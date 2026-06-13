@@ -43,10 +43,14 @@ const STRIP: Record<string, string> = {
 }
 
 const bodyVariants = {
-  collapsed: { height: 0, opacity: 0 },
+  // overflow is hidden only while the height animates; once expanded it switches
+  // to visible so the upward action-picker popover isn't clipped (it sits above
+  // the card with `bottom-full`).
+  collapsed: { height: 0, opacity: 0, overflow: 'hidden' },
   expanded: {
     height: 'auto', opacity: 1,
     transition: { type: 'spring' as const, damping: 28, stiffness: 320, opacity: { duration: 0.2 } },
+    transitionEnd: { overflow: 'visible' },
   },
 }
 
@@ -354,7 +358,7 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
       <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div key="tray-body" variants={bodyVariants}
-            initial="collapsed" animate="expanded" exit="collapsed" className="overflow-hidden">
+            initial="collapsed" animate="expanded" exit="collapsed">
             <div className="space-y-3 px-4 pb-3">
 
               {/* Plays summary & undo controls */}
