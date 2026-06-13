@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
-const LOCALES_DIR = resolve(__dirname, '../../../locales')
+const LOCALES_DIR = resolve(__dirname, '../../locales')
 const LANGUAGES = ['en', 'ko', 'es'] as const
 
 function loadJson(lang: string, ...pathParts: string[]): Record<string, unknown> {

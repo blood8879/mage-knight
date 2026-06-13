@@ -19,8 +19,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@data/*": ["../docs/data/*"],
-      "@locales/*": ["../locales/*"]
+      "@data/*": ["./data/*"],
+      "@locales/*": ["./locales/*"]
     },
 
     "strict": true,

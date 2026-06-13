@@ -7,8 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@data': resolve(__dirname, '../docs/data'),
-      '@locales': resolve(__dirname, '../locales'),
+      '@data': resolve(__dirname, './data'),
+      '@locales': resolve(__dirname, './locales'),
     },
   },
   test: {
