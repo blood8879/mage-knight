@@ -133,7 +133,7 @@ export default function LevelUpOverlay({
           <motion.div
             role="dialog"
             aria-modal="true"
-            className="relative z-50 flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-xl border border-amber-700/40 bg-slate-900 shadow-2xl shadow-amber-900/20 ring-1 ring-white/5"
+            className="relative z-50 flex max-h-[90vh] w-full min-w-0 max-w-md flex-col overflow-hidden rounded-xl border border-amber-700/40 bg-slate-900 shadow-2xl shadow-amber-900/20 ring-1 ring-white/5"
             variants={panelVariants}
             initial="hidden"
             animate="visible"
@@ -250,16 +250,16 @@ export default function LevelUpOverlay({
                             type="button"
                             onClick={() => { if (choice === 'A') setAaCardId(card.id) }}
                             className={[
-                              'flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left transition-all active:scale-[0.98]',
+                              'flex w-full items-start gap-2 rounded-xl border px-3 py-2 text-left transition-all active:scale-[0.98]',
                               isSelected
                                 ? 'border-violet-400 bg-violet-950/40 ring-1 ring-violet-400/60'
                                 : 'border-slate-700/50 bg-slate-800/60 hover:border-violet-500/40',
                             ].join(' ')}
                           >
-                            <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${AA_COLOR_DOT[colorKey] ?? 'bg-slate-500'}`} />
+                            <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${AA_COLOR_DOT[colorKey] ?? 'bg-slate-500'}`} />
                             <span className="min-w-0 flex-1">
-                              <span className="block truncate text-sm font-bold text-slate-100">{getCardName(card)}</span>
-                              <span className="block truncate text-[10px] text-slate-500">{getCardBasicEffect(card)}</span>
+                              <span className="block break-words text-sm font-bold text-slate-100">{getCardName(card)}</span>
+                              <span className="mt-0.5 block break-words text-[10px] leading-snug text-slate-400">{getCardBasicEffect(card)}</span>
                             </span>
                           </button>
                         )
