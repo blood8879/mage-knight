@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import type { EnemyAbility } from '@/engine/types'
 import { getAbilityMeta } from '@/components/combat/enemyAbilityMeta'
@@ -9,11 +10,15 @@ interface AbilityChipProps {
   size?: string
 }
 
+const TOOLTIP_W = 208 // px (matches w-52); clamped to viewport on open
+
 /**
  * Enemy ability chip with an explanatory tooltip.
  * Works on both desktop and mobile:
  *  - desktop: hover shows the tooltip
  *  - mobile: tap toggles it; tapping elsewhere (or another chip) closes it
+ * The tooltip is portaled to <body> and clamped inside the viewport so it is
+ * never clipped at the screen edges.
  */
 export default function AbilityChip({ ability, size = 'text-[10px]' }: AbilityChipProps) {
   const { t } = useTranslation('ui')
@@ -21,20 +26,40 @@ export default function AbilityChip({ ability, size = 'text-[10px]' }: AbilityCh
   const label = t(meta.labelKey, { defaultValue: ability.replace(/_/g, ' ') })
   const desc = meta.descKey ? t(meta.descKey, { defaultValue: '' }) : ''
   const [open, setOpen] = useState(false)
+  const [pos, setPos] = useState<{ left: number; top: number; width: number } | null>(null)
   const ref = useRef<HTMLSpanElement>(null)
   const tooltipId = useId()
+  const hasTooltip = desc.length > 0
 
-  // Close when tapping/clicking outside (mobile-friendly dismissal)
+  const place = () => {
+    const r = ref.current?.getBoundingClientRect()
+    if (!r) return
+    const vw = window.innerWidth || 360
+    const width = Math.min(TOOLTIP_W, vw - 16)
+    const left = Math.max(8, Math.min(r.left + r.width / 2 - width / 2, vw - width - 8))
+    setPos({ left, top: r.top, width })
+  }
+
+  const show = () => {
+    if (!hasTooltip) return
+    place()
+    setOpen(true)
+  }
+
+  // Close when tapping/clicking or scrolling outside (mobile-friendly dismissal)
   useEffect(() => {
     if (!open) return
-    const handler = (e: PointerEvent) => {
+    const onDown = (e: PointerEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
-    document.addEventListener('pointerdown', handler)
-    return () => document.removeEventListener('pointerdown', handler)
+    const onScroll = () => setOpen(false)
+    document.addEventListener('pointerdown', onDown)
+    window.addEventListener('scroll', onScroll, true)
+    return () => {
+      document.removeEventListener('pointerdown', onDown)
+      window.removeEventListener('scroll', onScroll, true)
+    }
   }, [open])
-
-  const hasTooltip = desc.length > 0
 
   return (
     <span ref={ref} className="relative inline-flex">
@@ -45,9 +70,9 @@ export default function AbilityChip({ ability, size = 'text-[10px]' }: AbilityCh
         aria-expanded={hasTooltip ? open : undefined}
         onClick={(e) => {
           e.stopPropagation()
-          if (hasTooltip) setOpen((o) => !o)
+          if (hasTooltip) (open ? setOpen(false) : show())
         }}
-        onMouseEnter={() => hasTooltip && setOpen(true)}
+        onMouseEnter={show}
         onMouseLeave={() => setOpen(false)}
         className={[
           'rounded bg-slate-700/60 px-1.5 py-0.5 font-semibold leading-none transition-colors',
@@ -58,17 +83,19 @@ export default function AbilityChip({ ability, size = 'text-[10px]' }: AbilityCh
       >
         {label}
       </button>
-      {open && hasTooltip && (
-        <span
-          id={tooltipId}
-          role="tooltip"
-          className="absolute bottom-full left-1/2 z-50 mb-1.5 w-48 -translate-x-1/2 rounded-lg border border-slate-600/70 bg-slate-900 px-2.5 py-1.5 text-left text-[11px] font-medium leading-snug text-slate-200 shadow-xl shadow-black/50"
-        >
-          <span className={`mb-0.5 block font-bold ${meta.color}`}>{label}</span>
-          {desc}
-          <span className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 border-b border-r border-slate-600/70 bg-slate-900" />
-        </span>
-      )}
+      {open && hasTooltip && pos &&
+        createPortal(
+          <span
+            id={tooltipId}
+            role="tooltip"
+            style={{ left: pos.left, top: pos.top, width: pos.width }}
+            className="pointer-events-none fixed z-[80] -translate-y-full -mt-1.5 rounded-lg border border-slate-600/70 bg-slate-900 px-2.5 py-1.5 text-left text-[11px] font-medium leading-snug text-slate-200 shadow-xl shadow-black/50"
+          >
+            <span className={`mb-0.5 block font-bold ${meta.color}`}>{label}</span>
+            {desc}
+          </span>,
+          document.body,
+        )}
     </span>
   )
 }

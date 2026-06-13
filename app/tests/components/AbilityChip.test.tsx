@@ -1,4 +1,4 @@
-import { describe, it, expect, afterAll, beforeEach } from 'vitest'
+import { describe, it, expect, afterAll, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import i18n from '@/i18n/config'
 import AbilityChip from '@/components/combat/AbilityChip'
@@ -45,6 +45,22 @@ describe('AbilityChip — ability tooltips (mobile tap + desktop hover)', () => 
     expect(screen.getByRole('tooltip')).toBeInTheDocument()
     fireEvent.pointerDown(screen.getByRole('button', { name: 'elsewhere' }))
     expect(screen.queryByRole('tooltip')).toBeNull()
+  })
+
+  it('clamps the tooltip inside the viewport at the left screen edge (no clipping)', () => {
+    // Simulate a chip pinned to the far-left edge of the screen
+    const spy = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      left: 0, top: 120, right: 28, bottom: 136, width: 28, height: 16, x: 0, y: 120, toJSON() {},
+    } as DOMRect)
+    try {
+      render(<AbilityChip ability="paralyze" />)
+      fireEvent.click(screen.getByRole('button'))
+      const tip = screen.getByRole('tooltip')
+      const left = parseFloat(tip.style.left)
+      expect(left).toBeGreaterThanOrEqual(8) // never negative / off-screen
+    } finally {
+      spy.mockRestore()
+    }
   })
 
   it('English locale renders English label + description', async () => {
