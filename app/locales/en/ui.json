@@ -1037,7 +1037,8 @@
     "emptyHand": "No playable cards in hand",
     "playBasic": "Basic +{{value}}",
     "playStrong": "Strong +{{value}}",
-    "playSideways": "Sideways +1"
+    "playSideways": "Sideways +1",
+    "woundsInHand": "{{count}} wound(s) in hand"
   },
   "track": {
     "fame": "Fame",

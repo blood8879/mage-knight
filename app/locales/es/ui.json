@@ -1052,7 +1052,8 @@
     "emptyHand": "No hay cartas jugables en la mano",
     "playBasic": "Básico +{{value}}",
     "playStrong": "Fuerte +{{value}}",
-    "playSideways": "De lado +1"
+    "playSideways": "De lado +1",
+    "woundsInHand": "{{count}} herida(s) en mano"
   },
   "ad": {
     "banner": "Publicidad",

@@ -1037,7 +1037,8 @@
     "emptyHand": "사용할 수 있는 카드가 없습니다",
     "playBasic": "기본 +{{value}}",
     "playStrong": "강화 +{{value}}",
-    "playSideways": "가로로 사용 +1"
+    "playSideways": "가로로 사용 +1",
+    "woundsInHand": "손에 부상 카드 {{count}}장"
   },
   "track": {
     "fame": "명성",

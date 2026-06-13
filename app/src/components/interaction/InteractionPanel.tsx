@@ -446,7 +446,7 @@ export default function InteractionPanel() {
                       {t('interaction.healWound')}
                     </button>
                     <span className="text-xs text-slate-500">
-                      {woundsInHand} {woundsInHand === 1 ? 'wound' : 'wounds'} in hand
+                      {t('interaction.woundsInHand', { defaultValue: '{{count}} wound(s) in hand', count: woundsInHand })}
                     </span>
                   </div>
                   {!canHeal && influencePool < healingCost && woundsInHand > 0 && (
@@ -737,7 +737,29 @@ function CardRow({
   )
 }
 
-function UnitRow({
+// Unit ability → icon + value chips (language-independent stat display)
+const UNIT_ACTION_ICON: Record<string, string> = {
+  attack: '⚔', ranged_attack: '🏹', siege_attack: '💥', block: '🛡',
+  influence: '🤝', move: '👟', heal: '❤️‍🩹', healing: '❤️‍🩹',
+}
+const UNIT_ELEMENT_ICON: Record<string, string> = {
+  fire: '🔥', ice: '❄️', cold_fire: '💜',
+}
+
+function unitStatChips(unit: AnyUnit): { key: string; icon: string; value: number; element?: string }[] {
+  const chips: { key: string; icon: string; value: number; element?: string }[] = []
+  unit.abilities.forEach((ability, ai) => {
+    ability.actions.forEach((action, idx) => {
+      const icon = UNIT_ACTION_ICON[action.type]
+      if (!icon || typeof action.value !== 'number') return
+      const element = typeof action.element === 'string' && action.element !== 'physical' ? action.element : undefined
+      chips.push({ key: `${ai}-${idx}`, icon, value: action.value, element })
+    })
+  })
+  return chips
+}
+
+export function UnitRow({
   unit,
   effectiveCost,
   canAfford,
@@ -752,15 +774,17 @@ function UnitRow({
   onRecruit: () => void
   t: (key: string, opts?: Record<string, unknown>) => string
 }) {
+  const { getUnitName } = useCardTranslation()
   const canRecruit = canAfford && !unitLimitReached
   const cost = effectiveCost ?? unit.cost
+  const chips = unitStatChips(unit)
 
   return (
     <div className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/20 bg-slate-800/30 px-3 py-2">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate text-sm font-semibold text-slate-200">
-            {unit.name}
+            {getUnitName(unit)}
           </span>
           <span className="shrink-0 rounded bg-sky-900/30 px-1.5 py-0.5 text-[9px] font-bold text-sky-300">
             L{unit.level}
@@ -772,11 +796,23 @@ function UnitRow({
           )}
         </div>
         <span className="text-[10px] text-slate-500">
-          {t('interaction.recruitCost', { cost })} · Armor {unit.armor}
+          {t('interaction.recruitCost', { cost })} · {t('game.armor', { defaultValue: 'Armor' })} {unit.armor}
           {cost < unit.cost && (
             <span className="ml-1 font-bold text-emerald-400">(-{unit.cost - cost})</span>
           )}
         </span>
+        {chips.length > 0 && (
+          <div className="mt-1 flex flex-wrap items-center gap-1">
+            {chips.map((c) => (
+              <span
+                key={c.key}
+                className="inline-flex items-center gap-0.5 rounded bg-slate-700/40 px-1.5 py-0.5 text-[10px] font-semibold text-slate-300"
+              >
+                {c.icon}{c.element ? UNIT_ELEMENT_ICON[c.element] ?? '' : ''} {c.value}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       <button
         type="button"
