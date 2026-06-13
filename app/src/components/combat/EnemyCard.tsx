@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import type { EnemyInstance, EnemyColor, AttackType, EnemyAbility } from '@/engine/types'
+import type { EnemyInstance, EnemyColor, AttackType } from '@/engine/types'
+import AbilityChip from '@/components/combat/AbilityChip'
 
 const ENEMY_COLOR_STYLES: Record<EnemyColor, { bg: string; border: string; glow: string }> = {
   green: {
@@ -40,31 +41,6 @@ const ATTACK_TYPE_ICON: Record<AttackType, string> = {
   ice: '\u2744\uFE0F',
   cold_fire: '\uD83D\uDCA0',
   summon: '\uD83D\uDC7B',
-}
-
-const ABILITY_LABELS: Record<string, { labelKey: string; color: string }> = {
-  fortified: { labelKey: 'combat.abilityFortified', color: 'text-amber-400' },
-  physical_resistance: { labelKey: 'combat.abilityPhysicalResistance', color: 'text-stone-400' },
-  fire_resistance: { labelKey: 'combat.abilityFireResistance', color: 'text-orange-400' },
-  ice_resistance: { labelKey: 'combat.abilityIceResistance', color: 'text-cyan-400' },
-  swift: { labelKey: 'combat.abilitySwift', color: 'text-sky-400' },
-  brutal: { labelKey: 'combat.abilityBrutal', color: 'text-red-400' },
-  poison: { labelKey: 'combat.abilityPoison', color: 'text-lime-400' },
-  paralyze: { labelKey: 'combat.abilityParalyze', color: 'text-yellow-400' },
-  arcane_immunity: { labelKey: 'combat.abilityArcaneImmunity', color: 'text-indigo-400' },
-  cumbersome: { labelKey: 'combat.abilityCumbersome', color: 'text-zinc-400' },
-  unfortified: { labelKey: 'combat.abilityUnfortified', color: 'text-zinc-500' },
-  vampiric: { labelKey: 'combat.abilityVampiric', color: 'text-fuchsia-400' },
-  assassination: { labelKey: 'combat.abilityAssassination', color: 'text-rose-400' },
-  defend_1: { labelKey: 'combat.abilityDefend1', color: 'text-teal-400' },
-  defend_2: { labelKey: 'combat.abilityDefend2', color: 'text-teal-300' },
-  reputation_minus_1: { labelKey: 'combat.abilityRepMinus1', color: 'text-orange-300' },
-}
-
-function getAbilityDisplay(ability: EnemyAbility): { labelKey: string; color: string } {
-  const known = ABILITY_LABELS[ability]
-  if (known) return known
-  return { labelKey: ability.slice(0, 6), color: 'text-slate-400' }
 }
 
 interface EnemyCardProps {
@@ -147,21 +123,9 @@ export default function EnemyCard({
 
       {showDetails && enemy.appliedAbilities.length > 0 && (
         <div className="mt-1 flex flex-wrap gap-0.5">
-          {enemy.appliedAbilities.map((ability, idx) => {
-            const display = getAbilityDisplay(ability)
-            return (
-              <span
-                key={`${ability}-${idx}`}
-                className={[
-                  'rounded px-0.5 py-px text-[7px] font-semibold leading-none',
-                  'bg-black/30',
-                  display.color,
-                ].join(' ')}
-              >
-                {t(display.labelKey)}
-              </span>
-            )
-          })}
+          {enemy.appliedAbilities.map((ability, idx) => (
+            <AbilityChip key={`${ability}-${idx}`} ability={ability} size="text-[7px]" />
+          ))}
         </div>
       )}
 

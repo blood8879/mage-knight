@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import type { HexCell, DayNight, TerrainType, SiteType, EnemyColor, EnemyToken } from '@/engine/types'
 import { TERRAIN_MOVE_COST } from '@/engine/GameState'
+import AbilityChip from '@/components/combat/AbilityChip'
 
 // ── Terrain emoji icons ──────────────────
 const TERRAIN_EMOJI: Record<TerrainType, string> = {
@@ -214,7 +215,6 @@ function EnemyCard({
   t: (key: string, options?: { defaultValue: string }) => string
 }) {
   const enemyName = tEnemies(`${token.id}.name`, { defaultValue: token.name })
-  const enemyAbilities = tEnemies(`${token.id}.abilities`, { defaultValue: '' })
   const dotColor = ENEMY_DOT_COLOR[token.color]
   const attackIcon = token.attackType !== 'normal' ? ATTACK_TYPE_ICON[token.attackType] : null
 
@@ -260,16 +260,11 @@ function EnemyCard({
           </span>
         </div>
 
-        {/* Abilities */}
-        {enemyAbilities && enemyAbilities !== 'None' && (
+        {/* Abilities — tooltip chips (tap on mobile, hover on desktop) */}
+        {token.abilities.length > 0 && (
           <div className="mt-1.5 flex flex-wrap gap-1">
-            {enemyAbilities.split(', ').map((ability) => (
-              <span
-                key={ability}
-                className="rounded bg-slate-700/60 px-1.5 py-0.5 text-[10px] font-medium text-slate-400"
-              >
-                {ability}
-              </span>
+            {token.abilities.map((ability, idx) => (
+              <AbilityChip key={`${ability}-${idx}`} ability={ability} />
             ))}
           </div>
         )}
