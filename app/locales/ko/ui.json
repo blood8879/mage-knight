@@ -1069,7 +1069,12 @@
     "noDice": "주사위 없음",
     "activeMana": "보유 마나",
     "crystalInventory": "크리스탈 인벤토리",
-    "crystalMax": "색상별 최대 {{max}}개"
+    "crystalMax": "색상별 최대 {{max}}개",
+    "takeDie": "{{color}} 마나 주사위 가져오기",
+    "goldDayOnly": "금색 주사위 — 낮에만",
+    "blackNightOnly": "검은색 주사위 — 밤에만",
+    "dieTaken": "이번 턴에 이미 주사위를 가져왔습니다",
+    "spendCrystal": "{{color}} 크리스탈을 마나로 사용"
   },
   "ad": {
     "banner": "광고",

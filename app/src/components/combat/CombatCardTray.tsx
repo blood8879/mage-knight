@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useCardTranslation } from '@/hooks/useCardTranslation'
 import { useGameStore } from '@/store/gameStore'
 import CardDetail from '@/components/cards/CardDetail'
+import ManaStrip from '@/components/common/ManaStrip'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
 import type { UseCombatCardsReturn } from '@/hooks/useCombatCards'
 import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor } from '@/engine/types'
@@ -359,7 +360,10 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
         {isExpanded && (
           <motion.div key="tray-body" variants={bodyVariants}
             initial="collapsed" animate="expanded" exit="collapsed">
-            <div className="space-y-3 px-4 pb-3">
+            <div className="space-y-3 px-4 pb-3 pt-2">
+
+              {/* Mana pool — take Source dice / spend crystals mid-combat */}
+              <ManaStrip />
 
               {/* Plays summary & undo controls */}
               <div className="space-y-1.5">

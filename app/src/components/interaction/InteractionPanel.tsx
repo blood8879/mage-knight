@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useGameEngine } from '@/hooks/useGameEngine'
 import { useGameStore } from '@/store/gameStore'
 import { useCardTranslation } from '@/hooks/useCardTranslation'
+import ManaStrip from '@/components/common/ManaStrip'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
 import type {
   InteractionSiteType,
@@ -314,6 +315,9 @@ export default function InteractionPanel() {
                   {t('interaction.playCardsForInfluence')}
                 </p>
               </div>
+
+              {/* ── Mana pool — take Source dice / spend crystals mid-interaction ── */}
+              <ManaStrip />
 
               {/* ── Hand cards → influence ── */}
               <SectionBlock

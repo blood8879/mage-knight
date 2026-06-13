@@ -886,7 +886,12 @@
     "noDice": "Sin dados",
     "activeMana": "Maná activo",
     "crystalInventory": "Inventario de cristales",
-    "crystalMax": "máx. {{max}} por color"
+    "crystalMax": "máx. {{max}} por color",
+    "takeDie": "Tomar dado de maná {{color}}",
+    "goldDayOnly": "Dado dorado — solo de Día",
+    "blackNightOnly": "Dado negro — solo de Noche",
+    "dieTaken": "Ya tomaste un dado este turno",
+    "spendCrystal": "Usar cristal {{color}} como maná"
   },
   "combat": {
     "title": "Combat",

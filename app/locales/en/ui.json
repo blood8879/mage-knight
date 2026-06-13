@@ -1069,7 +1069,12 @@
     "noDice": "No dice",
     "activeMana": "Active Mana",
     "crystalInventory": "Crystal Inventory",
-    "crystalMax": "max {{max}} each"
+    "crystalMax": "max {{max}} each",
+    "takeDie": "Take {{color}} mana die",
+    "goldDayOnly": "Gold die — Day only",
+    "blackNightOnly": "Black die — Night only",
+    "dieTaken": "Already took a die this turn",
+    "spendCrystal": "Use {{color}} crystal as mana"
   },
   "ad": {
     "banner": "Advertisement",
