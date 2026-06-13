@@ -1,0 +1,173 @@
+{
+  "_meta": {
+    "source": "Mage Knight base game — Tovak skill tokens",
+    "note": "Prepared for hero selection / dummy player skill decks. Action types not in the engine's supported set (enemy_armor_reduction, discard_wound_draw_card, sideways_bonus, draw_cards, cooperative_mana_overload) are informational until fully engine-supported.",
+    "createdAt": "2026-06-13"
+  },
+  "hero": {
+    "name": "Tovak",
+    "skills": [
+      {
+        "id": 301,
+        "name": "Double Time",
+        "type": "once_per_turn",
+        "effect": "Move 2 (during the Day), or Move 1 (at Night).",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2,
+            "condition": "day"
+          },
+          {
+            "type": "move",
+            "value": 1,
+            "condition": "night"
+          }
+        ]
+      },
+      {
+        "id": 302,
+        "name": "Night Sharpshooting",
+        "type": "once_per_turn",
+        "effect": "Ranged Attack 1 (during the Day), or Ranged Attack 2 (at Night).",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "value": 1,
+            "condition": "day"
+          },
+          {
+            "type": "ranged_attack",
+            "value": 2,
+            "condition": "night"
+          }
+        ]
+      },
+      {
+        "id": 303,
+        "name": "Cold Swordsmanship",
+        "type": "once_per_turn",
+        "effect": "Attack 2, or Ice Attack 2.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "element": "ice",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      {
+        "id": 304,
+        "name": "Shield Mastery",
+        "type": "once_per_turn",
+        "effect": "Block 3, or Fire Block 2, or Ice Block 2.",
+        "actions": [
+          {
+            "type": "block",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "element": "fire",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "element": "ice",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      {
+        "id": 305,
+        "name": "Resistance Break",
+        "type": "once_per_turn",
+        "effect": "Choose an enemy token: it gets Armor -1 for each resistance it has, to a minimum of 1.",
+        "actions": [
+          {
+            "type": "enemy_armor_reduction",
+            "value": 1,
+            "rule": "per_resistance_min_1"
+          }
+        ]
+      },
+      {
+        "id": 306,
+        "name": "I Feel No Pain",
+        "type": "once_per_turn",
+        "effect": "Once a turn, except in combat: discard one Wound from your hand. If you do, draw a new card.",
+        "actions": [
+          {
+            "type": "discard_wound_draw_card",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 307,
+        "name": "I Don't Give a Damn!",
+        "type": "once_per_turn",
+        "effect": "One card played sideways gives you +2 instead of +1. If it is an Advanced Action, Spell or Artifact, it gives +3 instead.",
+        "actions": [
+          {
+            "type": "sideways_bonus",
+            "value": 2,
+            "bonusValue": 3
+          }
+        ]
+      },
+      {
+        "id": 308,
+        "name": "Who Needs Magic?",
+        "type": "once_per_turn",
+        "effect": "One card played sideways gives you +2 instead of +1. If you use no die from the Source this turn, it gives +3 instead.",
+        "actions": [
+          {
+            "type": "sideways_bonus",
+            "value": 2,
+            "bonusValue": 3,
+            "condition": "no_source_die"
+          }
+        ]
+      },
+      {
+        "id": 309,
+        "name": "Motivation",
+        "type": "once_per_round",
+        "effect": "Once a Round, on any player's turn: flip this to draw two cards. If you have the least Fame (not tied), also gain a blue mana token.",
+        "actions": [
+          {
+            "type": "draw_cards",
+            "value": 2
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "blue",
+            "condition": "least_fame"
+          }
+        ]
+      },
+      {
+        "id": 310,
+        "name": "Mana Overload",
+        "type": "interactive_once_per_round",
+        "effect": "Cooperative: choose a basic color and gain a mana token of that color. Put this Skill token in the center marked with that color. The first player who uses mana of that color to power a card giving Move, Influence, Attack or Block gets +4 from that card and returns the Skill to you, face down.",
+        "actions": [
+          {
+            "type": "cooperative_mana_overload",
+            "value": 4
+          }
+        ]
+      }
+    ]
+  }
+}

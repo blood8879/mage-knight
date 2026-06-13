@@ -1,0 +1,127 @@
+{
+  "1": {
+    "name": "Banner of Glory",
+    "basicEffect": "Assign this to a unit you control. The assigned unit gets armor +1 and +1 to any attacks or blocks it makes. Whenever this unit attacks or blocks, fame +1.",
+    "strongEffect": "Units you control get armor +1 and +1 to any attacks or blocks they make this turn. Fame +1 for each unit that attacks or blocks this turn."
+  },
+  "2": {
+    "name": "Banner of Fear",
+    "basicEffect": "Assign this to a unit you control. During the block phase of combat, you may spend this Unit to cancel one enemy attack. If you do, Fame +1.",
+    "strongEffect": "Up to 3 enemies do not attack this combat."
+  },
+  "3": {
+    "name": "Banner of Protection",
+    "basicEffect": "Assign this to a unit you control. The assigned unit gets armor +1, fire resistance and ice resistance.",
+    "strongEffect": "At the end of your turn, you may throw away all wounds you received this turn."
+  },
+  "4": {
+    "name": "Banner of Courage",
+    "basicEffect": "Assign this to a unit you control. Once a round, except during combat, you may flip this card face down to ready this unit. At the beginning of a round, flip it face up again.",
+    "strongEffect": "You may play this any time other than combat to ready all units you control."
+  },
+  "5": {
+    "name": "Ruby Ring",
+    "basicEffect": "Gain a red mana token and a red crystal to your Inventory. Fame +1.",
+    "strongEffect": "You have an endless supply of red and black mana this turn. Fame +1 for each red Spell you cast this turn."
+  },
+  "6": {
+    "name": "Sapphire Ring",
+    "basicEffect": "Gain a blue mana token and a blue crystal to your Inventory. Fame +1.",
+    "strongEffect": "You have an endless supply of blue and black mana this turn. Fame +1 for each blue Spell you cast this turn."
+  },
+  "7": {
+    "name": "Diamond Ring",
+    "basicEffect": "Gain a white mana token and a white crystal to your Inventory. Fame +1.",
+    "strongEffect": "You have an endless supply of white and black mana this turn. Fame +1 for each white Spell you cast this turn."
+  },
+  "8": {
+    "name": "Emerald Ring",
+    "basicEffect": "Gain a green mana token and a green crystal to your Inventory. Fame +1.",
+    "strongEffect": "You have an endless supply of green and black mana this turn. Fame +1 for each green Spell you cast this turn."
+  },
+  "9": {
+    "name": "Sword of Justice",
+    "basicEffect": "When you play this, discard any number of cards from your hand. You get Attack 3 for each card you discard this way. Fame +1 for each enemy you defeat this turn.",
+    "strongEffect": "Double the contribution of all physical attacks you play during your Attack phase this turn. Enemies lose physical resistance this turn. Fame +1 for each enemy you defeat this turn."
+  },
+  "10": {
+    "name": "Horn of Wrath",
+    "basicEffect": "Siege Attack 5. Roll a mana die. If you roll black or red, you get a Wound.",
+    "strongEffect": "Siege Attack 5. You may add up to +5 to this Siege Attack. For each +1 you added roll a mana die. You get a Wound for each black or red rolled."
+  },
+  "11": {
+    "name": "Golden Grail",
+    "basicEffect": "Heal 2. Fame +1 for each point of Healing provided by this card you spend this turn.",
+    "strongEffect": "Heal 6. Every time you Heal a Wound from hand this turn, draw a card."
+  },
+  "12": {
+    "name": "Endless Bag of Gold",
+    "basicEffect": "Influence 4, Fame +2.",
+    "strongEffect": "Influence 9, Fame +3."
+  },
+  "13": {
+    "name": "Endless Gem Pouch",
+    "basicEffect": "Roll a mana die two times. Gain a crystal to your Inventory for each color rolled this way (if you roll gold, you choose the color). If you roll black, Fame +1 instead of a crystal.",
+    "strongEffect": "Gain a mana token of each basic color. Also get one gold (if played at day) or black (if played at night) mana token."
+  },
+  "14": {
+    "name": "Book of Wisdom",
+    "basicEffect": "Throw away an Action card from your hand. Gain an Advanced Action card from the Advanced Actions offer to your hand that is the same color as the Action you threw away.",
+    "strongEffect": "Throw away an Action card from your hand. Gain a Spell from the Spells offer to your hand that is the same color as the Action you threw away and a Crystal of that color to your Inventory."
+  },
+  "15": {
+    "name": "Amulet of Sun",
+    "basicEffect": "Gain a gold mana token. If played during the Night, forests have their move cost reduced to 3, you can use gold mana, and you reveal garrisons of nearby fortified sites and all ruins as if it were day.",
+    "strongEffect": "Same as the basic effect, except you get three gold mana tokens instead of one."
+  },
+  "16": {
+    "name": "Amulet of Darkness",
+    "basicEffect": "Gain a mana token of any color. If played during the Day, deserts have their move cost reduced to 3 and you can use black mana as if it were Night.",
+    "strongEffect": "Same as the basic effect, except you get three mana tokens of any colors instead of one."
+  },
+  "17": {
+    "name": "Bow of Starsdawn",
+    "basicEffect": "When you play this, discard any amount of cards from your hand. You get Ranged Attack 2 for each card you discard this way. Fame 1 for each enemy you defeat in the current phase of combat.",
+    "strongEffect": "Each of your Ranged Attacks this turn is either doubled, or becomes a Siege Attack of the same element. You may also double any Siege attacks, but they become Ranged Attacks of the same element."
+  },
+  "18": {
+    "name": "Banner of Command",
+    "basicEffect": "Influence 4. If you recruited a Unit this turn, you may assign this card to it instead of a Command token. Put this card face down over the Unit when it is spent, and return it face up under it whenever it is ready.",
+    "strongEffect": "Gain Fame +2. Recruit any one Unit from the Units offer for free. (If you are at your Command limit, you must disband one of your units first.)"
+  },
+  "19": {
+    "name": "Banner of Fortitude",
+    "basicEffect": "Assign this to a unit you control. Once a Round, when the Unit is about to get wounded, flip this card to ignore the Wound and any additional effects from it. The Unit can still only be assigned damage once each combat.",
+    "strongEffect": "Anytime except during combat: Heal all of your Units completely."
+  },
+  "20": {
+    "name": "Soul Harvester",
+    "basicEffect": "Attack 3. For one enemy defeated by this attack gain one crystal to your inventory. It may be red if the enemy had Fire Resistance, blue if it had Ice Resistance, green if it had Physical Resistance. You may always choose white.",
+    "strongEffect": "Attack 8. Gain one crystal as above for each enemy defeated in the current phase of combat."
+  },
+  "21": {
+    "name": "Shield of the Fallen Kings",
+    "basicEffect": "Block 6, or two Block 4 against different attacks.",
+    "strongEffect": "Cold Fire Block 8, or up to three Cold Fire Block 4 against different attacks."
+  },
+  "22": {
+    "name": "Druidic Staff",
+    "basicEffect": "Discard a card. Depending on its color, you get: White: Move up to 2 revealed spaces, to a safe space; Blue: Get two crystals of any one color; Red: Ready a level III Unit or lower; Green: Heal 3.",
+    "strongEffect": "Choose two of the options above, without discarding any cards."
+  },
+  "23": {
+    "name": "Circlet of Proficiency",
+    "basicEffect": "Use any non-interactive Skill in the Common Skills offer (including your own) as if it were your Skill. If it is a Skill usable each turn (one that does not flip), use its effect twice.",
+    "strongEffect": "Take any Skill in the Common Skills offer (including your own) and keep it for the rest of the game, as if acquired through a Level Up."
+  },
+  "24": {
+    "name": "Tome of All Spells",
+    "basicEffect": "Discard a card of any color. Use the basic effect of a Spell of the same color from the Spells offer without paying its mana cost.",
+    "strongEffect": "Discard a card of any color. Use the stronger effect of a Spell of the same color from the Spells offer without paying its mana cost. You may do so even during the Day."
+  },
+  "25": {
+    "name": "Mysterious Box",
+    "basicEffect": "Remove and reveal the top card of the Artifacts deck. This turn, you may use Mysterious Box as if it was that Artifact. If you do then Fame +1.",
+    "strongEffect": "At the end of the turn: put the revealed Artifact on the bottom of the Artifacts deck; if you did not use Mysterious Box then put it back in your hand; if you placed it on a unit as a banner then discard it."
+  }
+}

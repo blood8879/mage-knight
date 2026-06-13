@@ -1,0 +1,152 @@
+{
+  "_meta": {
+    "source": "Mage Knight base game — Norowas skill tokens",
+    "note": "Used for the solo dummy player's skill deck (EC-09-A-3). Effects mirror the physical tokens; 'unit_boost' and passive effects are informational until fully engine-supported.",
+    "createdAt": "2026-06-11"
+  },
+  "hero": {
+    "name": "Norowas",
+    "skills": [
+      {
+        "id": 101,
+        "name": "Forward March",
+        "type": "once_per_turn",
+        "effect": "Move 1 for each Ready and unwounded Unit you control, to a maximum of Move 3.",
+        "actions": [
+          {
+            "type": "move_per_ready_unit",
+            "value": 1,
+            "maxValue": 3
+          }
+        ]
+      },
+      {
+        "id": 102,
+        "name": "Day Sharpshooting",
+        "type": "once_per_turn",
+        "effect": "Ranged Attack 2 (during the Day), or Ranged Attack 1 (at Night).",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "value": 2,
+            "condition": "day"
+          },
+          {
+            "type": "ranged_attack",
+            "value": 1,
+            "condition": "night"
+          }
+        ]
+      },
+      {
+        "id": 103,
+        "name": "Inspiration",
+        "type": "once_per_turn",
+        "effect": "Ready or Heal one of your Units.",
+        "actions": [
+          {
+            "type": "free_unit_activation",
+            "description": "Ready a spent Unit"
+          },
+          {
+            "type": "heal_unit_wound",
+            "description": "Heal 1 wound from a Unit"
+          }
+        ]
+      },
+      {
+        "id": 104,
+        "name": "Bright Negotiation",
+        "type": "once_per_turn",
+        "effect": "Influence 3 (during the Day), or Influence 2 (at Night).",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 3,
+            "condition": "day"
+          },
+          {
+            "type": "influence",
+            "value": 2,
+            "condition": "night"
+          }
+        ]
+      },
+      {
+        "id": 105,
+        "name": "Leaves in the Wind",
+        "type": "once_per_round",
+        "effect": "Once a Round: gain a green crystal to your Inventory, or a white mana token.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "green",
+            "choice": true
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "white",
+            "choice": true
+          }
+        ]
+      },
+      {
+        "id": 106,
+        "name": "Whispers in the Treetops",
+        "type": "once_per_round",
+        "effect": "Once a Round: gain a white crystal to your Inventory, or a green mana token.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "white",
+            "choice": true
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "green",
+            "choice": true
+          }
+        ]
+      },
+      {
+        "id": 107,
+        "name": "Leadership",
+        "type": "once_per_turn",
+        "effect": "When you activate a Unit: it gets Ranged Attack +1, Attack +2 or Block +3 added to its ability.",
+        "actions": [
+          {
+            "type": "unit_boost",
+            "ranged_attack": 1,
+            "attack": 2,
+            "block": 3
+          }
+        ]
+      },
+      {
+        "id": 108,
+        "name": "Bonds of Loyalty",
+        "type": "passive",
+        "effect": "You have one extra Command token. The Unit recruited to it costs 5 less Influence.",
+        "actions": [
+          {
+            "type": "passive_command_bonus",
+            "extraCommand": 1,
+            "recruitDiscount": 5
+          }
+        ]
+      },
+      {
+        "id": 109,
+        "name": "Prayer of Weather",
+        "type": "interactive_once_per_round",
+        "effect": "Cooperative: until your next turn, the Move cost of one terrain type is reduced by 2 (minimum 1) for you, and by 1 for other players.",
+        "actions": [
+          {
+            "type": "cooperative_terrain_discount",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  }
+}

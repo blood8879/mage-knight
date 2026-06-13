@@ -1,0 +1,15 @@
+{
+  "1": { "name": "Village", "description": "A small settlement where heroes can heal wounds, recruit village units, or plunder for cards at the cost of reputation." },
+  "2": { "name": "Monastery", "description": "A sacred place offering healing, advanced actions for purchase, and monastery unit recruitment. Can be burned for an artifact, but at a steep reputation cost." },
+  "3": { "name": "Keep", "description": "A fortified stronghold defended by grey enemies. Once conquered, the owner can recruit keep units and draw an extra card when starting a turn nearby." },
+  "4": { "name": "Mage Tower", "description": "A fortified tower guarded by violet enemies. Once conquered, the owner can recruit units and buy spells with influence and matching mana." },
+  "5": { "name": "Dungeon", "description": "A dark underground lair where night rules always apply. Fight a brown enemy without unit support, then roll for a spell or artifact reward." },
+  "6": { "name": "Tomb", "description": "An ancient burial ground with a powerful red enemy. Night rules always apply and units cannot help. Victory grants both a spell and an artifact." },
+  "7": { "name": "Ancient Ruins", "description": "Mysterious ruins with a yellow token encounter. Pay 3 mana of the shown color to use the altar for 7 Fame, or fight the enemies revealed instead." },
+  "8": { "name": "Monster Den", "description": "A lair hiding a brown enemy. Defeat it to earn random mana crystals by rolling the mana die twice." },
+  "9": { "name": "Spawning Grounds", "description": "A dangerous area with two brown enemies. Full victory grants an artifact and 3 random mana crystals. Partial defeats leave remaining enemies in place." },
+  "10": { "name": "Crystal Mine", "description": "A source of raw mana. End your turn here to gain 1 mana crystal of the mine's color." },
+  "11": { "name": "Magical Glade", "description": "A place of natural magic. Discard a wound when ending your turn here. During the day, gain gold mana; at night, gain black mana when starting your turn here." },
+  "12": { "name": "City", "description": "A heavily fortified settlement with multiple defenders and city bonuses. Once conquered, the leader can recruit units, buy items, and draw extra cards when nearby." },
+  "13": { "name": "Portal", "description": "The starting location for players entering the map." }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mage Knight</string>
+    <string name="title_activity_main">Mage Knight</string>
+    <string name="package_name">com.mageknightgame.app</string>
+    <string name="custom_url_scheme">com.mageknightgame.app</string>
+</resources>

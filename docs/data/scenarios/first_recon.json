@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "description": "First Reconnaissance Scenario — Introductory solo scenario",
+    "version": "1.0",
+    "source": "Mage Knight Rulebook p.15",
+    "lastUpdated": "2026-02-19"
+  },
+  "scenario": {
+    "name": "First Reconnaissance",
+    "type": "introductory",
+    "playerCount": {
+      "min": 1,
+      "max": 4
+    },
+    "rounds": {
+      "total": 3,
+      "pattern": ["day", "night", "day"]
+    },
+    "mapSetup": {
+      "startingTile": "A",
+      "shape": "wedge",
+      "countrysideTiles": {
+        "solo": 8,
+        "twoPlayer": 8,
+        "threePlayer": 9,
+        "fourPlayer": 11
+      },
+      "coreTiles": {
+        "city": 1,
+        "nonCity": 2,
+        "total": 3
+      }
+    },
+    "victoryConditions": {
+      "endTrigger": "When a player reveals a city tile, all players have one last turn. If the round ends naturally, the game ends immediately.",
+      "winner": "Player with the most Fame wins."
+    },
+    "specialRules": [
+      {
+        "id": "tile_fame",
+        "description": "Gain 1 Fame whenever you reveal a new tile (any type)."
+      },
+      {
+        "id": "no_pvp",
+        "description": "No Player vs Player combat."
+      },
+      {
+        "id": "no_gold_units",
+        "description": "Gold (Elite) Units are not used."
+      },
+      {
+        "id": "no_city_conquest",
+        "description": "City is revealed but cannot be conquered."
+      },
+      {
+        "id": "delayed_reveal",
+        "description": "Spells and Advanced Action cards should not be revealed until needed for the first time."
+      }
+    ],
+    "soloSetup": {
+      "usePlayerCount": 2,
+      "useDummyPlayer": true,
+      "dummyPlayerCards": 3,
+      "dummyPlayerTacticSelection": "Dummy player always takes the lowest-numbered available tactic."
+    },
+    "scoring": {
+      "baseFame": true,
+      "achievementBonuses": [
+        {
+          "name": "Greatest Knowledge",
+          "description": "Most Advanced Actions + Spells in deed deck",
+          "points": 2
+        },
+        {
+          "name": "Greatest Leader",
+          "description": "Most Units in Unit area",
+          "points": 2
+        },
+        {
+          "name": "Greatest Conqueror",
+          "description": "Most conquered sites (keeps, mage towers)",
+          "points": 2
+        }
+      ]
+    }
+  }
+}

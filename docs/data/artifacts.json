@@ -1,0 +1,864 @@
+{
+  "_meta": {
+    "description": "Mage Knight Artifact Cards (16 Base + 8 Expansion + 1 Ultimate)",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki",
+    "lastUpdated": "2026-02-18"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "name": "Banner of Glory",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Assign this to a unit you control. The assigned unit gets armor +1 and +1 to any attacks or blocks it makes. Whenever this unit attacks or blocks, fame +1.",
+        "actions": [
+          {
+            "type": "assign_to_unit",
+            "bonus_armor": 1,
+            "bonus_attack": 1,
+            "bonus_block": 1,
+            "bonus_fame": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Units you control get armor +1 and +1 to any attacks or blocks they make this turn. Fame +1 for each unit that attacks or blocks this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "all_units_bonus",
+            "bonus_armor": 1,
+            "bonus_attack": 1,
+            "bonus_block": 1,
+            "fame_per_unit": 1
+          },
+          {
+            "type": "fame",
+            "value": 2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 2,
+      "name": "Banner of Fear",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Assign this to a unit you control. During the block phase of combat, you may spend this Unit to cancel one enemy attack. If you do, Fame +1.",
+        "actions": [
+          {
+            "type": "assign_to_unit",
+            "special": "Spend unit to cancel one enemy attack, Fame +1"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Up to 3 enemies do not attack this combat.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "enemy_skip_attack",
+            "count": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 3,
+      "name": "Banner of Protection",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Assign this to a unit you control. The assigned unit gets armor +1, fire resistance and ice resistance.",
+        "actions": [
+          {
+            "type": "assign_to_unit",
+            "bonus_armor": 1,
+            "grants_fire_resistance": true,
+            "grants_ice_resistance": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "At the end of your turn, you may throw away all wounds you received this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "healing",
+            "value": 2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 4,
+      "name": "Banner of Courage",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Assign this to a unit you control. Once a round, except during combat, you may flip this card face down to ready this unit. At the beginning of a round, flip it face up again.",
+        "actions": [
+          {
+            "type": "assign_to_unit",
+            "special": "Once per round (non-combat): flip to ready this unit"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "You may play this any time other than combat to ready all units you control.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "special",
+            "description": "Ready all units you control (anytime except combat)"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 5,
+      "name": "Ruby Ring",
+      "type": "artifact",
+      "subtype": "ring",
+      "basicEffect": {
+        "text": "Gain a red mana token and a red crystal to your Inventory. Fame +1.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "red"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "red"
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "You have an endless supply of red and black mana this turn. Fame +1 for each red Spell you cast this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "red",
+            "count": 3
+          },
+          {
+            "type": "gain_mana",
+            "color": "black"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 6,
+      "name": "Sapphire Ring",
+      "type": "artifact",
+      "subtype": "ring",
+      "basicEffect": {
+        "text": "Gain a blue mana token and a blue crystal to your Inventory. Fame +1.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "blue"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "blue"
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "You have an endless supply of blue and black mana this turn. Fame +1 for each blue Spell you cast this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "blue",
+            "count": 3
+          },
+          {
+            "type": "gain_mana",
+            "color": "black"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 7,
+      "name": "Diamond Ring",
+      "type": "artifact",
+      "subtype": "ring",
+      "basicEffect": {
+        "text": "Gain a white mana token and a white crystal to your Inventory. Fame +1.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "white"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "white"
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "You have an endless supply of white and black mana this turn. Fame +1 for each white Spell you cast this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "white",
+            "count": 3
+          },
+          {
+            "type": "gain_mana",
+            "color": "black"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 8,
+      "name": "Emerald Ring",
+      "type": "artifact",
+      "subtype": "ring",
+      "basicEffect": {
+        "text": "Gain a green mana token and a green crystal to your Inventory. Fame +1.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "green"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "green"
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "You have an endless supply of green and black mana this turn. Fame +1 for each green Spell you cast this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "green",
+            "count": 3
+          },
+          {
+            "type": "gain_mana",
+            "color": "black"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 9,
+      "name": "Sword of Justice",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "When you play this, discard any number of cards from your hand. You get Attack 3 for each card you discard this way. Fame +1 for each enemy you defeat this turn.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 3
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Double the contribution of all physical attacks you play during your Attack phase this turn. Enemies lose physical resistance this turn. Fame +1 for each enemy you defeat this turn.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "attack",
+            "value": 6
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 10,
+      "name": "Horn of Wrath",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "Siege Attack 5. Roll a mana die. If you roll black or red, you get a Wound.",
+        "actions": [
+          {
+            "type": "siege_attack",
+            "element": "physical",
+            "value": 5
+          },
+          {
+            "type": "special",
+            "description": "Roll a mana die. If black or red, take a Wound"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Siege Attack 5. You may add up to +5 to this Siege Attack. For each +1 you added roll a mana die. You get a Wound for each black or red rolled.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "siege_attack",
+            "element": "physical",
+            "value": 5
+          },
+          {
+            "type": "special",
+            "description": "May add up to +5. For each +1, roll mana die; Wound per black or red rolled"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 11,
+      "name": "Golden Grail",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Heal 2. Fame +1 for each point of Healing provided by this card you spend this turn.",
+        "actions": [
+          {
+            "type": "heal",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "Fame +1 for each Healing point from this card spent this turn"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Heal 6. Every time you Heal a Wound from hand this turn, draw a card.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "heal",
+            "value": 6
+          },
+          {
+            "type": "special",
+            "description": "Each time you Heal a Wound from hand this turn, draw a card"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 12,
+      "name": "Endless Bag of Gold",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Influence 4, Fame +2.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "fame",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 9, Fame +3.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "influence",
+            "value": 9
+          },
+          {
+            "type": "fame",
+            "value": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 13,
+      "name": "Endless Gem Pouch",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Roll a mana die two times. Gain a crystal to your Inventory for each color rolled this way (if you roll gold, you choose the color). If you roll black, Fame +1 instead of a crystal.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Gain a mana token of each basic color. Also get one gold (if played at day) or black (if played at night) mana token.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "red"
+          },
+          {
+            "type": "gain_mana",
+            "color": "blue"
+          },
+          {
+            "type": "gain_mana",
+            "color": "green"
+          },
+          {
+            "type": "gain_mana",
+            "color": "white"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_mana",
+            "color": "gold"
+          },
+          {
+            "type": "gain_mana",
+            "color": "black"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 14,
+      "name": "Book of Wisdom",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Throw away an Action card from your hand. Gain an Advanced Action card from the Advanced Actions offer to your hand that is the same color as the Action you threw away.",
+        "actions": [
+          {
+            "type": "gain_advanced_action",
+            "to": "hand"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Throw away an Action card from your hand. Gain a Spell from the Spells offer to your hand that is the same color as the Action you threw away and a Crystal of that color to your Inventory.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_spell",
+            "to": "hand"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 15,
+      "name": "Amulet of Sun",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Gain a gold mana token. If played during the Night, forests have their move cost reduced to 3, you can use gold mana, and you reveal garrisons of nearby fortified sites and all ruins as if it were day.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "gold"
+          },
+          {
+            "type": "special",
+            "description": "Night bonus: forests cost 3, gold mana usable, reveal garrisons/ruins as if Day"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Same as the basic effect, except you get three gold mana tokens instead of one.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "gold",
+            "count": 3
+          },
+          {
+            "type": "special",
+            "description": "Night bonus: forests cost 3, gold mana usable, reveal garrisons/ruins as if Day"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 16,
+      "name": "Amulet of Darkness",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Gain a mana token of any color. If played during the Day, deserts have their move cost reduced to 3 and you can use black mana as if it were Night.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "any"
+          },
+          {
+            "type": "special",
+            "description": "Day bonus: deserts cost 3, black mana usable as if Night"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Same as the basic effect, except you get three mana tokens of any colors instead of one.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "any",
+            "count": 3
+          },
+          {
+            "type": "special",
+            "description": "Day bonus: deserts cost 3, black mana usable as if Night"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 17,
+      "name": "Bow of Starsdawn",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "When you play this, discard any amount of cards from your hand. You get Ranged Attack 2 for each card you discard this way. Fame 1 for each enemy you defeat in the current phase of combat.",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Each of your Ranged Attacks this turn is either doubled, or becomes a Siege Attack of the same element. You may also double any Siege attacks, but they become Ranged Attacks of the same element.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "value": 4
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 18,
+      "name": "Banner of Command",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Influence 4. If you recruited a Unit this turn, you may assign this card to it instead of a Command token. Put this card face down over the Unit when it is spent, and return it face up under it whenever it is ready.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "May assign to recruited Unit as Command token replacement"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Gain Fame +2. Recruit any one Unit from the Units offer for free. (If you are at your Command limit, you must disband one of your units first.)",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "fame",
+            "value": 2
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 19,
+      "name": "Banner of Fortitude",
+      "type": "artifact",
+      "subtype": "banner",
+      "basicEffect": {
+        "text": "Assign this to a unit you control. Once a Round, when the Unit is about to get wounded, flip this card to ignore the Wound and any additional effects from it. The Unit can still only be assigned damage once each combat.",
+        "actions": [
+          {
+            "type": "assign_to_unit",
+            "special": "Once per Round: flip to ignore a Wound and its additional effects on assigned unit"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Anytime except during combat: Heal all of your Units completely.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "special",
+            "description": "Heal all Units completely (anytime except combat)"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 20,
+      "name": "Soul Harvester",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "Attack 3. For one enemy defeated by this attack gain one crystal to your inventory. It may be red if the enemy had Fire Resistance, blue if it had Ice Resistance, green if it had Physical Resistance. You may always choose white.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 3
+          },
+          {
+            "type": "special",
+            "description": "For 1 enemy defeated: gain crystal (red=Fire Res, blue=Ice Res, green=Physical Res, or white)"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 8. Gain one crystal as above for each enemy defeated in the current phase of combat.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "attack",
+            "value": 8
+          },
+          {
+            "type": "special",
+            "description": "Gain crystal (matching resistance color or white) per enemy defeated in current combat phase"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 21,
+      "name": "Shield of the Fallen Kings",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "Block 6, or two Block 4 against different attacks.",
+        "actions": [
+          {
+            "type": "block",
+            "value": 6
+          },
+          {
+            "type": "special",
+            "description": "Alternatively: two Block 4 against different attacks"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Cold Fire Block 8, or up to three Cold Fire Block 4 against different attacks.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "cold_fire_block",
+            "value": 8
+          },
+          {
+            "type": "special",
+            "description": "Alternatively: up to three Cold Fire Block 4 against different attacks"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 22,
+      "name": "Druidic Staff",
+      "type": "artifact",
+      "subtype": "weapon",
+      "basicEffect": {
+        "text": "Discard a card. Depending on its color, you get: White: Move up to 2 revealed spaces, to a safe space; Blue: Get two crystals of any one color; Red: Ready a level III Unit or lower; Green: Heal 3.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic",
+            "choice": true
+          },
+          {
+            "type": "heal",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "draw_card",
+            "value": 1,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Choose two of the options above, without discarding any cards.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "move",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic",
+            "choice": true
+          },
+          {
+            "type": "heal",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "draw_card",
+            "value": 1,
+            "choice": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 23,
+      "name": "Circlet of Proficiency",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Use any non-interactive Skill in the Common Skills offer (including your own) as if it were your Skill. If it is a Skill usable each turn (one that does not flip), use its effect twice.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Take any Skill in the Common Skills offer (including your own) and keep it for the rest of the game, as if acquired through a Level Up.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 24,
+      "name": "Tome of All Spells",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Discard a card of any color. Use the basic effect of a Spell of the same color from the Spells offer without paying its mana cost.",
+        "actions": [
+          {
+            "type": "gain_spell",
+            "to": "discard"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Discard a card of any color. Use the stronger effect of a Spell of the same color from the Spells offer without paying its mana cost. You may do so even during the Day.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "gain_spell",
+            "to": "hand"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 25,
+      "name": "Mysterious Box",
+      "type": "artifact",
+      "subtype": "item",
+      "basicEffect": {
+        "text": "Remove and reveal the top card of the Artifacts deck. This turn, you may use Mysterious Box as if it was that Artifact. If you do then Fame +1.",
+        "actions": [
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "At the end of the turn: put the revealed Artifact on the bottom of the Artifacts deck; if you did not use Mysterious Box then put it back in your hand; if you placed it on a unit as a banner then discard it.",
+        "throwAway": true,
+        "actions": [
+          {
+            "type": "fame",
+            "value": 1
+          },
+          {
+            "type": "draw_card",
+            "value": 1
+          }
+        ]
+      },
+      "set": "ultimate"
+    }
+  ]
+}

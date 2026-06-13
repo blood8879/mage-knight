@@ -1,0 +1,170 @@
+{
+  "1": {
+    "name": "Bola de Fuego / Tormenta de Fuego",
+    "basicSpellName": "Bola de Fuego",
+    "basicSpellText": "Ataque de Fuego a Distancia 5.",
+    "strongSpellName": "Tormenta de Fuego",
+    "strongSpellText": "Reciba una Herida. Ataque de Fuego de Asedio 8."
+  },
+  "2": {
+    "name": "Tormenta de Nieve / Ventisca",
+    "basicSpellName": "Tormenta de Nieve",
+    "basicSpellText": "Ataque de Hielo a Distancia 5.",
+    "strongSpellName": "Ventisca",
+    "strongSpellText": "Reciba una Herida. Ataque de Hielo de Asedio 8."
+  },
+  "3": {
+    "name": "Exponer / Exposición Masiva",
+    "basicSpellName": "Exponer",
+    "basicSpellText": "El enemigo objetivo pierde todas las fortificaciones y resistencias este combate. Ataque a Distancia 2.",
+    "strongSpellName": "Exposición Masiva",
+    "strongSpellText": "Los enemigos pierden todas las fortificaciones este combate, o los enemigos pierden todas las resistencias este combate. Ataque a Distancia 3."
+  },
+  "4": {
+    "name": "Temblor / Terremoto",
+    "basicSpellName": "Temblor",
+    "basicSpellText": "El enemigo objetivo obtiene Armadura -3, o todos los enemigos obtienen Armadura -2. La Armadura no puede reducirse por debajo de 1.",
+    "strongSpellName": "Terremoto",
+    "strongSpellText": "El enemigo objetivo obtiene Armadura -3 (Armadura -6 si está fortificado), o todos los enemigos obtienen Armadura -2 (Armadura -4 si están fortificados). La Armadura no puede reducirse por debajo de 1."
+  },
+  "5": {
+    "name": "Muro de Llamas / Ola de Llamas",
+    "basicSpellName": "Muro de Llamas",
+    "basicSpellText": "Ataque de Fuego 5 o Bloqueo de Fuego 7.",
+    "strongSpellName": "Ola de Llamas",
+    "strongSpellText": "Ataque de Fuego 5 o Bloqueo de Fuego 7. Este ataque o bloqueo se incrementa en 2 por cada ficha de enemigo que enfrente."
+  },
+  "6": {
+    "name": "Rayo de Maná / Trueno de Maná",
+    "basicSpellName": "Rayo de Maná",
+    "basicSpellText": "Cuando juegue esta carta, pague un maná. Si pagó azul, Ataque de Hielo 8. Si pagó rojo, Ataque de Fuego Frío 7. Si pagó blanco, Ataque de Hielo a Distancia 6. Si pagó verde, Ataque de Hielo de Asedio 5.",
+    "strongSpellName": "Trueno de Maná",
+    "strongSpellText": "Cuando juegue esta carta, pague un maná. Si pagó azul, Ataque de Hielo 11. Si pagó rojo, Ataque de Fuego Frío 10. Si pagó blanco, Ataque de Hielo a Distancia 9. Si pagó verde, Ataque de Hielo de Asedio 8."
+  },
+  "7": {
+    "name": "Torbellino / Tornado",
+    "basicSpellName": "Torbellino",
+    "basicSpellText": "El enemigo objetivo no ataca este combate.",
+    "strongSpellName": "Tornado",
+    "strongSpellText": "Juegue esto solo en la fase de Ataque del combate. Destruya al enemigo objetivo."
+  },
+  "8": {
+    "name": "Viaje Subterráneo / Ataque Subterráneo",
+    "basicSpellName": "Viaje Subterráneo",
+    "basicSpellText": "Muévase hasta 3 espacios revelados en el mapa. No puede moverse hacia o a través de pantanos o lagos de esta manera, y debe terminar su movimiento en un espacio seguro. Moverse de esta manera no provoca enemigos furiosos.",
+    "strongSpellName": "Ataque Subterráneo",
+    "strongSpellText": "Igual que el efecto básico, excepto que debe terminar su movimiento en un sitio fortificado (o en un espacio ocupado por otro jugador). Esto termina su movimiento y cuenta como un asalto (o como un ataque contra ese jugador). Ignore las fortificaciones del sitio. Si se retira después del combate, regrese a su posición original."
+  },
+  "9": {
+    "name": "Escudo Ardiente / Escudo Explosivo",
+    "basicSpellName": "Escudo Ardiente",
+    "basicSpellText": "Bloqueo de Fuego 4. Si esta carta se usa como parte de un Bloqueo exitoso, puede usarla durante su fase de Ataque como Ataque de Fuego 4.",
+    "strongSpellName": "Escudo Explosivo",
+    "strongSpellText": "Bloqueo de Fuego 4. Si esta carta se usa como parte de un Bloqueo exitoso, destruya al enemigo bloqueado."
+  },
+  "10": {
+    "name": "Escalofrío / Escalofrío Letal",
+    "basicSpellName": "Escalofrío",
+    "basicSpellText": "El enemigo objetivo no ataca este combate. Si tiene Resistencia al Fuego, la pierde por el resto del turno.",
+    "strongSpellName": "Escalofrío Letal",
+    "strongSpellText": "El enemigo objetivo no ataca este combate y obtiene Armadura -4 (hasta un mínimo de 1) por el resto del turno."
+  },
+  "11": {
+    "name": "Alas del Viento / Alas de la Noche",
+    "basicSpellName": "Alas del Viento",
+    "basicSpellText": "Cuando juegue esta carta, gaste de 1 a 5 puntos de Movimiento y muévase un espacio revelado en el mapa por cada uno. Debe terminar su movimiento en un espacio seguro. Moverse de esta manera no provoca enemigos furiosos.",
+    "strongSpellName": "Alas de la Noche",
+    "strongSpellText": "El enemigo objetivo no ataca este combate. Puede apuntar a enemigos adicionales: pague 1 punto de Movimiento por el segundo enemigo, 2 puntos de Movimiento por el tercer enemigo, etc."
+  },
+  "12": {
+    "name": "Restauración / Renacimiento",
+    "basicSpellName": "Restauración",
+    "basicSpellText": "Curación 3. Si se encuentra en un bosque, Curación 5 en su lugar.",
+    "strongSpellName": "Renacimiento",
+    "strongSpellText": "Curación 3. Si se encuentra en un bosque, Curación 5 en su lugar. Prepare hasta 3 niveles de Unidades. Si se encuentra en un bosque, prepare hasta 5 niveles de Unidades en su lugar."
+  },
+  "13": {
+    "name": "Demoler / Desintegrar",
+    "basicSpellName": "Demoler",
+    "basicSpellText": "Ignore las fortificaciones del sitio este turno. Los enemigos obtienen Armadura -1 (hasta un mínimo de 1).",
+    "strongSpellName": "Desintegrar",
+    "strongSpellText": "Juegue esto solo en la fase de Ataque del combate. Destruya al enemigo objetivo. Los demás enemigos obtienen Armadura -1 (hasta un mínimo de 1)."
+  },
+  "14": {
+    "name": "Curvatura del Espacio / Curvatura del Tiempo",
+    "basicSpellName": "Curvatura del Espacio",
+    "basicSpellText": "Este turno, puede moverse a espacios y explorar nuevas losetas que estén a 2 espacios de distancia como si fueran adyacentes. Ignore cualquier espacio que salte de esta manera. Su movimiento no provoca enemigos furiosos este turno.",
+    "strongSpellName": "Curvatura del Tiempo",
+    "strongSpellText": "Al final de su turno, reserve esta carta por el resto de la Ronda. Devuelva a su mano todas las demás cartas que jugó este turno (no las descartadas o eliminadas). Omita la parte de \"robar nuevas cartas\" de su paso de fin de turno. Inmediatamente tome otro turno."
+  },
+  "15": {
+    "name": "Llamada a las Armas / Llamada a la Gloria",
+    "basicSpellName": "Llamada a las Armas",
+    "basicSpellText": "Puede usar una habilidad de una Unidad en la oferta de Unidades este turno, como si fuera uno de sus reclutas. No puede asignar daño a esta Unidad.",
+    "strongSpellName": "Llamada a la Gloria",
+    "strongSpellText": "Reclute cualquier Unidad de la oferta de Unidades gratis. (Si está en su límite de Mando, debe licenciar una de sus Unidades primero.)"
+  },
+  "16": {
+    "name": "Meditación / Trance",
+    "basicSpellName": "Meditación",
+    "basicSpellText": "Escoja al azar dos cartas de su pila de descarte y colóquelas en la parte superior o inferior de su mazo de Hazañas. Al final de este turno, robe dos cartas por encima de su límite de mano.",
+    "strongSpellName": "Trance",
+    "strongSpellText": "Igual que el efecto básico, excepto que usted elige las cartas en lugar de escogerlas al azar."
+  },
+  "17": {
+    "name": "Fusión de Maná / Radiación de Maná",
+    "basicSpellName": "Fusión de Maná",
+    "basicSpellText": "Cada otro jugador debe elegir al azar un cristal de su Inventario para perderlo. Puede obtener un cristal perdido de esta manera para su Inventario. Cualquier jugador que no tuviera cristales en su Inventario cuando jugó esto, recibe una Herida en su lugar.",
+    "strongSpellName": "Radiación de Maná",
+    "strongSpellText": "Cuando juegue esta carta, elija un color de maná básico. Cada jugador, incluyéndole a usted, recibe una Herida por cada cristal de ese color que posea. Obtenga dos cristales del color elegido para su Inventario."
+  },
+  "18": {
+    "name": "Reclamo de Maná / Maldición de Maná",
+    "basicSpellName": "Reclamo de Maná",
+    "basicSpellText": "Tome un dado de maná de un color básico de la Fuente y manténgalo en su Área de Juego hasta el final de la Ronda. Puede obtener 3 fichas de maná de ese color este turno, o una ficha de maná de ese color cada turno por el resto de la Ronda (comenzando con su próximo turno).",
+    "strongSpellName": "Maldición de Maná",
+    "strongSpellText": "Igual que el efecto básico. Además, hasta el final de la Ronda: Cada vez que otro jugador use uno o más manás de ese color en su turno (de cualquier fuente), recibe una Herida. Cada jugador solo puede recibir una Herida por turno de esta manera."
+  },
+  "19": {
+    "name": "Lectura Mental / Robo Mental",
+    "basicSpellName": "Lectura Mental",
+    "basicSpellText": "Elija un color. Obtenga un cristal del color elegido para su Inventario. Cada otro jugador debe descartar una carta de Hechizo o Acción de ese color de su mano, o revelar su mano para demostrar que no tiene ninguna.",
+    "strongSpellName": "Robo Mental",
+    "strongSpellText": "Igual que el efecto básico. Además, puede decidir robar permanentemente una de las cartas de Acción (no Hechizos) descartadas de esta manera y colocarla en su mano."
+  },
+  "20": {
+    "name": "Flujo de Energía / Robo de Energía",
+    "basicSpellName": "Flujo de Energía",
+    "basicSpellText": "Prepare una Unidad. Si lo hace, puede gastar una Unidad de nivel II o menor en el área de Unidades de cada otro jugador.",
+    "strongSpellName": "Robo de Energía",
+    "strongSpellText": "Prepare una Unidad. Si lo hace, esa Unidad también es Curada, y puede gastar una Unidad de nivel III o menor en el área de Unidades de cada otro jugador."
+  },
+  "21": {
+    "name": "Ofrenda / Sacrificio",
+    "basicSpellName": "Ofrenda",
+    "basicSpellText": "Obtenga un cristal rojo para su Inventario. Puede descartar hasta 3 cartas que no sean Heridas de su mano. Por cada carta descartada obtenga un cristal del color correspondiente para su Inventario (para Artefactos, usted elige).",
+    "strongSpellName": "Sacrificio",
+    "strongSpellText": "Elija verde o blanco, luego elija rojo o azul. Obtenga Ataque de Asedio 4 (si eligió verde) o Ataque a Distancia 6 (si eligió blanco) por cada par de cristales de uno de cada uno de estos colores en su Inventario. Este Ataque es de Fuego (si eligió rojo) o de Hielo (si eligió azul). Luego, convierta todos estos pares de cristales en maná."
+  },
+  "22": {
+    "name": "Forma de Niebla / Velo de Niebla",
+    "basicSpellName": "Forma de Niebla",
+    "basicSpellText": "Movimiento 4. El coste de Movimiento de todos los terrenos, incluyendo lagos, es 2. No puede entrar en colinas y montañas por el resto de este turno.",
+    "strongSpellName": "Velo de Niebla",
+    "strongSpellText": "Todas sus Unidades obtienen todas las resistencias. Su héroe ignora la primera Herida de enemigos este turno. Ignore también cualquier efecto adicional de esa herida."
+  },
+  "23": {
+    "name": "Encantar / Poseer",
+    "basicSpellName": "Encantar",
+    "basicSpellText": "Influencia 4. Si usa esto durante una interacción, obtenga un cristal de cualquier color para su Inventario o reciba un descuento de 3 para una Unidad.",
+    "strongSpellName": "Poseer",
+    "strongSpellText": "Un enemigo no ataca. En la fase de Ataque obtenga Ataque igual a su Ataque incluyendo elementos (si los tiene) pero ignore habilidades especiales. Solo puede apuntar a otros enemigos con ese ataque."
+  },
+  "24": {
+    "name": "Curar / Enfermedad",
+    "basicSpellName": "Curar",
+    "basicSpellText": "Curación 2. Robe una carta por cada Herida curada de su mano este turno, y prepare cada Unidad curada este turno.",
+    "strongSpellName": "Enfermedad",
+    "strongSpellText": "Todos los enemigos bloqueados durante la fase de Bloqueo tienen su Armadura reducida a 1."
+  }
+}

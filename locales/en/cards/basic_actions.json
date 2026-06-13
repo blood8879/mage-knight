@@ -1,0 +1,82 @@
+{
+  "Rage": {
+    "name": "Rage",
+    "basicEffect": "Attack or Block 2",
+    "strongEffect": "Attack 4"
+  },
+  "Determination": {
+    "name": "Determination",
+    "basicEffect": "Attack or Block 2",
+    "strongEffect": "Block 5"
+  },
+  "Swiftness": {
+    "name": "Swiftness",
+    "basicEffect": "Move 2",
+    "strongEffect": "Ranged Attack 3"
+  },
+  "March": {
+    "name": "March",
+    "basicEffect": "Move 2",
+    "strongEffect": "Move 4"
+  },
+  "Stamina": {
+    "name": "Stamina",
+    "basicEffect": "Move 2",
+    "strongEffect": "Move 4"
+  },
+  "Tranquility": {
+    "name": "Tranquility",
+    "basicEffect": "Heal 1 or Draw a Card.",
+    "strongEffect": "Heal 2 or Draw two Cards."
+  },
+  "Promise": {
+    "name": "Promise",
+    "basicEffect": "Influence 2",
+    "strongEffect": "Influence 4"
+  },
+  "Threaten": {
+    "name": "Threaten",
+    "basicEffect": "Influence 2",
+    "strongEffect": "Influence 5. Reputation -1."
+  },
+  "Crystallize": {
+    "name": "Crystallize",
+    "basicEffect": "When you play this, also pay one mana of a basic color. Gain a crystal of that color to your Inventory.",
+    "strongEffect": "Gain a crystal of any basic color to your Inventory."
+  },
+  "Mana Draw": {
+    "name": "Mana Draw",
+    "basicEffect": "You can use one additional mana die from the Source this turn.",
+    "strongEffect": "Take a mana die from the source and set it to any color except gold. Gain two mana tokens of that color. Do not reroll this die when you return it to the Source."
+  },
+  "Concentration": {
+    "name": "Concentration",
+    "basicEffect": "Gain a blue, white or red mana token.",
+    "strongEffect": "When you play this, play another Action card with it. Get the stronger effect of that card for free. If that effect gives you Move, Influence, Block or any type of Attack, get that amount plus 2."
+  },
+  "Improvisation": {
+    "name": "Improvisation",
+    "basicEffect": "Discard another card from your hand to get Move 3, Influence 3, Attack 3 or Block 3.",
+    "strongEffect": "Discard another card from your hand to get Move 5, Influence 5, Attack 5 or Block 5."
+  },
+  "Battle Versatility": {
+    "name": "Battle Versatility",
+    "basicEffect": "Attack 2, Block 2 or Ranged Attack 1.",
+    "strongEffect": "Attack 4, Block 4, Fire Attack 3, Fire Block 3, Ranged Attack 3 or Siege Attack 2."
+  },
+  "Cold Toughness": {
+    "name": "Cold Toughness",
+    "basicEffect": "Ice Attack 2 or Ice Block 3.",
+    "strongEffect": "Ice Block 5. Get +1 Ice Block for each special ability, color of attack and resistance on the blocked enemy token."
+  },
+  "Noble Manners": {
+    "name": "Noble Manners",
+    "basicEffect": "Influence 2. If you use this during interaction you get Fame +1 at the end of the turn.",
+    "strongEffect": "Influence 4. If you use this during interaction you get Fame +1 and Reputation +1 at the end of the turn."
+  },
+  "Will Focus": {
+    "name": "Will Focus",
+    "basicEffect": "Gain a blue, white or red mana token, or gain a green crystal to your Inventory.",
+    "strongEffect": "When you play this, play another Action card with it. Get the stronger effect of that card for free. If that effect gives you Move, Influence, Block or any type of Attack, get that amount plus 3."
+  }
+}

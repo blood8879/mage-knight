@@ -1,0 +1,1167 @@
+{
+  "app": {
+    "title": "Mage Knight Juego de Mesa",
+    "subtitle": "Compañero Digital"
+  },
+  "menu": {
+    "home": "Inicio",
+    "cards": "Cartas",
+    "rules": "Reglas",
+    "settings": "Configuración",
+    "language": "Idioma",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "newGame": "Nueva partida",
+    "playAgain": "Jugar de nuevo",
+    "tutorial": "Tutorial"
+  },
+  "cardTypes": {
+    "basic_action": "Acción Básica",
+    "advanced_action": "Acción Avanzada",
+    "spell": "Hechizo",
+    "artifact": "Artefacto",
+    "unit": "Unidad"
+  },
+  "cardFields": {
+    "name": "Nombre",
+    "color": "Color",
+    "basicEffect": "Efecto Básico",
+    "strongEffect": "Efecto Potenciado",
+    "basicSpell": "Hechizo Básico",
+    "strongSpell": "Hechizo Potenciado",
+    "manaCost": "Coste de Maná",
+    "level": "Nivel",
+    "cost": "Coste",
+    "armor": "Armadura",
+    "resistance": "Resistencia",
+    "copies": "Copias",
+    "recruitSites": "Sitios de Reclutamiento",
+    "abilities": "Habilidades"
+  },
+  "colors": {
+    "red": "Rojo",
+    "blue": "Azul",
+    "green": "Verde",
+    "white": "Blanco",
+    "black": "Negro",
+    "gold": "Dorado"
+  },
+  "sets": {
+    "base": "Juego Base",
+    "expansion": "Expansión Legión Perdida",
+    "ultimate": "Edición Definitiva"
+  },
+  "unitTiers": {
+    "regular": "Regular (Plata)",
+    "elite": "Élite (Oro)"
+  },
+  "recruitSites": {
+    "village": "Aldea",
+    "monastery": "Monasterio",
+    "keep": "Fortaleza",
+    "mage_tower": "Torre del Mago",
+    "city": "Ciudad",
+    "glade": "Claro del Bosque"
+  },
+  "settings": {
+    "sound": "Efectos de Sonido",
+    "music": "Música",
+    "animations": "Animaciones",
+    "theme": "Tema",
+    "dark": "Oscuro",
+    "light": "Claro",
+    "general": "General",
+    "showTutorial": "Mostrar Tutorial"
+  },
+  "tutorial": {
+    "skip": "Saltar",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "finish": "¡A Jugar!",
+    "category": {
+      "intro": "Introducción",
+      "cards": "Cartas y Tácticas",
+      "map": "Mapa y Movimiento",
+      "combat": "Combate y Maná",
+      "progression": "Progresión"
+    },
+    "welcome": {
+      "title": "¡Bienvenido a Mage Knight!",
+      "desc": "Emprende una conquista épica por las tierras atlantes. Esta guía te enseñará todo lo necesario para jugar."
+    },
+    "overview": {
+      "title": "Cómo Funciona el Juego",
+      "desc": "El juego dura 3 rondas (Día → Noche → Día). Cada ronda, tú y un jugador ficticio se turnan. Juega cartas para moverte, luchar e interactuar con el mundo."
+    },
+    "tactics": {
+      "title": "Selección de Táctica",
+      "desc": "Al inicio de cada ronda, elige una carta de táctica. El número determina el orden — menor va primero. Cada táctica también da un bono especial."
+    },
+    "cards": {
+      "title": "Tu Mano de Cartas",
+      "desc": "Las cartas de abajo son tu mano. Cada carta tiene un efecto básico (gratis) y uno potenciado (cuesta maná). ¡Las heridas bloquean tu mano — descansa para curarlas!"
+    },
+    "cardPlay": {
+      "title": "Jugar Cartas",
+      "desc": "Toca una carta para seleccionarla y luego Jugar. Las cartas dan puntos de movimiento, ataque, bloqueo, influencia o curación. Jugarla de lado da +1 de cualquier tipo."
+    },
+    "movement": {
+      "title": "Moverse por el Mapa",
+      "desc": "Haz clic en un hexágono para seleccionar tu destino. Los hexágonos verdes son alcanzables. ¡Moverte revela nuevas losetas y puede descubrir enemigos!"
+    },
+    "terrain": {
+      "title": "Terreno y Costes",
+      "desc": "Llanuras 2PM, bosques 3PM (2 de noche), colinas 3PM, pantanos 5PM (3 de noche), desiertos 5PM (3 de noche). Los caminos reducen costes."
+    },
+    "sites": {
+      "title": "Sitios e Interacción",
+      "desc": "Las aldeas ofrecen curación y cartas básicas. Los monasterios ofrecen acciones avanzadas. Las fortalezas permiten reclutar unidades. ¡Las ciudades son la conquista definitiva!"
+    },
+    "combat": {
+      "title": "Sistema de Combate",
+      "desc": "El combate tiene 4 fases: ① Ataques a distancia/asedio ② Bloquear ataques ③ Asignar daño no bloqueado ④ Ataques cuerpo a cuerpo. ¡Derrota enemigos para ganar fama!"
+    },
+    "mana": {
+      "title": "Maná y Cristales",
+      "desc": "Los dados de maná potencian tus cartas. Toma uno por turno. Los cristales son maná permanente. El maná dorado es comodín de día, el negro de noche."
+    },
+    "levelUp": {
+      "title": "Subir de Nivel",
+      "desc": "Gana fama derrotando enemigos y conquistando sitios. Al alcanzar umbrales, mejoras armadura, ranuras de cartas y capacidad de unidades. ¡Elige nuevas habilidades!"
+    },
+    "goal": {
+      "title": "Tu Objetivo",
+      "desc": "¡Explora el mapa, derrota enemigos y conquista una ciudad! Tras 3 rondas, tu puntuación se calcula con fama, sitios conquistados y logros. ¡Buena suerte, Mage Knight!"
+    }
+  },
+  "tips": {
+    "tipTactic": {
+      "title": "Elige tu Táctica",
+      "desc": "Elige una carta de táctica. Los números bajos van primero pero los altos tienen mejores bonos."
+    },
+    "tipTurn": {
+      "title": "Tu Turno",
+      "desc": "Juega cartas para moverte, luchar o interactuar. Pulsa Terminar Turno o Descansar para curar heridas."
+    },
+    "tipMove": {
+      "title": "Movimiento",
+      "desc": "Haz clic en un hexágono resaltado para moverte. Cada terreno cuesta diferentes puntos de movimiento."
+    },
+    "tipCombat": {
+      "title": "¡Entrando en Combate!",
+      "desc": "El combate tiene 4 fases: Distancia → Bloqueo → Daño → Cuerpo a cuerpo. Usa cartas y unidades."
+    },
+    "tipDamage": {
+      "title": "Asignar Daño",
+      "desc": "Usa los botones + para asignar el daño no bloqueado al héroe o unidades. ¡Cada punto sin asignar se convierte en herida!"
+    },
+    "tipLevelUp": {
+      "title": "¡Subiste de Nivel!",
+      "desc": "¡Felicidades! Tu armadura, límite de mano o ranuras de unidades han mejorado."
+    },
+    "tipSite": {
+      "title": "Interacción con Sitio",
+      "desc": "¡Estás en un sitio! Puedes reclutar unidades, comprar cartas, aprender hechizos o curarte según la ubicación."
+    },
+    "tipEndTurn": {
+      "title": "Turno Completado",
+      "desc": "Las cartas jugadas van al descarte. Volverán cuando el mazo se baraje al final de la ronda."
+    },
+    "gotIt": "Entendido"
+  },
+  "common": {
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "all": "Todos",
+    "none": "Ninguno",
+    "back": "Volver",
+    "close": "Cerrar",
+    "closeDialog": "Cerrar diálogo"
+  },
+  "tutorialChapters": {
+    "ch1": {
+      "title": "Primeros Pasos",
+      "desc": "Aprende lo básico: juega cartas, mueve a tu héroe y pelea tu primer combate."
+    },
+    "ch2": {
+      "title": "Terreno y Exploración",
+      "desc": "Descubre los costes de terreno, los ciclos de día y noche, las fuentes de maná y la exploración del mapa."
+    },
+    "ch3": {
+      "title": "Maná y Dominio de Cartas",
+      "desc": "Domina el sistema de maná, la gestión de cristales, hechizos, artefactos y la recuperación de heridas."
+    },
+    "ch4": {
+      "title": "Interacción y Unidades",
+      "desc": "Visita sitios, recluta unidades, cúrate en aldeas y gestiona tu reputación."
+    },
+    "ch5": {
+      "title": "Combate Avanzado",
+      "desc": "Enfrenta enemigos más duros con resistencias elementales, fortificaciones y habilidades especiales."
+    },
+    "ch6": {
+      "title": "Asalto a Ciudades",
+      "desc": "Conquista ciudades, sube de nivel, obtén habilidades y aprende el sistema de puntuación."
+    }
+  },
+  "tutorialChapterSelect": {
+    "title": "Capítulos del Tutorial",
+    "subtitle": "Aprende Mage Knight paso a paso, o salta al capítulo que quieras.",
+    "completed": "Completado",
+    "minutes": "min",
+    "start": "Comenzar",
+    "replay": "Repetir",
+    "allComplete": "¡Completaste todos los capítulos! Estás listo para una partida real.",
+    "back": "Volver al menú",
+    "close": "Cerrar"
+  },
+  "interactiveTutorial": {
+    "welcome": {
+      "title": "¡Aprende Jugando!",
+      "desc": "Este tutorial te guiará a través del juego real. Sigue las instrucciones y realiza cada acción tú mismo."
+    },
+    "handIntro": {
+      "title": "Tus Cartas",
+      "desc": "Estas cartas de abajo son tu mano. Cada carta sirve para movimiento, ataque, defensa u otras acciones. ¡Usemos una!"
+    },
+    "playCard": {
+      "title": "Jugar una Carta",
+      "desc": "Toca una carta para seleccionarla y luego pulsa 'Jugar'. Esto te dará puntos de movimiento."
+    },
+    "movementIntro": {
+      "title": "Mueve tu Héroe",
+      "desc": "Haz clic en un hexágono verde del mapa para seleccionar tu destino."
+    },
+    "confirmMove": {
+      "title": "Confirmar Movimiento",
+      "desc": "Pulsa 'Confirmar Movimiento' para mover tu héroe al hexágono seleccionado."
+    },
+    "enemySpotted": {
+      "title": "¡Enemigo Cercano!",
+      "desc": "Hay un enemigo en un hexágono adyacente. ¡Pulsa 'Luchar' para entrar en combate!"
+    },
+    "combatRanged": {
+      "title": "Fase de Distancia",
+      "desc": "Esta es la fase de ataque a distancia. Puedes saltarla — pulsa 'Confirmar Ataques a Distancia'."
+    },
+    "combatBlock": {
+      "title": "Fase de Bloqueo",
+      "desc": "¡El enemigo ataca! Puedes bloquear con cartas o unidades. Por ahora, pulsa 'Confirmar Bloqueos'."
+    },
+    "combatDamage": {
+      "title": "Asignar Daño",
+      "desc": "El daño no bloqueado debe asignarse. Pulsa '+' junto a tu héroe para absorber el daño, luego 'Confirmar'."
+    },
+    "combatMelee": {
+      "title": "Ataque Cuerpo a Cuerpo",
+      "desc": "¡Ahora contraataca! Pulsa 'Confirmar Ataques Cuerpo a Cuerpo' para golpear al enemigo."
+    },
+    "combatEnd": {
+      "title": "¡Victoria!",
+      "desc": "¡Derrotaste al enemigo y ganaste fama! Pulsa 'Fin del Combate' para continuar."
+    },
+    "endTurn": {
+      "title": "Terminar Turno",
+      "desc": "Pulsa 'Terminar Turno' en la barra superior para finalizar tu turno."
+    },
+    "complete": {
+      "title": "¡Tutorial Completado!",
+      "desc": "¡Excelente! Has aprendido lo básico de movimiento, cartas y combate. ¡Estás listo para jugar una partida real!"
+    },
+    "step": "Paso",
+    "skip": "Saltar Tutorial",
+    "next": "Siguiente",
+    "finish": "¡A Jugar!",
+    "ch1": {
+      "welcome": {
+        "title": "¡Bienvenido, Mage Knight!",
+        "desc": "Este tutorial práctico te guía en tu primer turno. Jugarás cartas, te moverás por el mapa y pelearás contra un enemigo."
+      },
+      "handOverview": {
+        "title": "Tu Mano",
+        "desc": "Las cartas de abajo son tu mano. Cada una otorga movimiento, ataque, bloqueo u otras habilidades. Las jugarás para realizar acciones."
+      },
+      "playCard": {
+        "title": "Jugar una Carta",
+        "desc": "Toca una carta para seleccionarla y pulsa 'Jugar'. Esta carta te dará puntos de movimiento para recorrer el mapa."
+      },
+      "movementPoints": {
+        "title": "Puntos de Movimiento",
+        "desc": "Ahora tienes puntos de movimiento en la barra de acción. Cada tipo de terreno cuesta una cantidad distinta de puntos para entrar."
+      },
+      "selectHex": {
+        "title": "Elige un Hexágono",
+        "desc": "Haz clic en un hexágono verde resaltado para fijar tu destino. Verde significa que tienes suficientes puntos para llegar."
+      },
+      "confirmMove": {
+        "title": "Confirmar Movimiento",
+        "desc": "Pulsa 'Confirmar Movimiento' para enviar a tu héroe al hexágono elegido. Observa cómo disminuyen tus puntos al desplazarte."
+      },
+      "moveToHex": {
+        "title": "Mueve a tu Héroe",
+        "desc": "Haz clic en un hex del mapa para seleccionar tu destino y confirma el movimiento. Los marcadores verdes indican hexes alcanzables."
+      },
+      "terrainIntro": {
+        "title": "Costes de Terreno",
+        "desc": "Cada terreno tiene su coste. Llanuras cuestan 2, bosques 3, colinas 3, pantanos y desiertos 5. Los caminos reducen el coste a 1."
+      },
+      "enemySpotted": {
+        "title": "¡Enemigo al Frente!",
+        "desc": "Un enemigo custodia un hexágono cercano. Pulsa 'Luchar' para enfrentarlo. Derrotar enemigos te otorga puntos de fama."
+      },
+      "combatRanged": {
+        "title": "Fase a Distancia",
+        "desc": "El combate inicia con ataques a distancia. Puedes jugar cartas de ataque a distancia aquí, o saltar esta fase con 'Confirmar Ataques a Distancia'."
+      },
+      "combatBlock": {
+        "title": "Fase de Bloqueo",
+        "desc": "¡El enemigo contraataca! Juega cartas de bloqueo para reducir el daño entrante. Pulsa 'Confirmar Bloqueos' cuando termines."
+      },
+      "combatDamage": {
+        "title": "Asignar Daño",
+        "desc": "Todo daño no bloqueado debe ir a algún lado. Asígnalo a tu héroe o unidades con los botones '+', luego pulsa 'Confirmar'. El daño sin asignar se convierte en heridas."
+      },
+      "combatMelee": {
+        "title": "Fase Cuerpo a Cuerpo",
+        "desc": "¡Hora de contraatacar! Juega cartas de ataque para infligir daño cuerpo a cuerpo, y pulsa 'Confirmar Ataques Cuerpo a Cuerpo' para terminar la pelea."
+      },
+      "combatVictory": {
+        "title": "¡Victoria!",
+        "desc": "¡Derrotaste a tu primer enemigo y ganaste puntos de fama! Pulsa 'Fin del Combate' para recoger tu recompensa y continuar."
+      },
+      "endTurn": {
+        "title": "Terminar Turno",
+        "desc": "Pulsa 'Terminar Turno' en la barra superior. Las cartas jugadas van al descarte. Volverán cuando se baraje el mazo."
+      },
+      "complete": {
+        "title": "¡Capítulo 1 Completo!",
+        "desc": "¡Buen trabajo! Aprendiste a jugar cartas, moverte y las cuatro fases de combate. Estos son los cimientos de todo lo demás."
+      }
+    },
+    "ch2": {
+      "welcome": {
+        "title": "Explora el Mundo",
+        "desc": "Este capítulo cubre los tipos de terreno, los efectos de día y noche, la fuente de maná y cómo revelar nuevas losetas del mapa."
+      },
+      "terrainTypes": {
+        "title": "Tipos de Terreno",
+        "desc": "El mapa tiene llanuras (2 PM), bosques (3 PM), colinas (3 PM), pantanos (5 PM) y desiertos (5 PM). Los caminos siempre cuestan solo 1 PM. Planifica bien tu ruta."
+      },
+      "dayNight": {
+        "title": "Día y Noche",
+        "desc": "El juego alterna entre rondas de día y de noche. Algunos terrenos cuestan menos de noche (bosques, pantanos, desiertos). Los enemigos también se comportan distinto en la oscuridad."
+      },
+      "manaSource": {
+        "title": "La Fuente de Maná",
+        "desc": "Los dados de colores arriba a la derecha son la fuente de maná. Representan el maná disponible que cualquier jugador puede tomar en su turno."
+      },
+      "takeMana": {
+        "title": "Tomar un Dado de Maná",
+        "desc": "Haz clic en un dado de la fuente para tomarlo. Obtienes un dado por turno. Este maná activa los efectos potenciados de tus cartas."
+      },
+      "strongEffect": {
+        "title": "Usar Efecto Potenciado",
+        "desc": "Juega una carta y gasta maná para activar su efecto potenciado. Los efectos potenciados son mucho más poderosos que la versión básica."
+      },
+      "sidewaysPlay": {
+        "title": "Jugar de Lado",
+        "desc": "Cualquier carta se puede jugar de lado para obtener +1 genérico a movimiento, ataque, bloqueo o influencia. Es una forma flexible de exprimir valor extra de tu mano."
+      },
+      "moveForest": {
+        "title": "Cruzar un Bosque",
+        "desc": "Intenta moverte a un hexágono de bosque. Cuesta 3 PM de día, pero solo 2 PM de noche. Fíjate cómo el terreno afecta la planificación de tu ruta."
+      },
+      "tileReveal": {
+        "title": "Revelar Losetas",
+        "desc": "Moverte al borde del territorio explorado revela nuevas losetas. La exploración es clave: las losetas nuevas traen enemigos, sitios y tesoros."
+      },
+      "crystals": {
+        "title": "Cristales",
+        "desc": "Los cristales son maná permanente que puedes gastar en cualquier momento, incluso en el turno de otro jugador. A diferencia de los dados, los cristales no se relancen. Úsalos con cabeza."
+      },
+      "endTurn": {
+        "title": "Finalizar el Turno",
+        "desc": "Pulsa 'Terminar Turno' para cerrar. Este capítulo cubrió mucho terreno, literal y figuradamente."
+      },
+      "complete": {
+        "title": "¡Capítulo 2 Completo!",
+        "desc": "Ya entiendes el terreno, los ciclos de día/noche, las fuentes de maná y la exploración. Estos sistemas moldean cada decisión que tomes en el mapa."
+      }
+    },
+    "ch3": {
+      "welcome": {
+        "title": "Domina tu Maná",
+        "desc": "Este capítulo profundiza en los colores de maná, cristales, hechizos, artefactos y cómo las heridas afectan tu mano."
+      },
+      "manaColors": {
+        "title": "Colores de Maná",
+        "desc": "El maná viene en cuatro colores: rojo (ataque), azul (magia/hielo), verde (naturaleza/movimiento) y blanco (espíritu/curación). Empareja el color con lo que tu carta necesita."
+      },
+      "goldMana": {
+        "title": "Maná Dorado y Negro",
+        "desc": "El maná dorado funciona como comodín de día, reemplazando cualquier color. De noche, el maná negro toma ese rol. Planifica tus jugadas alrededor de estos cambios."
+      },
+      "crystalUsage": {
+        "title": "Gastar un Cristal",
+        "desc": "Los cristales están en tu inventario de forma permanente. Gasta uno ahora para potenciar una carta. Toca el cristal del color que tu carta necesite."
+      },
+      "powerSpell": {
+        "title": "Lanzar un Hechizo",
+        "desc": "Los hechizos requieren maná incluso a nivel básico. Selecciona una carta de hechizo de tu mano y gasta el maná necesario para desatarlo."
+      },
+      "wounds": {
+        "title": "Cartas de Herida",
+        "desc": "Cuando recibes daño, cartas de herida entran a tu mano. No se pueden jugar normalmente y bloquean tus opciones. Curarte o descansar las elimina."
+      },
+      "woundEffects": {
+        "title": "Penalización por Heridas",
+        "desc": "Una mano llena de heridas limita lo que puedes hacer. Si toda tu mano son heridas, te ves obligado a descansar. Mantén a tu héroe sano siempre que puedas."
+      },
+      "artifactCards": {
+        "title": "Artefactos",
+        "desc": "Los artefactos son cartas poderosas de un solo uso. No necesitan maná y suelen tener efectos decisivos. Los encuentras como recompensas o en ciertos sitios."
+      },
+      "cardSidewaysDetail": {
+        "title": "Dominio del Juego de Lado",
+        "desc": "Prueba a jugar una carta de lado. Esto te da +1 al tipo de acción que elijas. Siempre es una opción cuando el efecto impreso de la carta no encaja con tu plan."
+      },
+      "endTurn": {
+        "title": "Cerrar el Turno",
+        "desc": "Pulsa 'Terminar Turno' para finalizar. Estás construyendo una base sólida de conocimiento sobre maná que te servirá en combates más difíciles."
+      },
+      "complete": {
+        "title": "¡Capítulo 3 Completo!",
+        "desc": "Dominaste el sistema de maná, los cristales, hechizos, artefactos y la gestión de heridas. Estas herramientas te llevarán a través de las batallas más duras."
+      }
+    },
+    "ch4": {
+      "welcome": {
+        "title": "Sitios y Aliados",
+        "desc": "Es hora de visitar ubicaciones del mapa, reclutar unidades, curar heridas y construir tu reputación."
+      },
+      "influence": {
+        "title": "Influencia",
+        "desc": "La influencia es tu moneda social. Úsala para interactuar con aldeas, reclutar unidades y comprar cartas en sitios. Algunas cartas otorgan influencia al jugarlas."
+      },
+      "moveToVillage": {
+        "title": "Visitar una Aldea",
+        "desc": "Mueve a tu héroe a un hexágono de aldea. Las aldeas ofrecen curación, permiten reclutar campesinos y venden cartas de acción básica."
+      },
+      "villageHealing": {
+        "title": "Curarse en la Aldea",
+        "desc": "Gasta influencia para curar heridas en la aldea. Cada punto de curación elimina una herida de tu mano. Una mano limpia significa más opciones."
+      },
+      "reputation": {
+        "title": "Pista de Reputación",
+        "desc": "Tu reputación afecta los costes de interacción. Buena reputación abarata el reclutamiento y la curación. Quemar aldeas o monasterios hunde tu reputación, así que piénsalo bien."
+      },
+      "monastery": {
+        "title": "Monasterios",
+        "desc": "Los monasterios ofrecen cartas de acción avanzada más fuertes que tu mazo inicial. Gasta influencia para agregarlas a tu arsenal."
+      },
+      "mageTower": {
+        "title": "Torres del Mago",
+        "desc": "Las Torres del Mago venden cartas de hechizo. Los hechizos cuestan maná, pero sus efectos son únicamente poderosos. Valen la inversión."
+      },
+      "unitRecruit": {
+        "title": "Reclutar una Unidad",
+        "desc": "Las unidades son aliados que luchan contigo. Gasta influencia en fortalezas, aldeas o Torres del Mago para reclutarlos. Añaden ataque, bloqueo o habilidades especiales."
+      },
+      "unitActivation": {
+        "title": "Activar Unidades",
+        "desc": "Las unidades se activan una vez por combate. Aportan ataque o bloqueo, y algunas tienen habilidades especiales. Las unidades heridas no pueden activarse hasta que se curen."
+      },
+      "resting": {
+        "title": "Descansar",
+        "desc": "En vez de jugar cartas, puedes descansar. Descansar descarta toda tu mano (incluyendo heridas) y roba una nueva. A veces es la jugada más inteligente."
+      },
+      "endTurn": {
+        "title": "Finalizar",
+        "desc": "Termina tu turno. Has aprendido a sacar el máximo provecho de los sitios repartidos por el mapa."
+      },
+      "complete": {
+        "title": "¡Capítulo 4 Completo!",
+        "desc": "Ya puedes interactuar con sitios, reclutar unidades, gestionar reputación y curar a tu héroe. Estas habilidades convierten a un guerrero solitario en un comandante de ejército."
+      }
+    },
+    "ch5": {
+      "welcome": {
+        "title": "Batallas Difíciles",
+        "desc": "Los enemigos se vuelven más duros conforme avanzas por el mapa. Este capítulo enseña resistencias elementales, habilidades especiales y tácticas de combate avanzadas."
+      },
+      "elements": {
+        "title": "Tipos Elementales",
+        "desc": "Algunos enemigos resisten o son vulnerables a elementos específicos: fuego (físico), hielo (mágico), o ambos. Ajusta tus ataques para explotar sus debilidades."
+      },
+      "enemyAbilities": {
+        "title": "Habilidades Enemigas",
+        "desc": "Presta atención a palabras clave como Veloz (ataca antes del bloqueo), Brutal (daño extra imbloqueable), Veneno (las heridas no se curan normalmente) y Parálisis."
+      },
+      "fortified": {
+        "title": "Enemigos Fortificados",
+        "desc": "Los enemigos fortificados solo reciben daño de ataques de asedio en la fase a distancia. Los ataques a distancia normales rebotan en sus defensas."
+      },
+      "engageCombat": {
+        "title": "Atacar al Enemigo",
+        "desc": "Muévete adyacente a un enemigo y pulsa 'Luchar'. Presta atención a sus estadísticas: valor de ataque, armadura y cualquier habilidad especial."
+      },
+      "rangedAttack": {
+        "title": "Ataques a Distancia",
+        "desc": "Usa cartas de ataque a distancia en esta fase. Si el enemigo está fortificado, necesitarás daño tipo asedio. Las unidades con ataque a distancia también contribuyen aquí."
+      },
+      "blockElements": {
+        "title": "Bloqueo Elemental",
+        "desc": "Los ataques de fuego necesitan bloqueo de fuego (o el doble de bloqueo físico). Los de hielo necesitan bloqueo de hielo (o el doble de bloqueo físico). Los bloqueos normales no te protegen del todo."
+      },
+      "damageSpecial": {
+        "title": "Daño Especial",
+        "desc": "Asigna el daño con cuidado. El daño de veneno crea heridas que no se curan en aldeas. Algunos enemigos infligen daño extra cuando no se bloquean."
+      },
+      "meleeFinish": {
+        "title": "Rematar la Pelea",
+        "desc": "Inflige suficiente daño cuerpo a cuerpo para igualar o superar la armadura del enemigo. Combina cartas, unidades y maná para alcanzar el umbral."
+      },
+      "fameReward": {
+        "title": "Recompensa de Fama",
+        "desc": "Los enemigos más duros dan más fama. La fama determina tu nivel y, al final, tu puntuación. Busca oponentes fuertes cuando estés preparado."
+      },
+      "endTurn": {
+        "title": "Terminar Turno",
+        "desc": "Pulsa 'Terminar Turno' para cerrar esta ronda. Cada batalla fortalece a tu héroe y lo prepara mejor para lo que viene."
+      },
+      "complete": {
+        "title": "¡Capítulo 5 Completo!",
+        "desc": "Te enfrentaste a elementos, habilidades enemigas y enemigos fortificados. Los desafíos más duros del mapa ya están a tu alcance."
+      }
+    },
+    "ch6": {
+      "welcome": {
+        "title": "El Desafío Final",
+        "desc": "Las ciudades son la prueba definitiva. Este capítulo cubre el asalto a ciudades, batallas de guarnición, transiciones de ronda, subida de nivel y puntuación."
+      },
+      "cityOverview": {
+        "title": "Ciudades: Lo Básico",
+        "desc": "Las ciudades se ubican en el centro del mapa y están fuertemente defendidas. Conquistar una ciudad requiere preparación cuidadosa y cartas poderosas."
+      },
+      "cityColors": {
+        "title": "Colores de Ciudad",
+        "desc": "Cada ciudad tiene un color que determina la composición de su guarnición. Las ciudades verdes son las más fáciles, rojas y azules son intermedias, las blancas son las más difíciles."
+      },
+      "garrison": {
+        "title": "Guarnición de la Ciudad",
+        "desc": "La guarnición de una ciudad contiene múltiples enemigos que debes derrotar en un solo combate. Peleas contra todos a la vez, así que planifica bien tus recursos."
+      },
+      "assaultPenalty": {
+        "title": "Penalizaciones de Asalto",
+        "desc": "Atacar una ciudad impone penalizaciones. Los enemigos de la guarnición obtienen armadura y ataque extra. Los enemigos fortificados en ciudades requieren asedio solo para rasguñarlos."
+      },
+      "roundTransition": {
+        "title": "Transiciones de Ronda",
+        "desc": "El juego tiene tres rondas: Día, Noche y Día otra vez. Entre rondas, todas las cartas se barajan, el maná se relanza y eliges una nueva táctica. Planifica a largo plazo."
+      },
+      "levelUp": {
+        "title": "Subir de Nivel",
+        "desc": "Ganar fama sube tu nivel. Cada nivel otorga mejor armadura, más cartas en mano o ranuras de unidad extra. También eliges una nueva habilidad o carta de acción avanzada."
+      },
+      "skills": {
+        "title": "Habilidades",
+        "desc": "Las habilidades dan bonos pasivos permanentes o poderes de una vez por ronda. No ocupan espacio en tu mano. Elige habilidades que complementen tu estilo de juego."
+      },
+      "scoring": {
+        "title": "Puntuación Final",
+        "desc": "Tras tres rondas, tu puntuación suma fama obtenida, ciudades conquistadas, mayor conocimiento, mayor ejército y bonos de aventura. Cada acción cuenta."
+      },
+      "complete": {
+        "title": "¡Todos los Capítulos Completos!",
+        "desc": "¡Felicidades! Has aprendido todos los sistemas principales de Mage Knight. Ve a conquistar las tierras atlantes y reclama tu gloria."
+      }
+    }
+  },
+  "game": {
+    "selectTactic": "Seleccionar Táctica",
+    "tacticHint": "Elige una carta de táctica para esta ronda",
+    "yourTurn": "Tu Turno",
+    "dummyTurn": "Turno del Muñeco",
+    "phase": {
+      "setup": "Configuración",
+      "round_start": "Inicio de Ronda",
+      "tactic_selection": "Selección de Táctica",
+      "player_turn_start": "Tu Turno",
+      "movement": "Movimiento",
+      "action_declaration": "Declaración de Acción",
+      "interaction": "Interacción",
+      "combat_ranged_siege": "Distancia y Asedio",
+      "combat_block": "Bloqueo",
+      "combat_assign_damage": "Asignar Daño",
+      "combat_attack": "Ataque",
+      "combat_end": "Fin del Combate",
+      "level_up": "Subir de Nivel",
+      "end_of_turn": "Fin del Turno",
+      "end_of_round": "Fin de Ronda",
+      "game_over": "Fin del Juego"
+    },
+    "phaseHint": {
+      "movement": "Juega cartas para obtener puntos de movimiento y selecciona un hexágono al que moverte.",
+      "action_declaration": "Elige tu acción: interactuar con un lugar, explorar, desafiar a un enemigo, descansar o terminar tu turno.",
+      "interaction": "Elige cómo interactuar con esta ubicación.",
+      "combat_ranged_siege": "Juega ataques a distancia o de asedio antes de que el enemigo te alcance.",
+      "combat_block": "Asigna valores de bloqueo para reducir el daño entrante.",
+      "combat_assign_damage": "Asigna el daño no bloqueado a tu héroe o unidades.",
+      "combat_attack": "Juega cartas de ataque para derrotar al enemigo.",
+      "end_of_turn": "Tu turno está terminando. Descarta las cartas jugadas y roba una nueva mano.",
+      "end_of_round": "La ronda está terminando. Prepárate para la siguiente ronda."
+    },
+    "undo": "Deshacer",
+    "playSideways": "Jugar de Lado",
+    "sidewaysHint": "Usa esta carta para un bono genérico de +1",
+    "sidewaysMove": "+1 Movimiento",
+    "sidewaysAttack": "+1 Ataque",
+    "sidewaysBlock": "+1 Bloqueo",
+    "sidewaysInfluence": "+1 Influencia",
+    "movePoints": "Mov.",
+    "explore": "Explorar (2 PM)",
+    "explorePick": "Toca un área resaltada",
+    "tileInfo": "Info del Hexágono",
+    "tileInfoUnrevealed": "Sin Explorar",
+    "tileInfoTerrain": "Terreno",
+    "tileInfoSite": "Lugar",
+    "tileInfoEnemies": "Enemigos",
+    "tileInfoMoveCost": "Coste de Movimiento",
+    "tileInfoDay": "Día",
+    "tileInfoNight": "Noche",
+    "tileInfoImpassable": "Intransitable",
+    "tileInfoConquered": "Conquistado",
+    "tileInfoAttack": "Ataque",
+    "tileInfoArmor": "Armadura",
+    "tileInfoFame": "Fama",
+    "terrain": {
+      "plains": "Llanuras",
+      "hills": "Colinas",
+      "forest": "Bosque",
+      "wasteland": "Páramo",
+      "desert": "Desierto",
+      "swamp": "Pantano",
+      "lake": "Lago",
+      "mountain": "Montaña",
+      "sea": "Mar",
+      "city": "Ciudad"
+    },
+    "tacticManaSteal": "Mana Steal",
+    "tacticManaSearch": "Mana Search",
+    "tacticRightMoment": "Extra Turn",
+    "tacticLongNight": "Long Night",
+    "tacticMidnightMeditation": "Meditation",
+    "tacticSparingStore": "Store Card",
+    "tacticSparingRetrieve": "Get Cards",
+    "rethinkTitle": "Rethink",
+    "rethinkSubtitle": "Discard up to 3 cards (including wounds) from your hand, then draw that many.",
+    "preparationTitle": "Preparation",
+    "preparationSubtitle": "Search your deck for one card to take into your hand.",
+    "meditationTitle": "Midnight Meditation",
+    "meditationSubtitle": "Shuffle up to 5 cards (including wounds) from your hand back into your deck, then draw that many.",
+    "discard": "Discard",
+    "takeCard": "Take Card",
+    "shuffleBack": "Shuffle Back",
+    "selectedCount": "Selected",
+    "noCardsAvailable": "No cards available",
+    "manaStealSelectTitle": "Mana Steal",
+    "manaStealSelectSubtitle": "Select 1 basic-color die from the Source.",
+    "manaSearchSelectTitle": "Mana Search",
+    "manaSearchSelectSubtitle": "Select up to 2 dice to reroll.",
+    "selectDie": "Select",
+    "reroll": "Reroll",
+    "skip": "Skip",
+    "confirm": "Confirm",
+    "advancedActions": "Acciones avanzadas",
+    "armor": "Armadura",
+    "artifact": "Artefacto",
+    "attachBannerSubtitle": "Elige una unidad para portar este estandarte. Mantiene la bonificación hasta que la unidad se disuelva.",
+    "attachBannerTitle": "Asignar estandarte",
+    "attack": "Ataque",
+    "block": "Bloqueo",
+    "calculatingScore": "Calculando la puntuación final…",
+    "cancel": "Cancelar",
+    "claimReward": "Reclamar recompensa",
+    "close": "Cerrar",
+    "coachActionBody": "Lucha contra enemigos, interactúa en el lugar actual o termina tu turno.",
+    "coachActionTitle": "Elige tu acción",
+    "coachCombatBody": "Usa la bandeja de combate inferior, confirma cada fase y termina el combate.",
+    "coachCombatTitle": "Combate",
+    "coachInteractionBody": "Juega cartas de Influencia, compra lo que necesites y termina la interacción.",
+    "coachInteractionTitle": "Interacción",
+    "coachMoveTitle": "Muévete o explora",
+    "coachNoMoveBody": "No queda movimiento. Termina el turno o juega más cartas de movimiento.",
+    "coachTacticBody": "Elige una carta para fijar la iniciativa y comenzar la ronda.",
+    "coachTacticTitle": "Elige una táctica",
+    "coachTurnBody": "Toca una carta de tu mano. Úsala de lado para moverte o sus efectos básico/fuerte para actuar.",
+    "coachTurnTitle": "Comienza tu turno",
+    "combatReward": "¡Recompensa!",
+    "confirmMove": "Confirmar movimiento",
+    "continue": "Continuar",
+    "courageReady": "Estandarte de Coraje: voltéalo para preparar esta unidad",
+    "day": "Día",
+    "declareEndOfRound": "Declarar fin de ronda",
+    "endRound": "Fin de ronda",
+    "endTurn": "Fin de turno",
+    "fame": "Fama",
+    "fight": "Luchar",
+    "handLimit": "Mano",
+    "healWound": "Curar herida",
+    "hexMapPlaceholder": "Mapa hexagonal — Próximamente",
+    "improvisationChooseSubtitle": "Selecciona el efecto que quieres obtener.",
+    "improvisationChooseTitle": "Elegir efecto",
+    "improvisationDiscardSubtitle": "Descarta una carta de tu mano para activar el efecto.",
+    "improvisationDiscardTitle": "Improvisación",
+    "influence": "Influencia",
+    "info": "Información",
+    "level": "Nivel",
+    "levelUp": "¡Subes de nivel!",
+    "levelUpAABottom": "Recibes la acción avanzada inferior",
+    "levelUpChoiceA": "A: Nueva habilidad + cualquier acción",
+    "levelUpChoiceB": "B: Habilidad común + acción inferior",
+    "levelUpNoCommon": "Aún no hay habilidades comunes",
+    "levelUpNoSkills": "Tu mazo de habilidades está vacío; aun así obtienes una acción avanzada.",
+    "levelUpPickAA": "Elige una acción avanzada de la oferta",
+    "levelUpPickCommon": "Elige una habilidad del grupo común",
+    "levelUpPickRevealed": "Elige una de tus habilidades reveladas",
+    "loading": "Cargando...",
+    "manaSource": "Fuente de maná",
+    "menu": "Menú",
+    "move": "Movimiento",
+    "night": "Noche",
+    "noCards": "No hay cartas en la mano",
+    "noDiceAvailable": "No hay dados disponibles",
+    "noTactics": "No hay tácticas disponibles",
+    "noUnits": "No hay unidades reclutadas",
+    "play": "Jugar",
+    "reachedLevel": "Nivel alcanzado",
+    "ready": "Lista",
+    "reputation": "Reputación",
+    "rest": "Descansar",
+    "restStandard": "Descanso: descarta cartas normales y gestiona heridas",
+    "resume": "Reanudar",
+    "rewardChooseType": "Las ruinas antiguas guardan un tesoro. Elige tu recompensa:",
+    "rewardCrystalBlack": "Negro: ganas 1 de Fama en lugar de un cristal.",
+    "rewardCrystalGold": "Dorado: ¡elige un cristal de cualquier color básico!",
+    "rewardCrystalRolled": "Dado de maná lanzado:",
+    "rewardNoSpells": "No hay hechizos disponibles",
+    "rewardSpellPick": "Elige un hechizo de la oferta: irá encima de tu mazo.",
+    "round": "Ronda",
+    "roundComplete": "Ronda completada",
+    "roundTransition": "Prepárate para la siguiente ronda",
+    "saveAndExit": "Guardar y menú principal",
+    "settings": "Ajustes",
+    "spell": "Hechizo",
+    "spells": "Hechizos",
+    "title": "Partida",
+    "unitLimit": "Unidades",
+    "units": "Unidades",
+    "coachMoveBody": "Los hexágonos verdes son alcanzables. Toca uno y confirma el movimiento. Movimiento restante: {{remaining}}",
+    "healUnitCost": "Curar: {{cost}} punto(s) de curación",
+    "rewardArtifactPick": "Elige los artefactos que conservar — el resto vuelve al mazo.",
+    "rewardCrystalBasic": "Ganas un cristal.",
+    "siteOwnedLabel": "{{site}} (en propiedad)",
+    "siteConqueredLabel": "{{site}} (conquistado)",
+    "siteColorPrefix": "{{site}} {{color}}",
+    "oppHeader": "Oportunidades alcanzables",
+    "oppMoveLeft": "{{count}} de movimiento restante",
+    "oppMoveAfter": "{{count}} de movimiento tras llegar",
+    "oppEnemies": "{{count}} enemigo",
+    "oppEnemiesAt": "{{count}} enemigo en {{site}}",
+    "oppReachableHex": "Hexágono alcanzable",
+    "oppFight": "Luchar tras moverte aquí",
+    "oppInteract": "Interactuar tras moverte aquí",
+    "oppExplore": "Explorar este lugar",
+    "availableAction": "Acción disponible",
+    "availableFight": "Hay un enemigo aquí o adyacente. Inicia un combate para ganar Fama y despejar el lugar.",
+    "availableInteract": "Este sitio se puede usar ahora. Juega Influencia y luego interactúa para reclutar, curar o comprar.",
+    "dropToPlay": "Suelta para jugar",
+    "standardRestTitle": "Descanso estándar",
+    "standardRestSubtitle": "Selecciona 1 carta que no sea herida (obligatorio) y las heridas que quieras descartar",
+    "standardRestConfirm": "Descansar",
+    "noCardSelected": "Ninguna carta seleccionada",
+    "noCardsInHand": "No hay cartas en la mano",
+    "basicSpellLabel": "Hechizo básico",
+    "strongSpellLabel": "Hechizo potenciado",
+    "basicEffectLabel": "Efecto básico",
+    "strongEffectLabel": "Efecto potenciado",
+    "manaLabel": "Maná",
+    "manaRequired": "Se requiere maná",
+    "noMana": "Sin maná",
+    "competitive": "Competitivo",
+    "woundCard": "Herida",
+    "cardType": {
+      "basic_action": "Acción básica",
+      "advanced_action": "Acción avanzada",
+      "spell": "Hechizo",
+      "artifact": "Artefacto"
+    },
+    "cardSet": {
+      "base": "Base",
+      "expansion": "Expansión",
+      "ultimate": "Ultimate",
+      "lost_legion": "Lost Legion"
+    },
+    "offerHeader": {
+      "advanced_action": "Acciones avanzadas",
+      "spell": "Hechizos",
+      "unit": "Unidades"
+    },
+    "offerTypeSpell": "Hechizo",
+    "offerTypeAdvAction": "Acción av.",
+    "unitsLabel": "Unidades",
+    "noUnitSlots": "Sin ranuras de unidad",
+    "unitStatus": {
+      "ready": "Lista",
+      "spent": "Agotada",
+      "wounded": "Herida"
+    },
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "resetView": "Restablecer vista",
+    "actionType": {
+      "attack": "Ataque",
+      "block": "Bloqueo",
+      "cold_fire_attack": "Ataque de fuego frío",
+      "cold_fire_block": "Bloqueo de fuego frío",
+      "draw_card": "Robar carta",
+      "fire_attack": "Ataque de fuego",
+      "fire_block": "Bloqueo de fuego",
+      "gain_mana": "Ganar maná",
+      "gainMana": "Ganar maná",
+      "heal": "Curar",
+      "heal_wounds": "Curar heridas",
+      "ice_attack": "Ataque de hielo",
+      "ice_block": "Bloqueo de hielo",
+      "influence": "Influencia",
+      "move": "Movimiento",
+      "move_per_ready_unit": "Movimiento por unidad lista",
+      "ranged_attack": "Ataque a distancia",
+      "reputation": "Reputación",
+      "siege_attack": "Ataque de asedio",
+      "cooperative_terrain_discount": "Descuento de terreno (coop.)",
+      "mana": "Maná",
+      "draw": "Robar",
+      "special": "Especial",
+      "discard_cost": "Coste de descarte",
+      "gain_crystal": "Ganar cristal",
+      "gain_mana_token": "Ganar ficha de maná",
+      "healing": "Curar",
+      "fame": "Fama",
+      "influence_per_wound": "Influencia por herida",
+      "gain_advanced_action": "Ganar Acción Avanzada",
+      "gain_spell": "Ganar Hechizo",
+      "enemy_armor_reduction": "Reducir armadura enemiga",
+      "enemy_skip_attack": "El enemigo no ataca",
+      "destroy_enemy": "Destruir enemigo"
+    },
+    "actionCondition": {
+      "day": "Día",
+      "night": "Noche"
+    },
+    "element": {
+      "physical": "Físico",
+      "fire": "Fuego",
+      "ice": "Hielo",
+      "cold_fire": "Fuego frío"
+    },
+    "chooseEffectTitle": "Elegir efecto",
+    "chooseEffectSubtitle": "Selecciona un efecto para aplicar.",
+    "chooseColorTitle": "Elegir color",
+    "chooseColorSubtitle": "Elige un color de maná.",
+    "comboTitle": "Elige una carta para jugar con ella",
+    "comboSubtitle": "Su efecto fuerte se resuelve gratis con +{{bonus}}."
+  },
+  "track": {
+    "fame": "Fama",
+    "reputation": "Reputación",
+    "manaSource": "Fuente de Maná",
+    "level": "Nv",
+    "fameToNext": "{{count}} de fama para nivel {{level}}",
+    "maxLevelReached": "Nivel máximo alcanzado",
+    "noInteraction": "Sin Interacción",
+    "cannotInteractWithInhabitants": "No se puede interactuar con los habitantes",
+    "manaTokens": "Maná",
+    "noDice": "Sin dados",
+    "activeMana": "Maná activo",
+    "crystalInventory": "Inventario de cristales",
+    "crystalMax": "máx. {{max}} por color"
+  },
+  "combat": {
+    "title": "Combat",
+    "attacks": "attack(s)",
+    "blocks": "block(s)",
+    "cardsPlayed": "card(s) played",
+    "defeated": "defeated",
+    "fame": "Fame",
+    "enemies": "Enemies",
+    "victory": "Victory!",
+    "resolved": "Combat Resolved",
+    "of": "/",
+    "enemiesDefeated": "enemies defeated",
+    "endCombat": "End Combat",
+    "phaseRangedSiege": "Ranged & Siege",
+    "phaseBlock": "Block",
+    "phaseAssignDamage": "Assign Damage",
+    "phaseMeleeAttack": "Melee Attack",
+    "phaseCombatResults": "Combat Results",
+    "phaseCombatEnd": "Combat End",
+    "cardTray": "Card Tray",
+    "phase": "Phase",
+    "total": "Total",
+    "plays": "Plays",
+    "undo": "Undo",
+    "clearAll": "Clear All",
+    "handCards": "Hand Cards",
+    "noCards": "No cards available",
+    "units": "Units",
+    "rangedSiegePhase": "Ranged & Siege Phase",
+    "rangedSiegeHint": "Select enemies to target, then play cards to build attacks.",
+    "meleePhase": "Melee Attack Phase",
+    "meleeHint": "Select enemies to target, then play cards to build attacks.",
+    "targets": "Targets",
+    "activeTarget": "TARGET",
+    "noEnemies": "No enemies to target.",
+    "pendingAttacks": "Pending Attacks",
+    "siege": "Siege",
+    "ranged": "Ranged",
+    "armor": "Armor",
+    "enough": "Enough!",
+    "notEnough": "Not enough",
+    "noCardsPlayed": "No cards played yet — use the card tray below.",
+    "fortifiedWarning": "Fortified enemies require siege attacks",
+    "noAttacks": "No attacks declared. Click an enemy above to start.",
+    "newAttack": "New Attack",
+    "skipPhase": "Skip Phase",
+    "confirmAttacks": "Confirm",
+    "blockPhase": "Block Phase",
+    "blockDesc": "Assign blocks to reduce enemy damage. Unblocked enemies deal full damage.",
+    "incomingAttacks": "Incoming Attacks",
+    "swift": "SWIFT",
+    "attack": "Attack",
+    "blockNeeded": "Block needed",
+    "swiftLabel": "Swift",
+    "yourBlock": "Your block",
+    "resistsElement": "Enemy resists {{element}}",
+    "blocked": "BLOCKED",
+    "noBlock": "No block assigned — will take damage",
+    "assignBlock": "Assign Block",
+    "allDefeated": "All enemies defeated!",
+    "takeAllDamage": "Take All Damage",
+    "confirmBlocks": "Confirm Blocks",
+    "noIncomingDamage": "No incoming damage!",
+    "allBlocked": "All enemies were blocked.",
+    "continue": "Continue",
+    "incomingDamage": "Incoming Damage",
+    "remaining": "Remaining",
+    "heroLabel": "Hero",
+    "armorLabel": "Armor",
+    "confirmDamage": "Confirm Damage Assignment",
+    "assignMore": "Assign {{count}} more damage",
+    "dmg": "dmg",
+    "woundShort": "W",
+    "elementPhysical": "physical",
+    "elementFire": "fire",
+    "elementIce": "ice",
+    "elementColdFire": "cold fire",
+    "abilityFortified": "Fort",
+    "abilityPhysicalResistance": "Phys.R",
+    "abilityFireResistance": "Fire.R",
+    "abilityIceResistance": "Ice.R",
+    "abilitySwift": "Swift",
+    "abilityBrutal": "Brutal",
+    "abilityPoison": "Poison",
+    "abilityParalyze": "Paralyze",
+    "abilityArcaneImmunity": "Arcane",
+    "abilityCumbersome": "Cumber",
+    "abilityUnfortified": "Unfort",
+    "abilityVampiric": "Vamp",
+    "abilityAssassination": "Assn",
+    "abilityDefend1": "Def+1",
+    "abilityDefend2": "Def+2",
+    "abilityRepMinus1": "Rep-1",
+    "abilities_one": "ability",
+    "abilities_other": "abilities",
+    "basicEffect": "Basic",
+    "strongEffect": "Strong",
+    "playSideways": "Play Sideways (+1)",
+    "viewCardDetail": "Ver detalles de carta",
+    "tapToPlay": "tocar para jugar",
+    "tapToClose": "tocar para cerrar",
+    "assignAllToHero": "Asignar todo el daño al héroe",
+    "noMana": "Sin maná",
+    "retreatNote": "Quedan enemigos vivos. No se obtienen recompensas del lugar.",
+    "rewardsNote": "Las recompensas se procesarán al terminar el combate.",
+    "skills": "Habilidades",
+    "removePlay": "Quitar jugada"
+  },
+  "interaction": {
+    "title": "Site Interaction",
+    "site": {
+      "village": "Village",
+      "monastery": "Monastery",
+      "mageTower": "Mage Tower",
+      "keep": "Keep",
+      "city": "City"
+    },
+    "influence": "Influence",
+    "influenceAvailable": "Available Influence",
+    "influenceModifier": "Reputation Modifier",
+    "influenceFromCard": "+{{value}} Influence",
+    "influenceSideways": "+1 Influence (sideways)",
+    "healingSection": "Healing",
+    "healWound": "Heal Wound",
+    "healUnit": "Heal Unit",
+    "healingCost": "{{cost}} Influence per healing",
+    "healCount": "{{count}} healing",
+    "selectWounds": "Select wounds to heal",
+    "selectUnit": "Select unit to heal",
+    "cardsSection": "Cards",
+    "learnAA": "Learn Advanced Action",
+    "learnAACost": "6 Influence",
+    "learnSpell": "Learn Spell",
+    "learnSpellCost": "7 Influence + matching mana",
+    "buyArtifact": "Buy Artifact",
+    "buyArtifactCost": "12 Influence",
+    "unitsSection": "Unit Recruitment",
+    "recruitUnit": "Recruit Unit",
+    "recruitCost": "{{cost}} Influence",
+    "unitLimitReached": "Unit limit reached",
+    "noUnitsAvailable": "No units available at this site",
+    "noCardsAvailable": "No cards available to purchase",
+    "interact": "Interact",
+    "done": "Done",
+    "purchase": "Purchase",
+    "notEnoughInfluence": "Not enough influence",
+    "needsMana": "Mana required",
+    "cannotInteract": "Cannot interact here",
+    "reputationBlocked": "Reputation too low to interact",
+    "playCardsForInfluence": "Play cards for influence, then purchase items.",
+    "cityGreen": "Advanced Actions available",
+    "cityBlue": "Spells available",
+    "cityWhite": "All unit types available",
+    "cityRed": "Artifacts available",
+    "disbandHint": "disuelve una unidad para hacer sitio:",
+    "plunderVillage": "Saquear aldea",
+    "plunderVillageHint": "Saquea suministros: roba 2 cartas y pierde 1 de Reputación.",
+    "revealElite": "Revelar unidad de élite (2 de influencia)",
+    "skillsSection": "Habilidades",
+    "villageAidSection": "Ayuda de la aldea",
+    "handSection": "Juega cartas de tu mano",
+    "emptyHand": "No hay cartas jugables en la mano",
+    "playBasic": "Básico +{{value}}",
+    "playStrong": "Fuerte +{{value}}",
+    "playSideways": "De lado +1"
+  },
+  "ad": {
+    "banner": "Publicidad",
+    "loadingNextRound": "Cargando la siguiente ronda...",
+    "noThanks": "No, gracias",
+    "placeholder": "Anuncio",
+    "rewardDialog": "Vídeo con recompensa",
+    "rewardHintPrompt": "¿Ver un vídeo corto para obtener una pista?",
+    "rewardRetryPrompt": "¿Ver un vídeo corto para reintentar?",
+    "unavailableOffline": "No disponible sin conexión",
+    "watchVideo": "Ver vídeo"
+  },
+  "ads": {
+    "retryTitle": "¿Intentar de nuevo?"
+  },
+  "score": {
+    "achievements": "Logros",
+    "baseFame": "Fama base",
+    "level": "Nivel",
+    "title": "Fin de la partida",
+    "totalScore": "Puntuación total",
+    "rating": {
+      "rookie": "Novato",
+      "apprentice": "Aprendiz",
+      "scout": "Explorador",
+      "knight": "Caballero",
+      "veteran": "Veterano",
+      "champion": "Campeón",
+      "legend": "Leyenda"
+    },
+    "entryTitle": {
+      "greatestKnowledge": "Mayor conocimiento",
+      "greatestLeader": "Mayor líder",
+      "greatestConqueror": "Mayor conquistador",
+      "citiesConquered": "Ciudades conquistadas",
+      "allCitiesConquered": "Todas las ciudades conquistadas",
+      "earlyFinish": "Final anticipado",
+      "dummyRemainingCards": "Cartas restantes del dummy",
+      "endurance": "Resistencia"
+    },
+    "entryDesc": {
+      "greatestKnowledge": "Más acciones avanzadas + hechizos en el mazo de gestas",
+      "greatestLeader": "Más unidades en el área de unidades",
+      "greatestConqueror": "Más sitios conquistados",
+      "citiesConquered": "{{count}} ciudades conquistadas (10 puntos cada una)",
+      "allCitiesConquered": "Bonificación por conquistar todas las ciudades",
+      "earlyFinish": "{{count}} rondas restantes (30 puntos cada una)",
+      "dummyRemainingCards": "{{count}} cartas restantes en el mazo del dummy",
+      "endurance": "No declaró fin de ronda en la última ronda"
+    }
+  },
+  "skills": {
+    "combatOnly": "Usar en combate",
+    "dayOnly": "Solo de día",
+    "interactionOnly": "Durante la interacción",
+    "nightOnly": "Solo de noche",
+    "noCards": "Sin cartas en la mano",
+    "noManaTokens": "Sin fichas de maná",
+    "noReadyUnits": "Sin unidades listas",
+    "noSpentUnits": "Sin unidades agotadas",
+    "noWoundedUnits": "Sin unidades heridas",
+    "noWounds": "Sin heridas en la mano",
+    "notInCombat": "No durante el combate",
+    "notSupported": "Aún no compatible",
+    "passive": "Pasiva",
+    "title": "Habilidades",
+    "used": "Usada",
+    "type": {
+      "once_per_turn": "Una vez por turno",
+      "once_per_round": "Una vez por ronda",
+      "interactive_once_per_round": "Interactiva, una vez por ronda",
+      "passive": "Pasiva"
+    }
+  },
+  "logmsg": {
+    "forcedWithdrawal": "¡Retirada forzosa! Retrocediste a un espacio seguro y recibiste 1 herida",
+    "gladeHealHand": "Claro mágico: descartaste 1 herida de la mano",
+    "gladeHealDiscard": "Claro mágico: descartaste 1 herida de la pila de descarte",
+    "mineCrystal": "Mina de cristal: ganaste un cristal {{color}}",
+    "siteConquered": "¡{{site}} conquistado!",
+    "skillLearned": "Habilidad aprendida: {{name}}",
+    "bondsCommand": "Vínculos de lealtad: +{{count}} ficha de mando",
+    "dummySkillRevealed": "El dummy reveló {{name}} al grupo común",
+    "aaOnDeck": "Acción avanzada ganada: {{name}} (encima del mazo de gestas)",
+    "levelReward": "Recompensa de nivel {{level}} resuelta",
+    "artifactsGained": "Artefacto ganado: {{name}}",
+    "spellGained": "Hechizo ganado: {{name}}",
+    "crystalRollBlack": "Tirada de cristal: negro — ganaste 1 de Fama en su lugar",
+    "crystalGained": "Ganaste un cristal {{color}}",
+    "healedHandWound": "Curaste 1 herida de la mano",
+    "unitHealed": "Curaste a {{name}} ({{cost}} de curación)",
+    "woundsHealedInfluence": "Curaste {{count}} herida(s) por {{cost}} de influencia",
+    "unitRecruitedCost": "Reclutaste a {{name}} por {{cost}} de influencia",
+    "aaLearned": "Aprendiste {{name}} por 6 de influencia",
+    "aaLearnedMonastery": "Aprendiste {{name}} en el monasterio por 6 de influencia",
+    "spellLearned": "Aprendiste el hechizo {{name}} por 7 de influencia + maná {{color}}",
+    "artifactBought": "Compraste el artefacto {{name}} por 12 de influencia",
+    "unitRecruited": "Reclutaste a {{name}}",
+    "aaAcquired": "Acción avanzada adquirida: {{name}}",
+    "spellAcquired": "Hechizo adquirido: {{name}}"
+  },
+  "validation": {
+    "spellNoColor": "El hechizo no tiene color definido",
+    "spellBasicNeedsColor": "El hechizo básico requiere maná {{color}} (u oro)",
+    "spellStrongDay": "El hechizo potenciado no puede jugarse de día (requiere maná negro, no disponible)",
+    "spellStrongNeedsColor": "El hechizo potenciado requiere maná {{color}} (u oro) de noche",
+    "actionStrongDayNeedsColor": "El efecto potenciado requiere maná {{color}} (u oro) de día",
+    "actionStrongNightNeedsBoth": "El efecto potenciado requiere de noche maná {{color}} (u oro) Y maná negro",
+    "actionStrongNightNeedsColor": "El efecto potenciado requiere maná {{color}} (u oro) de noche",
+    "actionStrongNightNeedsBlack": "El efecto potenciado requiere maná negro de noche"
+  }
+}

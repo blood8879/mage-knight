@@ -1,0 +1,189 @@
+{
+  "_meta": {
+    "description": "Arythea Hero Data — Starting stats, deck, skills, level-up progression",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki + Rulebook",
+    "lastUpdated": "2026-02-19"
+  },
+  "hero": {
+    "name": "Arythea",
+    "title": "The Dark Priestess",
+    "startingStats": {
+      "armor": 2,
+      "handLimit": 5,
+      "unitLimit": 1
+    },
+    "startingDeck": {
+      "totalCards": 16,
+      "commonCards": [
+        { "name": "Rage", "color": "red", "copies": 1 },
+        { "name": "Determination", "color": "blue", "copies": 1 },
+        { "name": "Swiftness", "color": "white", "copies": 2 },
+        { "name": "March", "color": "green", "copies": 2 },
+        { "name": "Stamina", "color": "blue", "copies": 2 },
+        { "name": "Tranquility", "color": "green", "copies": 1 },
+        { "name": "Promise", "color": "white", "copies": 1 },
+        { "name": "Threaten", "color": "red", "copies": 1 },
+        { "name": "Crystallize", "color": "blue", "copies": 1 },
+        { "name": "Mana Draw", "color": "white", "copies": 1 },
+        { "name": "Concentration", "color": "green", "copies": 1 },
+        { "name": "Improvisation", "color": "red", "copies": 1 }
+      ],
+      "uniqueCard": {
+        "name": "Battle Versatility",
+        "color": "red",
+        "replaces": "Rage",
+        "copies": 1,
+        "basicEffect": {
+          "text": "Attack 2 or Block 2 or Move 2",
+          "actions": [
+            { "type": "attack", "value": 2, "choice": true },
+            { "type": "block", "value": 2, "choice": true },
+            { "type": "move", "value": 2, "choice": true }
+          ]
+        },
+        "strongEffect": {
+          "text": "Attack 4 or Block 4 or Move 4",
+          "manaCost": "red",
+          "actions": [
+            { "type": "attack", "value": 4, "choice": true },
+            { "type": "block", "value": 4, "choice": true },
+            { "type": "move", "value": 4, "choice": true }
+          ]
+        }
+      },
+      "expansionReplacement": {
+        "name": "Mana Pull",
+        "color": "white",
+        "replaces": "Mana Draw",
+        "copies": 1,
+        "basicEffect": {
+          "text": "Gain one mana token of any basic color",
+          "actions": [{ "type": "gain_mana_token", "color": "any_basic" }]
+        },
+        "strongEffect": {
+          "text": "Gain two mana tokens of any basic colors",
+          "manaCost": "white",
+          "actions": [
+            { "type": "gain_mana_token", "color": "any_basic" },
+            { "type": "gain_mana_token", "color": "any_basic" }
+          ]
+        }
+      }
+    },
+    "skills": [
+      {
+        "id": 1,
+        "name": "Dark Paths",
+        "type": "once_per_turn",
+        "effect": "Move 1 (during the Day), or Move 2 (at Night).",
+        "actions": [
+          { "type": "move", "value": 1, "condition": "day" },
+          { "type": "move", "value": 2, "condition": "night" }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Burning Power",
+        "type": "once_per_turn",
+        "effect": "Siege Attack 1, or Fire Siege Attack 1.",
+        "actions": [
+          { "type": "siege_attack", "value": 1, "choice": true },
+          { "type": "siege_attack", "element": "fire", "value": 1, "choice": true }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Hot Swordsmanship",
+        "type": "once_per_turn",
+        "effect": "Attack 2, or Fire Attack 2.",
+        "actions": [
+          { "type": "attack", "value": 2, "choice": true },
+          { "type": "attack", "element": "fire", "value": 2, "choice": true }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Dark Negotiation",
+        "type": "once_per_turn",
+        "effect": "Influence 2 (during the Day), or Influence 3 (at Night).",
+        "actions": [
+          { "type": "influence", "value": 2, "condition": "day" },
+          { "type": "influence", "value": 3, "condition": "night" }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Dark Fire Magic",
+        "type": "once_per_round",
+        "effect": "Flip this to gain one red crystal to your inventory, and one red or one black mana token.",
+        "actions": [
+          { "type": "gain_crystal", "color": "red" },
+          { "type": "gain_mana_token", "color": "red_or_black" }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Power of Pain",
+        "type": "once_per_turn",
+        "effect": "You can play one Wound sideways, as if it were a non-Wound card. It gives +2 instead of +1. At the end of your turn, put that Wound in your discard pile.",
+        "actions": [
+          { "type": "wound_as_card", "bonusValue": 2 }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Invocation",
+        "type": "once_per_turn",
+        "effect": "Discard a Wound card to gain a red or black mana token, or discard a non-wound card to gain a white or green mana token. You must spend a mana token gained this way immediately.",
+        "actions": [
+          { "type": "discard_wound_for_mana", "color": "red_or_black" },
+          { "type": "discard_card_for_mana", "color": "white_or_green" }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Polarization",
+        "type": "once_per_turn",
+        "effect": "You can use one mana as a mana of the opposite color. During the Day, you could use a black mana as any color other than black (not to power the stronger effect of spells). At Night, you could use a gold mana as black to power the stronger effect of a Spell.",
+        "actions": [
+          { "type": "mana_conversion", "rule": "opposite_color" }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "Motivation",
+        "type": "once_per_turn",
+        "effect": "Once a turn, one of your Units may use its ability without paying its activation cost.",
+        "actions": [
+          { "type": "free_unit_activation" }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Healing Ritual",
+        "type": "interactive_once_per_round",
+        "effect": "Flip this to throw away up to two Wounds from your hand. One of them goes to the hand of the closest hero instead of to the Wound pile.",
+        "actions": [
+          { "type": "heal_wounds", "value": 2, "transferOne": true }
+        ]
+      }
+    ],
+    "cooperativeSkill": {
+      "name": "Ritual of Pain",
+      "effect": "Once a Round, except in combat: Throw away up to two Wound cards from your hand. Put this Skill token in the center. Any player may return it to you, face down, to play a Wound card sideways as if it is a non-Wound card, and get +3 instead of +1."
+    },
+    "levelProgression": [
+      { "level": 1, "fameRequired": 0, "armor": 2, "handLimit": 5, "unitLimit": 1, "reward": "none" },
+      { "level": 2, "fameRequired": 3, "armor": 2, "handLimit": 5, "unitLimit": 2, "reward": "advanced_action_and_skill" },
+      { "level": 3, "fameRequired": 8, "armor": 3, "handLimit": 5, "unitLimit": 2, "reward": "stat_boost" },
+      { "level": 4, "fameRequired": 15, "armor": 3, "handLimit": 5, "unitLimit": 3, "reward": "advanced_action_and_skill" },
+      { "level": 5, "fameRequired": 24, "armor": 3, "handLimit": 6, "unitLimit": 3, "reward": "stat_boost" },
+      { "level": 6, "fameRequired": 35, "armor": 3, "handLimit": 6, "unitLimit": 4, "reward": "advanced_action_and_skill" },
+      { "level": 7, "fameRequired": 48, "armor": 4, "handLimit": 6, "unitLimit": 4, "reward": "stat_boost" },
+      { "level": 8, "fameRequired": 63, "armor": 4, "handLimit": 6, "unitLimit": 5, "reward": "advanced_action_and_skill" },
+      { "level": 9, "fameRequired": 80, "armor": 4, "handLimit": 7, "unitLimit": 5, "reward": "stat_boost" },
+      { "level": 10, "fameRequired": 99, "armor": 4, "handLimit": 7, "unitLimit": 5, "reward": "advanced_action_and_skill" }
+    ]
+  }
+}

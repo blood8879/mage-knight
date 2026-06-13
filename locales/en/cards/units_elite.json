@@ -1,0 +1,245 @@
+{
+  "1": {
+    "name": "Fire Golems",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Ranged Fire Attack",
+        "text": "Ranged Fire Attack 4"
+      }
+    ]
+  },
+  "2": {
+    "name": "Ice Golems",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Ice Attack",
+        "text": "Ice Attack 6"
+      }
+    ]
+  },
+  "3": {
+    "name": "Fire Mages",
+    "abilities": [
+      {
+        "name": "Ranged Fire Attack",
+        "text": "Ranged Fire Attack 3"
+      },
+      {
+        "name": "Fire Attack or Fire Block",
+        "text": "Fire Attack or Fire Block 6"
+      },
+      {
+        "name": "Gain Red Mana and Crystal",
+        "text": "Gain a red mana token and a red crystal to your Inventory."
+      }
+    ]
+  },
+  "4": {
+    "name": "Ice Mages",
+    "abilities": [
+      {
+        "name": "Ice Attack or Ice Block",
+        "text": "Ice Attack or Ice Block 4"
+      },
+      {
+        "name": "Siege Ice Attack",
+        "text": "Siege Ice Attack 4"
+      },
+      {
+        "name": "Gain Blue Mana and Crystal",
+        "text": "Gain a blue mana token and a blue crystal to your Inventory."
+      }
+    ]
+  },
+  "5": {
+    "name": "Amotep Gunners",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Ranged Fire Attack",
+        "text": "Ranged Fire Attack 6"
+      }
+    ]
+  },
+  "6": {
+    "name": "Amotep Freezers",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Freeze",
+        "text": "Target enemy does not attack this combat and it gets Armor -3 (to a minimum of 1)."
+      }
+    ]
+  },
+  "7": {
+    "name": "Catapults",
+    "abilities": [
+      {
+        "name": "Siege Attack",
+        "text": "Siege Attack 3"
+      },
+      {
+        "name": "Siege Fire Attack",
+        "text": "Siege Fire Attack 5"
+      },
+      {
+        "name": "Siege Ice Attack",
+        "text": "Siege Ice Attack 5"
+      }
+    ]
+  },
+  "8": {
+    "name": "Altem Mages",
+    "abilities": [
+      {
+        "name": "Gain Mana",
+        "text": "Gain 2 mana tokens of any colors"
+      },
+      {
+        "name": "Cold Fire Attack or Cold Fire Block",
+        "text": "Cold Fire Attack or Cold Fire Block 5. You can pay a blue or red mana to increase this to 7, or pay both to increase this to 9."
+      },
+      {
+        "name": "Elemental Mastery",
+        "text": "Pay a black mana: Choose one: All attacks you play this combat become Cold Fire Attacks, or all your attacks become Siege Attacks in addition to any elements they have."
+      }
+    ]
+  },
+  "9": {
+    "name": "Altem Guardians",
+    "abilities": [
+      {
+        "name": "Attack",
+        "text": "Attack 5"
+      },
+      {
+        "name": "Block",
+        "text": "Block 8. Counts twice against an attack with Swiftness."
+      },
+      {
+        "name": "Grant Resistances",
+        "text": "All units you control gain all resistances this turn."
+      }
+    ]
+  },
+  "10": {
+    "name": "Heroes (white)",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Ranged Attack",
+        "text": "Ranged Attack 7"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 5. If used during interaction, Reputation +1."
+      }
+    ]
+  },
+  "11": {
+    "name": "Heroes (green)",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Heal",
+        "text": "Heal 4"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 5. If used during interaction, Reputation +1."
+      }
+    ]
+  },
+  "12": {
+    "name": "Heroes (blue)",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Cold Fire Block",
+        "text": "Cold Fire Block 8"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 5. If used during interaction, Reputation +1."
+      }
+    ]
+  },
+  "13": {
+    "name": "Heroes (red)",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 5"
+      },
+      {
+        "name": "Cold Fire Attack",
+        "text": "Cold Fire Attack 6"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 5. If used during interaction, Reputation +1."
+      }
+    ]
+  },
+  "14": {
+    "name": "Sorcerers",
+    "abilities": [
+      {
+        "name": "Ranged Attack",
+        "text": "Ranged Attack 3"
+      },
+      {
+        "name": "Remove Fortifications",
+        "text": "Chosen enemy loses all fortifications. Ranged Attack 3."
+      },
+      {
+        "name": "Remove Resistances",
+        "text": "Chosen enemy loses all resistances. Ranged Attack 3."
+      }
+    ]
+  },
+  "15": {
+    "name": "Delphana Masters",
+    "abilities": [
+      {
+        "name": "Paralyze",
+        "text": "Target enemy does not attack."
+      },
+      {
+        "name": "Destroy If Blocked",
+        "text": "Target enemy is destroyed if blocked."
+      },
+      {
+        "name": "Weaken Armor",
+        "text": "Armor of target enemy is reduced by 5 (to a minimum of 1)."
+      },
+      {
+        "name": "Strip Defenses",
+        "text": "Target enemy loses all fortifications and resistances."
+      }
+    ]
+  }
+}

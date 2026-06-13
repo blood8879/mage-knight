@@ -1,0 +1,1564 @@
+{
+  "_meta": {
+    "description": "Mage Knight Advanced Action Cards - 44 cards (28 Base + 12 Expansion + 4 Ultimate)",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki + Rulebook",
+    "lastUpdated": "2026-02-18"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "name": "Fire Bolt",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Gain a red crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "red"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ranged Fire Attack 3",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "element": "fire",
+            "value": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 2,
+      "name": "Ice Bolt",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Gain a blue crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "blue"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ranged Ice Attack 3",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "element": "ice",
+            "value": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 3,
+      "name": "Swift Bolt",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Gain a white crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "white"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ranged Attack 4",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "element": "physical",
+            "value": 4
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 4,
+      "name": "Crushing Bolt",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Gain a green crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "green"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Siege Attack 3",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "siege_attack",
+            "element": "physical",
+            "value": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 5,
+      "name": "Blood Rage",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Attack 2. You can take a Wound to increase this to Attack 5.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "Optional: take Wound → Attack 5 instead",
+            "optional": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 4. You can take a Wound to increase this to Attack 9.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "Optional: take Wound → Attack 9 instead",
+            "optional": true
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 6,
+      "name": "Ice Shield",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Ice Block 3",
+        "actions": [
+          {
+            "type": "ice_block",
+            "value": 3
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ice Block 3. Reduce the Armor of one enemy blocked this way by 3. Armor cannot be reduced below 1.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "ice_block",
+            "value": 3
+          },
+          {
+            "type": "enemy_armor_reduction",
+            "value": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 7,
+      "name": "Agility",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2. During combat this turn, you may spend Move points left from Move phase as Attack points one for one.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "Leftover Move → Attack 1:1 ratio in combat"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4. During combat this turn, you may spend Move points left from Move phase as Attack points one for one, or 2 Move points for 1 point of Ranged Attack.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "Leftover Move → Attack 1:1 or Ranged Attack 2:1 ratio in combat"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 8,
+      "name": "Refreshing Walk",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2 and Heal 1.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "heal",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4 and Heal 2.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "heal",
+            "value": 2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 9,
+      "name": "Intimidate",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Influence 4 or Attack 3. Reputation -1.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "reputation",
+            "value": -1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 8 or Attack 7. Reputation -2.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 8,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 7,
+            "choice": true
+          },
+          {
+            "type": "reputation",
+            "value": -2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 10,
+      "name": "Frost Bridge",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Move 2. The Move cost of swamps is reduced to 1 this turn.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": "swamp",
+            "newCost": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4. You are able to travel through lakes, and the Move cost of lakes and swamps is reduced to 1 this turn.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": [
+              "swamp",
+              "lake"
+            ],
+            "newCost": 1,
+            "enableLake": true
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 11,
+      "name": "Song of Wind",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Move 2. The Move cost of plains, deserts and wastelands is reduced by 1, to a minimum of 0 this turn.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": [
+              "plains",
+              "desert",
+              "wasteland"
+            ],
+            "costReduction": 1,
+            "minimum": 0
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 2. The Move cost of plains, deserts and wastelands is reduced by 2, to a minimum of 0. You may pay a blue mana to be able to travel through lakes for Move cost 0 this turn.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": [
+              "plains",
+              "desert",
+              "wasteland"
+            ],
+            "costReduction": 2,
+            "minimum": 0
+          },
+          {
+            "type": "special",
+            "description": "Pay blue mana → travel through lakes for cost 0",
+            "optional": true
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 12,
+      "name": "Path Finding",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2. The Move cost of all terrains is reduced by 1, to a minimum of 2, this turn.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": "all",
+            "costReduction": 1,
+            "minimum": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4. The Move cost of all terrains is reduced to 2 this turn.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "terrain_modifier",
+            "terrain": "all",
+            "newCost": 2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 13,
+      "name": "Blood Ritual",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Take a Wound. Gain a red mana token and a mana token of any color (including non-basic).",
+        "actions": [
+          {
+            "type": "take_wound"
+          },
+          {
+            "type": "gain_mana",
+            "color": "red"
+          },
+          {
+            "type": "gain_mana",
+            "color": "any_including_special"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Take a Wound. Gain three mana tokens of any colors (including non-basic).",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "take_wound"
+          },
+          {
+            "type": "gain_mana",
+            "color": "any_including_special",
+            "count": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 14,
+      "name": "Pure Magic",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "When you play this, pay a mana. If you paid Green, Move 4. If you paid White, Influence 4. If you paid Blue, Block 4. If you paid Red, Attack 4.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "influence",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 4,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this, pay a mana. If you paid Green, Move 7. If you paid White, Influence 7. If you paid Blue, Block 7. If you paid Red, Attack 7.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "move",
+            "value": 7,
+            "choice": true
+          },
+          {
+            "type": "influence",
+            "value": 7,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 7,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 7,
+            "choice": true
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 15,
+      "name": "Heroic Tale",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 3. Reputation +1 for each Unit you recruit this turn.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 3
+          },
+          {
+            "type": "reputation",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 6. Fame +1 and Reputation +1 for each Unit you recruit this turn.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 6
+          },
+          {
+            "type": "reputation",
+            "value": 1
+          },
+          {
+            "type": "fame",
+            "value": 1
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 16,
+      "name": "Regeneration",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Heal 1. Ready a Level I or II Unit you control.",
+        "actions": [
+          {
+            "type": "heal",
+            "value": 1
+          },
+          {
+            "type": "ready_unit",
+            "maxLevel": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Heal 2. Ready a Level I, II or III Unit you control.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "heal",
+            "value": 2
+          },
+          {
+            "type": "ready_unit",
+            "maxLevel": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 17,
+      "name": "Into the Heat",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Play this card at the start of the combat. All of your Units get their Attack and Block values increased by 2 this combat. You cannot assign damage to Units this turn.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Play this card at the start of the combat. All of your Units get their Attack and Block values increased by 3 this combat. You cannot assign damage to Units this turn.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 3,
+            "choice": true
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 18,
+      "name": "Steady Tempo",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Move 2. At the end of your turn, instead of putting this card in your discard pile, you may place it on the bottom of your deed deck as long as it is not empty.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "End of turn: may place on bottom of Deed deck instead of discard"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4. At the end of your turn, instead of putting this card in your discard pile, you may place it on top of your Deed deck.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "End of turn: may place on top of Deed deck instead of discard"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 19,
+      "name": "Diplomacy",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 2. You may use Influence as Block this turn.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "Influence may be used as Block this turn"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 4. Choose Ice or Fire. You may use Influence as Block for the chosen element this turn.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "Choose Ice or Fire. Influence = elemental Block of chosen type this turn"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 20,
+      "name": "In Need",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Influence 2. Get an additional Influence 1 for each Wound card in your hand or on a Unit you control.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          },
+          {
+            "type": "influence_per_wound",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 4. Get an additional Influence 2 for each Wound card in your hand or on a Unit you control.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "influence_per_wound",
+            "value": 2
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 21,
+      "name": "Decompose",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "When you play this card, throw away an Action card from hand. Gain two crystals to your Inventory that are the same color as the thrown away card.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this card, throw away an Action card from hand. Gain a crystal to your Inventory of each basic color that does not match the color of the thrown away card.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 22,
+      "name": "Crystal Mastery",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Gain a crystal to your Inventory of the same color as a crystal you already own.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Any crystal you spend this turn are returned to your Inventory at the end of the turn.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 23,
+      "name": "Mana Storm",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Choose a mana die in the Source that is showing a basic color. Gain a crystal of that color to your Inventory, then immediately reroll that die and return it to the Source.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Reroll all dice in the Source. You can use three extra dice from the Source, and you can use dice showing black or gold as mana of any basic color, regardless of the Round.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "any_basic",
+            "count": 3
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 24,
+      "name": "Ambush",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2. Add +1 to your first Attack card of any type or +2 to your first Block card of any type, whichever you play first this turn.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "First Attack +1 OR first Block +2 (whichever played first)"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4. Add +2 to your first Attack card of any type or +4 to your first Block card of any type, whichever you play first this turn.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "First Attack +2 OR first Block +4 (whichever played first)"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 25,
+      "name": "Maximal Effect",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "When you play this, play another Action card with it. Use the basic effect of that card three times. Then, throw away that card.",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Play with another Action card → use its basic effect 3x → throw away that card"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this, play another Action card with it. Use the advanced effect of that card two times (for free). Then, throw away that card.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Play with another Action card → use its strong effect 2x for free → throw away that card"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 26,
+      "name": "Magic Talent",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Discard a card from your hand. You may play one Spell card in the Spells offer this turn as if it were in your hand. That card remains in the Spells offer.",
+        "actions": [
+          {
+            "type": "gain_spell",
+            "to": "discard"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this, pay a mana of any color. Gain a Spell card of that color from the Spells offer and put it in your discard pile.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "gain_spell",
+            "to": "discard"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 27,
+      "name": "Learning",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 2. Once during this turn, you may pay Influence 6 to gain an Advanced Action card from the Advanced Actions offer to your discard pile.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          },
+          {
+            "type": "gain_advanced_action",
+            "to": "discard"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 4. Once during this turn, you may pay Influence 9 to gain an Advanced Action card from the Advanced Actions offer to your hand.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "gain_advanced_action",
+            "to": "hand"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 28,
+      "name": "Training",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Throw away an Action card from your hand, then take a card of the same color from the Advanced Actions offer and put it into your discard pile.",
+        "actions": [
+          {
+            "type": "gain_advanced_action",
+            "to": "discard"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Throw away an Action card from your hand, then take a card of the same color from the Advanced Actions offer and put it into your hand.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "gain_advanced_action",
+            "to": "hand"
+          }
+        ]
+      },
+      "set": "base"
+    },
+    {
+      "id": 29,
+      "name": "Counterattack",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Attack 2. Get an additional Attack 2 for each enemy blocked this turn.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2
+          },
+          {
+            "type": "attack",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 4. Get an additional Attack 3 for each enemy blocked this turn.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 4
+          },
+          {
+            "type": "attack",
+            "value": 3
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 30,
+      "name": "Ritual Attack",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Throw away another action card. Depending on its color, you get: Attack 5 for red, Ice Attack 3 for blue, Ranged Attack 3 for white, Siege Attack 2 for green.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 5,
+            "choice": true
+          },
+          {
+            "type": "ice_attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "ranged_attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "siege_attack",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Throw away another action card. Depending on its color, you get: Fire Attack 6 for red, Cold Fire Attack 4 for blue, Ranged Fire Attack 4 for white, Siege Fire Attack 3 for green.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "fire_attack",
+            "value": 6,
+            "choice": true
+          },
+          {
+            "type": "cold_fire_attack",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "ranged_attack",
+            "value": 4,
+            "element": "fire",
+            "choice": true
+          },
+          {
+            "type": "siege_attack",
+            "value": 3,
+            "element": "fire",
+            "choice": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 31,
+      "name": "Blood of Ancients",
+      "type": "advanced_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Gain a Wound. Pay one mana of any color. Gain a card of that color from the Advanced Actions offer and put into your hand.",
+        "actions": [
+          {
+            "type": "take_wound"
+          },
+          {
+            "type": "special",
+            "description": "Pay 1 mana of any color → gain AA of that color from offer to hand"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Gain a Wound to your hand or discard pile. Use the stronger effect of any card from the Advanced Action offer without paying its mana cost. The card remains in the offer.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "take_wound"
+          },
+          {
+            "type": "special",
+            "description": "Use strong effect of any AA from offer for free (card stays in offer)"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 32,
+      "name": "Shield Bash",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Block 3. Counts twice against an attack with Swiftness.",
+        "actions": [
+          {
+            "type": "block",
+            "value": 3
+          },
+          {
+            "type": "special",
+            "description": "Counts twice vs Swiftness attacks"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Block 5. Counts twice against an attack with Swiftness. Blocked enemy gets Armor -1 for each point of block higher than needed (to a minimum of 1).",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "block",
+            "value": 5
+          },
+          {
+            "type": "special",
+            "description": "Counts twice vs Swiftness. Excess block reduces enemy Armor by 1 per point (min 1)"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 33,
+      "name": "Temporal Portal",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Play as your action for this turn. You may move to an adjacent revealed safe space (without provoking rampaging monsters). Whether you move or not, your Hand limit is higher by 1 the next time you draw cards.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "As above, except you can either move two spaces to a revealed safe space instead of one, or get your Hand limit increased by 2 instead of 1.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 34,
+      "name": "Spell Forge",
+      "type": "advanced_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Gain one crystal to your Inventory of the same color as one of the Spell cards in the Spell offer.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Gain two crystals to your Inventory of the same color as two of the Spell cards in the Spell offer.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 35,
+      "name": "Chivalry",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Attack 3, or Attack 2 and Reputation +1 for each enemy defeated by this attack.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "special",
+            "description": "OR Attack 2 + Reputation +1 per enemy defeated",
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 6, or Attack 4 and Reputation +1 and Fame +1 for each enemy defeated by this attack.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 6,
+            "choice": true
+          },
+          {
+            "type": "special",
+            "description": "OR Attack 4 + Reputation +1 and Fame +1 per enemy defeated",
+            "choice": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 36,
+      "name": "Peaceful Moment",
+      "type": "advanced_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 3. You may play this as your action for the turn: if you do, you may get Heal 1 for each 2 Influence you spend.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 3
+          },
+          {
+            "type": "special",
+            "description": "As action: spend 2 Influence → Heal 1",
+            "optional": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 6. You may play this as your action for the turn: if you do, you may get Heal 1 for each 2 Influence you spend and/or refresh a Unit paying 2 Influence per level of the Unit.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 6
+          },
+          {
+            "type": "special",
+            "description": "As action: spend 2 Influence → Heal 1 and/or 2 Influence per level → Ready Unit",
+            "optional": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 37,
+      "name": "Dodge and Weave",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Reduce one enemy attack by 2. Gain Attack 1 in the Attack phase if you did not add any Wounds to your hand in the previous combat phases.",
+        "actions": [
+          {
+            "type": "block",
+            "value": 2
+          },
+          {
+            "type": "attack",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Reduce one enemy attack by 4 or two attacks of one or two enemies by 2. Gain Attack 2 in the Attack phase if you did not add any Wounds to your hand in the previous combat phases.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "block",
+            "value": 4
+          },
+          {
+            "type": "attack",
+            "value": 2
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 38,
+      "name": "Stout Resolve",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2, Influence 2, Attack 2 or Block 2. You may discard a Wound to increase the effect by 1.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "influence",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 3, Influence 3, Attack 3 or Block 3. You may discard any number of cards, including one Wound, to increase the effect by 2 for each.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "influence",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 3,
+            "choice": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 39,
+      "name": "Force of Nature",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Chosen Unit gains physical resistance this combat.",
+        "actions": [
+          {
+            "type": "block",
+            "value": 3
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Siege Attack 3 or Block 6.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "siege_attack",
+            "element": "physical",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 6,
+            "choice": true
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 40,
+      "name": "Mountain Lore",
+      "type": "advanced_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 3. If you end your turn in hills, your Hand limit is higher by 1 the next time you draw cards.",
+        "actions": [
+          {
+            "type": "move",
+            "value": 3
+          },
+          {
+            "type": "special",
+            "description": "End in hills → Hand limit +1 next draw"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 5. You can enter mountains at a Move cost of 5 and they are considered a safe space for you at the end of this turn. If you end your turn in mountains/hills, your Hand limit is higher by 2/1 the next time you draw cards.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 5
+          },
+          {
+            "type": "special",
+            "description": "Mountains cost 5 Move (safe space). End in mountains → +2 Hand limit, hills → +1 Hand limit"
+          }
+        ]
+      },
+      "set": "expansion"
+    },
+    {
+      "id": 41,
+      "name": "Power Crystals",
+      "type": "advanced_action",
+      "color": [
+        "green",
+        "blue"
+      ],
+      "basicEffect": {
+        "text": "Gain a crystal to your Inventory of a basic color you do not already own.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4, or Heal 2, or draw two cards. For each set of four different color crystals in your Inventory: Move 2, or Heal 1, or draw a card.",
+        "manaCost": "green_or_blue",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "heal",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "draw_card",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "set": "ultimate"
+    },
+    {
+      "id": 42,
+      "name": "Rush of Adrenaline",
+      "type": "advanced_action",
+      "color": [
+        "red",
+        "green"
+      ],
+      "basicEffect": {
+        "text": "For each of the three Wounds you take to your hand this turn, draw a card.",
+        "actions": [
+          {
+            "type": "draw_card",
+            "value": 1
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "After taking the first Wound to your hand this turn, throw it away and draw a card. For each of the next three Wounds you take, draw a card.",
+        "manaCost": "red_or_green",
+        "actions": [
+          {
+            "type": "draw_card",
+            "value": 2
+          }
+        ]
+      },
+      "set": "ultimate"
+    },
+    {
+      "id": 43,
+      "name": "Explosive Bolt",
+      "type": "advanced_action",
+      "color": [
+        "white",
+        "red"
+      ],
+      "basicEffect": {
+        "text": "Take a Wound. Gain a white and red crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "take_wound"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "white"
+          },
+          {
+            "type": "gain_crystal",
+            "color": "red"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ranged Attack 3. For each enemy defeated by this attack, another enemy gets Armor -1 (to a minimum of 1).",
+        "manaCost": "white_or_red",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "element": "physical",
+            "value": 3
+          },
+          {
+            "type": "enemy_armor_reduction",
+            "value": 1
+          }
+        ]
+      },
+      "set": "ultimate"
+    },
+    {
+      "id": 44,
+      "name": "Chilling Stare",
+      "type": "advanced_action",
+      "color": [
+        "blue",
+        "white"
+      ],
+      "basicEffect": {
+        "text": "Influence 3, or a chosen enemy attack loses all attack abilities (but not its color).",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 3,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 5, or a chosen enemy does not attack this turn.",
+        "manaCost": "blue_or_white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 5,
+            "choice": true
+          },
+          {
+            "type": "enemy_skip_attack",
+            "choice": true
+          }
+        ]
+      },
+      "set": "ultimate"
+    }
+  ]
+}

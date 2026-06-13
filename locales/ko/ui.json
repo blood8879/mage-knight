@@ -1,0 +1,1167 @@
+{
+  "app": {
+    "title": "메이지 나이트 보드 게임",
+    "subtitle": "디지털 도우미"
+  },
+  "menu": {
+    "home": "홈",
+    "cards": "카드",
+    "rules": "규칙",
+    "settings": "설정",
+    "language": "언어",
+    "back": "뒤로",
+    "continue": "이어하기",
+    "newGame": "새 게임",
+    "playAgain": "다시 하기",
+    "tutorial": "튜토리얼"
+  },
+  "cardTypes": {
+    "basic_action": "기본 행동",
+    "advanced_action": "상위 행동",
+    "spell": "주문",
+    "artifact": "아티팩트",
+    "unit": "유닛"
+  },
+  "cardFields": {
+    "name": "이름",
+    "color": "색상",
+    "basicEffect": "기본 효과",
+    "strongEffect": "강화 효과",
+    "basicSpell": "기본 주문",
+    "strongSpell": "강화 주문",
+    "manaCost": "마나 비용",
+    "level": "레벨",
+    "cost": "비용",
+    "armor": "갑옷",
+    "resistance": "저항",
+    "copies": "수량",
+    "recruitSites": "모집 장소",
+    "abilities": "능력"
+  },
+  "colors": {
+    "red": "빨간색",
+    "blue": "파란색",
+    "green": "녹색",
+    "white": "흰색",
+    "black": "검은색",
+    "gold": "금색"
+  },
+  "sets": {
+    "base": "기본 게임",
+    "expansion": "로스트 리전 확장팩",
+    "ultimate": "얼티밋 에디션"
+  },
+  "unitTiers": {
+    "regular": "일반 (은색)",
+    "elite": "정예 (금색)"
+  },
+  "recruitSites": {
+    "village": "마을",
+    "monastery": "수도원",
+    "keep": "성채",
+    "mage_tower": "마법사 탑",
+    "city": "도시",
+    "glade": "숲속 빈터"
+  },
+  "settings": {
+    "sound": "효과음",
+    "music": "음악",
+    "animations": "애니메이션",
+    "theme": "테마",
+    "dark": "다크",
+    "light": "라이트",
+    "general": "일반",
+    "showTutorial": "튜토리얼 보기"
+  },
+  "tutorial": {
+    "skip": "건너뛰기",
+    "prev": "이전",
+    "next": "다음",
+    "finish": "게임 시작!",
+    "category": {
+      "intro": "소개",
+      "cards": "카드와 전술",
+      "map": "지도와 이동",
+      "combat": "전투와 마나",
+      "progression": "성장"
+    },
+    "welcome": {
+      "title": "메이지 나이트에 오신 것을 환영합니다!",
+      "desc": "아틀란티스 대륙을 정복하는 장대한 여정을 시작하세요. 이 가이드가 게임의 모든 것을 알려드립니다."
+    },
+    "overview": {
+      "title": "게임 진행 방식",
+      "desc": "게임은 3라운드(낮 → 밤 → 낮)로 진행됩니다. 각 라운드에서 당신과 더미 플레이어가 번갈아 턴을 합니다. 카드를 사용해 이동, 전투, 상호작용하세요."
+    },
+    "tactics": {
+      "title": "전술 선택",
+      "desc": "각 라운드 시작 시 전술 카드를 선택합니다. 숫자가 낮을수록 먼저 행동하며, 각 전술은 특별한 보너스도 제공합니다."
+    },
+    "cards": {
+      "title": "카드 패",
+      "desc": "하단의 카드가 당신의 패입니다. 각 카드는 기본 효과(무료)와 강화 효과(마나 필요)가 있습니다. 부상 카드는 패를 막으니 휴식으로 치료하세요!"
+    },
+    "cardPlay": {
+      "title": "카드 사용하기",
+      "desc": "카드를 탭하여 선택한 후 플레이를 누르세요. 카드는 이동력, 공격력, 방어력, 영향력, 치유를 제공합니다. 옆으로 놓으면 어떤 유형이든 +1을 줍니다."
+    },
+    "movement": {
+      "title": "지도에서 이동하기",
+      "desc": "헥스를 클릭해 목적지를 선택하세요. 초록색 헥스가 이동 가능한 곳입니다. 이동하면 새 타일이 공개되고 적이 나타날 수 있습니다!"
+    },
+    "terrain": {
+      "title": "지형과 이동 비용",
+      "desc": "평원 2MP, 숲 3MP(밤 2MP), 언덕 3MP, 늪 5MP(밤 3MP), 사막 5MP(밤 3MP). 도로와 안전한 길은 비용을 줄여줍니다."
+    },
+    "sites": {
+      "title": "장소와 상호작용",
+      "desc": "마을은 치료와 기본 카드를, 수도원은 상위 행동을, 성채는 유닛 모집을, 마법사 탑은 주문을 제공합니다. 도시가 최종 정복 목표입니다!"
+    },
+    "combat": {
+      "title": "전투 시스템",
+      "desc": "전투는 4단계로 진행: ① 원거리/공성 공격 ② 적 공격 방어 ③ 방어되지 않은 피해 배분 ④ 근접 공격. 적을 처치하면 명성을 얻습니다!"
+    },
+    "mana": {
+      "title": "마나와 크리스탈",
+      "desc": "마나 주사위로 카드를 강화하세요. 턴당 주사위 1개를 가져올 수 있습니다. 크리스탈은 영구 마나로 언제든 사용 가능합니다. 금색은 낮에, 검은색은 밤에 만능입니다."
+    },
+    "levelUp": {
+      "title": "레벨 업",
+      "desc": "적 처치와 장소 정복으로 명성을 얻으세요. 레벨 임계치에 도달하면 갑옷, 카드 슬롯, 유닛 용량이 증가합니다. 새 스킬이나 상위 카드를 선택하세요!"
+    },
+    "goal": {
+      "title": "당신의 목표",
+      "desc": "지도를 탐험하고, 적을 처치하고, 도시를 정복하세요! 3라운드 후 명성, 정복 장소, 업적 등으로 점수가 계산됩니다. 행운을 빕니다, 메이지 나이트!"
+    }
+  },
+  "tips": {
+    "tipTactic": {
+      "title": "전술을 선택하세요",
+      "desc": "전술 카드를 고르세요. 낮은 숫자가 먼저 행동하지만 높은 숫자는 더 좋은 보너스가 있습니다."
+    },
+    "tipTurn": {
+      "title": "당신의 턴",
+      "desc": "카드를 사용해 이동, 전투, 상호작용하세요. 완료되면 턴 종료를 누르거나, 휴식으로 부상을 치료하세요."
+    },
+    "tipMove": {
+      "title": "이동",
+      "desc": "강조된 헥스를 클릭해 이동하세요. 지형마다 이동 비용이 다릅니다."
+    },
+    "tipCombat": {
+      "title": "전투 시작!",
+      "desc": "전투는 4단계: 원거리 → 방어 → 피해배분 → 근접. 카드와 유닛으로 공격과 방어를 하세요."
+    },
+    "tipDamage": {
+      "title": "피해 배분",
+      "desc": "+ 버튼으로 방어되지 않은 피해를 영웅이나 유닛에 배분하세요. 배분하지 않은 피해는 부상 카드가 됩니다!"
+    },
+    "tipLevelUp": {
+      "title": "레벨 업!",
+      "desc": "축하합니다! 레벨이 올랐습니다. 갑옷, 패 한도, 유닛 슬롯이 향상되었습니다."
+    },
+    "tipSite": {
+      "title": "장소 상호작용",
+      "desc": "장소에 도착했습니다! 위치에 따라 유닛 모집, 카드 구매, 주문 학습, 치료가 가능합니다."
+    },
+    "tipEndTurn": {
+      "title": "턴 완료",
+      "desc": "사용한 카드는 버린 더미로 갑니다. 라운드 끝에 덱이 다시 섞일 때 돌아옵니다."
+    },
+    "gotIt": "확인"
+  },
+  "common": {
+    "search": "검색",
+    "filter": "필터",
+    "sort": "정렬",
+    "all": "전체",
+    "none": "없음",
+    "back": "뒤로",
+    "close": "닫기",
+    "closeDialog": "대화상자 닫기"
+  },
+  "tutorialChapters": {
+    "ch1": {
+      "title": "첫 걸음",
+      "desc": "카드 사용, 영웅 이동, 첫 전투까지 기본기를 배워보세요."
+    },
+    "ch2": {
+      "title": "지형과 탐험",
+      "desc": "지형 비용, 낮과 밤, 마나 소스, 맵 탐험의 기초를 익힙니다."
+    },
+    "ch3": {
+      "title": "마나와 카드 숙달",
+      "desc": "마나 시스템, 크리스탈 관리, 주문, 아티팩트, 부상 회복을 다룹니다."
+    },
+    "ch4": {
+      "title": "상호작용과 유닛",
+      "desc": "장소 방문, 유닛 모집, 마을 치료, 평판 관리를 배웁니다."
+    },
+    "ch5": {
+      "title": "고급 전투",
+      "desc": "속성 저항, 요새화, 특수 능력을 가진 강적에 맞서 싸워보세요."
+    },
+    "ch6": {
+      "title": "도시 공성과 마스터",
+      "desc": "도시 정복, 레벨 업, 스킬 획득, 점수 계산 방법을 배웁니다."
+    }
+  },
+  "tutorialChapterSelect": {
+    "title": "튜토리얼 챕터",
+    "subtitle": "메이지 나이트를 단계별로 배우거나, 원하는 챕터로 바로 이동하세요.",
+    "completed": "완료",
+    "minutes": "분",
+    "start": "시작",
+    "replay": "다시하기",
+    "allComplete": "모든 챕터를 완료했습니다! 실전 게임을 시작할 준비가 되었습니다.",
+    "back": "메뉴로 돌아가기",
+    "close": "닫기"
+  },
+  "interactiveTutorial": {
+    "welcome": {
+      "title": "직접 해보며 배우기!",
+      "desc": "이 튜토리얼은 실제 게임 플레이를 안내합니다. 지시를 따라 직접 행동해 보세요."
+    },
+    "handIntro": {
+      "title": "당신의 카드",
+      "desc": "하단의 카드가 당신의 패입니다. 각 카드는 이동, 공격, 방어 등에 사용됩니다. 하나를 사용해 봅시다!"
+    },
+    "playCard": {
+      "title": "카드 사용하기",
+      "desc": "카드를 탭하여 선택한 후 '플레이' 버튼을 누르세요. 이동 포인트를 얻을 수 있습니다."
+    },
+    "movementIntro": {
+      "title": "영웅 이동하기",
+      "desc": "지도에서 초록색으로 강조된 헥스를 클릭하여 목적지를 선택하세요."
+    },
+    "confirmMove": {
+      "title": "이동 확인",
+      "desc": "'이동 확인' 버튼을 눌러 영웅을 선택한 헥스로 이동시키세요."
+    },
+    "enemySpotted": {
+      "title": "적 발견!",
+      "desc": "인접한 헥스에 적이 있습니다. '전투' 버튼을 눌러 전투를 시작하세요!"
+    },
+    "combatRanged": {
+      "title": "원거리 공격 단계",
+      "desc": "원거리 공격 단계입니다. 지금은 건너뛰어도 됩니다 — '원거리 공격 확인'을 누르세요."
+    },
+    "combatBlock": {
+      "title": "방어 단계",
+      "desc": "적이 공격합니다! 카드나 유닛으로 방어할 수 있습니다. 지금은 '방어 확인'을 누르세요."
+    },
+    "combatDamage": {
+      "title": "피해 배분",
+      "desc": "방어하지 못한 피해를 배분해야 합니다. 영웅 옆의 '+' 버튼을 눌러 피해를 받은 후 '확인'을 누르세요."
+    },
+    "combatMelee": {
+      "title": "근접 공격",
+      "desc": "이제 반격하세요! '근접 공격 확인'을 눌러 적을 공격하세요."
+    },
+    "combatEnd": {
+      "title": "승리!",
+      "desc": "적을 처치하고 명성을 얻었습니다! '전투 종료'를 눌러 계속하세요."
+    },
+    "endTurn": {
+      "title": "턴 종료",
+      "desc": "상단 바의 '턴 종료'를 눌러 턴을 마무리하세요."
+    },
+    "complete": {
+      "title": "튜토리얼 완료!",
+      "desc": "훌륭합니다! 이동, 카드 사용, 전투의 기본을 배웠습니다. 이제 실전 게임을 시작할 준비가 되었습니다!"
+    },
+    "step": "단계",
+    "skip": "튜토리얼 건너뛰기",
+    "next": "다음",
+    "finish": "게임 시작!",
+    "ch1": {
+      "welcome": {
+        "title": "환영합니다, 메이지 나이트!",
+        "desc": "이 실습 튜토리얼에서 첫 턴을 직접 진행합니다. 카드를 사용하고, 맵을 이동하고, 적과 전투해 보세요."
+      },
+      "handOverview": {
+        "title": "카드 패 살펴보기",
+        "desc": "화면 하단의 카드가 당신의 패입니다. 각 카드는 이동, 공격, 방어 등의 능력을 제공합니다. 이 카드들로 행동을 수행하게 됩니다."
+      },
+      "playCard": {
+        "title": "카드 사용",
+        "desc": "카드를 탭해서 선택한 뒤 '플레이'를 누르세요. 이 카드가 이동 포인트를 줄 테니 맵을 돌아다닐 수 있습니다."
+      },
+      "movementPoints": {
+        "title": "이동 포인트",
+        "desc": "행동 바에 이동 포인트가 표시됩니다. 지형마다 진입하는 데 필요한 포인트가 다릅니다."
+      },
+      "selectHex": {
+        "title": "헥스 선택",
+        "desc": "초록색으로 표시된 헥스를 클릭해 목적지를 정하세요. 초록색은 포인트가 충분해서 도달 가능하다는 뜻입니다."
+      },
+      "confirmMove": {
+        "title": "이동 확인",
+        "desc": "'이동 확인'을 눌러 영웅을 선택한 헥스로 보내세요. 이동하면서 포인트가 줄어드는 걸 확인할 수 있습니다."
+      },
+      "moveToHex": {
+        "title": "영웅 이동",
+        "desc": "맵에서 이동할 헥스를 클릭한 뒤 이동을 확정하세요. 초록색 표시가 도달 가능한 헥스입니다."
+      },
+      "terrainIntro": {
+        "title": "지형 비용",
+        "desc": "지형마다 이동 비용이 다릅니다. 평원 2, 숲 3, 언덕 3, 늪과 사막은 5포인트가 듭니다. 도로는 1로 줄어듭니다."
+      },
+      "enemySpotted": {
+        "title": "적 출현!",
+        "desc": "근처 헥스에 적이 대기 중입니다. '전투' 버튼을 눌러 싸워보세요. 적을 처치하면 명성 포인트를 얻습니다."
+      },
+      "combatRanged": {
+        "title": "원거리 단계",
+        "desc": "전투는 원거리 공격부터 시작됩니다. 원거리 공격 카드를 사용하거나, '원거리 공격 확인'으로 건너뛸 수 있습니다."
+      },
+      "combatBlock": {
+        "title": "방어 단계",
+        "desc": "적이 반격합니다! 방어 카드로 피해를 줄이세요. 방어가 끝나면 '방어 확인'을 누르세요."
+      },
+      "combatDamage": {
+        "title": "피해 배분",
+        "desc": "방어하지 못한 피해를 배분해야 합니다. '+' 버튼으로 영웅이나 유닛에 배분하고 '확인'을 누르세요. 미배분 피해는 부상 카드가 됩니다."
+      },
+      "combatMelee": {
+        "title": "근접 단계",
+        "desc": "반격할 시간입니다! 공격 카드를 사용한 뒤 '근접 공격 확인'을 눌러 전투를 마무리하세요."
+      },
+      "combatVictory": {
+        "title": "승리!",
+        "desc": "첫 적을 처치했습니다! 명성 포인트를 획득했습니다. '전투 종료'를 눌러 보상을 받고 계속 진행하세요."
+      },
+      "endTurn": {
+        "title": "턴 종료하기",
+        "desc": "상단의 '턴 종료'를 누르세요. 사용한 카드는 버린 더미로 가며, 덱이 다시 섞일 때 돌아옵니다."
+      },
+      "complete": {
+        "title": "챕터 1 완료!",
+        "desc": "잘 하셨습니다! 카드 사용, 이동, 4단계 전투의 기본을 배웠습니다. 이것들이 모든 것의 기초가 됩니다."
+      }
+    },
+    "ch2": {
+      "welcome": {
+        "title": "세계를 탐험하자",
+        "desc": "이 챕터에서는 지형 종류, 낮과 밤 효과, 마나 소스, 새 타일 공개 방법을 다룹니다."
+      },
+      "terrainTypes": {
+        "title": "지형 종류",
+        "desc": "맵에는 평원(2MP), 숲(3MP), 언덕(3MP), 늪(5MP), 사막(5MP)이 있습니다. 도로는 항상 1MP만 듭니다. 경로를 잘 계획하세요."
+      },
+      "dayNight": {
+        "title": "낮과 밤",
+        "desc": "게임은 낮과 밤 라운드가 번갈아 진행됩니다. 밤에는 숲, 늪, 사막의 이동 비용이 줄어듭니다. 적의 행동 패턴도 달라집니다."
+      },
+      "manaSource": {
+        "title": "마나 소스",
+        "desc": "우측 상단의 색깔 주사위가 마나 소스입니다. 턴 중 아무 플레이어나 사용할 수 있는 마나를 나타냅니다."
+      },
+      "takeMana": {
+        "title": "마나 주사위 가져오기",
+        "desc": "마나 소스에서 주사위를 클릭해 가져오세요. 턴당 1개를 가져올 수 있습니다. 이 마나로 카드의 강화 효과를 발동할 수 있습니다."
+      },
+      "strongEffect": {
+        "title": "강화 효과 사용",
+        "desc": "카드를 내고 마나를 소비하면 강화 효과가 발동됩니다. 강화 효과는 기본 효과보다 훨씬 강력합니다."
+      },
+      "sidewaysPlay": {
+        "title": "옆으로 놓기",
+        "desc": "아무 카드나 옆으로 놓으면 이동, 공격, 방어, 영향력 중 아무 유형에 +1을 줍니다. 패 활용도를 높이는 유연한 방법입니다."
+      },
+      "moveForest": {
+        "title": "숲으로 이동",
+        "desc": "숲 헥스로 이동해 보세요. 낮에는 3MP가 들지만 밤에는 2MP만 듭니다. 지형이 경로 계획에 어떤 영향을 주는지 확인하세요."
+      },
+      "tileReveal": {
+        "title": "새 타일 공개",
+        "desc": "탐험 영역 가장자리로 이동하면 새 맵 타일이 공개됩니다. 탐험이 핵심입니다. 새 타일에서 적, 장소, 보물이 나타납니다."
+      },
+      "crystals": {
+        "title": "크리스탈",
+        "desc": "크리스탈은 언제든 사용할 수 있는 영구 마나입니다. 소스 주사위와 달리 재굴림되지 않으니 신중하게 쓰세요."
+      },
+      "endTurn": {
+        "title": "턴 마무리",
+        "desc": "'턴 종료'를 누르세요. 이 챕터에서 맵 위로도, 지식으로도 많은 거리를 이동했습니다."
+      },
+      "complete": {
+        "title": "챕터 2 완료!",
+        "desc": "지형, 낮/밤 주기, 마나 소스, 탐험을 이해하셨습니다. 이 시스템들이 맵 위 모든 결정에 영향을 줍니다."
+      }
+    },
+    "ch3": {
+      "welcome": {
+        "title": "마나를 정복하자",
+        "desc": "이 챕터에서는 마나 색상, 크리스탈, 주문, 아티팩트, 부상이 패에 미치는 영향을 깊이 다룹니다."
+      },
+      "manaColors": {
+        "title": "마나 색상",
+        "desc": "마나는 네 가지 색으로 나뉩니다: 빨강(공격), 파랑(마법/냉기), 초록(자연/이동), 하양(영혼/치유). 카드가 요구하는 색과 맞춰 사용하세요."
+      },
+      "goldMana": {
+        "title": "금색 & 검정 마나",
+        "desc": "낮에는 금색 마나가 만능 마나로 아무 색이든 대체합니다. 밤에는 검정 마나가 만능 역할을 합니다. 이 변화에 맞춰 전략을 세우세요."
+      },
+      "crystalUsage": {
+        "title": "크리스탈 사용",
+        "desc": "크리스탈은 인벤토리에 영구적으로 남습니다. 카드의 강화 효과를 위해 필요한 색의 크리스탈을 탭해 사용해 보세요."
+      },
+      "powerSpell": {
+        "title": "주문 시전",
+        "desc": "주문은 기본 효과도 마나가 필요합니다. 패에서 주문 카드를 선택하고 필요한 마나를 소비해 시전하세요."
+      },
+      "wounds": {
+        "title": "부상 카드",
+        "desc": "피해를 받으면 부상 카드가 패에 들어옵니다. 일반적으로 사용할 수 없고 선택지를 줄입니다. 치료나 휴식으로 제거하세요."
+      },
+      "woundEffects": {
+        "title": "부상의 페널티",
+        "desc": "부상이 가득 차면 행동이 크게 제한됩니다. 패 전체가 부상이면 강제 휴식해야 합니다. 가능하면 영웅의 체력을 유지하세요."
+      },
+      "artifactCards": {
+        "title": "아티팩트",
+        "desc": "아티팩트는 강력한 일회용 카드입니다. 마나 없이 사용 가능하고, 판세를 바꾸는 효과가 많습니다. 보상이나 특정 장소에서 획득할 수 있습니다."
+      },
+      "cardSidewaysDetail": {
+        "title": "옆으로 놓기 활용",
+        "desc": "카드를 옆으로 놓아 보세요. 원하는 행동 유형에 +1을 줍니다. 카드의 인쇄 효과가 상황에 안 맞을 때 항상 쓸 수 있는 옵션입니다."
+      },
+      "endTurn": {
+        "title": "턴 마무리",
+        "desc": "'턴 종료'를 누르세요. 마나 지식의 든든한 기반을 쌓고 있습니다. 어려운 전투에서 빛을 발할 겁니다."
+      },
+      "complete": {
+        "title": "챕터 3 완료!",
+        "desc": "마나 시스템, 크리스탈, 주문, 아티팩트, 부상 관리를 마스터했습니다. 이 도구들이 가장 어려운 전투를 헤쳐나가는 힘이 됩니다."
+      }
+    },
+    "ch4": {
+      "welcome": {
+        "title": "장소와 동맹",
+        "desc": "맵의 장소를 방문하고, 유닛을 모집하고, 부상을 치료하고, 평판을 쌓아보세요."
+      },
+      "influence": {
+        "title": "영향력",
+        "desc": "영향력은 사교 화폐입니다. 마을 상호작용, 유닛 모집, 장소에서 카드 구매에 사용됩니다. 일부 카드를 내면 영향력이 발생합니다."
+      },
+      "moveToVillage": {
+        "title": "마을 방문",
+        "desc": "영웅을 마을 헥스로 이동시키세요. 마을에서는 치료, 농민 모집, 기본 행동 카드 구매가 가능합니다."
+      },
+      "villageHealing": {
+        "title": "마을에서 치료",
+        "desc": "영향력을 써서 마을에서 부상 카드를 치료하세요. 치료 1포인트당 부상 1장을 제거합니다. 깨끗한 패는 더 많은 선택지를 뜻합니다."
+      },
+      "reputation": {
+        "title": "평판 트랙",
+        "desc": "평판이 상호작용 비용에 영향을 줍니다. 평판이 높으면 모집과 치료가 싸집니다. 마을이나 수도원을 태우면 평판이 급락하니 신중하세요."
+      },
+      "monastery": {
+        "title": "수도원",
+        "desc": "수도원에서는 시작 덱보다 강한 상위 행동 카드를 제공합니다. 영향력을 써서 전력에 추가하세요."
+      },
+      "mageTower": {
+        "title": "마법사 탑",
+        "desc": "마법사 탑에서 주문 카드를 구입할 수 있습니다. 주문은 마나가 필요하지만 효과가 독보적으로 강력합니다. 투자 가치가 충분합니다."
+      },
+      "unitRecruit": {
+        "title": "유닛 모집",
+        "desc": "유닛은 함께 싸우는 동맹입니다. 성채, 마을, 마법사 탑에서 영향력으로 모집하세요. 공격력, 방어력, 특수 능력을 보탤 수 있습니다."
+      },
+      "unitActivation": {
+        "title": "유닛 활성화",
+        "desc": "유닛은 전투당 한 번 활성화할 수 있습니다. 공격이나 방어 수치를 제공하며, 특수 능력을 가진 유닛도 있습니다. 부상 유닛은 치료 전까지 활성화 불가입니다."
+      },
+      "resting": {
+        "title": "휴식",
+        "desc": "카드를 내는 대신 휴식할 수 있습니다. 휴식하면 패 전체(부상 포함)를 버리고 새 패를 뽑습니다. 때로는 가장 현명한 선택입니다."
+      },
+      "endTurn": {
+        "title": "턴 마무리",
+        "desc": "턴을 종료하세요. 맵 곳곳의 장소를 최대한 활용하는 법을 배웠습니다."
+      },
+      "complete": {
+        "title": "챕터 4 완료!",
+        "desc": "장소 상호작용, 유닛 모집, 평판 관리, 치료를 할 수 있게 되었습니다. 이 능력들이 혼자 싸우는 전사를 군대 지휘관으로 만들어줍니다."
+      }
+    },
+    "ch5": {
+      "welcome": {
+        "title": "더 강한 전투",
+        "desc": "맵 깊숙이 갈수록 적이 강해집니다. 이 챕터에서 속성 저항, 특수 능력, 고급 전투 전술을 배웁니다."
+      },
+      "elements": {
+        "title": "속성 유형",
+        "desc": "일부 적은 특정 속성에 저항하거나 약합니다. 불(물리), 얼음(마법), 또는 둘 다. 약점을 노려 공격을 맞추세요."
+      },
+      "enemyAbilities": {
+        "title": "적 능력",
+        "desc": "주의할 키워드: 신속(방어 전에 공격), 잔인(방어 불가 추가 피해), 독(일반 치료 불가 부상), 마비. 각 능력에 맞는 대응이 필요합니다."
+      },
+      "fortified": {
+        "title": "요새화된 적",
+        "desc": "요새화된 적은 원거리 단계의 공성 공격으로만 피해를 줄 수 있습니다. 일반 원거리 공격은 방어에 막힙니다."
+      },
+      "engageCombat": {
+        "title": "적과 교전",
+        "desc": "적 옆으로 이동한 뒤 '전투'를 누르세요. 적의 능력치를 주의 깊게 살피세요: 공격력, 방어력, 특수 능력."
+      },
+      "rangedAttack": {
+        "title": "원거리 공격",
+        "desc": "이 단계에서 원거리 공격 카드를 사용하세요. 요새화된 적이면 공성 피해가 필요합니다. 원거리 유닛도 여기서 기여할 수 있습니다."
+      },
+      "blockElements": {
+        "title": "속성 방어",
+        "desc": "불 공격은 불 방어(또는 물리 방어 2배)가 필요합니다. 얼음 공격도 마찬가지입니다. 일반 방어만으로는 완전히 막을 수 없습니다."
+      },
+      "damageSpecial": {
+        "title": "특수 피해",
+        "desc": "피해 배분에 신중하세요. 독 피해는 마을에서 치료할 수 없는 부상을 만듭니다. 일부 적은 방어하지 못하면 추가 피해를 줍니다."
+      },
+      "meleeFinish": {
+        "title": "전투 마무리",
+        "desc": "적의 방어 수치 이상의 근접 피해를 입히세요. 카드, 유닛, 마나를 조합해 필요한 수치에 도달하세요."
+      },
+      "fameReward": {
+        "title": "명성 보상",
+        "desc": "강한 적일수록 더 많은 명성을 줍니다. 명성이 레벨과 최종 점수를 결정합니다. 준비되면 강적을 찾아 나서세요."
+      },
+      "endTurn": {
+        "title": "턴 종료",
+        "desc": "'턴 종료'로 이번 라운드를 마무리하세요. 매 전투가 영웅을 더 강하게 만들고 앞으로의 도전에 대비시켜 줍니다."
+      },
+      "complete": {
+        "title": "챕터 5 완료!",
+        "desc": "속성, 적 능력, 요새화된 적에 맞서 싸우는 법을 배웠습니다. 맵의 가장 힘든 도전도 이제 감당할 수 있습니다."
+      }
+    },
+    "ch6": {
+      "welcome": {
+        "title": "최종 도전",
+        "desc": "도시는 최고의 시험대입니다. 도시 공성, 수비대 전투, 라운드 전환, 레벨 업, 점수 계산을 다룹니다."
+      },
+      "cityOverview": {
+        "title": "도시 기본",
+        "desc": "도시는 맵 중앙에 위치하며 강력하게 방어됩니다. 도시를 정복하려면 철저한 준비와 강력한 카드가 필요합니다."
+      },
+      "cityColors": {
+        "title": "도시 색상",
+        "desc": "도시마다 색상이 있어 수비대 구성이 달라집니다. 초록 도시가 가장 쉽고, 빨강과 파랑은 중간, 하양 도시가 가장 어렵습니다."
+      },
+      "garrison": {
+        "title": "도시 수비대",
+        "desc": "도시 수비대는 여러 적으로 구성되며, 한 번의 전투에서 모두 상대해야 합니다. 동시에 싸우므로 자원을 신중히 배분하세요."
+      },
+      "assaultPenalty": {
+        "title": "공성 페널티",
+        "desc": "도시를 공격하면 페널티가 적용됩니다. 수비대 적의 방어력과 공격력이 올라갑니다. 요새화된 적은 공성 공격 없이는 긁히지도 않습니다."
+      },
+      "roundTransition": {
+        "title": "라운드 전환",
+        "desc": "게임은 세 라운드로 진행됩니다: 낮, 밤, 다시 낮. 라운드 사이에 카드가 전부 섞이고, 마나가 재굴림되며, 새 전술을 고릅니다. 라운드를 넘나드는 계획이 중요합니다."
+      },
+      "levelUp": {
+        "title": "레벨 업",
+        "desc": "명성을 쌓으면 레벨이 오릅니다. 레벨마다 갑옷 향상, 패 한도 증가, 유닛 슬롯 추가 중 하나를 받습니다. 새 스킬이나 상위 행동 카드도 선택하세요."
+      },
+      "skills": {
+        "title": "스킬",
+        "desc": "스킬은 영구 패시브 보너스나 라운드당 1회 능력을 제공합니다. 패 공간을 차지하지 않습니다. 자신의 플레이 스타일에 맞는 스킬을 고르세요."
+      },
+      "scoring": {
+        "title": "최종 점수",
+        "desc": "세 라운드 후 점수가 집계됩니다. 획득 명성, 정복한 도시, 최대 지식, 최대 군대, 모험 보너스 등이 합산됩니다. 모든 행동이 중요합니다."
+      },
+      "complete": {
+        "title": "전 챕터 완료!",
+        "desc": "축하합니다! 메이지 나이트의 모든 핵심 시스템을 배웠습니다. 아틀란티스 대륙을 정복하고 영광을 차지하세요."
+      }
+    }
+  },
+  "game": {
+    "selectTactic": "전술 선택",
+    "tacticHint": "이번 라운드에 사용할 전술 카드를 선택하세요",
+    "yourTurn": "당신의 차례",
+    "dummyTurn": "더미의 차례",
+    "phase": {
+      "setup": "설정",
+      "round_start": "라운드 시작",
+      "tactic_selection": "전술 선택",
+      "player_turn_start": "당신의 차례",
+      "movement": "이동",
+      "action_declaration": "행동 선언",
+      "interaction": "상호작용",
+      "combat_ranged_siege": "원거리 & 공성",
+      "combat_block": "방어",
+      "combat_assign_damage": "피해 할당",
+      "combat_attack": "공격",
+      "combat_end": "전투 종료",
+      "level_up": "레벨 업",
+      "end_of_turn": "턴 종료",
+      "end_of_round": "라운드 종료",
+      "game_over": "게임 오버"
+    },
+    "phaseHint": {
+      "movement": "카드를 사용하여 이동력을 얻고, 이동할 헥스를 선택하세요.",
+      "action_declaration": "행동을 선택하세요: 장소 상호작용, 탐험, 적 도전, 휴식, 또는 턴 종료.",
+      "interaction": "이 장소에서 어떻게 상호작용할지 선택하세요.",
+      "combat_ranged_siege": "적이 도달하기 전에 원거리 또는 공성 공격을 사용하세요.",
+      "combat_block": "방어 값을 할당하여 받는 피해를 줄이세요.",
+      "combat_assign_damage": "막지 못한 피해를 영웅이나 유닛에 할당하세요.",
+      "combat_attack": "공격 카드를 사용하여 적을 처치하세요.",
+      "end_of_turn": "턴이 종료됩니다. 사용한 카드를 버리고 새 핸드를 뽑으세요.",
+      "end_of_round": "라운드가 종료됩니다. 다음 라운드를 준비하세요."
+    },
+    "undo": "되돌리기",
+    "playSideways": "눕혀서 사용",
+    "sidewaysHint": "이 카드를 범용 +1 보너스로 사용합니다",
+    "sidewaysMove": "+1 이동",
+    "sidewaysAttack": "+1 공격",
+    "sidewaysBlock": "+1 방어",
+    "sidewaysInfluence": "+1 영향력",
+    "movePoints": "이동",
+    "explore": "탐험 (2 MP)",
+    "explorePick": "배치할 영역을 선택하세요",
+    "tileInfo": "타일 정보",
+    "tileInfoUnrevealed": "미탐험",
+    "tileInfoTerrain": "지형",
+    "tileInfoSite": "시설",
+    "tileInfoEnemies": "적",
+    "tileInfoMoveCost": "이동 비용",
+    "tileInfoDay": "낮",
+    "tileInfoNight": "밤",
+    "tileInfoImpassable": "통행 불가",
+    "tileInfoConquered": "정복됨",
+    "tileInfoAttack": "공격",
+    "tileInfoArmor": "방어력",
+    "tileInfoFame": "명성",
+    "tacticManaSteal": "마나 탈취",
+    "tacticManaSearch": "마나 탐색",
+    "tacticRightMoment": "추가 턴",
+    "tacticLongNight": "긴 밤",
+    "tacticMidnightMeditation": "자정 명상",
+    "tacticSparingStore": "카드 저장",
+    "tacticSparingRetrieve": "카드 회수",
+    "rethinkTitle": "재고",
+    "rethinkSubtitle": "손에서 카드(상처 포함)를 최대 3장 버리고 같은 수만큼 뽑습니다.",
+    "preparationTitle": "준비",
+    "preparationSubtitle": "덱에서 카드 1장을 검색하여 손에 넣습니다.",
+    "meditationTitle": "자정 명상",
+    "meditationSubtitle": "손에서 카드(상처 포함)를 최대 5장까지 덱에 섞어 넣고 같은 수만큼 뽑습니다.",
+    "discard": "버리기",
+    "takeCard": "카드 가져오기",
+    "shuffleBack": "덱에 넣기",
+    "selectedCount": "선택됨",
+    "noCardsAvailable": "사용 가능한 카드가 없습니다",
+    "manaStealSelectTitle": "마나 탈취",
+    "manaStealSelectSubtitle": "원천에서 기본색 주사위 1개를 선택하세요.",
+    "manaSearchSelectTitle": "마나 탐색",
+    "manaSearchSelectSubtitle": "리롤할 주사위를 최대 2개 선택하세요.",
+    "selectDie": "선택",
+    "reroll": "리롤",
+    "skip": "건너뛰기",
+    "confirm": "확인",
+    "terrain": {
+      "plains": "평원",
+      "hills": "언덕",
+      "forest": "숲",
+      "wasteland": "황무지",
+      "desert": "사막",
+      "swamp": "늪",
+      "lake": "호수",
+      "mountain": "산",
+      "sea": "바다",
+      "city": "도시"
+    },
+    "advancedActions": "고급 행동",
+    "armor": "방어력",
+    "artifact": "아티팩트",
+    "attachBannerSubtitle": "이 깃발을 들 유닛을 선택하세요. 유닛이 해산될 때까지 보너스가 유지됩니다.",
+    "attachBannerTitle": "깃발 부착",
+    "attack": "공격",
+    "block": "방어",
+    "calculatingScore": "최종 점수 계산 중…",
+    "cancel": "취소",
+    "claimReward": "보상 받기",
+    "close": "닫기",
+    "coachActionBody": "적과 싸우거나, 현재 장소와 상호작용하거나, 턴을 종료하세요.",
+    "coachActionTitle": "행동을 선택하세요",
+    "coachCombatBody": "하단의 전투 트레이를 사용해 각 단계를 확정하고 전투를 종료하세요.",
+    "coachCombatTitle": "전투",
+    "coachInteractionBody": "영향력 카드를 사용해 필요한 것을 구매한 뒤 상호작용을 종료하세요.",
+    "coachInteractionTitle": "상호작용",
+    "coachMoveTitle": "이동 또는 탐험",
+    "coachNoMoveBody": "이동력이 없습니다. 턴을 종료하거나 이동 카드를 더 사용하세요.",
+    "coachTacticBody": "카드 한 장을 선택해 선후공을 정하고 라운드를 시작하세요.",
+    "coachTacticTitle": "전술을 선택하세요",
+    "coachTurnBody": "핸드의 카드를 탭하세요. 옆으로 내서 이동하거나, 기본/강화 효과로 행동할 수 있습니다.",
+    "coachTurnTitle": "턴을 시작하세요",
+    "combatReward": "보상!",
+    "confirmMove": "이동 확정",
+    "continue": "계속",
+    "courageReady": "용기의 깃발: 뒤집어 이 유닛을 준비 상태로",
+    "day": "낮",
+    "declareEndOfRound": "라운드 종료 선언",
+    "endRound": "라운드 종료",
+    "endTurn": "턴 종료",
+    "fame": "명성",
+    "fight": "전투",
+    "handLimit": "핸드",
+    "healWound": "부상 치료",
+    "hexMapPlaceholder": "헥스 맵 — 준비 중",
+    "improvisationChooseSubtitle": "얻을 효과를 선택하세요.",
+    "improvisationChooseTitle": "효과 선택",
+    "improvisationDiscardSubtitle": "효과를 발동하려면 핸드에서 카드 한 장을 버리세요.",
+    "improvisationDiscardTitle": "임기응변",
+    "influence": "영향력",
+    "info": "정보",
+    "level": "레벨",
+    "levelUp": "레벨 업!",
+    "levelUpAABottom": "오퍼 최하단의 고급 행동을 받습니다",
+    "levelUpChoiceA": "A: 새 스킬 + 원하는 행동 카드",
+    "levelUpChoiceB": "B: 공용 스킬 + 최하단 행동 카드",
+    "levelUpNoCommon": "아직 공용 스킬이 없습니다",
+    "levelUpNoSkills": "스킬 덱이 비었습니다 — 고급 행동 카드는 그대로 획득합니다.",
+    "levelUpPickAA": "오퍼에서 고급 행동을 선택하세요",
+    "levelUpPickCommon": "공용 풀에서 스킬을 선택하세요",
+    "levelUpPickRevealed": "공개된 스킬 중 하나를 선택하세요",
+    "loading": "불러오는 중...",
+    "manaSource": "마나 소스",
+    "menu": "메뉴",
+    "move": "이동",
+    "night": "밤",
+    "noCards": "핸드에 카드가 없습니다",
+    "noDiceAvailable": "사용 가능한 주사위가 없습니다",
+    "noTactics": "선택 가능한 전술이 없습니다",
+    "noUnits": "모집한 유닛이 없습니다",
+    "play": "사용",
+    "reachedLevel": "도달 레벨",
+    "ready": "준비",
+    "reputation": "평판",
+    "rest": "휴식",
+    "restStandard": "휴식: 일반 카드를 버리고 부상을 정리합니다",
+    "resume": "계속하기",
+    "rewardChooseType": "고대 유적에 보물이 있습니다. 보상을 선택하세요:",
+    "rewardCrystalBlack": "검정: 크리스탈 대신 명성 1을 얻습니다.",
+    "rewardCrystalGold": "금색: 원하는 기본 색상 크리스탈을 선택하세요!",
+    "rewardCrystalRolled": "마나 주사위 결과:",
+    "rewardNoSpells": "선택 가능한 주문이 없습니다",
+    "rewardSpellPick": "오퍼에서 주문을 선택하세요 — 덱 맨 위에 놓입니다.",
+    "round": "라운드",
+    "roundComplete": "라운드 완료",
+    "roundTransition": "다음 라운드를 준비하세요",
+    "saveAndExit": "저장 후 메인 메뉴",
+    "settings": "설정",
+    "spell": "주문",
+    "spells": "주문",
+    "title": "게임",
+    "unitLimit": "유닛",
+    "units": "유닛",
+    "coachMoveBody": "초록색 헥스로 이동할 수 있습니다. 헥스를 탭한 뒤 이동 확정을 누르세요. 남은 이동력: {{remaining}}",
+    "healUnitCost": "치료: 치유 포인트 {{cost}} 필요",
+    "rewardArtifactPick": "가질 아티팩트를 선택하세요 — 나머지는 덱으로 돌아갑니다.",
+    "rewardCrystalBasic": "크리스탈을 획득합니다.",
+    "siteOwnedLabel": "{{site}} (소유)",
+    "siteConqueredLabel": "{{site}} (정복됨)",
+    "siteColorPrefix": "{{color}} {{site}}",
+    "oppHeader": "이동 가능한 기회",
+    "oppMoveLeft": "남은 이동력 {{count}}",
+    "oppMoveAfter": "도착 후 이동력 {{count}}",
+    "oppEnemies": "적 {{count}}마리",
+    "oppEnemiesAt": "{{site}}에 적 {{count}}마리",
+    "oppReachableHex": "이동 가능한 헥스",
+    "oppFight": "이동 후 전투",
+    "oppInteract": "이동 후 상호작용",
+    "oppExplore": "이 장소 탐험",
+    "availableAction": "가능한 행동",
+    "availableFight": "적이 이곳 또는 인접 칸에 있습니다. 전투를 시작해 명성을 얻고 지역을 정리하세요.",
+    "availableInteract": "이 장소를 지금 이용할 수 있습니다. 영향력 카드를 사용한 뒤 상호작용으로 모집·치료·구매를 하세요.",
+    "dropToPlay": "여기에 놓아 사용",
+    "standardRestTitle": "일반 휴식",
+    "standardRestSubtitle": "상처가 아닌 카드 1장(필수)과 버릴 상처 카드를 선택하세요",
+    "standardRestConfirm": "휴식",
+    "noCardSelected": "선택된 카드가 없습니다",
+    "noCardsInHand": "손에 카드가 없습니다",
+    "basicSpellLabel": "기본 주문",
+    "strongSpellLabel": "강화 주문",
+    "basicEffectLabel": "기본 효과",
+    "strongEffectLabel": "강화 효과",
+    "manaLabel": "마나",
+    "manaRequired": "마나 필요",
+    "noMana": "마나 없음",
+    "competitive": "경쟁용",
+    "woundCard": "상처",
+    "cardType": {
+      "basic_action": "기본 행동",
+      "advanced_action": "고급 행동",
+      "spell": "주문",
+      "artifact": "아티팩트"
+    },
+    "cardSet": {
+      "base": "기본판",
+      "expansion": "확장판",
+      "ultimate": "얼티밋",
+      "lost_legion": "로스트 리전"
+    },
+    "offerHeader": {
+      "advanced_action": "고급 행동",
+      "spell": "주문",
+      "unit": "유닛"
+    },
+    "offerTypeSpell": "주문",
+    "offerTypeAdvAction": "고급 행동",
+    "unitsLabel": "유닛",
+    "noUnitSlots": "유닛 슬롯이 없습니다",
+    "unitStatus": {
+      "ready": "준비됨",
+      "spent": "소모됨",
+      "wounded": "부상"
+    },
+    "zoomIn": "확대",
+    "zoomOut": "축소",
+    "resetView": "보기 초기화",
+    "actionType": {
+      "attack": "공격",
+      "block": "방어",
+      "cold_fire_attack": "냉염 공격",
+      "cold_fire_block": "냉염 방어",
+      "draw_card": "카드 뽑기",
+      "fire_attack": "화염 공격",
+      "fire_block": "화염 방어",
+      "gain_mana": "마나 획득",
+      "gainMana": "마나 획득",
+      "heal": "치유",
+      "heal_wounds": "상처 치유",
+      "ice_attack": "냉기 공격",
+      "ice_block": "냉기 방어",
+      "influence": "영향력",
+      "move": "이동",
+      "move_per_ready_unit": "준비된 유닛당 이동",
+      "ranged_attack": "원거리 공격",
+      "reputation": "평판",
+      "siege_attack": "공성 공격",
+      "cooperative_terrain_discount": "지형 할인 (협동)",
+      "mana": "마나",
+      "draw": "뽑기",
+      "special": "특수",
+      "discard_cost": "버리기 비용",
+      "gain_crystal": "크리스탈 획득",
+      "gain_mana_token": "마나 토큰 획득",
+      "healing": "치유",
+      "fame": "명성",
+      "influence_per_wound": "상처당 영향력",
+      "gain_advanced_action": "고급 행동 획득",
+      "gain_spell": "주문 획득",
+      "enemy_armor_reduction": "적 방어력 감소",
+      "enemy_skip_attack": "적 공격 무효",
+      "destroy_enemy": "적 제거"
+    },
+    "actionCondition": {
+      "day": "낮",
+      "night": "밤"
+    },
+    "element": {
+      "physical": "물리",
+      "fire": "화염",
+      "ice": "냉기",
+      "cold_fire": "냉염"
+    },
+    "chooseEffectTitle": "효과 선택",
+    "chooseEffectSubtitle": "적용할 효과 하나를 선택하세요.",
+    "chooseColorTitle": "색상 선택",
+    "chooseColorSubtitle": "마나 색상을 선택하세요.",
+    "comboTitle": "함께 사용할 카드 선택",
+    "comboSubtitle": "선택한 카드의 강화 효과가 무료로 발동되며 +{{bonus}} 보너스를 받습니다."
+  },
+  "combat": {
+    "title": "전투",
+    "attacks": "공격",
+    "blocks": "방어",
+    "cardsPlayed": "카드 사용",
+    "defeated": "처치",
+    "fame": "명성",
+    "enemies": "적",
+    "victory": "승리!",
+    "resolved": "전투 종료",
+    "of": "/",
+    "enemiesDefeated": "적 처치",
+    "endCombat": "전투 종료",
+    "phaseRangedSiege": "원거리 & 공성",
+    "phaseBlock": "방어",
+    "phaseAssignDamage": "피해 배분",
+    "phaseMeleeAttack": "근접 공격",
+    "phaseCombatResults": "전투 결과",
+    "phaseCombatEnd": "전투 종료",
+    "cardTray": "카드 트레이",
+    "phase": "단계",
+    "total": "합계",
+    "plays": "사용 카드",
+    "undo": "되돌리기",
+    "clearAll": "전체 취소",
+    "handCards": "패 카드",
+    "noCards": "사용 가능한 카드 없음",
+    "units": "유닛",
+    "rangedSiegePhase": "원거리 & 공성 단계",
+    "rangedSiegeHint": "적을 선택한 후, 카드를 사용하여 공격하세요.",
+    "meleePhase": "근접 공격 단계",
+    "meleeHint": "적을 선택한 후, 카드를 사용하여 공격하세요.",
+    "targets": "대상",
+    "activeTarget": "대상",
+    "noEnemies": "대상 적이 없습니다.",
+    "pendingAttacks": "대기 공격",
+    "siege": "공성",
+    "ranged": "원거리",
+    "armor": "방어력",
+    "enough": "충분!",
+    "notEnough": "부족",
+    "noCardsPlayed": "아직 카드를 사용하지 않았습니다 — 아래 카드 트레이를 사용하세요.",
+    "fortifiedWarning": "요새화된 적은 공성 공격이 필요합니다",
+    "noAttacks": "공격이 선언되지 않았습니다. 위의 적을 클릭하세요.",
+    "newAttack": "새 공격",
+    "skipPhase": "건너뛰기",
+    "confirmAttacks": "확인",
+    "blockPhase": "방어 단계",
+    "blockDesc": "방어를 배정하여 적의 피해를 줄이세요. 방어하지 않은 적은 전체 피해를 줍니다.",
+    "incomingAttacks": "적의 공격",
+    "swift": "신속",
+    "attack": "공격",
+    "blockNeeded": "필요 방어",
+    "swiftLabel": "신속",
+    "yourBlock": "현재 방어",
+    "resistsElement": "적이 {{element}} 속성에 저항합니다",
+    "blocked": "방어 완료",
+    "noBlock": "방어 미배정 — 피해를 받습니다",
+    "assignBlock": "방어 배정",
+    "allDefeated": "모든 적을 처치했습니다!",
+    "takeAllDamage": "전체 피해 수용",
+    "confirmBlocks": "방어 확인",
+    "noIncomingDamage": "피해 없음!",
+    "allBlocked": "모든 적의 공격을 방어했습니다.",
+    "continue": "계속",
+    "incomingDamage": "받는 피해",
+    "remaining": "남은 피해",
+    "heroLabel": "영웅",
+    "armorLabel": "갑옷",
+    "confirmDamage": "피해 배분 확인",
+    "assignMore": "{{count}} 피해 더 배분 필요",
+    "dmg": "피해",
+    "woundShort": "부상",
+    "elementPhysical": "물리",
+    "elementFire": "불",
+    "elementIce": "얼음",
+    "elementColdFire": "냉화",
+    "abilityFortified": "요새",
+    "abilityPhysicalResistance": "물리 저항",
+    "abilityFireResistance": "불 저항",
+    "abilityIceResistance": "얼음 저항",
+    "abilitySwift": "신속",
+    "abilityBrutal": "잔인",
+    "abilityPoison": "독",
+    "abilityParalyze": "마비",
+    "abilityArcaneImmunity": "비전 면역",
+    "abilityCumbersome": "둔중",
+    "abilityUnfortified": "비요새",
+    "abilityVampiric": "흡혈",
+    "abilityAssassination": "암살",
+    "abilityDefend1": "방어+1",
+    "abilityDefend2": "방어+2",
+    "abilityRepMinus1": "평판-1",
+    "abilities_one": "능력",
+    "abilities_other": "능력",
+    "basicEffect": "기본",
+    "strongEffect": "강화",
+    "playSideways": "눕혀 사용 (+1)",
+    "viewCardDetail": "카드 상세 보기",
+    "tapToPlay": "탭하여 사용",
+    "tapToClose": "탭하여 닫기",
+    "assignAllToHero": "모든 데미지를 영웅에게 할당",
+    "noMana": "마나 없음",
+    "retreatNote": "살아남은 적이 남아 있습니다. 장소 보상은 없습니다.",
+    "rewardsNote": "보상은 전투 종료 시 처리됩니다.",
+    "skills": "스킬",
+    "removePlay": "플레이 제거"
+  },
+  "interaction": {
+    "title": "장소 상호작용",
+    "site": {
+      "village": "마을",
+      "monastery": "수도원",
+      "mageTower": "마법사 탑",
+      "keep": "성채",
+      "city": "도시"
+    },
+    "influence": "영향력",
+    "influenceAvailable": "사용 가능한 영향력",
+    "influenceModifier": "평판 보정",
+    "influenceFromCard": "+{{value}} 영향력",
+    "influenceSideways": "+1 영향력 (눕혀 사용)",
+    "healingSection": "치료",
+    "healWound": "부상 치료",
+    "healUnit": "유닛 치료",
+    "healingCost": "치료당 영향력 {{cost}}",
+    "healCount": "{{count}}회 치료",
+    "selectWounds": "치료할 부상을 선택하세요",
+    "selectUnit": "치료할 유닛을 선택하세요",
+    "cardsSection": "카드",
+    "learnAA": "상위 행동 학습",
+    "learnAACost": "영향력 6",
+    "learnSpell": "주문 학습",
+    "learnSpellCost": "영향력 7 + 같은 색 마나",
+    "buyArtifact": "아티팩트 구매",
+    "buyArtifactCost": "영향력 12",
+    "unitsSection": "유닛 모집",
+    "recruitUnit": "유닛 모집",
+    "recruitCost": "영향력 {{cost}}",
+    "unitLimitReached": "유닛 한도에 도달했습니다",
+    "noUnitsAvailable": "이 장소에서 모집 가능한 유닛이 없습니다",
+    "noCardsAvailable": "구매 가능한 카드가 없습니다",
+    "interact": "상호작용",
+    "done": "완료",
+    "purchase": "구매",
+    "notEnoughInfluence": "영향력이 부족합니다",
+    "needsMana": "마나가 필요합니다",
+    "cannotInteract": "여기서는 상호작용할 수 없습니다",
+    "reputationBlocked": "평판이 너무 낮아 상호작용할 수 없습니다",
+    "playCardsForInfluence": "카드를 사용해 영향력을 쌓고 아이템을 구매하세요.",
+    "cityGreen": "상위 행동 구매 가능",
+    "cityBlue": "주문 구매 가능",
+    "cityWhite": "모든 유닛 모집 가능",
+    "cityRed": "아티팩트 구매 가능",
+    "disbandHint": "자리를 만들려면 유닛을 해산하세요:",
+    "plunderVillage": "마을 약탈",
+    "plunderVillageHint": "보급품 약탈: 카드 2장을 뽑고 평판 1을 잃습니다.",
+    "revealElite": "정예 유닛 공개 (영향력 2)",
+    "skillsSection": "스킬",
+    "villageAidSection": "마을 지원",
+    "handSection": "손패 카드 사용",
+    "emptyHand": "사용할 수 있는 카드가 없습니다",
+    "playBasic": "기본 +{{value}}",
+    "playStrong": "강화 +{{value}}",
+    "playSideways": "가로로 사용 +1"
+  },
+  "track": {
+    "fame": "명성",
+    "reputation": "평판",
+    "manaSource": "마나 원천",
+    "level": "레벨",
+    "fameToNext": "레벨 {{level}}까지 {{count}} 명성",
+    "maxLevelReached": "최대 레벨 달성",
+    "noInteraction": "상호작용 불가",
+    "cannotInteractWithInhabitants": "주민과 상호작용할 수 없습니다",
+    "manaTokens": "마나",
+    "noDice": "주사위 없음",
+    "activeMana": "보유 마나",
+    "crystalInventory": "크리스탈 인벤토리",
+    "crystalMax": "색상별 최대 {{max}}개"
+  },
+  "ad": {
+    "banner": "광고",
+    "loadingNextRound": "다음 라운드 준비 중...",
+    "noThanks": "괜찮아요",
+    "placeholder": "광고",
+    "rewardDialog": "보상형 광고",
+    "rewardHintPrompt": "짧은 영상을 보고 힌트를 확인할까요?",
+    "rewardRetryPrompt": "짧은 영상을 보고 재도전할까요?",
+    "unavailableOffline": "오프라인에서는 사용할 수 없음",
+    "watchVideo": "영상 보기"
+  },
+  "ads": {
+    "retryTitle": "다시 도전할까요?"
+  },
+  "score": {
+    "achievements": "업적",
+    "baseFame": "기본 명성",
+    "level": "레벨",
+    "title": "게임 종료",
+    "totalScore": "총점",
+    "rating": {
+      "rookie": "신참",
+      "apprentice": "견습 기사",
+      "scout": "정찰병",
+      "knight": "기사",
+      "veteran": "베테랑",
+      "champion": "챔피언",
+      "legend": "전설"
+    },
+    "entryTitle": {
+      "greatestKnowledge": "최고의 지식",
+      "greatestLeader": "최고의 지도자",
+      "greatestConqueror": "최고의 정복자",
+      "citiesConquered": "정복한 도시",
+      "allCitiesConquered": "모든 도시 정복",
+      "earlyFinish": "조기 완료",
+      "dummyRemainingCards": "더미 남은 카드",
+      "endurance": "인내"
+    },
+    "entryDesc": {
+      "greatestKnowledge": "행동 덱에 고급 행동 + 주문이 가장 많음",
+      "greatestLeader": "유닛 영역에 유닛이 가장 많음",
+      "greatestConqueror": "정복한 장소가 가장 많음",
+      "citiesConquered": "도시 {{count}}곳 정복 (곳당 10점)",
+      "allCitiesConquered": "모든 도시 정복 보너스",
+      "earlyFinish": "남은 라운드 {{count}} (라운드당 30점)",
+      "dummyRemainingCards": "더미 덱에 카드 {{count}}장 남음",
+      "endurance": "마지막 라운드에 라운드 종료를 선언하지 않음"
+    }
+  },
+  "skills": {
+    "combatOnly": "전투 중 사용",
+    "dayOnly": "낮에만",
+    "interactionOnly": "상호작용 중에만",
+    "nightOnly": "밤에만",
+    "noCards": "핸드에 카드 없음",
+    "noManaTokens": "마나 토큰 없음",
+    "noReadyUnits": "준비된 유닛 없음",
+    "noSpentUnits": "소모된 유닛 없음",
+    "noWoundedUnits": "부상당한 유닛 없음",
+    "noWounds": "핸드에 부상 카드 없음",
+    "notInCombat": "전투 중 사용 불가",
+    "notSupported": "아직 미지원",
+    "passive": "패시브",
+    "title": "스킬",
+    "used": "사용됨",
+    "type": {
+      "once_per_turn": "턴당 1회",
+      "once_per_round": "라운드당 1회",
+      "interactive_once_per_round": "상호작용 · 라운드당 1회",
+      "passive": "패시브"
+    }
+  },
+  "logmsg": {
+    "forcedWithdrawal": "강제 후퇴! 안전한 칸으로 물러나며 상처 1장을 받았습니다",
+    "gladeHealHand": "마법의 숲: 손에서 상처 1장을 버렸습니다",
+    "gladeHealDiscard": "마법의 숲: 버린 더미에서 상처 1장을 버렸습니다",
+    "mineCrystal": "크리스탈 광산: {{color}} 크리스탈 획득",
+    "siteConquered": "{{site}} 정복!",
+    "skillLearned": "스킬 습득: {{name}}",
+    "bondsCommand": "충성의 결속: 지휘 토큰 +{{count}}",
+    "dummySkillRevealed": "더미가 {{name}} 스킬을 공용 풀에 공개했습니다",
+    "aaOnDeck": "고급 행동 획득: {{name}} (행동 덱 맨 위)",
+    "levelReward": "레벨 {{level}} 보상 획득 완료",
+    "artifactsGained": "아티팩트 획득: {{name}}",
+    "spellGained": "주문 획득: {{name}}",
+    "crystalRollBlack": "크리스탈 굴림: 검은색 — 대신 명성 1을 얻었습니다",
+    "crystalGained": "{{color}} 크리스탈 획득",
+    "healedHandWound": "손의 상처 1장을 치료했습니다",
+    "unitHealed": "{{name}} 치료 (치유 {{cost}})",
+    "woundsHealedInfluence": "영향력 {{cost}}로 상처 {{count}}장 치료",
+    "unitRecruitedCost": "영향력 {{cost}}로 {{name}} 모집",
+    "aaLearned": "영향력 6으로 {{name}} 습득",
+    "aaLearnedMonastery": "수도원에서 영향력 6으로 {{name}} 습득",
+    "spellLearned": "영향력 7 + {{color}} 마나로 주문 {{name}} 습득",
+    "artifactBought": "영향력 12로 아티팩트 {{name}} 구매",
+    "unitRecruited": "{{name}} 모집",
+    "aaAcquired": "고급 행동 획득: {{name}}",
+    "spellAcquired": "주문 획득: {{name}}"
+  },
+  "validation": {
+    "spellNoColor": "주문에 색상이 정의되어 있지 않습니다",
+    "spellBasicNeedsColor": "기본 주문은 {{color}} (또는 금색) 마나가 필요합니다",
+    "spellStrongDay": "강화 주문은 낮에는 사용할 수 없습니다 (검은색 마나 필요, 낮에는 사용 불가)",
+    "spellStrongNeedsColor": "강화 주문은 밤에 {{color}} (또는 금색) 마나가 필요합니다",
+    "actionStrongDayNeedsColor": "강화 효과는 낮에 {{color}} (또는 금색) 마나가 필요합니다",
+    "actionStrongNightNeedsBoth": "강화 효과는 밤에 {{color}} (또는 금색) 마나와 검은색 마나가 모두 필요합니다",
+    "actionStrongNightNeedsColor": "강화 효과는 밤에 {{color}} (또는 금색) 마나가 필요합니다",
+    "actionStrongNightNeedsBlack": "강화 효과는 밤에 검은색 마나가 필요합니다"
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "1": {
+    "name": "Campesinos",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 2"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 2"
+      },
+      {
+        "name": "Movimiento",
+        "text": "Movimiento 2"
+      }
+    ]
+  },
+  "2": {
+    "name": "Herbolarios",
+    "abilities": [
+      {
+        "name": "Curación",
+        "text": "Curación 2"
+      },
+      {
+        "name": "Preparar Unidad",
+        "text": "Prepare una Unidad de nivel I o II"
+      },
+      {
+        "name": "Obtener Maná",
+        "text": "Obtenga una ficha de maná verde"
+      }
+    ]
+  },
+  "3": {
+    "name": "Guardabosques",
+    "abilities": [
+      {
+        "name": "Movimiento",
+        "text": "Movimiento 2. El coste de movimiento de bosques, colinas y pantanos se reduce en 1 este turno, hasta un mínimo de 0."
+      },
+      {
+        "name": "Bloqueo",
+        "text": "Bloqueo 3"
+      }
+    ]
+  },
+  "4": {
+    "name": "Ballesteros Utem",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque a Distancia",
+        "text": "Ataque a Distancia 2"
+      }
+    ]
+  },
+  "5": {
+    "name": "Guardianes Utem",
+    "abilities": [
+      {
+        "name": "Ataque",
+        "text": "Ataque 2"
+      },
+      {
+        "name": "Bloqueo",
+        "text": "Bloqueo 4. Cuenta el doble contra un ataque con Rapidez."
+      }
+    ]
+  },
+  "6": {
+    "name": "Espadachines Utem",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque o Bloqueo (Herida)",
+        "text": "Ataque o Bloqueo 6. Esta Unidad queda Herida."
+      }
+    ]
+  },
+  "7": {
+    "name": "Gólems Guardianes",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 2"
+      },
+      {
+        "name": "Bloqueo de Fuego",
+        "text": "Bloqueo de Fuego 4"
+      },
+      {
+        "name": "Bloqueo de Hielo",
+        "text": "Bloqueo de Hielo 4"
+      }
+    ]
+  },
+  "8": {
+    "name": "Ilusionistas",
+    "abilities": [
+      {
+        "name": "Influencia",
+        "text": "Influencia 4"
+      },
+      {
+        "name": "Pacificar",
+        "text": "El enemigo objetivo no fortificado no ataca este combate."
+      },
+      {
+        "name": "Obtener Cristal",
+        "text": "Obtenga un cristal blanco para su Inventario."
+      }
+    ]
+  },
+  "9": {
+    "name": "Monjes de Capa Roja",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque de Fuego o Bloqueo de Fuego",
+        "text": "Ataque de Fuego o Bloqueo de Fuego 4"
+      }
+    ]
+  },
+  "10": {
+    "name": "Monjes del Norte",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque de Hielo o Bloqueo de Hielo",
+        "text": "Ataque de Hielo o Bloqueo de Hielo 4"
+      }
+    ]
+  },
+  "11": {
+    "name": "Monjes Salvajes",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque de Asedio",
+        "text": "Ataque de Asedio 4"
+      }
+    ]
+  },
+  "12": {
+    "name": "Exploradores",
+    "abilities": [
+      {
+        "name": "Ataque de Asedio",
+        "text": "Ataque de Asedio 1"
+      },
+      {
+        "name": "Explorar",
+        "text": "Observe una ficha boca abajo a 3 espacios o menos en el mapa, o la ficha superior de cualquier pila de fichas de enemigo sin usar. Si derrota esa ficha este turno, obtenga +1 Fama."
+      },
+      {
+        "name": "Movimiento",
+        "text": "Movimiento 2. Puede revelar una nueva loseta a una distancia de 2 espacios en lugar de 1."
+      }
+    ]
+  },
+  "13": {
+    "name": "Matones",
+    "abilities": [
+      {
+        "name": "Bloqueo",
+        "text": "Bloqueo 3"
+      },
+      {
+        "name": "Ataque",
+        "text": "Ataque 3, Reputación -1"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 4, Reputación -1"
+      }
+    ]
+  },
+  "14": {
+    "name": "Tropas de Choque",
+    "abilities": [
+      {
+        "name": "Ataque a Distancia",
+        "text": "Ataque a Distancia 1. Todas sus otras Unidades obtienen +1 a todos sus Ataques este turno."
+      },
+      {
+        "name": "Debilitar",
+        "text": "Reduzca la Armadura y un ataque del enemigo elegido en 1."
+      },
+      {
+        "name": "Provocar",
+        "text": "Reduzca un ataque enemigo en 3. Cualquier daño de ese ataque debe asignarse a esta Unidad primero, incluso si ese enemigo tenía Asesinato."
+      }
+    ]
+  },
+  "15": {
+    "name": "Familiares Mágicos",
+    "abilities": [
+      {
+        "name": "Ataque",
+        "text": "Ataque 3 (+2 si el maná de la carta es rojo)"
+      },
+      {
+        "name": "Bloqueo",
+        "text": "Bloqueo 4 (+3 si el maná de la carta es azul)"
+      },
+      {
+        "name": "Movimiento o Influencia",
+        "text": "Movimiento 3 o Influencia 3 (+2 si el maná de la carta es blanco)"
+      },
+      {
+        "name": "Curación",
+        "text": "Curación 2 (+1 si el maná de la carta es verde)"
+      }
+    ]
+  }
+}

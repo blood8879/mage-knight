@@ -1,0 +1,592 @@
+{
+  "_meta": {
+    "description": "Mage Knight Gold (Elite) Unit Cards (20 Base + 8 Expansion)",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki",
+    "lastUpdated": "2026-02-18"
+  },
+  "units": [
+    {
+      "id": 1,
+      "name": "Fire Golems",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 8,
+      "armor": 4,
+      "recruitSites": ["mage_tower", "keep"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 3",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 3 },
+            { "type": "block", "value": 3 }
+          ]
+        },
+        {
+          "name": "Ranged Fire Attack",
+          "text": "Ranged Fire Attack 4",
+          "manaCost": null,
+          "actions": [
+            { "type": "ranged_attack", "element": "fire", "value": 4 }
+          ]
+        }
+      ],
+      "resistance": "physical_fire",
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 2,
+      "name": "Ice Golems",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 8,
+      "armor": 4,
+      "recruitSites": ["mage_tower", "keep"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 3",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 3 },
+            { "type": "block", "value": 3 }
+          ]
+        },
+        {
+          "name": "Ice Attack",
+          "text": "Ice Attack 6",
+          "manaCost": null,
+          "actions": [
+            { "type": "ice_attack", "value": 6 }
+          ]
+        }
+      ],
+      "resistance": "physical_ice",
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 3,
+      "name": "Fire Mages",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["mage_tower", "monastery"],
+      "abilities": [
+        {
+          "name": "Ranged Fire Attack",
+          "text": "Ranged Fire Attack 3",
+          "manaCost": null,
+          "actions": [
+            { "type": "ranged_attack", "element": "fire", "value": 3 }
+          ]
+        },
+        {
+          "name": "Fire Attack or Fire Block",
+          "text": "Fire Attack or Fire Block 6",
+          "manaCost": null,
+          "actions": [
+            { "type": "fire_attack", "value": 6 },
+            { "type": "fire_block", "value": 6 }
+          ]
+        },
+        {
+          "name": "Gain Red Mana and Crystal",
+          "text": "Gain a red mana token and a red crystal to your Inventory.",
+          "manaCost": null,
+          "actions": [
+            { "type": "gain_mana", "color": "red" },
+            { "type": "gain_crystal", "color": "red" }
+          ]
+        }
+      ],
+      "resistance": "fire",
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 4,
+      "name": "Ice Mages",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["mage_tower", "monastery"],
+      "abilities": [
+        {
+          "name": "Ice Attack or Ice Block",
+          "text": "Ice Attack or Ice Block 4",
+          "manaCost": null,
+          "actions": [
+            { "type": "ice_attack", "value": 4 },
+            { "type": "ice_block", "value": 4 }
+          ]
+        },
+        {
+          "name": "Siege Ice Attack",
+          "text": "Siege Ice Attack 4",
+          "manaCost": null,
+          "actions": [
+            { "type": "siege_attack", "element": "ice", "value": 4 }
+          ]
+        },
+        {
+          "name": "Gain Blue Mana and Crystal",
+          "text": "Gain a blue mana token and a blue crystal to your Inventory.",
+          "manaCost": null,
+          "actions": [
+            { "type": "gain_mana", "color": "blue" },
+            { "type": "gain_crystal", "color": "blue" }
+          ]
+        }
+      ],
+      "resistance": "ice",
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 5,
+      "name": "Amotep Gunners",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 8,
+      "armor": 6,
+      "recruitSites": ["keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Ranged Fire Attack",
+          "text": "Ranged Fire Attack 6",
+          "manaCost": null,
+          "actions": [
+            { "type": "ranged_attack", "element": "fire", "value": 6 }
+          ]
+        }
+      ],
+      "resistance": null,
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 6,
+      "name": "Amotep Freezers",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 8,
+      "armor": 6,
+      "recruitSites": ["keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Freeze",
+          "text": "Target enemy does not attack this combat and it gets Armor -3 (to a minimum of 1).",
+          "manaCost": null,
+          "actions": [
+            { "type": "special", "description": "Target enemy does not attack this combat and it gets Armor -3 (to a minimum of 1)" }
+          ]
+        }
+      ],
+      "resistance": null,
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 7,
+      "name": "Catapults",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["keep", "city"],
+      "abilities": [
+        {
+          "name": "Siege Attack",
+          "text": "Siege Attack 3",
+          "manaCost": null,
+          "actions": [
+            { "type": "siege_attack", "element": "physical", "value": 3 }
+          ]
+        },
+        {
+          "name": "Siege Fire Attack",
+          "text": "Siege Fire Attack 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "siege_attack", "element": "fire", "value": 5 }
+          ]
+        },
+        {
+          "name": "Siege Ice Attack",
+          "text": "Siege Ice Attack 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "siege_attack", "element": "ice", "value": 5 }
+          ]
+        }
+      ],
+      "resistance": null,
+      "copies": 3,
+      "set": "base"
+    },
+    {
+      "id": 8,
+      "name": "Altem Mages",
+      "type": "unit",
+      "tier": "elite",
+      "level": 4,
+      "cost": 12,
+      "armor": 5,
+      "recruitSites": ["city"],
+      "abilities": [
+        {
+          "name": "Gain Mana",
+          "text": "Gain 2 mana tokens of any colors",
+          "manaCost": null,
+          "actions": [
+            { "type": "gain_mana", "color": "any", "value": 2 }
+          ]
+        },
+        {
+          "name": "Cold Fire Attack or Cold Fire Block",
+          "text": "Cold Fire Attack or Cold Fire Block 5. You can pay a blue or red mana to increase this to 7, or pay both to increase this to 9.",
+          "manaCost": null,
+          "actions": [
+            { "type": "cold_fire_attack", "value": 5 },
+            { "type": "cold_fire_block", "value": 5 },
+            { "type": "special", "description": "Pay blue or red mana to increase to 7, or pay both to increase to 9" }
+          ]
+        },
+        {
+          "name": "Elemental Mastery",
+          "text": "Pay a black mana: Choose one: All attacks you play this combat become Cold Fire Attacks, or all your attacks become Siege Attacks in addition to any elements they have.",
+          "manaCost": "black",
+          "actions": [
+            { "type": "special", "description": "Choose one: All attacks you play this combat become Cold Fire Attacks, or all your attacks become Siege Attacks in addition to any elements they have" }
+          ]
+        }
+      ],
+      "resistance": "fire_ice",
+      "copies": 2,
+      "set": "base"
+    },
+    {
+      "id": 9,
+      "name": "Altem Guardians",
+      "type": "unit",
+      "tier": "elite",
+      "level": 4,
+      "cost": 11,
+      "armor": 7,
+      "recruitSites": ["city"],
+      "abilities": [
+        {
+          "name": "Attack",
+          "text": "Attack 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 }
+          ]
+        },
+        {
+          "name": "Block",
+          "text": "Block 8. Counts twice against an attack with Swiftness.",
+          "manaCost": null,
+          "actions": [
+            { "type": "block", "value": 8 },
+            { "type": "special", "description": "Counts twice against an attack with Swiftness" }
+          ]
+        },
+        {
+          "name": "Grant Resistances",
+          "text": "All units you control gain all resistances this turn.",
+          "manaCost": "green",
+          "actions": [
+            { "type": "special", "description": "All units you control gain all resistances this turn" }
+          ]
+        }
+      ],
+      "resistance": null,
+      "copies": 3,
+      "set": "base"
+    },
+    {
+      "id": 10,
+      "name": "Heroes (white)",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 6,
+      "recruitSites": ["village", "keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Ranged Attack",
+          "text": "Ranged Attack 7",
+          "manaCost": null,
+          "actions": [
+            { "type": "ranged_attack", "element": "physical", "value": 7 }
+          ]
+        },
+        {
+          "name": "Influence",
+          "text": "Influence 5. If used during interaction, Reputation +1.",
+          "manaCost": null,
+          "actions": [
+            { "type": "influence", "value": 5 },
+            { "type": "special", "description": "If used during interaction, Reputation +1" }
+          ]
+        }
+      ],
+      "resistance": null,
+      "copies": 1,
+      "set": "expansion"
+    },
+    {
+      "id": 11,
+      "name": "Heroes (green)",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 3,
+      "recruitSites": ["village", "keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Heal",
+          "text": "Heal 4",
+          "manaCost": null,
+          "actions": [
+            { "type": "heal", "value": 4 }
+          ]
+        },
+        {
+          "name": "Influence",
+          "text": "Influence 5. If used during interaction, Reputation +1.",
+          "manaCost": null,
+          "actions": [
+            { "type": "influence", "value": 5 },
+            { "type": "special", "description": "If used during interaction, Reputation +1" }
+          ]
+        }
+      ],
+      "resistance": "physical",
+      "copies": 1,
+      "set": "expansion"
+    },
+    {
+      "id": 12,
+      "name": "Heroes (blue)",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["village", "keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Cold Fire Block",
+          "text": "Cold Fire Block 8",
+          "manaCost": null,
+          "actions": [
+            { "type": "cold_fire_block", "value": 8 }
+          ]
+        },
+        {
+          "name": "Influence",
+          "text": "Influence 5. If used during interaction, Reputation +1.",
+          "manaCost": null,
+          "actions": [
+            { "type": "influence", "value": 5 },
+            { "type": "special", "description": "If used during interaction, Reputation +1" }
+          ]
+        }
+      ],
+      "resistance": "ice",
+      "copies": 1,
+      "set": "expansion"
+    },
+    {
+      "id": 13,
+      "name": "Heroes (red)",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["village", "keep", "city"],
+      "abilities": [
+        {
+          "name": "Attack or Block",
+          "text": "Attack or Block 5",
+          "manaCost": null,
+          "actions": [
+            { "type": "attack", "value": 5 },
+            { "type": "block", "value": 5 }
+          ]
+        },
+        {
+          "name": "Cold Fire Attack",
+          "text": "Cold Fire Attack 6",
+          "manaCost": null,
+          "actions": [
+            { "type": "cold_fire_attack", "value": 6 }
+          ]
+        },
+        {
+          "name": "Influence",
+          "text": "Influence 5. If used during interaction, Reputation +1.",
+          "manaCost": null,
+          "actions": [
+            { "type": "influence", "value": 5 },
+            { "type": "special", "description": "If used during interaction, Reputation +1" }
+          ]
+        }
+      ],
+      "resistance": "fire",
+      "copies": 1,
+      "set": "expansion"
+    },
+    {
+      "id": 14,
+      "name": "Sorcerers",
+      "type": "unit",
+      "tier": "elite",
+      "level": 3,
+      "cost": 9,
+      "armor": 4,
+      "recruitSites": ["mage_tower", "monastery"],
+      "abilities": [
+        {
+          "name": "Ranged Attack",
+          "text": "Ranged Attack 3",
+          "manaCost": null,
+          "actions": [
+            { "type": "ranged_attack", "element": "physical", "value": 3 }
+          ]
+        },
+        {
+          "name": "Remove Fortifications",
+          "text": "Chosen enemy loses all fortifications. Ranged Attack 3.",
+          "manaCost": "white",
+          "actions": [
+            { "type": "special", "description": "Chosen enemy loses all fortifications" },
+            { "type": "ranged_attack", "element": "physical", "value": 3 }
+          ]
+        },
+        {
+          "name": "Remove Resistances",
+          "text": "Chosen enemy loses all resistances. Ranged Attack 3.",
+          "manaCost": "green",
+          "actions": [
+            { "type": "special", "description": "Chosen enemy loses all resistances" },
+            { "type": "ranged_attack", "element": "physical", "value": 3 }
+          ]
+        }
+      ],
+      "resistance": "fire_ice",
+      "copies": 2,
+      "set": "expansion"
+    },
+    {
+      "id": 15,
+      "name": "Delphana Masters",
+      "type": "unit",
+      "tier": "elite",
+      "level": 4,
+      "cost": 13,
+      "armor": 3,
+      "recruitSites": ["city"],
+      "abilities": [
+        {
+          "name": "Paralyze",
+          "text": "Target enemy does not attack.",
+          "manaCost": "blue",
+          "actions": [
+            { "type": "special", "description": "Target enemy does not attack" }
+          ]
+        },
+        {
+          "name": "Destroy If Blocked",
+          "text": "Target enemy is destroyed if blocked.",
+          "manaCost": "red",
+          "actions": [
+            { "type": "special", "description": "Target enemy is destroyed if blocked" }
+          ]
+        },
+        {
+          "name": "Weaken Armor",
+          "text": "Armor of target enemy is reduced by 5 (to a minimum of 1).",
+          "manaCost": "green",
+          "actions": [
+            { "type": "special", "description": "Armor of target enemy is reduced by 5 (to a minimum of 1)" }
+          ]
+        },
+        {
+          "name": "Strip Defenses",
+          "text": "Target enemy loses all fortifications and resistances.",
+          "manaCost": "white",
+          "actions": [
+            { "type": "special", "description": "Target enemy loses all fortifications and resistances" }
+          ]
+        }
+      ],
+      "resistance": "physical_fire_ice",
+      "copies": 2,
+      "set": "expansion"
+    }
+  ]
+}

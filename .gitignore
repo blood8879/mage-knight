@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+dist-ssr/
+.next/
+**/dist/
+**/.next/
+
+# Test / report artifacts
+test-results/
+**/test-results/
+playwright-report/
+**/playwright-report/
+.playwright-mcp/
+
+# Deploy / tooling
+.vercel/
+**/.vercel/
+.omc/
+**/.omc/
+.sisyphus/
+
+# Native builds
+app/android/app/build/
+app/android/.gradle/
+app/android/build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+**/.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.swp
+*.local
+
+# Copyrighted rulebooks / source PDFs (not for redistribution)
+*.pdf
+
+# Playwright test-run screenshots (regenerated each run)
+app/tests/e2e/screenshots/

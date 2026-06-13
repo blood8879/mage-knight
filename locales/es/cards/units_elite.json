@@ -1,0 +1,245 @@
+{
+  "1": {
+    "name": "Gólems de Fuego",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque de Fuego a Distancia",
+        "text": "Ataque de Fuego a Distancia 4"
+      }
+    ]
+  },
+  "2": {
+    "name": "Gólems de Hielo",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 3"
+      },
+      {
+        "name": "Ataque de Hielo",
+        "text": "Ataque de Hielo 6"
+      }
+    ]
+  },
+  "3": {
+    "name": "Magos de Fuego",
+    "abilities": [
+      {
+        "name": "Ataque de Fuego a Distancia",
+        "text": "Ataque de Fuego a Distancia 3"
+      },
+      {
+        "name": "Ataque de Fuego o Bloqueo de Fuego",
+        "text": "Ataque de Fuego o Bloqueo de Fuego 6"
+      },
+      {
+        "name": "Obtener Maná Rojo y Cristal",
+        "text": "Obtenga una ficha de maná rojo y un cristal rojo para su Inventario."
+      }
+    ]
+  },
+  "4": {
+    "name": "Magos de Hielo",
+    "abilities": [
+      {
+        "name": "Ataque de Hielo o Bloqueo de Hielo",
+        "text": "Ataque de Hielo o Bloqueo de Hielo 4"
+      },
+      {
+        "name": "Ataque de Hielo de Asedio",
+        "text": "Ataque de Hielo de Asedio 4"
+      },
+      {
+        "name": "Obtener Maná Azul y Cristal",
+        "text": "Obtenga una ficha de maná azul y un cristal azul para su Inventario."
+      }
+    ]
+  },
+  "5": {
+    "name": "Artilleros Amotep",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Ataque de Fuego a Distancia",
+        "text": "Ataque de Fuego a Distancia 6"
+      }
+    ]
+  },
+  "6": {
+    "name": "Congeladores Amotep",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Congelar",
+        "text": "El enemigo objetivo no ataca este combate y obtiene Armadura -3 (hasta un mínimo de 1)."
+      }
+    ]
+  },
+  "7": {
+    "name": "Catapultas",
+    "abilities": [
+      {
+        "name": "Ataque de Asedio",
+        "text": "Ataque de Asedio 3"
+      },
+      {
+        "name": "Ataque de Fuego de Asedio",
+        "text": "Ataque de Fuego de Asedio 5"
+      },
+      {
+        "name": "Ataque de Hielo de Asedio",
+        "text": "Ataque de Hielo de Asedio 5"
+      }
+    ]
+  },
+  "8": {
+    "name": "Magos Altem",
+    "abilities": [
+      {
+        "name": "Obtener Maná",
+        "text": "Obtenga 2 fichas de maná de cualquier color"
+      },
+      {
+        "name": "Ataque de Fuego Frío o Bloqueo de Fuego Frío",
+        "text": "Ataque de Fuego Frío o Bloqueo de Fuego Frío 5. Puede pagar un maná azul o rojo para aumentar esto a 7, o pagar ambos para aumentar esto a 9."
+      },
+      {
+        "name": "Maestría Elemental",
+        "text": "Pague un maná negro: Elija uno: Todos los ataques que juegue este combate se convierten en Ataques de Fuego Frío, o todos sus ataques se convierten en Ataques de Asedio además de cualquier elemento que tengan."
+      }
+    ]
+  },
+  "9": {
+    "name": "Guardianes Altem",
+    "abilities": [
+      {
+        "name": "Ataque",
+        "text": "Ataque 5"
+      },
+      {
+        "name": "Bloqueo",
+        "text": "Bloqueo 8. Cuenta el doble contra un ataque con Rapidez."
+      },
+      {
+        "name": "Otorgar Resistencias",
+        "text": "Todas las unidades que controle obtienen todas las resistencias este turno."
+      }
+    ]
+  },
+  "10": {
+    "name": "Héroes (blanco)",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Ataque a Distancia",
+        "text": "Ataque a Distancia 7"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 5. Si se usa durante una interacción, Reputación +1."
+      }
+    ]
+  },
+  "11": {
+    "name": "Héroes (verde)",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Curación",
+        "text": "Curación 4"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 5. Si se usa durante una interacción, Reputación +1."
+      }
+    ]
+  },
+  "12": {
+    "name": "Héroes (azul)",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Bloqueo de Fuego Frío",
+        "text": "Bloqueo de Fuego Frío 8"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 5. Si se usa durante una interacción, Reputación +1."
+      }
+    ]
+  },
+  "13": {
+    "name": "Héroes (rojo)",
+    "abilities": [
+      {
+        "name": "Ataque o Bloqueo",
+        "text": "Ataque o Bloqueo 5"
+      },
+      {
+        "name": "Ataque de Fuego Frío",
+        "text": "Ataque de Fuego Frío 6"
+      },
+      {
+        "name": "Influencia",
+        "text": "Influencia 5. Si se usa durante una interacción, Reputación +1."
+      }
+    ]
+  },
+  "14": {
+    "name": "Hechiceros",
+    "abilities": [
+      {
+        "name": "Ataque a Distancia",
+        "text": "Ataque a Distancia 3"
+      },
+      {
+        "name": "Eliminar Fortificaciones",
+        "text": "El enemigo elegido pierde todas las fortificaciones. Ataque a Distancia 3."
+      },
+      {
+        "name": "Eliminar Resistencias",
+        "text": "El enemigo elegido pierde todas las resistencias. Ataque a Distancia 3."
+      }
+    ]
+  },
+  "15": {
+    "name": "Maestros Delphana",
+    "abilities": [
+      {
+        "name": "Paralizar",
+        "text": "El enemigo objetivo no ataca."
+      },
+      {
+        "name": "Destruir si es Bloqueado",
+        "text": "El enemigo objetivo es destruido si es bloqueado."
+      },
+      {
+        "name": "Debilitar Armadura",
+        "text": "La Armadura del enemigo objetivo se reduce en 5 (hasta un mínimo de 1)."
+      },
+      {
+        "name": "Despojar Defensas",
+        "text": "El enemigo objetivo pierde todas las fortificaciones y resistencias."
+      }
+    ]
+  }
+}

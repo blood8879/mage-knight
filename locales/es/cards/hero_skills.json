@@ -1,0 +1,158 @@
+{
+  "1": {
+    "name": "Sendas Oscuras (Dark Paths)",
+    "effect": "Movimiento 1 (durante el Día), o Movimiento 2 (de Noche)."
+  },
+  "2": {
+    "name": "Poder Ardiente (Burning Power)",
+    "effect": "Ataque de Asedio 1, o Ataque de Asedio de Fuego 1."
+  },
+  "3": {
+    "name": "Esgrima Ardiente (Hot Swordsmanship)",
+    "effect": "Ataque 2, o Ataque de Fuego 2."
+  },
+  "4": {
+    "name": "Negociación Oscura (Dark Negotiation)",
+    "effect": "Influencia 2 (durante el Día), o Influencia 3 (de Noche)."
+  },
+  "5": {
+    "name": "Magia de Fuego Oscuro (Dark Fire Magic)",
+    "effect": "Voltea esto para ganar un cristal rojo en tu inventario y una ficha de maná rojo o negro."
+  },
+  "6": {
+    "name": "Poder del Dolor (Power of Pain)",
+    "effect": "Puedes jugar una carta de Herida de lado, como si fuera una carta normal. Otorga +2 en vez de +1. Al final de tu turno, pon esa Herida en tu pila de descarte."
+  },
+  "7": {
+    "name": "Invocación (Invocation)",
+    "effect": "Descarta una carta de Herida para ganar una ficha de maná rojo o negro, o descarta una carta que no sea Herida para ganar una ficha de maná blanco o verde. Debes gastar la ficha de maná obtenida de esta forma inmediatamente."
+  },
+  "8": {
+    "name": "Polarización (Polarization)",
+    "effect": "Puedes usar un maná como maná del color opuesto. Durante el Día, puedes usar maná negro como cualquier color excepto negro (no para activar el efecto potenciado de hechizos). De Noche, puedes usar maná dorado como negro para activar el efecto potenciado de un Hechizo."
+  },
+  "9": {
+    "name": "Motivación (Motivation)",
+    "effect": "Una vez por turno, una de tus Unidades puede usar su habilidad sin pagar su coste de activación."
+  },
+  "10": {
+    "name": "Ritual de Curación (Healing Ritual)",
+    "effect": "Voltea esto para eliminar hasta dos Heridas de tu mano. Una de ellas va a la mano del héroe más cercano en vez de a la pila de Heridas."
+  },
+  "101": {
+    "name": "Marcha Adelante (Forward March)",
+    "effect": "Movimiento 1 por cada Unidad preparada y sin heridas que controles, hasta un máximo de Movimiento 3."
+  },
+  "102": {
+    "name": "Puntería Diurna (Day Sharpshooting)",
+    "effect": "Ataque a Distancia 2 (durante el Día), o Ataque a Distancia 1 (de Noche)."
+  },
+  "103": {
+    "name": "Inspiración (Inspiration)",
+    "effect": "Prepara o Cura una de tus Unidades."
+  },
+  "104": {
+    "name": "Negociación Luminosa (Bright Negotiation)",
+    "effect": "Influencia 3 (durante el Día), o Influencia 2 (de Noche)."
+  },
+  "105": {
+    "name": "Hojas al Viento (Leaves in the Wind)",
+    "effect": "Una vez por Ronda: gana un cristal verde para tu Inventario, o una ficha de maná blanco."
+  },
+  "106": {
+    "name": "Susurros en las Copas (Whispers in the Treetops)",
+    "effect": "Una vez por Ronda: gana un cristal blanco para tu Inventario, o una ficha de maná verde."
+  },
+  "107": {
+    "name": "Liderazgo (Leadership)",
+    "effect": "Cuando actives una Unidad: obtiene Ataque a Distancia +1, Ataque +2 o Bloqueo +3 añadido a su habilidad."
+  },
+  "108": {
+    "name": "Lazos de Lealtad (Bonds of Loyalty)",
+    "effect": "Tienes una ficha de Mando extra. La Unidad reclutada en ella cuesta 5 Influencia menos."
+  },
+  "109": {
+    "name": "Plegaria del Clima (Prayer of Weather)",
+    "effect": "Cooperativa: hasta tu próximo turno, el coste de Movimiento de un tipo de terreno se reduce en 2 (mínimo 1) para ti, y en 1 para los demás jugadores."
+  },
+  "201": {
+    "name": "Poder Gélido (Freezing Power)",
+    "effect": "Ataque de Asedio 1, o Ataque de Asedio de Hielo 1."
+  },
+  "202": {
+    "name": "Elaboración de Pociones (Potion Making)",
+    "effect": "Una vez por Ronda, excepto en combate: voltea esta ficha para Curar 2."
+  },
+  "203": {
+    "name": "Artesanía de Cristal Blanco (White Crystal Craft)",
+    "effect": "Una vez por Ronda: voltea esta ficha para ganar un cristal azul para tu Inventario y una ficha de maná blanco."
+  },
+  "204": {
+    "name": "Artesanía de Cristal Verde (Green Crystal Craft)",
+    "effect": "Una vez por Ronda: voltea esta ficha para ganar un cristal azul para tu Inventario y una ficha de maná verde."
+  },
+  "205": {
+    "name": "Artesanía de Cristal Rojo (Red Crystal Craft)",
+    "effect": "Una vez por Ronda: voltea esta ficha para ganar un cristal azul para tu Inventario y una ficha de maná rojo."
+  },
+  "206": {
+    "name": "Fortuna Reluciente (Glittering Fortune)",
+    "effect": "Durante la interacción: obtén Influencia 1 por cada cristal de distinto color en tu Inventario. Esta Influencia no puede usarse fuera de la interacción."
+  },
+  "207": {
+    "name": "Vuelo (Flight)",
+    "effect": "Una vez por Ronda: voltea esta ficha para moverte a un espacio adyacente gratis, o dos espacios por 2 puntos de Movimiento. Debes terminar en un espacio seguro. Este movimiento no provoca a los enemigos errantes."
+  },
+  "208": {
+    "name": "Poder Universal (Universal Power)",
+    "effect": "Puedes añadir un maná a una carta jugada de lado: da +3 en vez de +1, o +4 si es una carta de Acción o Hechizo del mismo color que ese maná."
+  },
+  "209": {
+    "name": "Motivación (Motivation)",
+    "effect": "Una vez por Ronda, en el turno de cualquier jugador: voltea esta ficha para robar dos cartas. Si tienes la menor Fama (sin empate), gana también una ficha de maná verde."
+  },
+  "210": {
+    "name": "Apertura de la Fuente (Source Opening)",
+    "effect": "Cooperativa: pon esta ficha en el centro y vuelve a tirar un dado de maná de la Fuente. Cualquier jugador puede devolvértela boca abajo para usar un dado extra de color básico de la Fuente y darte un cristal de ese color."
+  },
+  "301": {
+    "name": "Paso Ligero (Double Time)",
+    "effect": "Movimiento 2 (durante el Día), o Movimiento 1 (de Noche)."
+  },
+  "302": {
+    "name": "Puntería Nocturna (Night Sharpshooting)",
+    "effect": "Ataque a Distancia 1 (durante el Día), o Ataque a Distancia 2 (de Noche)."
+  },
+  "303": {
+    "name": "Esgrima Fría (Cold Swordsmanship)",
+    "effect": "Ataque 2, o Ataque de Hielo 2."
+  },
+  "304": {
+    "name": "Maestría con Escudo (Shield Mastery)",
+    "effect": "Bloqueo 3, o Bloqueo de Fuego 2, o Bloqueo de Hielo 2."
+  },
+  "305": {
+    "name": "Ruptura de Resistencia (Resistance Break)",
+    "effect": "Elige una ficha de enemigo: su Armadura se reduce en 1 por cada resistencia que tenga, hasta un mínimo de 1."
+  },
+  "306": {
+    "name": "No Siento Dolor (I Feel No Pain)",
+    "effect": "Una vez por turno, excepto en combate: descarta una Herida de tu mano. Si lo haces, roba una carta nueva."
+  },
+  "307": {
+    "name": "¡Me Importa un Bledo! (I Don't Give a Damn!)",
+    "effect": "Una carta jugada de lado te da +2 en vez de +1. Si es una Acción Avanzada, Hechizo o Artefacto, da +3."
+  },
+  "308": {
+    "name": "¿Quién Necesita Magia? (Who Needs Magic?)",
+    "effect": "Una carta jugada de lado te da +2 en vez de +1. Si no usas ningún dado de la Fuente este turno, da +3."
+  },
+  "309": {
+    "name": "Motivación (Motivation)",
+    "effect": "Una vez por Ronda, en el turno de cualquier jugador: voltea esta ficha para robar dos cartas. Si tienes la menor Fama (sin empate), gana también una ficha de maná azul."
+  },
+  "310": {
+    "name": "Sobrecarga de Maná (Mana Overload)",
+    "effect": "Cooperativa: elige un color básico y gana una ficha de maná de ese color. Pon esta ficha en el centro marcada con ese color. El primer jugador que use maná de ese color para potenciar una carta de Movimiento, Influencia, Ataque o Bloqueo obtiene +4 de esa carta y te devuelve la ficha boca abajo."
+  }
+}

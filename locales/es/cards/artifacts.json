@@ -1,0 +1,127 @@
+{
+  "1": {
+    "name": "Estandarte de Gloria",
+    "basicEffect": "Asigne esto a una unidad que controle. La unidad asignada obtiene armadura +1 y +1 a cualquier ataque o bloqueo que realice. Cada vez que esta unidad ataque o bloquee, fama +1.",
+    "strongEffect": "Las unidades que controle obtienen armadura +1 y +1 a cualquier ataque o bloqueo que realicen este turno. Fama +1 por cada unidad que ataque o bloquee este turno."
+  },
+  "2": {
+    "name": "Estandarte de Miedo",
+    "basicEffect": "Asigne esto a una unidad que controle. Durante la fase de bloqueo del combate, puede gastar esta Unidad para cancelar un ataque enemigo. Si lo hace, Fama +1.",
+    "strongEffect": "Hasta 3 enemigos no atacan este combate."
+  },
+  "3": {
+    "name": "Estandarte de Protección",
+    "basicEffect": "Asigne esto a una unidad que controle. La unidad asignada obtiene armadura +1, resistencia al fuego y resistencia al hielo.",
+    "strongEffect": "Al final de su turno, puede eliminar todas las heridas que recibió este turno."
+  },
+  "4": {
+    "name": "Estandarte de Coraje",
+    "basicEffect": "Asigne esto a una unidad que controle. Una vez por ronda, excepto durante el combate, puede voltear esta carta boca abajo para preparar esta unidad. Al comienzo de una ronda, voltéela boca arriba de nuevo.",
+    "strongEffect": "Puede jugar esto en cualquier momento excepto durante el combate para preparar todas las unidades que controle."
+  },
+  "5": {
+    "name": "Anillo de Rubí",
+    "basicEffect": "Obtenga una ficha de maná rojo y un cristal rojo para su Inventario. Fama +1.",
+    "strongEffect": "Tiene un suministro ilimitado de maná rojo y negro este turno. Fama +1 por cada Hechizo rojo que lance este turno."
+  },
+  "6": {
+    "name": "Anillo de Zafiro",
+    "basicEffect": "Obtenga una ficha de maná azul y un cristal azul para su Inventario. Fama +1.",
+    "strongEffect": "Tiene un suministro ilimitado de maná azul y negro este turno. Fama +1 por cada Hechizo azul que lance este turno."
+  },
+  "7": {
+    "name": "Anillo de Diamante",
+    "basicEffect": "Obtenga una ficha de maná blanco y un cristal blanco para su Inventario. Fama +1.",
+    "strongEffect": "Tiene un suministro ilimitado de maná blanco y negro este turno. Fama +1 por cada Hechizo blanco que lance este turno."
+  },
+  "8": {
+    "name": "Anillo de Esmeralda",
+    "basicEffect": "Obtenga una ficha de maná verde y un cristal verde para su Inventario. Fama +1.",
+    "strongEffect": "Tiene un suministro ilimitado de maná verde y negro este turno. Fama +1 por cada Hechizo verde que lance este turno."
+  },
+  "9": {
+    "name": "Espada de Justicia",
+    "basicEffect": "Cuando juegue esta carta, descarte cualquier cantidad de cartas de su mano. Obtiene Ataque 3 por cada carta que descarte de esta manera. Fama +1 por cada enemigo que derrote este turno.",
+    "strongEffect": "Duplique la contribución de todos los ataques físicos que juegue durante su fase de Ataque este turno. Los enemigos pierden la resistencia física este turno. Fama +1 por cada enemigo que derrote este turno."
+  },
+  "10": {
+    "name": "Cuerno de Ira",
+    "basicEffect": "Ataque de Asedio 5. Lance un dado de maná. Si obtiene negro o rojo, recibe una Herida.",
+    "strongEffect": "Ataque de Asedio 5. Puede añadir hasta +5 a este Ataque de Asedio. Por cada +1 que añada, lance un dado de maná. Recibe una Herida por cada negro o rojo obtenido."
+  },
+  "11": {
+    "name": "Grial Dorado",
+    "basicEffect": "Curación 2. Fama +1 por cada punto de Curación proporcionado por esta carta que gaste este turno.",
+    "strongEffect": "Curación 6. Cada vez que Cure una Herida de su mano este turno, robe una carta."
+  },
+  "12": {
+    "name": "Bolsa de Oro Infinita",
+    "basicEffect": "Influencia 4, Fama +2.",
+    "strongEffect": "Influencia 9, Fama +3."
+  },
+  "13": {
+    "name": "Bolsa de Gemas Infinita",
+    "basicEffect": "Lance un dado de maná dos veces. Obtenga un cristal para su Inventario por cada color obtenido de esta manera (si obtiene oro, usted elige el color). Si obtiene negro, Fama +1 en lugar de un cristal.",
+    "strongEffect": "Obtenga una ficha de maná de cada color básico. También obtenga una ficha de maná de oro (si se juega de día) o negro (si se juega de noche)."
+  },
+  "14": {
+    "name": "Libro de Sabiduría",
+    "basicEffect": "Elimine una carta de Acción de su mano. Obtenga una carta de Acción Avanzada de la oferta de Acciones Avanzadas para su mano que sea del mismo color que la Acción que eliminó.",
+    "strongEffect": "Elimine una carta de Acción de su mano. Obtenga un Hechizo de la oferta de Hechizos para su mano que sea del mismo color que la Acción que eliminó, y un Cristal de ese color para su Inventario."
+  },
+  "15": {
+    "name": "Amuleto del Sol",
+    "basicEffect": "Obtenga una ficha de maná de oro. Si se juega durante la Noche, los bosques tienen su coste de movimiento reducido a 3, puede usar maná de oro, y revela las guarniciones de sitios fortificados cercanos y todas las ruinas como si fuera de día.",
+    "strongEffect": "Igual que el efecto básico, excepto que obtiene tres fichas de maná de oro en lugar de una."
+  },
+  "16": {
+    "name": "Amuleto de Oscuridad",
+    "basicEffect": "Obtenga una ficha de maná de cualquier color. Si se juega durante el Día, los desiertos tienen su coste de movimiento reducido a 3 y puede usar maná negro como si fuera de Noche.",
+    "strongEffect": "Igual que el efecto básico, excepto que obtiene tres fichas de maná de cualquier color en lugar de una."
+  },
+  "17": {
+    "name": "Arco del Amanecer Estelar",
+    "basicEffect": "Cuando juegue esta carta, descarte cualquier cantidad de cartas de su mano. Obtiene Ataque a Distancia 2 por cada carta que descarte de esta manera. Fama 1 por cada enemigo que derrote en la fase actual del combate.",
+    "strongEffect": "Cada uno de sus Ataques a Distancia este turno se duplica, o se convierte en un Ataque de Asedio del mismo elemento. También puede duplicar cualquier Ataque de Asedio, pero se convierten en Ataques a Distancia del mismo elemento."
+  },
+  "18": {
+    "name": "Estandarte de Mando",
+    "basicEffect": "Influencia 4. Si reclutó una Unidad este turno, puede asignar esta carta a ella en lugar de una ficha de Mando. Coloque esta carta boca abajo sobre la Unidad cuando esté gastada, y devuélvala boca arriba debajo de ella cuando esté preparada.",
+    "strongEffect": "Obtenga Fama +2. Reclute cualquier Unidad de la oferta de Unidades gratis. (Si está en su límite de Mando, debe licenciar una de sus unidades primero.)"
+  },
+  "19": {
+    "name": "Estandarte de Fortaleza",
+    "basicEffect": "Asigne esto a una unidad que controle. Una vez por Ronda, cuando la Unidad esté a punto de ser herida, voltee esta carta para ignorar la Herida y cualquier efecto adicional. La Unidad solo puede recibir daño asignado una vez por combate.",
+    "strongEffect": "En cualquier momento excepto durante el combate: Cure completamente todas sus Unidades."
+  },
+  "20": {
+    "name": "Cosechador de Almas",
+    "basicEffect": "Ataque 3. Por un enemigo derrotado por este ataque, obtenga un cristal para su inventario. Puede ser rojo si el enemigo tenía Resistencia al Fuego, azul si tenía Resistencia al Hielo, verde si tenía Resistencia Física. Siempre puede elegir blanco.",
+    "strongEffect": "Ataque 8. Obtenga un cristal como arriba por cada enemigo derrotado en la fase actual del combate."
+  },
+  "21": {
+    "name": "Escudo de los Reyes Caídos",
+    "basicEffect": "Bloqueo 6, o dos Bloqueos 4 contra ataques diferentes.",
+    "strongEffect": "Bloqueo de Fuego Frío 8, o hasta tres Bloqueos de Fuego Frío 4 contra ataques diferentes."
+  },
+  "22": {
+    "name": "Bastón Druídico",
+    "basicEffect": "Descarte una carta. Dependiendo de su color, obtiene: Blanco: Muévase hasta 2 espacios revelados, a un espacio seguro; Azul: Obtenga dos cristales de un mismo color; Rojo: Prepare una Unidad de nivel III o menor; Verde: Curación 3.",
+    "strongEffect": "Elija dos de las opciones anteriores, sin descartar ninguna carta."
+  },
+  "23": {
+    "name": "Diadema de Competencia",
+    "basicEffect": "Use cualquier Habilidad no interactiva de la oferta de Habilidades Comunes (incluyendo la suya propia) como si fuera su Habilidad. Si es una Habilidad usable cada turno (una que no se voltea), use su efecto dos veces.",
+    "strongEffect": "Tome cualquier Habilidad de la oferta de Habilidades Comunes (incluyendo la suya propia) y consérvela por el resto del juego, como si la hubiera adquirido mediante una Subida de Nivel."
+  },
+  "24": {
+    "name": "Tomo de Todos los Hechizos",
+    "basicEffect": "Descarte una carta de cualquier color. Use el efecto básico de un Hechizo del mismo color de la oferta de Hechizos sin pagar su coste de maná.",
+    "strongEffect": "Descarte una carta de cualquier color. Use el efecto más fuerte de un Hechizo del mismo color de la oferta de Hechizos sin pagar su coste de maná. Puede hacerlo incluso durante el Día."
+  },
+  "25": {
+    "name": "Caja Misteriosa",
+    "basicEffect": "Retire y revele la carta superior del mazo de Artefactos. Este turno, puede usar la Caja Misteriosa como si fuera ese Artefacto. Si lo hace, Fama +1.",
+    "strongEffect": "Al final del turno: coloque el Artefacto revelado en la parte inferior del mazo de Artefactos; si no usó la Caja Misteriosa, devuélvala a su mano; si la colocó sobre una unidad como estandarte, descártela."
+  }
+}

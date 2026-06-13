@@ -1,0 +1,64 @@
+{
+  "map_tiles": {
+    "starting_tile": {
+      "name": "Portal Tile",
+      "sides": ["A", "B"],
+      "note": "Two-sided tile. One side used per game as the starting location. Contains the Portal site.",
+      "hex_layout": {
+        "NOT_FOUND_ON_WIKI": true,
+        "note": "Individual hex terrain and site data for Portal Tile not found in text form on the wiki. Check rulebook or physical tile."
+      }
+    },
+    "countryside_tiles": {
+      "total_base_game": 11,
+      "back_color": "green",
+      "tiles": [
+        { "id": "1", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "2", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "3", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "4", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "5", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "6", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "7", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "8", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "9", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "10", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "11", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } }
+      ],
+      "expansion_tiles": [
+        { "id": "12", "source": "expansion" },
+        { "id": "13", "source": "expansion" },
+        { "id": "14", "source": "expansion" }
+      ]
+    },
+    "core_tiles": {
+      "total_base_game": 8,
+      "back_color": "brown",
+      "notation": "Core tile IDs use italicized numbers in the physical game (e.g. *1* through *8*).",
+      "tiles": [
+        { "id": "core-1", "has_city": false, "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-2", "has_city": false, "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-3", "has_city": false, "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-4", "has_city": false, "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-5", "has_city": true, "city_color": "Green", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-6", "has_city": true, "city_color": "Blue", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-7", "has_city": true, "city_color": "White", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } },
+        { "id": "core-8", "has_city": true, "city_color": "Red", "hex_layout": { "NOT_FOUND_ON_WIKI": true, "note": "Individual hex data not available in text form on wiki." } }
+      ],
+      "expansion_tiles": [
+        { "id": "core-9", "source": "expansion" },
+        { "id": "core-10", "source": "expansion" },
+        { "id": "volkares-camp", "id_label": "V", "source": "expansion", "note": "Volkare's Camp tile" }
+      ]
+    }
+  },
+  "_meta": {
+    "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Map_tiles",
+    "not_found_on_wiki": [
+      "Per-hex terrain type for each tile",
+      "Per-hex site/location placement for each tile",
+      "Exact hex count per tile",
+      "Tile layout diagrams in text form (wiki shows images only)"
+    ]
+  }
+}

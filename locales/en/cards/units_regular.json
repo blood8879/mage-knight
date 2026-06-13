@@ -1,0 +1,233 @@
+{
+  "1": {
+    "name": "Peasants",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 2"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 2"
+      },
+      {
+        "name": "Move",
+        "text": "Move 2"
+      }
+    ]
+  },
+  "2": {
+    "name": "Herbalists",
+    "abilities": [
+      {
+        "name": "Heal",
+        "text": "Heal 2"
+      },
+      {
+        "name": "Ready Unit",
+        "text": "Ready a level I or II Unit"
+      },
+      {
+        "name": "Gain Mana",
+        "text": "Gain a green mana token"
+      }
+    ]
+  },
+  "3": {
+    "name": "Foresters",
+    "abilities": [
+      {
+        "name": "Move",
+        "text": "Move 2. The move cost of forests, hills and swamps is reduced by 1 this turn, to a minimum of 0."
+      },
+      {
+        "name": "Block",
+        "text": "Block 3"
+      }
+    ]
+  },
+  "4": {
+    "name": "Utem Crossbowmen",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Ranged Attack",
+        "text": "Ranged Attack 2"
+      }
+    ]
+  },
+  "5": {
+    "name": "Utem Guardsmen",
+    "abilities": [
+      {
+        "name": "Attack",
+        "text": "Attack 2"
+      },
+      {
+        "name": "Block",
+        "text": "Block 4. Counts twice against an attack with Swiftness."
+      }
+    ]
+  },
+  "6": {
+    "name": "Utem Swordsmen",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Attack or Block (Wound)",
+        "text": "Attack or Block 6. This Unit becomes Wounded."
+      }
+    ]
+  },
+  "7": {
+    "name": "Guardian Golems",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 2"
+      },
+      {
+        "name": "Fire Block",
+        "text": "Fire Block 4"
+      },
+      {
+        "name": "Ice Block",
+        "text": "Ice Block 4"
+      }
+    ]
+  },
+  "8": {
+    "name": "Illusionists",
+    "abilities": [
+      {
+        "name": "Influence",
+        "text": "Influence 4"
+      },
+      {
+        "name": "Pacify",
+        "text": "Target unfortified enemy does not attack this combat."
+      },
+      {
+        "name": "Gain Crystal",
+        "text": "Gain a white crystal to your Inventory."
+      }
+    ]
+  },
+  "9": {
+    "name": "Red Cape Monks",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Fire Attack or Fire Block",
+        "text": "Fire Attack or Fire Block 4"
+      }
+    ]
+  },
+  "10": {
+    "name": "Northern Monks",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Ice Attack or Ice Block",
+        "text": "Ice Attack or Ice Block 4"
+      }
+    ]
+  },
+  "11": {
+    "name": "Savage Monks",
+    "abilities": [
+      {
+        "name": "Attack or Block",
+        "text": "Attack or Block 3"
+      },
+      {
+        "name": "Siege Attack",
+        "text": "Siege Attack 4"
+      }
+    ]
+  },
+  "12": {
+    "name": "Scouts",
+    "abilities": [
+      {
+        "name": "Siege Attack",
+        "text": "Siege Attack 1"
+      },
+      {
+        "name": "Scout",
+        "text": "Take a look at a face down token within 3 spaces on the map, or at the top token of any unused enemy token pile. If you defeat that token this turn, gain +1 Fame."
+      },
+      {
+        "name": "Move",
+        "text": "Move 2. You may reveal a new tile at a distance of 2 spaces instead of 1."
+      }
+    ]
+  },
+  "13": {
+    "name": "Thugs",
+    "abilities": [
+      {
+        "name": "Block",
+        "text": "Block 3"
+      },
+      {
+        "name": "Attack",
+        "text": "Attack 3, Reputation -1"
+      },
+      {
+        "name": "Influence",
+        "text": "Influence 4, Reputation -1"
+      }
+    ]
+  },
+  "14": {
+    "name": "Shocktroops",
+    "abilities": [
+      {
+        "name": "Ranged Attack",
+        "text": "Ranged Attack 1. All your other Units get +1 to all their Attacks this turn."
+      },
+      {
+        "name": "Weaken",
+        "text": "Reduce Armor and one attack of chosen enemy by 1."
+      },
+      {
+        "name": "Taunt",
+        "text": "Reduce one enemy attack by 3. Any damage from that attack must be assigned to this Unit first, even if that enemy had Assassination."
+      }
+    ]
+  },
+  "15": {
+    "name": "Magic Familiars",
+    "abilities": [
+      {
+        "name": "Attack",
+        "text": "Attack 3 (+2 if the mana on the card is red)"
+      },
+      {
+        "name": "Block",
+        "text": "Block 4 (+3 if the mana on the card is blue)"
+      },
+      {
+        "name": "Move or Influence",
+        "text": "Move 3 or Influence 3 (+2 if the mana on the card is white)"
+      },
+      {
+        "name": "Heal",
+        "text": "Heal 2 (+1 if the mana on the card is green)"
+      }
+    ]
+  }
+}

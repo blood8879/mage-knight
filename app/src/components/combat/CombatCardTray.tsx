@@ -1,0 +1,584 @@
+import { useState, useCallback, useMemo } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { useCardTranslation } from '@/hooks/useCardTranslation'
+import { useGameStore } from '@/store/gameStore'
+import CardDetail from '@/components/cards/CardDetail'
+import { validateCardPlay } from '@/engine/CardPlayValidator'
+import type { UseCombatCardsReturn } from '@/hooks/useCombatCards'
+import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor } from '@/engine/types'
+import type { GameState } from '@/engine/GameState'
+import type { CombatCardPlay } from '@/engine/combatCardTypes'
+import {
+  getCardEffect, filterActionsForPhase, getManaCost,
+} from '@/utils/combatCardUtils'
+
+// ── Constants ────────────────────────────────
+
+const PHASE_LABEL_KEY: Record<CombatPhase, string> = {
+  ranged_siege: 'combat.phaseRangedSiege',
+  block: 'combat.phaseBlock',
+  assign_damage: 'combat.phaseAssignDamage',
+  attack: 'combat.phaseMeleeAttack',
+  combat_end: 'combat.phaseCombatEnd',
+}
+
+const ELEM: Record<string, { text: string; bg: string }> = {
+  physical: { text: 'text-slate-300', bg: 'bg-slate-700/50' },
+  fire: { text: 'text-orange-400', bg: 'bg-orange-900/40' },
+  ice: { text: 'text-cyan-400', bg: 'bg-cyan-900/40' },
+  cold_fire: { text: 'text-purple-400', bg: 'bg-purple-900/40' },
+}
+
+const TYPE_ICON: Record<string, string> = {
+  basic_action: '⚔', advanced_action: '🗡', spell: '✦', artifact: '◆', wound: '⚡',
+}
+
+const ACT_ICON: Record<string, string> = {
+  attack: '⚔', block: '🛡', ranged_attack: '🏹', siege_attack: '💥',
+}
+
+const STRIP: Record<string, string> = {
+  red: 'bg-red-500', blue: 'bg-blue-500', green: 'bg-emerald-500', white: 'bg-slate-200',
+}
+
+const bodyVariants = {
+  collapsed: { height: 0, opacity: 0 },
+  expanded: {
+    height: 'auto', opacity: 1,
+    transition: { type: 'spring' as const, damping: 28, stiffness: 320, opacity: { duration: 0.2 } },
+  },
+}
+
+const pickerVariants = {
+  hidden: { opacity: 0, y: -4, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.12 } },
+  exit: { opacity: 0, y: -4, scale: 0.95, transition: { duration: 0.08 } },
+}
+
+// ── Helpers ──────────────────────────────────
+
+function renderStrip(card: AnyCard) {
+  if (card.type === 'wound') return <div className="h-1 w-full rounded-t bg-red-800/80" />
+  const c = card.color
+  if (!c) return null
+  if (Array.isArray(c)) {
+    return (
+      <div className="flex h-1 w-full overflow-hidden rounded-t">
+        {c.map((v, i) => <div key={`${v}-${i}`} className={`flex-1 ${STRIP[v] ?? 'bg-slate-600'}`} />)}
+      </div>
+    )
+  }
+  return <div className={`h-1 w-full rounded-t ${STRIP[c] ?? 'bg-slate-600'}`} />
+}
+
+function fmtAction(a: CardAction): string {
+  const d = a.description ?? a.type.replace(/_/g, ' ')
+  return a.value != null ? `${d} ${a.value}` : d
+}
+
+// ── CardActionPicker ─────────────────────────
+
+function PickerRow({ label, icon, amber, mana, onClick }: {
+  label: string; icon: string; amber?: boolean; mana?: string | string[]; onClick: () => void
+}) {
+  return (
+    <button type="button" onClick={onClick} className={[
+      'flex min-h-[40px] w-full items-center gap-1.5 rounded-md px-2 py-2 text-left text-[10px] transition-colors sm:min-h-0 sm:py-1.5',
+      amber ? 'hover:bg-amber-900/30' : 'hover:bg-slate-700/80',
+    ].join(' ')}>
+      <span className="shrink-0 text-xs">{icon}</span>
+      <span className={`flex-1 truncate font-medium ${amber ? 'text-amber-200' : 'text-slate-200'}`}>{label}</span>
+      {mana && (
+        <span className="shrink-0 rounded-full bg-amber-700/50 px-1.5 py-0.5 text-[8px] font-bold text-amber-300">
+          {Array.isArray(mana) ? mana.join('/') : mana}
+        </span>
+      )}
+    </button>
+  )
+}
+
+interface PickerProps {
+  card: AnyCard; handIndex: number; phase: CombatPhase
+  onSelect: (idx: number, eff: 'basic' | 'strong', a: CardAction) => void
+  onSideways: (idx: number) => void; onClose: () => void
+  onViewDetail: (card: AnyCard) => void
+  onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
+  canPlayStrong: boolean
+}
+
+/** Check if a card is Improvisation (special discard-to-choose card) */
+function isImprovisationCard(card: AnyCard): boolean {
+  return card.type !== 'wound' && 'name' in card && card.name === 'Improvisation'
+}
+
+/** Generate synthetic combat actions for Improvisation based on phase */
+function getImprovisationActionsForPhase(phase: CombatPhase, value: number): CardAction[] {
+  switch (phase) {
+    case 'ranged_siege':
+      return [] // Improvisation doesn't provide ranged/siege
+    case 'block':
+      return [{ type: 'block', value, choice: true }]
+    case 'attack':
+      return [{ type: 'attack', value, choice: true }]
+    default:
+      return []
+  }
+}
+
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, canPlayStrong }: PickerProps) {
+  const { t } = useTranslation('ui')
+  if (card.type === 'wound') return null
+  const basic = getCardEffect(card, 'basic')
+  const strong = getCardEffect(card, 'strong')
+  const mana = getManaCost(card)
+
+  // Special handling for Improvisation
+  const isImprov = isImprovisationCard(card)
+
+  const bActs = isImprov
+    ? getImprovisationActionsForPhase(phase, 3)
+    : (basic ? filterActionsForPhase(basic.actions, phase) : [])
+  const sActs = isImprov
+    ? getImprovisationActionsForPhase(phase, 5)
+    : (strong ? filterActionsForPhase(strong.actions, phase) : [])
+  const bChoice = bActs.filter((a) => a.choice), bNon = bActs.filter((a) => !a.choice)
+  const sChoice = sActs.filter((a) => a.choice), sNon = sActs.filter((a) => !a.choice)
+
+  const pick = (eff: 'basic' | 'strong', a: CardAction) => {
+    if (eff === 'strong' && !canPlayStrong) return // mana check
+    if (isImprov && onImprovisation) {
+      onImprovisation(handIndex, eff, a)
+      onClose()
+    } else {
+      onSelect(handIndex, eff, a)
+      onClose()
+    }
+  }
+  const side = () => { onSideways(handIndex); onClose() }
+
+  return (
+    <motion.div
+      className="absolute bottom-full left-1/2 z-30 mb-1.5 w-44 -translate-x-1/2 rounded-lg border border-slate-600/60 bg-slate-800 p-1.5 shadow-xl shadow-black/40"
+      variants={pickerVariants} initial="hidden" animate="visible" exit="exit"
+    >
+      <PickerRow label={t('combat.viewCardDetail')} icon="🔍" onClick={() => { onViewDetail(card); onClose() }} />
+      <div className="my-1 h-px bg-slate-700/60" />
+      {bNon.length > 0 && (
+        <PickerRow label={`${t('combat.basicEffect')}: ${bNon.map(fmtAction).join(', ')}`} icon={ACT_ICON[bNon[0].type] ?? '◈'}
+          onClick={() => pick('basic', bNon[0])} />
+      )}
+      {bChoice.map((a, i) => (
+        <PickerRow key={`bc-${i}`} label={`${t('combat.basicEffect')}: ${fmtAction(a)}`} icon={ACT_ICON[a.type] ?? '◈'}
+          onClick={() => pick('basic', a)} />
+      ))}
+      {sNon.length > 0 && (
+        <PickerRow
+          label={canPlayStrong
+            ? `${t('combat.strongEffect')}: ${sNon.map(fmtAction).join(', ')}`
+            : `${t('combat.strongEffect')}: ${sNon.map(fmtAction).join(', ')} (${t('combat.noMana', 'No Mana')})`}
+          icon={ACT_ICON[sNon[0].type] ?? '◈'}
+          amber={canPlayStrong} mana={mana}
+          onClick={() => pick('strong', sNon[0])} />
+      )}
+      {sChoice.map((a, i) => (
+        <PickerRow key={`sc-${i}`}
+          label={canPlayStrong
+            ? `${t('combat.strongEffect')}: ${fmtAction(a)}`
+            : `${t('combat.strongEffect')}: ${fmtAction(a)} (${t('combat.noMana', 'No Mana')})`}
+          icon={ACT_ICON[a.type] ?? '◈'}
+          amber={canPlayStrong} mana={mana}
+          onClick={() => pick('strong', a)} />
+      ))}
+      <div className="my-1 h-px bg-slate-700/60" />
+      <PickerRow label={t('combat.playSideways')} icon="↗" amber onClick={side} />
+    </motion.div>
+  )
+}
+
+// ── PlayChip ─────────────────────────────────
+
+function PlayChip({ play, onRemove }: { play: CombatCardPlay; onRemove: (id: string) => void }) {
+  const { t } = useTranslation('ui')
+  const el = ELEM[play.element] ?? ELEM.physical
+  const sw = play.effectType === 'sideways'
+  const st = play.effectType === 'strong'
+
+  return (
+    <div className={[
+      'group flex items-center gap-1 rounded-md border px-2 py-1 text-[10px]',
+      sw ? 'border-amber-700/30 bg-amber-950/20' : st ? 'border-amber-600/30 bg-amber-950/30' : 'border-slate-700/40 bg-slate-800/60',
+    ].join(' ')}>
+      <span className={`font-semibold ${sw ? 'text-amber-300/80' : el.text}`}>{play.cardName}</span>
+      {sw
+        ? <span className="rounded bg-amber-800/40 px-1 py-px text-[8px] font-bold text-amber-400">+1</span>
+        : <span className={`rounded px-1 py-px text-[8px] font-bold ${el.bg} ${el.text}`}>{play.value}</span>}
+      {st && play.manaCost && (
+        <span className="rounded-full bg-amber-700/40 px-1 py-px text-[8px] font-bold text-amber-300">
+          {Array.isArray(play.manaCost) ? play.manaCost.join('/') : play.manaCost}
+        </span>
+      )}
+      <button type="button" onClick={() => onRemove(play.id)} aria-label={t('combat.removePlay', { defaultValue: 'Remove play' })}
+        className="ml-0.5 rounded text-[9px] text-slate-500 opacity-0 transition-all hover:text-red-400 group-hover:opacity-100">
+        ✕
+      </button>
+    </div>
+  )
+}
+
+// ── Main Component ───────────────────────────
+
+interface CombatCardTrayProps {
+  phase: CombatPhase
+  combatCards: UseCombatCardsReturn
+}
+
+/** Check if a card's strong effect can be played given current mana */
+function checkCanPlayStrong(card: AnyCard, engineState: GameState | null, dayNight: 'day' | 'night'): boolean {
+  if (!engineState) return false
+  if (card.type === 'wound') return false
+  // Artifacts always playable strong
+  if (card.type === 'artifact') return true
+
+  const manaState = engineState.player.mana
+  const hasColor = (c: ManaColor) => {
+    if (manaState.playerMana.some((t) => t.color === c)) return true
+    if (manaState.crystals[c] > 0) return true
+    return false
+  }
+  const hasGold = manaState.playerMana.some((t) => t.color === 'gold') && dayNight === 'day'
+  const hasBlack = manaState.playerMana.some((t) => t.color === 'black') && dayNight === 'night'
+
+  const result = validateCardPlay(card as DeedCard, dayNight, { hasColor, hasBlack, hasGold })
+  return result.canPlayStrong
+}
+
+export default function CombatCardTray({ phase, combatCards }: CombatCardTrayProps) {
+  const { t } = useTranslation('ui')
+  const { getCardName } = useCardTranslation()
+  const engineState = useGameStore((s) => s.engineState)
+  const dayNight = useGameStore((s) => s.dayNight) ?? 'day'
+  const [isExpanded, setIsExpanded] = useState(true)
+  const [pickerIdx, setPickerIdx] = useState<number | null>(null)
+  const [detailCard, setDetailCard] = useState<DeedCard | null>(null)
+  const [detailOpen, setDetailOpen] = useState(false)
+  const [improvMode, setImprovMode] = useState<{
+    cardIndex: number
+    effectType: 'basic' | 'strong'
+    action: CardAction
+  } | null>(null)
+
+  const {
+    plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue,
+    playCardForPhase, playCardSideways, activateUnit, activateSkillForCombat, removePlay, undoLastPlay, resetPhase,
+  } = combatCards
+
+  const unitsWithActions = useMemo(() => availableUnits.filter((u) => u.actions.length > 0), [availableUnits])
+
+  const toggleExpand = useCallback(() => setIsExpanded((p) => !p), [])
+
+  const handleCardClick = useCallback((idx: number, card: AnyCard) => {
+    if (card.type === 'wound' || usedCardIndices.has(idx)) return
+    setPickerIdx((p) => (p === idx ? null : idx))
+  }, [usedCardIndices])
+
+  const handleSelect = useCallback((idx: number, eff: 'basic' | 'strong', a: CardAction) => {
+    playCardForPhase(idx, eff, a); setPickerIdx(null)
+  }, [playCardForPhase])
+
+  const handleSideways = useCallback((idx: number) => {
+    playCardSideways(idx); setPickerIdx(null)
+  }, [playCardSideways])
+
+  // Improvisation: step 1 — user picked an effect, now needs to discard a card
+  const handleImprovisation = useCallback((cardIndex: number, effectType: 'basic' | 'strong', action: CardAction) => {
+    setImprovMode({ cardIndex, effectType, action })
+    setPickerIdx(null)
+  }, [])
+
+  // Improvisation: step 2 — user picked a card to discard
+  const handleImprovDiscard = useCallback((discardIdx: number) => {
+    if (!improvMode) return
+    // First: play the Improvisation card with the chosen combat action (Attack 3 / Block 3 etc.)
+    playCardForPhase(improvMode.cardIndex, improvMode.effectType, improvMode.action)
+    // Then: mark the discarded card as used with a zero-value action (discard cost, no combat contribution)
+    playCardForPhase(discardIdx, 'basic', { type: 'discard_cost', value: 0, description: 'Improvisation discard' })
+    setImprovMode(null)
+  }, [improvMode, playCardForPhase])
+
+  const closePicker = useCallback(() => setPickerIdx(null), [])
+
+  const handleViewDetail = useCallback((card: AnyCard) => {
+    if (card.type !== 'wound') {
+      setDetailCard(card as DeedCard)
+      setDetailOpen(true)
+    }
+  }, [])
+
+  const closeDetail = useCallback(() => {
+    setDetailOpen(false)
+    setDetailCard(null)
+  }, [])
+
+  const handleUnit = useCallback((ui: number, a: CardAction, ab: UnitAbility) => {
+    activateUnit(ui, a, ab)
+  }, [activateUnit])
+
+  const handleSkill = useCallback((si: number, a: CardAction) => {
+    activateSkillForCombat(si, a)
+  }, [activateSkillForCombat])
+
+  return (
+    <div className="sticky bottom-0 z-40 w-full border-t border-slate-700/50 bg-slate-900/95 shadow-[0_-4px_24px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+      {/* Header */}
+      <button type="button" onClick={toggleExpand}
+        className="flex w-full items-center justify-between px-4 py-2 transition-colors hover:bg-slate-800/60">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            {t('combat.cardTray', 'Card Tray')}
+          </span>
+          <motion.span className="text-[10px] text-slate-500"
+            animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>▼</motion.span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] font-semibold text-slate-500">
+            {t('combat.phase', 'Phase')}: {t(PHASE_LABEL_KEY[phase])}
+          </span>
+          <span className="rounded-full bg-slate-800 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-400">
+            {t('combat.total', 'Total')}: {totalPhaseValue}
+          </span>
+        </div>
+      </button>
+
+      {/* Expandable body */}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div key="tray-body" variants={bodyVariants}
+            initial="collapsed" animate="expanded" exit="collapsed" className="overflow-hidden">
+            <div className="space-y-3 px-4 pb-3">
+
+              {/* Plays summary & undo controls */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                    {t('combat.plays', 'Plays')} ({plays.length})
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button type="button" onClick={undoLastPlay}
+                      disabled={plays.length === 0}
+                      className={[
+                        'rounded px-2 py-0.5 text-[9px] font-semibold transition-colors',
+                        plays.length > 0
+                          ? 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200'
+                          : 'cursor-not-allowed bg-slate-800/50 text-slate-600',
+                      ].join(' ')}>
+                      ↩ {t('combat.undo', 'Undo')}
+                    </button>
+                    <button type="button" onClick={resetPhase}
+                      disabled={plays.length === 0}
+                      className={[
+                        'rounded px-2 py-0.5 text-[9px] font-semibold transition-colors',
+                        plays.length > 0
+                          ? 'bg-slate-800 text-red-400/70 hover:bg-red-900/30 hover:text-red-300'
+                          : 'cursor-not-allowed bg-slate-800/50 text-slate-600',
+                      ].join(' ')}>
+                      ✕ {t('combat.clearAll', 'Clear All')}
+                    </button>
+                  </div>
+                </div>
+                {plays.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {plays.map((p) => <PlayChip key={p.id} play={p} onRemove={removePlay} />)}
+                  </div>
+                )}
+              </div>
+
+              {/* Hand cards */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                  {t('combat.handCards', 'Hand Cards')}
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {availableCards.length === 0 && (
+                    <span className="py-2 text-[10px] text-slate-600 italic">
+                      {t('combat.noCards', 'No cards available')}
+                    </span>
+                  )}
+                  {availableCards.map(({ card, index, isRelevant }) => {
+                    const w = card.type === 'wound'
+                    const used = usedCardIndices.has(index)
+                    const sel = pickerIdx === index
+                    return (
+                      <div key={`${card.id}-${index}`} className="relative">
+                        <div className={[
+                          'relative flex w-[72px] flex-col overflow-hidden rounded-md border transition-all duration-150 sm:w-[80px]',
+                          w ? 'border-red-800/40 bg-red-950/40 opacity-30'
+                            : used ? 'border-slate-700/30 bg-slate-800/40 opacity-30'
+                            : sel ? 'border-violet-500/60 bg-slate-800 ring-2 ring-violet-400/50 ring-offset-1 ring-offset-slate-900'
+                            : isRelevant ? 'border-slate-600/60 bg-slate-800 ring-1 ring-amber-500/40'
+                            : 'border-slate-700/50 bg-slate-800/70',
+                        ].join(' ')}>
+                          {renderStrip(card)}
+                          {/* Info button — opens CardDetail directly */}
+                          {!w && !used && (
+                            <button
+                              type="button"
+                              aria-label={`View ${getCardName(card)} details`}
+                              onClick={() => handleViewDetail(card)}
+                              className="absolute top-1 right-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-slate-700/80 text-[8px] text-slate-400 transition-colors hover:bg-violet-700/80 hover:text-white"
+                            >
+                              i
+                            </button>
+                          )}
+                          {/* Main tap area — opens action picker */}
+                          <button
+                            type="button"
+                            disabled={w || used}
+                            onClick={() => handleCardClick(index, card)}
+                            className="flex min-h-[64px] w-full flex-col items-center justify-center px-1 py-2 disabled:cursor-not-allowed"
+                          >
+                            <span className={`text-base leading-none sm:text-lg ${w ? 'text-red-500' : ''}`}>
+                              {TYPE_ICON[card.type] ?? '?'}
+                            </span>
+                            <span className={`mt-1 w-full truncate text-center text-[9px] font-medium leading-tight sm:text-[10px] ${w ? 'text-red-400' : 'text-slate-300'}`}>
+                              {getCardName(card)}
+                            </span>
+                            {!w && !used && (
+                              <span className="mt-1 text-[8px] text-slate-600">
+                                {sel ? t('combat.tapToClose', 'tap to close') : t('combat.tapToPlay', 'tap to play')}
+                              </span>
+                            )}
+                          </button>
+                          {isRelevant && !w && !used && (
+                            <div className="pointer-events-none absolute inset-0 rounded-md shadow-[inset_0_0_6px_rgba(245,158,11,0.08)]" />
+                          )}
+                        </div>
+                        <AnimatePresence>
+                          {sel && !w && !used && (
+                            <CardActionPicker card={card} handIndex={index} phase={phase}
+                              onSelect={handleSelect} onSideways={handleSideways} onClose={closePicker} onViewDetail={handleViewDetail}
+                              onImprovisation={handleImprovisation}
+                              canPlayStrong={checkCanPlayStrong(card, engineState, dayNight)} />
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Skills (UNIT-09-B) */}
+              {availableSkills.length > 0 && (
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-amber-500/80">
+                    {t('combat.skills', 'Skills')}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {availableSkills.map(({ skill, index, actions }) => (
+                      <div key={`skill-${index}`}
+                        className="flex items-center gap-1.5 rounded-md border border-amber-700/40 bg-amber-950/30 px-2 py-1.5">
+                        <span className="text-[10px] font-semibold text-amber-200">✨ {skill.name}</span>
+                        <div className="flex gap-1">
+                          {actions.map((action, i) => (
+                            <button key={`sa-${i}`} type="button"
+                              onClick={() => handleSkill(index, action)}
+                              className="rounded bg-amber-900/40 px-1.5 py-0.5 text-[9px] font-medium text-amber-100 transition-colors hover:bg-amber-700/50">
+                              {ACT_ICON[action.type] ?? '◈'} {fmtAction(action)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Units */}
+              {unitsWithActions.length > 0 && (
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                    {t('combat.units', 'Units')}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {unitsWithActions.map(({ unit, index, actions }) => (
+                      <div key={`unit-${index}`}
+                        className="flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/70 px-2 py-1.5">
+                        <span className="text-[10px] font-semibold text-slate-200">{unit.unit.name}</span>
+                        <div className="flex gap-1">
+                          {actions.map(({ ability, action }, i) => (
+                            <button key={`ua-${i}`} type="button"
+                              onClick={() => handleUnit(index, action, ability)}
+                              className="rounded bg-slate-700/60 px-1.5 py-0.5 text-[9px] font-medium text-slate-300 transition-colors hover:bg-violet-800/40 hover:text-violet-200">
+                              {ACT_ICON[action.type] ?? '◈'} {fmtAction(action)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <CardDetail card={detailCard} isOpen={detailOpen} onClose={closeDetail} />
+
+      {/* Improvisation: discard selection overlay */}
+      <AnimatePresence>
+        {improvMode && (
+          <motion.div
+            key="improv-discard"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm"
+          >
+            <div className="w-full max-w-sm rounded-xl border border-violet-600/40 bg-slate-900 p-4 shadow-2xl">
+              <h3 className="mb-1 text-center text-sm font-black text-violet-300">
+                {t('game.improvisationDiscardTitle', 'Improvisation')}
+              </h3>
+              <p className="mb-3 text-center text-[10px] text-slate-400">
+                {t('game.improvisationDiscardSubtitle', 'Discard a card from your hand to activate the effect.')}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {availableCards
+                  .filter(({ index }) => index !== improvMode.cardIndex && !usedCardIndices.has(index))
+                  .map(({ card: c, index: idx }) => {
+                    const isWound = c.type === 'wound'
+                    return (
+                      <button
+                        key={`improv-${c.id}-${idx}`}
+                        type="button"
+                        disabled={isWound}
+                        onClick={() => handleImprovDiscard(idx)}
+                        className={[
+                          'flex w-[72px] flex-col items-center rounded-md border px-1 py-2 transition-all',
+                          isWound
+                            ? 'cursor-not-allowed border-red-800/40 bg-red-950/40 opacity-30'
+                            : 'border-slate-600/60 bg-slate-800 hover:border-violet-500/60 hover:ring-2 hover:ring-violet-400/50 active:scale-95',
+                        ].join(' ')}
+                      >
+                        <span className="text-base">{TYPE_ICON[c.type] ?? '?'}</span>
+                        <span className="mt-1 w-full truncate text-center text-[9px] font-medium text-slate-300">
+                          {getCardName(c)}
+                        </span>
+                      </button>
+                    )
+                  })}
+              </div>
+              <button
+                type="button"
+                onClick={() => setImprovMode(null)}
+                className="mt-3 w-full rounded-lg bg-slate-700 px-4 py-2 text-xs font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+              >
+                {t('game.cancel', 'Cancel')}
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}

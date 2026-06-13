@@ -1,0 +1,158 @@
+{
+  "1": {
+    "name": "Dark Paths",
+    "effect": "Move 1 (during the Day), or Move 2 (at Night)."
+  },
+  "2": {
+    "name": "Burning Power",
+    "effect": "Siege Attack 1, or Fire Siege Attack 1."
+  },
+  "3": {
+    "name": "Hot Swordsmanship",
+    "effect": "Attack 2, or Fire Attack 2."
+  },
+  "4": {
+    "name": "Dark Negotiation",
+    "effect": "Influence 2 (during the Day), or Influence 3 (at Night)."
+  },
+  "5": {
+    "name": "Dark Fire Magic",
+    "effect": "Flip this to gain one red crystal to your inventory, and one red or one black mana token."
+  },
+  "6": {
+    "name": "Power of Pain",
+    "effect": "You can play one Wound sideways, as if it were a non-Wound card. It gives +2 instead of +1. At the end of your turn, put that Wound in your discard pile."
+  },
+  "7": {
+    "name": "Invocation",
+    "effect": "Discard a Wound card to gain a red or black mana token, or discard a non-wound card to gain a white or green mana token. You must spend a mana token gained this way immediately."
+  },
+  "8": {
+    "name": "Polarization",
+    "effect": "You can use one mana as a mana of the opposite color. During the Day, you could use a black mana as any color other than black (not to power the stronger effect of spells). At Night, you could use a gold mana as black to power the stronger effect of a Spell."
+  },
+  "9": {
+    "name": "Motivation",
+    "effect": "Once a turn, one of your Units may use its ability without paying its activation cost."
+  },
+  "10": {
+    "name": "Healing Ritual",
+    "effect": "Flip this to throw away up to two Wounds from your hand. One of them goes to the hand of the closest hero instead of to the Wound pile."
+  },
+  "101": {
+    "name": "Forward March",
+    "effect": "Move 1 for each Ready and unwounded Unit you control, to a maximum of Move 3."
+  },
+  "102": {
+    "name": "Day Sharpshooting",
+    "effect": "Ranged Attack 2 (during the Day), or Ranged Attack 1 (at Night)."
+  },
+  "103": {
+    "name": "Inspiration",
+    "effect": "Ready or Heal one of your Units."
+  },
+  "104": {
+    "name": "Bright Negotiation",
+    "effect": "Influence 3 (during the Day), or Influence 2 (at Night)."
+  },
+  "105": {
+    "name": "Leaves in the Wind",
+    "effect": "Once a Round: gain a green crystal to your Inventory, or a white mana token."
+  },
+  "106": {
+    "name": "Whispers in the Treetops",
+    "effect": "Once a Round: gain a white crystal to your Inventory, or a green mana token."
+  },
+  "107": {
+    "name": "Leadership",
+    "effect": "When you activate a Unit: it gets Ranged Attack +1, Attack +2 or Block +3 added to its ability."
+  },
+  "108": {
+    "name": "Bonds of Loyalty",
+    "effect": "You have one extra Command token. The Unit recruited to it costs 5 less Influence."
+  },
+  "109": {
+    "name": "Prayer of Weather",
+    "effect": "Cooperative: until your next turn, the Move cost of one terrain type is reduced by 2 (minimum 1) for you, and by 1 for other players."
+  },
+  "201": {
+    "name": "Freezing Power",
+    "effect": "Siege Attack 1, or Ice Siege Attack 1."
+  },
+  "202": {
+    "name": "Potion Making",
+    "effect": "Once a Round, except in combat: flip this for Heal 2."
+  },
+  "203": {
+    "name": "White Crystal Craft",
+    "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one white mana token."
+  },
+  "204": {
+    "name": "Green Crystal Craft",
+    "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one green mana token."
+  },
+  "205": {
+    "name": "Red Crystal Craft",
+    "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one red mana token."
+  },
+  "206": {
+    "name": "Glittering Fortune",
+    "effect": "During interaction: get Influence 1 for each different color crystal in your Inventory. This Influence cannot be used outside of interaction."
+  },
+  "207": {
+    "name": "Flight",
+    "effect": "Once a Round: flip this to move to an adjacent space for free, or two spaces for 2 Move points. You must end this move in a safe space. This move does not provoke rampaging enemies."
+  },
+  "208": {
+    "name": "Universal Power",
+    "effect": "You may add one mana to a card played sideways: it gives +3 instead of +1, or +4 if it is an Action or Spell card of the same color as that mana."
+  },
+  "209": {
+    "name": "Motivation",
+    "effect": "Once a Round, on any player's turn: flip this to draw two cards. If you have the least Fame (not tied), also gain a green mana token."
+  },
+  "210": {
+    "name": "Source Opening",
+    "effect": "Cooperative: put this Skill token in the center and reroll a mana die in the Source. Any player may return it to you, face down, to use an extra basic-color die from the Source and give you a crystal of that color."
+  },
+  "301": {
+    "name": "Double Time",
+    "effect": "Move 2 (during the Day), or Move 1 (at Night)."
+  },
+  "302": {
+    "name": "Night Sharpshooting",
+    "effect": "Ranged Attack 1 (during the Day), or Ranged Attack 2 (at Night)."
+  },
+  "303": {
+    "name": "Cold Swordsmanship",
+    "effect": "Attack 2, or Ice Attack 2."
+  },
+  "304": {
+    "name": "Shield Mastery",
+    "effect": "Block 3, or Fire Block 2, or Ice Block 2."
+  },
+  "305": {
+    "name": "Resistance Break",
+    "effect": "Choose an enemy token: it gets Armor -1 for each resistance it has, to a minimum of 1."
+  },
+  "306": {
+    "name": "I Feel No Pain",
+    "effect": "Once a turn, except in combat: discard one Wound from your hand. If you do, draw a new card."
+  },
+  "307": {
+    "name": "I Don't Give a Damn!",
+    "effect": "One card played sideways gives you +2 instead of +1. If it is an Advanced Action, Spell or Artifact, it gives +3 instead."
+  },
+  "308": {
+    "name": "Who Needs Magic?",
+    "effect": "One card played sideways gives you +2 instead of +1. If you use no die from the Source this turn, it gives +3 instead."
+  },
+  "309": {
+    "name": "Motivation",
+    "effect": "Once a Round, on any player's turn: flip this to draw two cards. If you have the least Fame (not tied), also gain a blue mana token."
+  },
+  "310": {
+    "name": "Mana Overload",
+    "effect": "Cooperative: choose a basic color and gain a mana token of that color. Put this Skill token in the center marked with that color. The first player who uses mana of that color to power a card giving Move, Influence, Attack or Block gets +4 from that card and returns the Skill to you, face down."
+  }
+}

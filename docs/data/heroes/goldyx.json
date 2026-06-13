@@ -1,0 +1,156 @@
+{
+  "_meta": {
+    "source": "Mage Knight base game — Goldyx skill tokens",
+    "note": "Prepared for hero selection / dummy player skill decks. Action types not in the engine's supported set (influence_per_crystal_color, flight, sideways_mana_boost, draw_cards, cooperative_source_opening) are informational until fully engine-supported.",
+    "createdAt": "2026-06-13"
+  },
+  "hero": {
+    "name": "Goldyx",
+    "skills": [
+      {
+        "id": 201,
+        "name": "Freezing Power",
+        "type": "once_per_turn",
+        "effect": "Siege Attack 1, or Ice Siege Attack 1.",
+        "actions": [
+          {
+            "type": "siege_attack",
+            "value": 1,
+            "choice": true
+          },
+          {
+            "type": "siege_attack",
+            "element": "ice",
+            "value": 1,
+            "choice": true
+          }
+        ]
+      },
+      {
+        "id": 202,
+        "name": "Potion Making",
+        "type": "once_per_round",
+        "effect": "Once a Round, except in combat: flip this for Heal 2.",
+        "actions": [
+          {
+            "type": "healing",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 203,
+        "name": "White Crystal Craft",
+        "type": "once_per_round",
+        "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one white mana token.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "blue"
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "white"
+          }
+        ]
+      },
+      {
+        "id": 204,
+        "name": "Green Crystal Craft",
+        "type": "once_per_round",
+        "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one green mana token.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "blue"
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "green"
+          }
+        ]
+      },
+      {
+        "id": 205,
+        "name": "Red Crystal Craft",
+        "type": "once_per_round",
+        "effect": "Once a Round: flip this to gain one blue crystal to your Inventory, and one red mana token.",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "blue"
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "red"
+          }
+        ]
+      },
+      {
+        "id": 206,
+        "name": "Glittering Fortune",
+        "type": "once_per_turn",
+        "effect": "During interaction: get Influence 1 for each different color crystal in your Inventory. This Influence cannot be used outside of interaction.",
+        "actions": [
+          {
+            "type": "influence_per_crystal_color",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "id": 207,
+        "name": "Flight",
+        "type": "once_per_round",
+        "effect": "Once a Round: flip this to move to an adjacent space for free, or two spaces for 2 Move points. You must end this move in a safe space. This move does not provoke rampaging enemies.",
+        "actions": [
+          {
+            "type": "flight",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": 208,
+        "name": "Universal Power",
+        "type": "once_per_turn",
+        "effect": "You may add one mana to a card played sideways: it gives +3 instead of +1, or +4 if it is an Action or Spell card of the same color as that mana.",
+        "actions": [
+          {
+            "type": "sideways_mana_boost",
+            "value": 3,
+            "bonusValue": 4
+          }
+        ]
+      },
+      {
+        "id": 209,
+        "name": "Motivation",
+        "type": "once_per_round",
+        "effect": "Once a Round, on any player's turn: flip this to draw two cards. If you have the least Fame (not tied), also gain a green mana token.",
+        "actions": [
+          {
+            "type": "draw_cards",
+            "value": 2
+          },
+          {
+            "type": "gain_mana_token",
+            "color": "green",
+            "condition": "least_fame"
+          }
+        ]
+      },
+      {
+        "id": 210,
+        "name": "Source Opening",
+        "type": "interactive_once_per_round",
+        "effect": "Cooperative: put this Skill token in the center and reroll a mana die in the Source. Any player may return it to you, face down, to use an extra basic-color die from the Source and give you a crystal of that color.",
+        "actions": [
+          {
+            "type": "cooperative_source_opening"
+          }
+        ]
+      }
+    ]
+  }
+}

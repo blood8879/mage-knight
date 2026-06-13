@@ -1,0 +1,22 @@
+{
+  "scenario": {
+    "name": "First Reconnaissance",
+    "NOT_FOUND_ON_WIKI": true,
+    "note": "No scenario page was found on the Unofficial Mage Knight Wiki for First Reconnaissance. The wiki does not appear to contain scenario rules. All fields below must be filled in from the physical rulebook.",
+    "fields_to_populate_from_rulebook": [
+      "number_of_rounds",
+      "map_setup (tile counts, countryside vs core)",
+      "starting_tile (A side or B side)",
+      "number_of_cities",
+      "victory_conditions",
+      "special_rules",
+      "scoring_modifications",
+      "dummy_player_setup_for_solo"
+    ]
+  },
+  "_meta": {
+    "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/",
+    "search_attempted": true,
+    "result": "No wiki page found for 'First Reconnaissance'. Scenario rules are NOT documented on the Unofficial Mage Knight Wiki."
+  }
+}

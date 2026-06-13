@@ -1,0 +1,15 @@
+{
+  "1": { "name": "Aldea (Village)", "description": "Un pequeño asentamiento donde los héroes pueden curar heridas, reclutar unidades de aldea o saquear para obtener cartas a cambio de reputación." },
+  "2": { "name": "Monasterio (Monastery)", "description": "Un lugar sagrado que ofrece curación, acciones avanzadas a la venta y reclutamiento de unidades de monasterio. Puede quemarse para obtener un artefacto, pero con un alto coste de reputación." },
+  "3": { "name": "Fortaleza (Keep)", "description": "Un bastión fortificado defendido por enemigos grises. Una vez conquistada, el propietario puede reclutar unidades de fortaleza y robar una carta extra al iniciar un turno en sus cercanías." },
+  "4": { "name": "Torre de Mago (Mage Tower)", "description": "Una torre fortificada custodiada por enemigos violetas. Una vez conquistada, el propietario puede reclutar unidades y comprar hechizos con influencia y maná del color correspondiente." },
+  "5": { "name": "Mazmorra (Dungeon)", "description": "Una guarida subterránea oscura donde siempre se aplican las reglas nocturnas. Lucha contra un enemigo marrón sin apoyo de unidades, luego tira el dado para obtener un hechizo o artefacto." },
+  "6": { "name": "Tumba (Tomb)", "description": "Un antiguo lugar de enterramiento con un poderoso enemigo rojo. Siempre se aplican las reglas nocturnas y las unidades no pueden ayudar. La victoria otorga un hechizo y un artefacto." },
+  "7": { "name": "Ruinas Antiguas (Ancient Ruins)", "description": "Ruinas misteriosas con un encuentro determinado por ficha amarilla. Paga 3 maná del color mostrado para usar el altar y ganar 7 de Fama, o lucha contra los enemigos revelados." },
+  "8": { "name": "Guarida de Monstruos (Monster Den)", "description": "Una guarida que esconde un enemigo marrón. Derrótalo para ganar cristales de maná aleatorios tirando el dado de maná dos veces." },
+  "9": { "name": "Campos de Cría (Spawning Grounds)", "description": "Una zona peligrosa con dos enemigos marrones. La victoria total otorga un artefacto y 3 cristales de maná aleatorios. Las derrotas parciales dejan a los enemigos restantes en su lugar." },
+  "10": { "name": "Mina de Cristal (Crystal Mine)", "description": "Una fuente de maná en bruto. Termina tu turno aquí para ganar 1 cristal de maná del color de la mina." },
+  "11": { "name": "Claro Mágico (Magical Glade)", "description": "Un lugar de magia natural. Descarta una herida al terminar tu turno aquí. Durante el día, gana maná dorado; de noche, gana maná negro al iniciar tu turno aquí." },
+  "12": { "name": "Ciudad (City)", "description": "Un asentamiento fuertemente fortificado con múltiples defensores y bonificaciones de ciudad. Una vez conquistada, el líder puede reclutar unidades, comprar objetos y robar cartas extra en sus cercanías." },
+  "13": { "name": "Portal (Portal)", "description": "La ubicación inicial donde los jugadores entran al mapa." }
+}

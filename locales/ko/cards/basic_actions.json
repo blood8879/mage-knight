@@ -1,0 +1,82 @@
+{
+  "Rage": {
+    "name": "분노",
+    "basicEffect": "공격 또는 방어 2",
+    "strongEffect": "공격 4"
+  },
+  "Determination": {
+    "name": "결의",
+    "basicEffect": "공격 또는 방어 2",
+    "strongEffect": "방어 5"
+  },
+  "Swiftness": {
+    "name": "신속",
+    "basicEffect": "이동 2",
+    "strongEffect": "원거리 공격 3"
+  },
+  "March": {
+    "name": "행군",
+    "basicEffect": "이동 2",
+    "strongEffect": "이동 4"
+  },
+  "Stamina": {
+    "name": "체력",
+    "basicEffect": "이동 2",
+    "strongEffect": "이동 4"
+  },
+  "Tranquility": {
+    "name": "평온",
+    "basicEffect": "치유 1 또는 카드 1장 뽑기.",
+    "strongEffect": "치유 2 또는 카드 2장 뽑기."
+  },
+  "Promise": {
+    "name": "약속",
+    "basicEffect": "영향력 2",
+    "strongEffect": "영향력 4"
+  },
+  "Threaten": {
+    "name": "위협",
+    "basicEffect": "영향력 2",
+    "strongEffect": "영향력 5. 평판 -1."
+  },
+  "Crystallize": {
+    "name": "결정화",
+    "basicEffect": "이 카드를 낼 때, 기본 색상의 마나 1개를 지불한다. 해당 색상의 크리스탈 1개를 인벤토리에 획득한다.",
+    "strongEffect": "아무 기본 색상의 크리스탈 1개를 인벤토리에 획득한다."
+  },
+  "Mana Draw": {
+    "name": "마나 흡수",
+    "basicEffect": "이번 턴 소스에서 마나 주사위 1개를 추가로 사용할 수 있다.",
+    "strongEffect": "소스에서 마나 주사위 1개를 가져와 금색을 제외한 아무 색상으로 설정한다. 해당 색상의 마나 토큰 2개를 획득한다. 이 주사위를 소스에 돌려놓을 때 다시 굴리지 않는다."
+  },
+  "Concentration": {
+    "name": "집중",
+    "basicEffect": "파란색, 흰색 또는 빨간색 마나 토큰 1개를 획득한다.",
+    "strongEffect": "이 카드를 낼 때, 다른 행동 카드 1장을 함께 낸다. 그 카드의 상위 효과를 무료로 얻는다. 이동, 영향력, 방어 또는 공격이면 해당 수치 +2."
+  },
+  "Improvisation": {
+    "name": "즉흥",
+    "basicEffect": "손에서 다른 카드 1장을 버려 이동 3, 영향력 3, 공격 3 또는 방어 3을 얻는다.",
+    "strongEffect": "손에서 다른 카드 1장을 버려 이동 5, 영향력 5, 공격 5 또는 방어 5를 얻는다."
+  },
+  "Battle Versatility": {
+    "name": "전투 다재",
+    "basicEffect": "공격 2, 방어 2 또는 원거리 공격 1.",
+    "strongEffect": "공격 4, 방어 4, 화염 공격 3, 화염 방어 3, 원거리 공격 3 또는 공성 공격 2."
+  },
+  "Cold Toughness": {
+    "name": "냉기 강인",
+    "basicEffect": "빙결 공격 2 또는 빙결 방어 3.",
+    "strongEffect": "빙결 방어 5. 방어한 적 토큰의 특수 능력, 공격 색상 및 저항 1개당 빙결 방어 +1."
+  },
+  "Noble Manners": {
+    "name": "고귀한 매너",
+    "basicEffect": "영향력 2. 상호작용 중 사용하면 턴 종료 시 명성 +1.",
+    "strongEffect": "영향력 4. 상호작용 중 사용하면 턴 종료 시 명성 +1, 평판 +1."
+  },
+  "Will Focus": {
+    "name": "의지 집중",
+    "basicEffect": "파란색, 흰색 또는 빨간색 마나 토큰 1개를 획득하거나, 초록색 크리스탈 1개를 인벤토리에 획득한다.",
+    "strongEffect": "이 카드를 낼 때, 다른 행동 카드 1장을 함께 낸다. 그 카드의 상위 효과를 무료로 얻는다. 이동, 영향력, 방어 또는 공격이면 해당 수치 +3."
+  }
+}

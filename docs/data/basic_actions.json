@@ -1,0 +1,642 @@
+{
+  "_meta": {
+    "description": "Mage Knight Basic Action Cards - Base Game",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki + Rulebook",
+    "lastUpdated": "2026-02-18"
+  },
+  "commonCards": [
+    {
+      "id": 1,
+      "name": "Rage",
+      "type": "basic_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Attack or Block 2",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 4",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 4
+          }
+        ]
+      },
+      "copies": 2,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 3,
+      "name": "Determination",
+      "type": "basic_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Attack or Block 2",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Block 5",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "block",
+            "value": 5
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 4,
+      "name": "Swiftness",
+      "type": "basic_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Move 2",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ranged Attack 3",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "ranged_attack",
+            "value": 3,
+            "element": "physical"
+          }
+        ]
+      },
+      "copies": 2,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 6,
+      "name": "March",
+      "type": "basic_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Move 2",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          }
+        ]
+      },
+      "copies": 2,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 8,
+      "name": "Stamina",
+      "type": "basic_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Move 2",
+        "actions": [
+          {
+            "type": "move",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Move 4",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "move",
+            "value": 4
+          }
+        ]
+      },
+      "copies": 2,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 10,
+      "name": "Tranquility",
+      "type": "basic_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Heal 1 or Draw a Card.",
+        "actions": [
+          {
+            "type": "heal",
+            "value": 1,
+            "choice": true
+          },
+          {
+            "type": "draw_card",
+            "value": 1,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Heal 2 or Draw two Cards.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "heal",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "draw_card",
+            "value": 2,
+            "choice": true
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 11,
+      "name": "Promise",
+      "type": "basic_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 2",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 4",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 12,
+      "name": "Threaten",
+      "type": "basic_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Influence 2",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 5. Reputation -1.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 5
+          },
+          {
+            "type": "reputation",
+            "value": -1
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 13,
+      "name": "Crystallize",
+      "type": "basic_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "When you play this, also pay one mana of a basic color. Gain a crystal of that color to your Inventory.",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Pay 1 basic mana → gain crystal of same color"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Gain a crystal of any basic color to your Inventory.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "gain_crystal",
+            "color": "any_basic"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 14,
+      "name": "Mana Draw",
+      "type": "basic_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "You can use one additional mana die from the Source this turn.",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Use 1 additional mana die from Source"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Take a mana die from the source and set it to any color except gold. Gain two mana tokens of that color. Do not reroll this die when you return it to the Source.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Take die, set to any non-gold color, gain 2 mana tokens of that color, die stays on chosen color"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 15,
+      "name": "Concentration",
+      "type": "basic_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Gain a blue, white or red mana token.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "blue_white_or_red"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this, play another Action card with it. Get the stronger effect of that card for free. If that effect gives you Move, Influence, Block or any type of Attack, get that amount plus 2.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Play another Action card → free strong effect + bonus 2 to Move/Influence/Block/Attack"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    },
+    {
+      "id": 16,
+      "name": "Improvisation",
+      "type": "basic_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Discard another card from your hand to get Move 3, Influence 3, Attack 3 or Block 3.",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Discard 1 card → choose Move 3 / Influence 3 / Attack 3 / Block 3"
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Discard another card from your hand to get Move 5, Influence 5, Attack 5 or Block 5.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Discard 1 card → choose Move 5 / Influence 5 / Attack 5 / Block 5"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": null,
+      "replaces": null,
+      "set": "base"
+    }
+  ],
+  "heroSpecificCards": [
+    {
+      "id": 15,
+      "name": "Will Focus",
+      "type": "basic_action",
+      "color": "green",
+      "basicEffect": {
+        "text": "Gain a blue, white or red mana token, or gain a green crystal to your Inventory.",
+        "actions": [
+          {
+            "type": "gain_mana",
+            "color": "blue_white_or_red",
+            "choice": true
+          },
+          {
+            "type": "gain_crystal",
+            "color": "green",
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "When you play this, play another Action card with it. Get the stronger effect of that card for free. If that effect gives you Move, Influence, Block or any type of Attack, get that amount plus 3.",
+        "manaCost": "green",
+        "actions": [
+          {
+            "type": "special",
+            "description": "Play another Action card → free strong effect + bonus 3 to Move/Influence/Block/Attack"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": "Goldyx",
+      "replaces": "Concentration",
+      "set": "base"
+    },
+    {
+      "id": 11,
+      "name": "Noble Manners",
+      "type": "basic_action",
+      "color": "white",
+      "basicEffect": {
+        "text": "Influence 2. If you use this during interaction you get Fame +1 at the end of the turn.",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 2
+          },
+          {
+            "type": "special",
+            "description": "Fame +1 if used during interaction",
+            "conditional": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Influence 4. If you use this during interaction you get Fame +1 and Reputation +1 at the end of the turn.",
+        "manaCost": "white",
+        "actions": [
+          {
+            "type": "influence",
+            "value": 4
+          },
+          {
+            "type": "special",
+            "description": "Fame +1 and Reputation +1 if used during interaction",
+            "conditional": true
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": "Norowas",
+      "replaces": "Promise",
+      "set": "base"
+    },
+    {
+      "id": 3,
+      "name": "Cold Toughness",
+      "type": "basic_action",
+      "color": "blue",
+      "basicEffect": {
+        "text": "Ice Attack 2 or Ice Block 3.",
+        "actions": [
+          {
+            "type": "ice_attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "ice_block",
+            "value": 3,
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Ice Block 5. Get +1 Ice Block for each special ability, color of attack and resistance on the blocked enemy token.",
+        "manaCost": "blue",
+        "actions": [
+          {
+            "type": "ice_block",
+            "value": 5
+          },
+          {
+            "type": "special",
+            "description": "+1 Ice Block per enemy special ability/attack color/resistance icon"
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": "Tovak",
+      "replaces": "Determination",
+      "set": "base"
+    },
+    {
+      "id": 1,
+      "name": "Battle Versatility",
+      "type": "basic_action",
+      "color": "red",
+      "basicEffect": {
+        "text": "Attack 2, Block 2 or Ranged Attack 1.",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 2,
+            "choice": true
+          },
+          {
+            "type": "ranged_attack",
+            "value": 1,
+            "element": "physical",
+            "choice": true
+          }
+        ]
+      },
+      "strongEffect": {
+        "text": "Attack 4, Block 4, Fire Attack 3, Fire Block 3, Ranged Attack 3 or Siege Attack 2.",
+        "manaCost": "red",
+        "actions": [
+          {
+            "type": "attack",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "block",
+            "value": 4,
+            "choice": true
+          },
+          {
+            "type": "fire_attack",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "fire_block",
+            "value": 3,
+            "choice": true
+          },
+          {
+            "type": "ranged_attack",
+            "value": 3,
+            "element": "physical",
+            "choice": true
+          },
+          {
+            "type": "siege_attack",
+            "value": 2,
+            "element": "physical",
+            "choice": true
+          }
+        ]
+      },
+      "copies": 1,
+      "heroSpecific": "Arythea",
+      "replaces": "Rage",
+      "set": "base"
+    }
+  ],
+  "deckComposition": {
+    "description": "기본 덱 16장 구성 (히어로별 고유 카드로 대체)",
+    "standard": [
+      {
+        "card": "Rage",
+        "count": 2
+      },
+      {
+        "card": "Determination",
+        "count": 1
+      },
+      {
+        "card": "Swiftness",
+        "count": 2
+      },
+      {
+        "card": "March",
+        "count": 2
+      },
+      {
+        "card": "Stamina",
+        "count": 2
+      },
+      {
+        "card": "Tranquility",
+        "count": 1
+      },
+      {
+        "card": "Promise",
+        "count": 1
+      },
+      {
+        "card": "Threaten",
+        "count": 1
+      },
+      {
+        "card": "Crystallize",
+        "count": 1
+      },
+      {
+        "card": "Mana Draw",
+        "count": 1
+      },
+      {
+        "card": "Concentration",
+        "count": 1
+      },
+      {
+        "card": "Improvisation",
+        "count": 1
+      }
+    ],
+    "heroReplacements": {
+      "Goldyx": {
+        "remove": "Concentration",
+        "add": "Will Focus"
+      },
+      "Norowas": {
+        "remove": "Promise",
+        "add": "Noble Manners"
+      },
+      "Tovak": {
+        "remove": "Determination",
+        "add": "Cold Toughness"
+      },
+      "Arythea": {
+        "remove": "Rage (1 copy)",
+        "add": "Battle Versatility"
+      }
+    }
+  }
+}

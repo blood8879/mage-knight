@@ -1,0 +1,222 @@
+{
+  "1": {
+    "name": "Fire Bolt",
+    "basicEffect": "Gain a red crystal to your Inventory.",
+    "strongEffect": "Ranged Fire Attack 3"
+  },
+  "2": {
+    "name": "Ice Bolt",
+    "basicEffect": "Gain a blue crystal to your Inventory.",
+    "strongEffect": "Ranged Ice Attack 3"
+  },
+  "3": {
+    "name": "Swift Bolt",
+    "basicEffect": "Gain a white crystal to your Inventory.",
+    "strongEffect": "Ranged Attack 4"
+  },
+  "4": {
+    "name": "Crushing Bolt",
+    "basicEffect": "Gain a green crystal to your Inventory.",
+    "strongEffect": "Siege Attack 3"
+  },
+  "5": {
+    "name": "Blood Rage",
+    "basicEffect": "Attack 2. You can take a Wound to increase this to Attack 5.",
+    "strongEffect": "Attack 4. You can take a Wound to increase this to Attack 9."
+  },
+  "6": {
+    "name": "Ice Shield",
+    "basicEffect": "Ice Block 3",
+    "strongEffect": "Ice Block 3. Reduce the Armor of one enemy blocked this way by 3. Armor cannot be reduced below 1."
+  },
+  "7": {
+    "name": "Agility",
+    "basicEffect": "Move 2. During combat this turn, you may spend Move points left from Move phase as Attack points one for one.",
+    "strongEffect": "Move 4. During combat this turn, you may spend Move points left from Move phase as Attack points one for one, or 2 Move points for 1 point of Ranged Attack."
+  },
+  "8": {
+    "name": "Refreshing Walk",
+    "basicEffect": "Move 2 and Heal 1.",
+    "strongEffect": "Move 4 and Heal 2."
+  },
+  "9": {
+    "name": "Intimidate",
+    "basicEffect": "Influence 4 or Attack 3. Reputation -1.",
+    "strongEffect": "Influence 8 or Attack 7. Reputation -2."
+  },
+  "10": {
+    "name": "Frost Bridge",
+    "basicEffect": "Move 2. The Move cost of swamps is reduced to 1 this turn.",
+    "strongEffect": "Move 4. You are able to travel through lakes, and the Move cost of lakes and swamps is reduced to 1 this turn."
+  },
+  "11": {
+    "name": "Song of Wind",
+    "basicEffect": "Move 2. The Move cost of plains, deserts and wastelands is reduced by 1, to a minimum of 0 this turn.",
+    "strongEffect": "Move 2. The Move cost of plains, deserts and wastelands is reduced by 2, to a minimum of 0. You may pay a blue mana to be able to travel through lakes for Move cost 0 this turn."
+  },
+  "12": {
+    "name": "Path Finding",
+    "basicEffect": "Move 2. The Move cost of all terrains is reduced by 1, to a minimum of 2, this turn.",
+    "strongEffect": "Move 4. The Move cost of all terrains is reduced to 2 this turn."
+  },
+  "13": {
+    "name": "Blood Ritual",
+    "basicEffect": "Take a Wound. Gain a red mana token and a mana token of any color (including non-basic).",
+    "strongEffect": "Take a Wound. Gain three mana tokens of any colors (including non-basic)."
+  },
+  "14": {
+    "name": "Pure Magic",
+    "basicEffect": "When you play this, pay a mana. If you paid Green, Move 4. If you paid White, Influence 4. If you paid Blue, Block 4. If you paid Red, Attack 4.",
+    "strongEffect": "When you play this, pay a mana. If you paid Green, Move 7. If you paid White, Influence 7. If you paid Blue, Block 7. If you paid Red, Attack 7."
+  },
+  "15": {
+    "name": "Heroic Tale",
+    "basicEffect": "Influence 3. Reputation +1 for each Unit you recruit this turn.",
+    "strongEffect": "Influence 6. Fame +1 and Reputation +1 for each Unit you recruit this turn."
+  },
+  "16": {
+    "name": "Regeneration",
+    "basicEffect": "Heal 1. Ready a Level I or II Unit you control.",
+    "strongEffect": "Heal 2. Ready a Level I, II or III Unit you control."
+  },
+  "17": {
+    "name": "Into the Heat",
+    "basicEffect": "Play this card at the start of the combat. All of your Units get their Attack and Block values increased by 2 this combat. You cannot assign damage to Units this turn.",
+    "strongEffect": "Play this card at the start of the combat. All of your Units get their Attack and Block values increased by 3 this combat. You cannot assign damage to Units this turn."
+  },
+  "18": {
+    "name": "Steady Tempo",
+    "basicEffect": "Move 2. At the end of your turn, instead of putting this card in your discard pile, you may place it on the bottom of your deed deck as long as it is not empty.",
+    "strongEffect": "Move 4. At the end of your turn, instead of putting this card in your discard pile, you may place it on top of your Deed deck."
+  },
+  "19": {
+    "name": "Diplomacy",
+    "basicEffect": "Influence 2. You may use Influence as Block this turn.",
+    "strongEffect": "Influence 4. Choose Ice or Fire. You may use Influence as Block for the chosen element this turn."
+  },
+  "20": {
+    "name": "In Need",
+    "basicEffect": "Influence 2. Get an additional Influence 1 for each Wound card in your hand or on a Unit you control.",
+    "strongEffect": "Influence 4. Get an additional Influence 2 for each Wound card in your hand or on a Unit you control."
+  },
+  "21": {
+    "name": "Decompose",
+    "basicEffect": "When you play this card, throw away an Action card from hand. Gain two crystals to your Inventory that are the same color as the thrown away card.",
+    "strongEffect": "When you play this card, throw away an Action card from hand. Gain a crystal to your Inventory of each basic color that does not match the color of the thrown away card."
+  },
+  "22": {
+    "name": "Crystal Mastery",
+    "basicEffect": "Gain a crystal to your Inventory of the same color as a crystal you already own.",
+    "strongEffect": "Any crystal you spend this turn are returned to your Inventory at the end of the turn."
+  },
+  "23": {
+    "name": "Mana Storm",
+    "basicEffect": "Choose a mana die in the Source that is showing a basic color. Gain a crystal of that color to your Inventory, then immediately reroll that die and return it to the Source.",
+    "strongEffect": "Reroll all dice in the Source. You can use three extra dice from the Source, and you can use dice showing black or gold as mana of any basic color, regardless of the Round."
+  },
+  "24": {
+    "name": "Ambush",
+    "basicEffect": "Move 2. Add +1 to your first Attack card of any type or +2 to your first Block card of any type, whichever you play first this turn.",
+    "strongEffect": "Move 4. Add +2 to your first Attack card of any type or +4 to your first Block card of any type, whichever you play first this turn."
+  },
+  "25": {
+    "name": "Maximal Effect",
+    "basicEffect": "When you play this, play another Action card with it. Use the basic effect of that card three times. Then, throw away that card.",
+    "strongEffect": "When you play this, play another Action card with it. Use the advanced effect of that card two times (for free). Then, throw away that card."
+  },
+  "26": {
+    "name": "Magic Talent",
+    "basicEffect": "Discard a card from your hand. You may play one Spell card in the Spells offer this turn as if it were in your hand. That card remains in the Spells offer.",
+    "strongEffect": "When you play this, pay a mana of any color. Gain a Spell card of that color from the Spells offer and put it in your discard pile."
+  },
+  "27": {
+    "name": "Learning",
+    "basicEffect": "Influence 2. Once during this turn, you may pay Influence 6 to gain an Advanced Action card from the Advanced Actions offer to your discard pile.",
+    "strongEffect": "Influence 4. Once during this turn, you may pay Influence 9 to gain an Advanced Action card from the Advanced Actions offer to your hand."
+  },
+  "28": {
+    "name": "Training",
+    "basicEffect": "Throw away an Action card from your hand, then take a card of the same color from the Advanced Actions offer and put it into your discard pile.",
+    "strongEffect": "Throw away an Action card from your hand, then take a card of the same color from the Advanced Actions offer and put it into your hand."
+  },
+  "29": {
+    "name": "Counterattack",
+    "basicEffect": "Attack 2. Get an additional Attack 2 for each enemy blocked this turn.",
+    "strongEffect": "Attack 4. Get an additional Attack 3 for each enemy blocked this turn."
+  },
+  "30": {
+    "name": "Ritual Attack",
+    "basicEffect": "Throw away another action card. Depending on its color, you get: Attack 5 for red, Ice Attack 3 for blue, Ranged Attack 3 for white, Siege Attack 2 for green.",
+    "strongEffect": "Throw away another action card. Depending on its color, you get: Fire Attack 6 for red, Cold Fire Attack 4 for blue, Ranged Fire Attack 4 for white, Siege Fire Attack 3 for green."
+  },
+  "31": {
+    "name": "Blood of Ancients",
+    "basicEffect": "Gain a Wound. Pay one mana of any color. Gain a card of that color from the Advanced Actions offer and put into your hand.",
+    "strongEffect": "Gain a Wound to your hand or discard pile. Use the stronger effect of any card from the Advanced Action offer without paying its mana cost. The card remains in the offer."
+  },
+  "32": {
+    "name": "Shield Bash",
+    "basicEffect": "Block 3. Counts twice against an attack with Swiftness.",
+    "strongEffect": "Block 5. Counts twice against an attack with Swiftness. Blocked enemy gets Armor -1 for each point of block higher than needed (to a minimum of 1)."
+  },
+  "33": {
+    "name": "Temporal Portal",
+    "basicEffect": "Play as your action for this turn. You may move to an adjacent revealed safe space (without provoking rampaging monsters). Whether you move or not, your Hand limit is higher by 1 the next time you draw cards.",
+    "strongEffect": "As above, except you can either move two spaces to a revealed safe space instead of one, or get your Hand limit increased by 2 instead of 1."
+  },
+  "34": {
+    "name": "Spell Forge",
+    "basicEffect": "Gain one crystal to your Inventory of the same color as one of the Spell cards in the Spell offer.",
+    "strongEffect": "Gain two crystals to your Inventory of the same color as two of the Spell cards in the Spell offer."
+  },
+  "35": {
+    "name": "Chivalry",
+    "basicEffect": "Attack 3, or Attack 2 and Reputation +1 for each enemy defeated by this attack.",
+    "strongEffect": "Attack 6, or Attack 4 and Reputation +1 and Fame +1 for each enemy defeated by this attack."
+  },
+  "36": {
+    "name": "Peaceful Moment",
+    "basicEffect": "Influence 3. You may play this as your action for the turn: if you do, you may get Heal 1 for each 2 Influence you spend.",
+    "strongEffect": "Influence 6. You may play this as your action for the turn: if you do, you may get Heal 1 for each 2 Influence you spend and/or refresh a Unit paying 2 Influence per level of the Unit."
+  },
+  "37": {
+    "name": "Dodge and Weave",
+    "basicEffect": "Reduce one enemy attack by 2. Gain Attack 1 in the Attack phase if you did not add any Wounds to your hand in the previous combat phases.",
+    "strongEffect": "Reduce one enemy attack by 4 or two attacks of one or two enemies by 2. Gain Attack 2 in the Attack phase if you did not add any Wounds to your hand in the previous combat phases."
+  },
+  "38": {
+    "name": "Stout Resolve",
+    "basicEffect": "Move 2, Influence 2, Attack 2 or Block 2. You may discard a Wound to increase the effect by 1.",
+    "strongEffect": "Move 3, Influence 3, Attack 3 or Block 3. You may discard any number of cards, including one Wound, to increase the effect by 2 for each."
+  },
+  "39": {
+    "name": "Force of Nature",
+    "basicEffect": "Chosen Unit gains physical resistance this combat.",
+    "strongEffect": "Siege Attack 3 or Block 6."
+  },
+  "40": {
+    "name": "Mountain Lore",
+    "basicEffect": "Move 3. If you end your turn in hills, your Hand limit is higher by 1 the next time you draw cards.",
+    "strongEffect": "Move 5. You can enter mountains at a Move cost of 5 and they are considered a safe space for you at the end of this turn. If you end your turn in mountains/hills, your Hand limit is higher by 2/1 the next time you draw cards."
+  },
+  "41": {
+    "name": "Power Crystals",
+    "basicEffect": "Gain a crystal to your Inventory of a basic color you do not already own.",
+    "strongEffect": "Move 4, or Heal 2, or draw two cards. For each set of four different color crystals in your Inventory: Move 2, or Heal 1, or draw a card."
+  },
+  "42": {
+    "name": "Rush of Adrenaline",
+    "basicEffect": "For each of the three Wounds you take to your hand this turn, draw a card.",
+    "strongEffect": "After taking the first Wound to your hand this turn, throw it away and draw a card. For each of the next three Wounds you take, draw a card."
+  },
+  "43": {
+    "name": "Explosive Bolt",
+    "basicEffect": "Take a Wound. Gain a white and red crystal to your Inventory.",
+    "strongEffect": "Ranged Attack 3. For each enemy defeated by this attack, another enemy gets Armor -1 (to a minimum of 1)."
+  },
+  "44": {
+    "name": "Chilling Stare",
+    "basicEffect": "Influence 3, or a chosen enemy attack loses all attack abilities (but not its color).",
+    "strongEffect": "Influence 5, or a chosen enemy does not attack this turn."
+  }
+}

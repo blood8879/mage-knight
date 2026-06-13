@@ -1,0 +1,292 @@
+{
+  "_meta": {
+    "description": "Mage Knight map site types with enemies, fortification, and interaction rules",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki + Rulebook",
+    "lastUpdated": "2026-02-19"
+  },
+  "sites": [
+    {
+      "id": 1,
+      "type": "village",
+      "name": "Village",
+      "enemyColor": null,
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "heal",
+          "description": "Buy 1 Healing for 3 Influence",
+          "cost": { "influence": 3 }
+        },
+        {
+          "type": "recruit",
+          "description": "Recruit village-icon units at unit cost"
+        },
+        {
+          "type": "plunder",
+          "description": "Draw 2 cards, Reputation -1",
+          "reputationCost": -1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "monastery",
+      "name": "Monastery",
+      "enemyColor": "violet",
+      "enemyNote": "Only if burned; units cannot help in this fight",
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "heal",
+          "description": "Buy 1 Healing for 2 Influence",
+          "cost": { "influence": 2 }
+        },
+        {
+          "type": "buyAdvancedAction",
+          "description": "Buy Advanced Action for 6 Influence",
+          "cost": { "influence": 6 }
+        },
+        {
+          "type": "recruit",
+          "description": "Recruit monastery-icon units at unit cost"
+        },
+        {
+          "type": "burn",
+          "description": "Burn the Monastery: Reputation -3, fight violet enemy without units, reward is an Artifact",
+          "reputationCost": -3,
+          "reward": "artifact"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "keep",
+      "name": "Keep",
+      "enemyColor": "grey",
+      "enemyNote": "Face-down on reveal",
+      "isFortified": true,
+      "interactions": [
+        {
+          "type": "assault",
+          "description": "Assault the Keep: Reputation -1, fight fortified grey defenders",
+          "reputationCost": -1
+        },
+        {
+          "type": "recruit",
+          "description": "Once owned, recruit keep-icon units at unit cost",
+          "requiresOwnership": true
+        },
+        {
+          "type": "extraCardDraw",
+          "description": "Once owned, draw an extra card when starting turn adjacent or on the Keep",
+          "requiresOwnership": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "mageTower",
+      "name": "Mage Tower",
+      "enemyColor": "violet",
+      "enemyNote": "Face-down on reveal",
+      "isFortified": true,
+      "interactions": [
+        {
+          "type": "assault",
+          "description": "Assault the Mage Tower: Reputation -1, fight fortified violet defenders",
+          "reputationCost": -1
+        },
+        {
+          "type": "recruit",
+          "description": "Once conquered, recruit units at the Mage Tower",
+          "requiresOwnership": true
+        },
+        {
+          "type": "buySpell",
+          "description": "Once conquered, buy Spells for 7 Influence plus one matching color mana",
+          "requiresOwnership": true,
+          "cost": { "influence": 7, "mana": "matching color" }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "dungeon",
+      "name": "Dungeon",
+      "enemyColor": "brown",
+      "enemyNote": "Random enemy token drawn",
+      "isFortified": false,
+      "special": "Night rules always apply inside the Dungeon. Units cannot participate in combat.",
+      "interactions": [
+        {
+          "type": "combat",
+          "description": "Fight brown enemy under night rules without units"
+        },
+        {
+          "type": "reward",
+          "description": "Roll mana die: gold or black = gain a Spell, any other color = gain an Artifact"
+        },
+        {
+          "type": "refight",
+          "description": "May be re-fought for Fame only; no additional reward"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "tomb",
+      "name": "Tomb",
+      "enemyColor": "red",
+      "enemyNote": "Draconum-level enemy",
+      "isFortified": false,
+      "special": "Night rules always apply inside the Tomb. Units cannot participate in combat.",
+      "interactions": [
+        {
+          "type": "combat",
+          "description": "Fight red/draconum enemy under night rules without units"
+        },
+        {
+          "type": "reward",
+          "description": "Gain 1 Spell and 1 Artifact"
+        },
+        {
+          "type": "refight",
+          "description": "May be re-fought for Fame only; no additional reward"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ancientRuins",
+      "name": "Ancient Ruins",
+      "enemyColor": "special",
+      "enemyNote": "Yellow token determines encounter: altar or enemy tokens",
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "altar",
+          "description": "Pay 3 mana of the shown color — no combat required, gain 7 Fame",
+          "cost": { "mana": 3 },
+          "reward": { "fame": 7 }
+        },
+        {
+          "type": "combat",
+          "description": "Fight the enemies shown on the token instead of using the altar"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "monsterDen",
+      "name": "Monster Den",
+      "enemyColor": "brown",
+      "enemyNote": "Face-down on reveal",
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "combat",
+          "description": "Fight brown enemy"
+        },
+        {
+          "type": "reward",
+          "description": "Gain 2 random mana crystals: roll die twice — gold = choose any color, black = gain 1 Fame instead of a crystal"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "spawningGrounds",
+      "name": "Spawning Grounds",
+      "enemyColor": "brown",
+      "enemyNote": "Two brown enemy tokens",
+      "isFortified": false,
+      "special": "Partial defeat leaves remaining enemy tokens in place.",
+      "interactions": [
+        {
+          "type": "combat",
+          "description": "Fight 2 brown enemies"
+        },
+        {
+          "type": "reward",
+          "description": "Gain 1 Artifact and 3 random mana crystals"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "crystalMine",
+      "name": "Crystal Mine",
+      "enemyColor": null,
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "gainCrystal",
+          "description": "End your turn on the mine to gain 1 mana crystal of the mine's color"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "magicalGlade",
+      "name": "Magical Glade",
+      "enemyColor": null,
+      "isFortified": false,
+      "interactions": [
+        {
+          "type": "heal",
+          "description": "End your turn here to discard 1 Wound from your hand"
+        },
+        {
+          "type": "gainMana",
+          "description": "Start your turn here during the Day: gain 1 gold mana token",
+          "condition": "day"
+        },
+        {
+          "type": "gainMana",
+          "description": "Start your turn here during the Night: gain 1 black mana token",
+          "condition": "night"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "city",
+      "name": "City",
+      "enemyColor": "multiple",
+      "enemyNote": "Defenders determined by city card; city bonuses apply to defense",
+      "isFortified": true,
+      "interactions": [
+        {
+          "type": "assault",
+          "description": "Assault the City: Reputation -1, fight fortified city defenders with city bonuses",
+          "reputationCost": -1
+        },
+        {
+          "type": "recruit",
+          "description": "Once conquered, recruit city-icon units at unit cost",
+          "requiresOwnership": true
+        },
+        {
+          "type": "buyItems",
+          "description": "Once conquered, buy items available in the city",
+          "requiresOwnership": true
+        },
+        {
+          "type": "leaderBonus",
+          "description": "City leader draws +2 cards when starting a turn adjacent to or on the city",
+          "requiresOwnership": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "portal",
+      "name": "Portal",
+      "enemyColor": null,
+      "isFortified": false,
+      "special": "Starting location for players.",
+      "interactions": []
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "Map Tile inventory — Countryside, Core, and Starting tiles. Individual hex layouts to be added when tile images are digitized.",
+    "version": "1.0",
+    "source": "Unofficial Mage Knight Wiki + Rulebook",
+    "lastUpdated": "2026-02-19"
+  },
+  "startingTile": {
+    "id": "start",
+    "name": "Portal Tile",
+    "sides": ["A", "B"],
+    "hexCount": 7,
+    "features": {
+      "A": { "portal": true, "description": "Starting portal with surrounding terrain" },
+      "B": { "portal": true, "description": "Alternate starting layout" }
+    }
+  },
+  "countrysideTiles": [
+    { "id": 1, "name": "Countryside 1", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 2, "name": "Countryside 2", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 3, "name": "Countryside 3", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 4, "name": "Countryside 4", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 5, "name": "Countryside 5", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 6, "name": "Countryside 6", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 7, "name": "Countryside 7", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 8, "name": "Countryside 8", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 9, "name": "Countryside 9", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 10, "name": "Countryside 10", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 11, "name": "Countryside 11", "back": "green", "hexCount": 7, "set": "base" },
+    { "id": 12, "name": "Countryside 12", "back": "green", "hexCount": 7, "set": "expansion" },
+    { "id": 13, "name": "Countryside 13", "back": "green", "hexCount": 7, "set": "expansion" },
+    { "id": 14, "name": "Countryside 14", "back": "green", "hexCount": 7, "set": "expansion" }
+  ],
+  "coreTiles": [
+    { "id": 1, "name": "Core 1", "back": "brown", "hexCount": 7, "hasCity": false, "set": "base" },
+    { "id": 2, "name": "Core 2", "back": "brown", "hexCount": 7, "hasCity": false, "set": "base" },
+    { "id": 3, "name": "Core 3", "back": "brown", "hexCount": 7, "hasCity": false, "set": "base" },
+    { "id": 4, "name": "Core 4", "back": "brown", "hexCount": 7, "hasCity": false, "set": "base" },
+    { "id": 5, "name": "Core 5 — Green City", "back": "brown", "hexCount": 7, "hasCity": true, "cityColor": "green", "set": "base" },
+    { "id": 6, "name": "Core 6 — Blue City", "back": "brown", "hexCount": 7, "hasCity": true, "cityColor": "blue", "set": "base" },
+    { "id": 7, "name": "Core 7 — White City", "back": "brown", "hexCount": 7, "hasCity": true, "cityColor": "white", "set": "base" },
+    { "id": 8, "name": "Core 8 — Red City", "back": "brown", "hexCount": 7, "hasCity": true, "cityColor": "red", "set": "base" },
+    { "id": 9, "name": "Core 9", "back": "brown", "hexCount": 7, "hasCity": false, "set": "expansion" },
+    { "id": 10, "name": "Core 10", "back": "brown", "hexCount": 7, "hasCity": false, "set": "expansion" }
+  ],
+  "terrainTypes": [
+    { "type": "plains", "moveCostDay": 2, "moveCostNight": 2 },
+    { "type": "hills", "moveCostDay": 3, "moveCostNight": 3 },
+    { "type": "forest", "moveCostDay": 3, "moveCostNight": 5 },
+    { "type": "wasteland", "moveCostDay": 4, "moveCostNight": 4 },
+    { "type": "desert", "moveCostDay": 5, "moveCostNight": 3 },
+    { "type": "swamp", "moveCostDay": 5, "moveCostNight": 5 },
+    { "type": "lake", "moveCostDay": null, "moveCostNight": null, "passable": false },
+    { "type": "mountain", "moveCostDay": null, "moveCostNight": null, "passable": false },
+    { "type": "sea", "moveCostDay": null, "moveCostNight": null, "passable": false }
+  ]
+}

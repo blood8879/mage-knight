@@ -1,0 +1,184 @@
+{
+  "site_locations": [
+    {
+      "name": "Village",
+      "enemy_token": null,
+      "combat_required": false,
+      "interactions": [
+        "Recruit village-icon units",
+        "Buy 1 Healing for 3 Influence",
+        "Plunder: draw 2 cards, Reputation -1"
+      ],
+      "rewards": ["Healing", "Unit recruitment"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Village"
+    },
+    {
+      "name": "Monastery",
+      "enemy_token": "Violet (random, only if burned; units cannot be used in that combat)",
+      "combat_required": false,
+      "interactions": [
+        "Recruit monastery-icon units",
+        "Buy 1 Healing for 2 Influence",
+        "Buy Advanced Actions for 6 Influence",
+        "Burn it: Reputation -3, triggers violet enemy combat (no units allowed), grants Artifact if enemy defeated"
+      ],
+      "rewards": ["Healing", "Advanced Actions", "Artifact (if burned and enemy defeated)"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Monastery"
+    },
+    {
+      "name": "Keep",
+      "enemy_token": "Grey (face-down on reveal)",
+      "combat_required": true,
+      "combat_notes": "Assault costs Reputation -1; defenders are fortified",
+      "interactions": [
+        "Assault (Reputation -1, fortified defenders)",
+        "Own it: gain unit recruitment + extra card draw"
+      ],
+      "rewards": ["Ownership bonus: unit recruitment, extra card draw"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Keep"
+    },
+    {
+      "name": "Mage Tower",
+      "enemy_token": "Violet (face-down on reveal)",
+      "combat_required": true,
+      "combat_notes": "Assault costs Reputation -1; defenders are fortified",
+      "interactions": [
+        "Assault (Reputation -1, fortified defenders)",
+        "On conquest: recruit units, buy Spells for 7 Influence, gain mana of tower's color"
+      ],
+      "rewards": ["Spell (on conquest)", "Unit recruitment", "Color mana"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Mage_Tower"
+    },
+    {
+      "name": "Dungeon",
+      "enemy_token": "Brown (random)",
+      "combat_required": true,
+      "combat_notes": "Night rules apply inside; units cannot be used in combat",
+      "interactions": [
+        "Enter as an action",
+        "Night rules apply; no units in combat",
+        "Can be re-entered after conquest for Fame only"
+      ],
+      "rewards": [
+        "Roll mana die: gold or black = Spell; any other color = Artifact"
+      ],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Dungeon"
+    },
+    {
+      "name": "Tomb",
+      "enemy_token": "Red / Draconum",
+      "combat_required": true,
+      "combat_notes": "Night rules apply inside; units cannot be used in combat",
+      "interactions": [
+        "Enter as an action",
+        "Night rules apply; no units in combat",
+        "Can be re-entered after conquest"
+      ],
+      "rewards": ["1 Spell + 1 Artifact"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Tomb"
+    },
+    {
+      "name": "Ruins",
+      "alternate_name": "Ancient Ruins",
+      "enemy_token": "Yellow token (altar or enemies)",
+      "combat_required": "conditional",
+      "combat_notes": "Either pay mana to altar (no combat) or fight enemies. Tokens persist after conquest.",
+      "interactions": [
+        "Enter as an action",
+        "Option A: Pay 3 mana of shown color to altar — no combat, gain 7 Fame",
+        "Option B: Fight enemies on yellow token — gain reward shown on token",
+        "Tokens remain face-up after resolution (can be revisited by other players)"
+      ],
+      "rewards": [
+        "Altar path: 7 Fame",
+        "Enemy path: reward shown on yellow token"
+      ],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Ruins"
+    },
+    {
+      "name": "Monster Den",
+      "enemy_token": "Brown (face-down on reveal)",
+      "combat_required": true,
+      "interactions": [
+        "Enter as an action",
+        "Fight the revealed brown token"
+      ],
+      "rewards": [
+        "2 random mana crystals: roll mana die twice; gold result = choose any color crystal; black result = +1 Fame instead"
+      ],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Monster_Den"
+    },
+    {
+      "name": "Spawning Ground",
+      "enemy_token": "Brown x2",
+      "combat_required": true,
+      "combat_notes": "Must fight 2 brown tokens; partial defeat leaves remaining tokens; defeated tokens are replaced face-down",
+      "interactions": [
+        "Enter as an action",
+        "Fight 2 brown tokens",
+        "Partial defeat: remaining tokens stay",
+        "Defeated tokens replaced face-down"
+      ],
+      "rewards": ["1 Artifact + 3 random mana crystals"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Spawning_Ground"
+    },
+    {
+      "name": "Crystal Mine",
+      "alternate_name": "Mine",
+      "enemy_token": null,
+      "combat_required": false,
+      "interactions": [
+        "End your turn on the mine hex to gain 1 mana crystal of the mine's color"
+      ],
+      "rewards": ["1 mana crystal of mine's color (per visit)"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Crystal_Mines"
+    },
+    {
+      "name": "Magical Glade",
+      "enemy_token": null,
+      "combat_required": false,
+      "interactions": [
+        "End your turn here: throw away 1 Wound",
+        "Start your turn here during Day: gain a gold mana token",
+        "Start your turn here during Night: gain a black mana token"
+      ],
+      "rewards": ["Wound removal", "Gold mana token (Day)", "Black mana token (Night)"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Magical_Glade"
+    },
+    {
+      "name": "City",
+      "enemy_token": "Multiple (listed on city card)",
+      "combat_required": true,
+      "combat_notes": "Assault costs Reputation -1; city defenders are fortified and have bonus abilities; city color determines defender types",
+      "interactions": [
+        "Assault (Reputation -1, fortified defenders + city bonuses)",
+        "On conquest: recruit city-icon units, buy items from city offer",
+        "Leader of conquering group gets +2 cards when adjacent to conquered city"
+      ],
+      "rewards": ["Fame", "Leadership bonus (+2 cards adjacent)", "Unit recruitment", "Items from city offer"],
+      "city_colors": ["Green", "Blue", "White", "Red"],
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/City"
+    },
+    {
+      "name": "Portal",
+      "enemy_token": null,
+      "combat_required": false,
+      "interactions": {
+        "NOT_FOUND_ON_WIKI": true,
+        "note": "The Portal wiki page exists but contains no description text. Check the rulebook for Portal interactions."
+      },
+      "rewards": {
+        "NOT_FOUND_ON_WIKI": true,
+        "note": "Portal reward details not found on wiki."
+      },
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Portal"
+    }
+  ],
+  "_meta": {
+    "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Map_features",
+    "not_found_on_wiki": [
+      "Portal site description and interactions (page is blank)",
+      "Ruin (singular) — the /wiki/Ruin URL redirects to Yellow Tokens, not a site description"
+    ]
+  }
+}

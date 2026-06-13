@@ -1,0 +1,14 @@
+{
+  "1": { "name": "Madrugador (Early Bird)", "effect": "Esta carta de táctica no tiene efecto aparte de garantizar que el jugador que la elija actuará primero." },
+  "2": { "name": "Reconsiderar (Rethink)", "effect": "Al tomar esta Táctica, descarta hasta 3 cartas (incluyendo Heridas) de tu mano y roba la misma cantidad. Baraja tu pila de descarte de vuelta a tu mazo de Acción." },
+  "3": { "name": "Robo de Maná (Mana Steal)", "effect": "Al tomar esta Táctica, toma un dado de maná de color básico de la Fuente y colócalo sobre esta carta. Puedes usar ese maná en cualquiera de tus turnos este Día. Si lo haces, vuelve a tirar el dado al final de ese turno y devuélvelo a la Fuente." },
+  "4": { "name": "Planificación (Planning)", "effect": "Al final de cada turno, si tienes al menos dos cartas en la mano antes de robar, roba como si tu límite de mano fuera 1 más alto." },
+  "5": { "name": "Gran Comienzo (Great Start)", "effect": "Puedes robar 2 cartas inmediatamente." },
+  "6": { "name": "El Momento Justo (The Right Moment)", "effect": "Una vez este Día durante tu turno, puedes anunciar que tomarás otro turno inmediatamente después de este. Si lo haces, voltea esta carta boca abajo." },
+  "7": { "name": "Desde el Crepúsculo (From the Dusk)", "effect": "Esta carta de táctica no tiene efecto aparte de garantizar que el jugador que la elija actuará primero." },
+  "8": { "name": "Noche Larga (Long Night)", "effect": "Una vez esta Noche, si tu mazo de Acción está vacío, puedes barajar tu pila de descarte y devolver 3 cartas al azar a tu mazo de Acción. Luego voltea esta carta boca abajo." },
+  "9": { "name": "Búsqueda de Maná (Mana Search)", "effect": "Una vez por turno, antes de usar maná de la Fuente, puedes volver a tirar hasta dos dados de maná en la Fuente. Al elegir los dados, debes escoger primero los dados dorados (agotados) si los hay." },
+  "10": { "name": "Meditación de Medianoche (Midnight Meditation)", "effect": "Una vez esta Noche, antes de cualquiera de tus turnos, puedes barajar hasta 5 cartas (incluyendo Heridas) de tu mano de vuelta a tu mazo de Acción y luego robar la misma cantidad. Después, voltea esta carta boca abajo." },
+  "11": { "name": "Preparación (Preparation)", "effect": "Al tomar esta Táctica, busca en tu mazo cualquier carta y ponla en tu mano, luego baraja tu mazo." },
+  "12": { "name": "Reserva de Poder (Sparing Power)", "effect": "Una vez antes del inicio de cada uno de tus turnos, elige una opción: Pon la carta superior de tu mazo de Acción boca abajo bajo esta carta, o voltea esta carta boca abajo y pon todas las cartas de Acción debajo de ella en tu mano." }
+}

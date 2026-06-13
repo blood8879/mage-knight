@@ -1,0 +1,222 @@
+{
+  "1": {
+    "name": "Rayo de Fuego",
+    "basicEffect": "Obtenga un cristal rojo para su Inventario.",
+    "strongEffect": "Ataque de Fuego a Distancia 3"
+  },
+  "2": {
+    "name": "Rayo de Hielo",
+    "basicEffect": "Obtenga un cristal azul para su Inventario.",
+    "strongEffect": "Ataque de Hielo a Distancia 3"
+  },
+  "3": {
+    "name": "Rayo Veloz",
+    "basicEffect": "Obtenga un cristal blanco para su Inventario.",
+    "strongEffect": "Ataque a Distancia 4"
+  },
+  "4": {
+    "name": "Rayo Aplastante",
+    "basicEffect": "Obtenga un cristal verde para su Inventario.",
+    "strongEffect": "Ataque de Asedio 3"
+  },
+  "5": {
+    "name": "Furia Sangrienta",
+    "basicEffect": "Ataque 2. Puede recibir una Herida para aumentar esto a Ataque 5.",
+    "strongEffect": "Ataque 4. Puede recibir una Herida para aumentar esto a Ataque 9."
+  },
+  "6": {
+    "name": "Escudo de Hielo",
+    "basicEffect": "Bloqueo de Hielo 3",
+    "strongEffect": "Bloqueo de Hielo 3. Reduzca la Armadura de un enemigo bloqueado de esta manera en 3. La Armadura no puede reducirse por debajo de 1."
+  },
+  "7": {
+    "name": "Agilidad",
+    "basicEffect": "Movimiento 2. Durante el combate de este turno, puede gastar los puntos de Movimiento restantes de la fase de Movimiento como puntos de Ataque uno por uno.",
+    "strongEffect": "Movimiento 4. Durante el combate de este turno, puede gastar los puntos de Movimiento restantes de la fase de Movimiento como puntos de Ataque uno por uno, o 2 puntos de Movimiento por 1 punto de Ataque a Distancia."
+  },
+  "8": {
+    "name": "Paseo Reparador",
+    "basicEffect": "Movimiento 2 y Curación 1.",
+    "strongEffect": "Movimiento 4 y Curación 2."
+  },
+  "9": {
+    "name": "Intimidar",
+    "basicEffect": "Influencia 4 o Ataque 3. Reputación -1.",
+    "strongEffect": "Influencia 8 o Ataque 7. Reputación -2."
+  },
+  "10": {
+    "name": "Puente de Escarcha",
+    "basicEffect": "Movimiento 2. El coste de Movimiento de los pantanos se reduce a 1 este turno.",
+    "strongEffect": "Movimiento 4. Puede viajar a través de lagos, y el coste de Movimiento de lagos y pantanos se reduce a 1 este turno."
+  },
+  "11": {
+    "name": "Canción del Viento",
+    "basicEffect": "Movimiento 2. El coste de Movimiento de llanuras, desiertos y páramos se reduce en 1, hasta un mínimo de 0 este turno.",
+    "strongEffect": "Movimiento 2. El coste de Movimiento de llanuras, desiertos y páramos se reduce en 2, hasta un mínimo de 0. Puede pagar un maná azul para poder viajar a través de lagos con coste de Movimiento 0 este turno."
+  },
+  "12": {
+    "name": "Búsqueda de Senderos",
+    "basicEffect": "Movimiento 2. El coste de Movimiento de todos los terrenos se reduce en 1, hasta un mínimo de 2, este turno.",
+    "strongEffect": "Movimiento 4. El coste de Movimiento de todos los terrenos se reduce a 2 este turno."
+  },
+  "13": {
+    "name": "Ritual de Sangre",
+    "basicEffect": "Reciba una Herida. Obtenga una ficha de maná rojo y una ficha de maná de cualquier color (incluyendo no básico).",
+    "strongEffect": "Reciba una Herida. Obtenga tres fichas de maná de cualquier color (incluyendo no básico)."
+  },
+  "14": {
+    "name": "Magia Pura",
+    "basicEffect": "Cuando juegue esta carta, pague un maná. Si pagó Verde, Movimiento 4. Si pagó Blanco, Influencia 4. Si pagó Azul, Bloqueo 4. Si pagó Rojo, Ataque 4.",
+    "strongEffect": "Cuando juegue esta carta, pague un maná. Si pagó Verde, Movimiento 7. Si pagó Blanco, Influencia 7. Si pagó Azul, Bloqueo 7. Si pagó Rojo, Ataque 7."
+  },
+  "15": {
+    "name": "Relato Heroico",
+    "basicEffect": "Influencia 3. Reputación +1 por cada Unidad que reclute este turno.",
+    "strongEffect": "Influencia 6. Fama +1 y Reputación +1 por cada Unidad que reclute este turno."
+  },
+  "16": {
+    "name": "Regeneración",
+    "basicEffect": "Curación 1. Prepare una Unidad de Nivel I o II que controle.",
+    "strongEffect": "Curación 2. Prepare una Unidad de Nivel I, II o III que controle."
+  },
+  "17": {
+    "name": "Al Calor de la Batalla",
+    "basicEffect": "Juegue esta carta al inicio del combate. Todas sus Unidades obtienen sus valores de Ataque y Bloqueo aumentados en 2 este combate. No puede asignar daño a las Unidades este turno.",
+    "strongEffect": "Juegue esta carta al inicio del combate. Todas sus Unidades obtienen sus valores de Ataque y Bloqueo aumentados en 3 este combate. No puede asignar daño a las Unidades este turno."
+  },
+  "18": {
+    "name": "Ritmo Constante",
+    "basicEffect": "Movimiento 2. Al final de su turno, en lugar de poner esta carta en su pila de descarte, puede colocarla en la parte inferior de su mazo de hazañas siempre que no esté vacío.",
+    "strongEffect": "Movimiento 4. Al final de su turno, en lugar de poner esta carta en su pila de descarte, puede colocarla en la parte superior de su mazo de Hazañas."
+  },
+  "19": {
+    "name": "Diplomacia",
+    "basicEffect": "Influencia 2. Puede usar Influencia como Bloqueo este turno.",
+    "strongEffect": "Influencia 4. Elija Hielo o Fuego. Puede usar Influencia como Bloqueo del elemento elegido este turno."
+  },
+  "20": {
+    "name": "En Apuros",
+    "basicEffect": "Influencia 2. Obtenga Influencia 1 adicional por cada carta de Herida en su mano o sobre una Unidad que controle.",
+    "strongEffect": "Influencia 4. Obtenga Influencia 2 adicional por cada carta de Herida en su mano o sobre una Unidad que controle."
+  },
+  "21": {
+    "name": "Descomponer",
+    "basicEffect": "Cuando juegue esta carta, elimine una carta de Acción de su mano. Obtenga dos cristales para su Inventario del mismo color que la carta eliminada.",
+    "strongEffect": "Cuando juegue esta carta, elimine una carta de Acción de su mano. Obtenga un cristal para su Inventario de cada color básico que no coincida con el color de la carta eliminada."
+  },
+  "22": {
+    "name": "Maestría de Cristales",
+    "basicEffect": "Obtenga un cristal para su Inventario del mismo color que un cristal que ya posea.",
+    "strongEffect": "Cualquier cristal que gaste este turno será devuelto a su Inventario al final del turno."
+  },
+  "23": {
+    "name": "Tormenta de Maná",
+    "basicEffect": "Elija un dado de maná en la Fuente que muestre un color básico. Obtenga un cristal de ese color para su Inventario, luego vuelva a lanzar ese dado inmediatamente y devuélvalo a la Fuente.",
+    "strongEffect": "Vuelva a lanzar todos los dados en la Fuente. Puede usar tres dados adicionales de la Fuente, y puede usar dados que muestren negro u oro como maná de cualquier color básico, independientemente de la Ronda."
+  },
+  "24": {
+    "name": "Emboscada",
+    "basicEffect": "Movimiento 2. Añada +1 a su primera carta de Ataque de cualquier tipo o +2 a su primera carta de Bloqueo de cualquier tipo, lo que juegue primero este turno.",
+    "strongEffect": "Movimiento 4. Añada +2 a su primera carta de Ataque de cualquier tipo o +4 a su primera carta de Bloqueo de cualquier tipo, lo que juegue primero este turno."
+  },
+  "25": {
+    "name": "Efecto Máximo",
+    "basicEffect": "Cuando juegue esta carta, juegue otra carta de Acción con ella. Use el efecto básico de esa carta tres veces. Luego, elimine esa carta.",
+    "strongEffect": "Cuando juegue esta carta, juegue otra carta de Acción con ella. Use el efecto avanzado de esa carta dos veces (gratis). Luego, elimine esa carta."
+  },
+  "26": {
+    "name": "Talento Mágico",
+    "basicEffect": "Descarte una carta de su mano. Puede jugar una carta de Hechizo de la oferta de Hechizos este turno como si estuviera en su mano. Esa carta permanece en la oferta de Hechizos.",
+    "strongEffect": "Cuando juegue esta carta, pague un maná de cualquier color. Obtenga una carta de Hechizo de ese color de la oferta de Hechizos y colóquela en su pila de descarte."
+  },
+  "27": {
+    "name": "Aprendizaje",
+    "basicEffect": "Influencia 2. Una vez durante este turno, puede pagar Influencia 6 para obtener una carta de Acción Avanzada de la oferta de Acciones Avanzadas para su pila de descarte.",
+    "strongEffect": "Influencia 4. Una vez durante este turno, puede pagar Influencia 9 para obtener una carta de Acción Avanzada de la oferta de Acciones Avanzadas para su mano."
+  },
+  "28": {
+    "name": "Entrenamiento",
+    "basicEffect": "Elimine una carta de Acción de su mano, luego tome una carta del mismo color de la oferta de Acciones Avanzadas y colóquela en su pila de descarte.",
+    "strongEffect": "Elimine una carta de Acción de su mano, luego tome una carta del mismo color de la oferta de Acciones Avanzadas y colóquela en su mano."
+  },
+  "29": {
+    "name": "Contraataque",
+    "basicEffect": "Ataque 2. Obtenga Ataque 2 adicional por cada enemigo bloqueado este turno.",
+    "strongEffect": "Ataque 4. Obtenga Ataque 3 adicional por cada enemigo bloqueado este turno."
+  },
+  "30": {
+    "name": "Ataque Ritual",
+    "basicEffect": "Elimine otra carta de acción. Dependiendo de su color, obtiene: Ataque 5 por rojo, Ataque de Hielo 3 por azul, Ataque a Distancia 3 por blanco, Ataque de Asedio 2 por verde.",
+    "strongEffect": "Elimine otra carta de acción. Dependiendo de su color, obtiene: Ataque de Fuego 6 por rojo, Ataque de Fuego Frío 4 por azul, Ataque de Fuego a Distancia 4 por blanco, Ataque de Fuego de Asedio 3 por verde."
+  },
+  "31": {
+    "name": "Sangre de los Ancestros",
+    "basicEffect": "Reciba una Herida. Pague un maná de cualquier color. Obtenga una carta de ese color de la oferta de Acciones Avanzadas y colóquela en su mano.",
+    "strongEffect": "Reciba una Herida en su mano o pila de descarte. Use el efecto más fuerte de cualquier carta de la oferta de Acciones Avanzadas sin pagar su coste de maná. La carta permanece en la oferta."
+  },
+  "32": {
+    "name": "Golpe de Escudo",
+    "basicEffect": "Bloqueo 3. Cuenta el doble contra un ataque con Rapidez.",
+    "strongEffect": "Bloqueo 5. Cuenta el doble contra un ataque con Rapidez. El enemigo bloqueado obtiene Armadura -1 por cada punto de bloqueo superior al necesario (hasta un mínimo de 1)."
+  },
+  "33": {
+    "name": "Portal Temporal",
+    "basicEffect": "Juegue como su acción de este turno. Puede moverse a un espacio seguro revelado adyacente (sin provocar monstruos furiosos). Se mueva o no, su límite de Mano es mayor en 1 la próxima vez que robe cartas.",
+    "strongEffect": "Igual que arriba, excepto que puede moverse dos espacios a un espacio seguro revelado en lugar de uno, u obtener su límite de Mano aumentado en 2 en lugar de 1."
+  },
+  "34": {
+    "name": "Forja de Hechizos",
+    "basicEffect": "Obtenga un cristal para su Inventario del mismo color que una de las cartas de Hechizo en la oferta de Hechizos.",
+    "strongEffect": "Obtenga dos cristales para su Inventario del mismo color que dos de las cartas de Hechizo en la oferta de Hechizos."
+  },
+  "35": {
+    "name": "Caballería",
+    "basicEffect": "Ataque 3, o Ataque 2 y Reputación +1 por cada enemigo derrotado por este ataque.",
+    "strongEffect": "Ataque 6, o Ataque 4 y Reputación +1 y Fama +1 por cada enemigo derrotado por este ataque."
+  },
+  "36": {
+    "name": "Momento de Paz",
+    "basicEffect": "Influencia 3. Puede jugar esto como su acción del turno: si lo hace, puede obtener Curación 1 por cada 2 de Influencia que gaste.",
+    "strongEffect": "Influencia 6. Puede jugar esto como su acción del turno: si lo hace, puede obtener Curación 1 por cada 2 de Influencia que gaste y/o preparar una Unidad pagando 2 de Influencia por nivel de la Unidad."
+  },
+  "37": {
+    "name": "Esquivar y Zigzaguear",
+    "basicEffect": "Reduzca un ataque enemigo en 2. Obtenga Ataque 1 en la fase de Ataque si no añadió ninguna Herida a su mano en las fases de combate anteriores.",
+    "strongEffect": "Reduzca un ataque enemigo en 4 o dos ataques de uno o dos enemigos en 2. Obtenga Ataque 2 en la fase de Ataque si no añadió ninguna Herida a su mano en las fases de combate anteriores."
+  },
+  "38": {
+    "name": "Resolución Firme",
+    "basicEffect": "Movimiento 2, Influencia 2, Ataque 2 o Bloqueo 2. Puede descartar una Herida para aumentar el efecto en 1.",
+    "strongEffect": "Movimiento 3, Influencia 3, Ataque 3 o Bloqueo 3. Puede descartar cualquier cantidad de cartas, incluyendo una Herida, para aumentar el efecto en 2 por cada una."
+  },
+  "39": {
+    "name": "Fuerza de la Naturaleza",
+    "basicEffect": "La Unidad elegida obtiene resistencia física este combate.",
+    "strongEffect": "Ataque de Asedio 3 o Bloqueo 6."
+  },
+  "40": {
+    "name": "Saber de Montaña",
+    "basicEffect": "Movimiento 3. Si termina su turno en colinas, su límite de Mano es mayor en 1 la próxima vez que robe cartas.",
+    "strongEffect": "Movimiento 5. Puede entrar en montañas con un coste de Movimiento de 5 y se consideran un espacio seguro para usted al final de este turno. Si termina su turno en montañas/colinas, su límite de Mano es mayor en 2/1 la próxima vez que robe cartas."
+  },
+  "41": {
+    "name": "Cristales de Poder",
+    "basicEffect": "Obtenga un cristal para su Inventario de un color básico que aún no posea.",
+    "strongEffect": "Movimiento 4, o Curación 2, o robe dos cartas. Por cada conjunto de cuatro cristales de diferente color en su Inventario: Movimiento 2, o Curación 1, o robe una carta."
+  },
+  "42": {
+    "name": "Torrente de Adrenalina",
+    "basicEffect": "Por cada una de las tres Heridas que reciba en su mano este turno, robe una carta.",
+    "strongEffect": "Tras recibir la primera Herida en su mano este turno, elimínela y robe una carta. Por cada una de las siguientes tres Heridas que reciba, robe una carta."
+  },
+  "43": {
+    "name": "Rayo Explosivo",
+    "basicEffect": "Reciba una Herida. Obtenga un cristal blanco y uno rojo para su Inventario.",
+    "strongEffect": "Ataque a Distancia 3. Por cada enemigo derrotado por este ataque, otro enemigo obtiene Armadura -1 (hasta un mínimo de 1)."
+  },
+  "44": {
+    "name": "Mirada Gélida",
+    "basicEffect": "Influencia 3, o un ataque enemigo elegido pierde todas sus habilidades de ataque (pero no su color).",
+    "strongEffect": "Influencia 5, o un enemigo elegido no ataca este turno."
+  }
+}

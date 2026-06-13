@@ -1,0 +1,170 @@
+{
+  "1": {
+    "name": "Fireball / Firestorm",
+    "basicSpellName": "Fireball",
+    "basicSpellText": "Ranged Fire Attack 5.",
+    "strongSpellName": "Firestorm",
+    "strongSpellText": "Take a Wound. Siege Fire Attack 8."
+  },
+  "2": {
+    "name": "Snowstorm / Blizzard",
+    "basicSpellName": "Snowstorm",
+    "basicSpellText": "Ranged Ice Attack 5.",
+    "strongSpellName": "Blizzard",
+    "strongSpellText": "Take a Wound. Siege Ice Attack 8."
+  },
+  "3": {
+    "name": "Expose / Mass Expose",
+    "basicSpellName": "Expose",
+    "basicSpellText": "Target enemy loses all fortifications and resistances this combat. Ranged Attack 2.",
+    "strongSpellName": "Mass Expose",
+    "strongSpellText": "Enemies lose all fortifications this combat, or enemies lose all resistances this combat. Ranged Attack 3."
+  },
+  "4": {
+    "name": "Tremor / Earthquake",
+    "basicSpellName": "Tremor",
+    "basicSpellText": "Target enemy gets Armor -3, or all enemies get Armor -2. Armor cannot be reduced below 1.",
+    "strongSpellName": "Earthquake",
+    "strongSpellText": "Target enemy gets Armor -3 (Armor -6 if it is fortified), or all enemies get Armor -2 (Armor -4 if they are fortified). Armor cannot be reduced below 1."
+  },
+  "5": {
+    "name": "Flame Wall / Flame Wave",
+    "basicSpellName": "Flame Wall",
+    "basicSpellText": "Fire Attack 5 or Fire Block 7.",
+    "strongSpellName": "Flame Wave",
+    "strongSpellText": "Fire Attack 5 or Fire Block 7. This attack or block gets increased by 2 for each enemy token you are facing."
+  },
+  "6": {
+    "name": "Mana Bolt / Mana Thunderbolt",
+    "basicSpellName": "Mana Bolt",
+    "basicSpellText": "When you play this, pay a mana. If you paid blue, Ice Attack 8. If you paid red, Cold Fire Attack 7. If you paid white, Ranged Ice Attack 6. If you paid green, Siege Ice Attack 5.",
+    "strongSpellName": "Mana Thunderbolt",
+    "strongSpellText": "When you play this, pay a mana. If you paid blue, Ice Attack 11. If you paid red, Cold Fire Attack 10. If you paid white, Ranged Ice Attack 9. If you paid green, Siege Ice Attack 8."
+  },
+  "7": {
+    "name": "Whirlwind / Tornado",
+    "basicSpellName": "Whirlwind",
+    "basicSpellText": "Target enemy does not attack this combat.",
+    "strongSpellName": "Tornado",
+    "strongSpellText": "Play this only in the Attack phase of combat. Destroy target enemy."
+  },
+  "8": {
+    "name": "Underground Travel / Underground Attack",
+    "basicSpellName": "Underground Travel",
+    "basicSpellText": "Move by up to 3 revealed spaces on the map. You may not move to or through swamps or lakes this way, and you must end your move on a safe space. Moving this way does not provoke rampaging enemies.",
+    "strongSpellName": "Underground Attack",
+    "strongSpellText": "Same as the basic effect, except you have to end your move on a fortified site (or on a space occupied by another player). It ends your movement and counts as an assault (or as an attack on that player). Ignore site fortifications. If withdrawing after the combat, return to your original position."
+  },
+  "9": {
+    "name": "Burning Shield / Exploding Shield",
+    "basicSpellName": "Burning Shield",
+    "basicSpellText": "Fire Block 4. If this card is used as part of a successful Block, you may use it during your Attack phase as Fire Attack 4.",
+    "strongSpellName": "Exploding Shield",
+    "strongSpellText": "Fire Block 4. If this card is used as part of a successful Block, destroy the blocked enemy."
+  },
+  "10": {
+    "name": "Chill / Lethal Chill",
+    "basicSpellName": "Chill",
+    "basicSpellText": "Target enemy does not attack this combat. If it has Fire Resistance, it loses it for the rest of the turn.",
+    "strongSpellName": "Lethal Chill",
+    "strongSpellText": "Target enemy does not attack this combat and gets Armor -4 (to a minimum of 1) for the rest of the turn."
+  },
+  "11": {
+    "name": "Wings of Wind / Wings of Night",
+    "basicSpellName": "Wings of Wind",
+    "basicSpellText": "When you play this, spend 1-5 Move points and move one revealed space on the map for each. You must end your move in a safe space. Moving this way does not provoke rampaging enemies.",
+    "strongSpellName": "Wings of Night",
+    "strongSpellText": "Target enemy does not attack this combat. You may target additional enemies: pay 1 Move point for the second enemy, 2 Move points for the third enemy, etc."
+  },
+  "12": {
+    "name": "Restoration / Rebirth",
+    "basicSpellName": "Restoration",
+    "basicSpellText": "Heal 3. If you are in a forest, Heal 5 instead.",
+    "strongSpellName": "Rebirth",
+    "strongSpellText": "Heal 3. If you are in a forest, Heal 5 instead. Ready up to 3 levels worth of Units. If you are in a forest, Ready up to 5 levels of Units instead."
+  },
+  "13": {
+    "name": "Demolish / Disintegrate",
+    "basicSpellName": "Demolish",
+    "basicSpellText": "Ignore site fortifications this turn. Enemies get Armor -1 (to a minimum of 1).",
+    "strongSpellName": "Disintegrate",
+    "strongSpellText": "Play this only in the Attack phase of combat. Destroy target enemy. Other enemies get Armor -1 (to a minimum of 1)."
+  },
+  "14": {
+    "name": "Space Bending / Time Bending",
+    "basicSpellName": "Space Bending",
+    "basicSpellText": "This turn, you may move to spaces and explore new tiles that are 2 spaces away from you as if they were adjacent. Ignore any spaces you leap over this way. Your movement does not provoke rampaging enemies this turn.",
+    "strongSpellName": "Time Bending",
+    "strongSpellText": "At the end of your turn, set this card aside for the rest of the Round. Put all other cards you played this turn (not those discarded or thrown away) back in your hand. Skip the \"draw new cards\" portion of your end of turn step. Immediately take another turn."
+  },
+  "15": {
+    "name": "Call to Arms / Call to Glory",
+    "basicSpellName": "Call to Arms",
+    "basicSpellText": "You may use an ability of one Unit in the Units offer this turn, as if it were one of your recruits. You cannot assign damage to this Unit.",
+    "strongSpellName": "Call to Glory",
+    "strongSpellText": "Recruit any one Unit from the Units offer for free. (If you are at your Command limit, you must disband one of your Units first.)"
+  },
+  "16": {
+    "name": "Meditation / Trance",
+    "basicSpellName": "Meditation",
+    "basicSpellText": "Randomly pick two cards from your discard pile and place them either on the top or bottom of your Deed deck. At the end of this turn, draw two cards over your hand limit.",
+    "strongSpellName": "Trance",
+    "strongSpellText": "Same as the basic effect, except you choose the cards instead of picking them randomly."
+  },
+  "17": {
+    "name": "Mana Meltdown / Mana Radiance",
+    "basicSpellName": "Mana Meltdown",
+    "basicSpellText": "Each other player must randomly choose a crystal in their Inventory to be lost. You may gain one crystal lost this way to your Inventory. Any player that had no crystal in their Inventory when you played this, takes a Wound instead.",
+    "strongSpellName": "Mana Radiance",
+    "strongSpellText": "When you play this, choose a basic mana color. Each player, including you, takes a Wound for each crystal of that color they own. Gain two crystals of the chosen color to your Inventory."
+  },
+  "18": {
+    "name": "Mana Claim / Mana Curse",
+    "basicSpellName": "Mana Claim",
+    "basicSpellText": "Take a mana die of a basic color from the Source and keep it in your Play area until the end of the Round. You can either gain 3 mana tokens of that color this turn, or one mana token of that color each turn for the remainder of the Round (starting with your next turn).",
+    "strongSpellName": "Mana Curse",
+    "strongSpellText": "Same as the basic effect. In addition, until the end of the Round: Each time another player uses one or more mana of that color on their turn (from any source), they take a Wound. Each player can get only one Wound per turn this way."
+  },
+  "19": {
+    "name": "Mind Read / Mind Steal",
+    "basicSpellName": "Mind Read",
+    "basicSpellText": "Choose a color. Gain a crystal of the chosen color to your Inventory. Each other player must discard a Spell or Action card of that color from their hand, or reveal their hand to show that they have none.",
+    "strongSpellName": "Mind Steal",
+    "strongSpellText": "Same as the basic effect. In addition to that, you may decide to permanently steal one of the Action cards (not Spells) discarded this way and put it into your hand."
+  },
+  "20": {
+    "name": "Energy Flow / Energy Steal",
+    "basicSpellName": "Energy Flow",
+    "basicSpellText": "Ready a Unit. If you do, you may spend one Unit of level II or less in each other player's Unit area.",
+    "strongSpellName": "Energy Steal",
+    "strongSpellText": "Ready a Unit. If you do, that Unit also gets Healed, and you may spend one unit of level III or less in each other player's Unit area."
+  },
+  "21": {
+    "name": "Offering / Sacrifice",
+    "basicSpellName": "Offering",
+    "basicSpellText": "Gain a red crystal to your Inventory. You may discard up to 3 non-Wound cards from your hand. For each discarded card gain a crystal of the matching color to your Inventory (for Artifacts you choose).",
+    "strongSpellName": "Sacrifice",
+    "strongSpellText": "Choose green or white, then choose red or blue. Gain Siege Attack 4 (if you choose green) or Ranged Attack 6 (if you choose white) for each pair of crystals of one of each of these colors in your Inventory. This Attack is Fire (if you choose red) or Ice (if you choose blue). Then, turn all these crystal pairs into mana."
+  },
+  "22": {
+    "name": "Mist Form / Veil of Mist",
+    "basicSpellName": "Mist Form",
+    "basicSpellText": "Move 4. The Move costs of all terrains, including lakes, is 2. You cannot enter hills and mountains for the rest of this turn.",
+    "strongSpellName": "Veil of Mist",
+    "strongSpellText": "All your Units gain all resistances. Your hero ignores the first Wound from enemies this turn. Also ignore any additional effects of that wound."
+  },
+  "23": {
+    "name": "Charm / Possess",
+    "basicSpellName": "Charm",
+    "basicSpellText": "Influence 4. If you use this during interaction then either gain a crystal of any color to your Inventory or get a discount of 3 towards one Unit.",
+    "strongSpellName": "Possess",
+    "strongSpellText": "One enemy does not attack. In the Attack phase gain Attack equal to its Attack including elements (if any) but ignore special abilities. You can target only other enemies with that attack."
+  },
+  "24": {
+    "name": "Cure / Disease",
+    "basicSpellName": "Cure",
+    "basicSpellText": "Heal 2. Draw a card for each Wound healed from your hand this turn, and ready each Unit healed this turn.",
+    "strongSpellName": "Disease",
+    "strongSpellText": "All enemies blocked during the Block phase get their Armor reduced to 1."
+  }
+}

@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ── Display font (bundled, OFL) ─────────── */
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/assets/fonts/cinzel-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/assets/fonts/cinzel-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Theme tokens ─────────────────────────── */
+:root {
+  --mk-gold: #d4af37;
+  --mk-gold-soft: #e7d9a8;
+  --mk-gold-dim: rgba(212, 175, 55, 0.35);
+  --mk-bg-deep: #080d1a;
+  --mk-bg-panel: #101727;
+  --mk-font-display: 'Cinzel', 'Noto Serif KR', 'Apple SD Gothic Neo', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--mk-bg-deep);
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Fantasy theme utilities ─────────────── */
+
+.font-display {
+  font-family: var(--mk-font-display);
+  letter-spacing: 0.04em;
+}
+
+/* Gold-foil title text */
+.text-gold-foil {
+  background: linear-gradient(170deg, #f5e6b8 0%, var(--mk-gold) 38%, #8a6d1f 55%, #f0d98c 72%, #c9a432 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.25));
+}
+
+/* Primary fantasy button: dark steel with a gold rim */
+.btn-fantasy {
+  position: relative;
+  font-family: var(--mk-font-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--mk-gold-soft);
+  background: linear-gradient(180deg, #2a3349 0%, #161d30 55%, #10162a 100%);
+  border: 1px solid var(--mk-gold-dim);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.18s ease;
+}
+.btn-fantasy:hover {
+  border-color: rgba(212, 175, 55, 0.75);
+  color: #f5e8c0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 18px rgba(0, 0, 0, 0.55),
+    0 0 18px rgba(212, 175, 55, 0.18);
+  transform: translateY(-1px);
+}
+.btn-fantasy:active {
+  transform: translateY(0);
+}
+
+.btn-fantasy-primary {
+  background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 60%, #4c1d95 100%);
+  border-color: rgba(196, 181, 253, 0.5);
+  color: #f5f3ff;
+}
+.btn-fantasy-primary:hover {
+  border-color: rgba(221, 214, 254, 0.85);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 18px rgba(0, 0, 0, 0.55),
+    0 0 22px rgba(139, 92, 246, 0.35);
+}
+
+.btn-fantasy-gold {
+  background: linear-gradient(180deg, #b8860b 0%, #8a6d1f 60%, #6e5517 100%);
+  border-color: rgba(245, 230, 184, 0.55);
+  color: #fdf6e3;
+}
+.btn-fantasy-gold:hover {
+  border-color: rgba(245, 230, 184, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 18px rgba(0, 0, 0, 0.55),
+    0 0 22px rgba(212, 175, 55, 0.35);
+}
+
+/* Panel chrome: subtle vertical sheen + gold hairline */
+.panel-fantasy {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.75) 0%, rgba(13, 19, 33, 0.92) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Ornamental divider: — ◆ — */
+.divider-ornate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--mk-gold-dim);
+}
+.divider-ornate::before,
+.divider-ornate::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mk-gold-dim));
+}
+.divider-ornate::after {
+  background: linear-gradient(90deg, var(--mk-gold-dim), transparent);
+}
+
+/* Slow ambient glow pulse (menu title etc.) */
+@keyframes mk-glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.animate-glow-pulse {
+  animation: mk-glow-pulse 5s ease-in-out infinite;
+}
+
+/* Slow drifting background for the menu */
+@keyframes mk-drift {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-18px, -12px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.animate-drift {
+  animation: mk-drift 36s ease-in-out infinite;
+}

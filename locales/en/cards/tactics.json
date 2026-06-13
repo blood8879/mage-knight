@@ -1,0 +1,14 @@
+{
+  "1": { "name": "Early Bird", "effect": "This tactic card has no effect besides guaranteeing the player picking it will go first." },
+  "2": { "name": "Rethink", "effect": "When you take this Tactic, discard up to 3 cards (including Wounds) from your hand, then draw that many cards. Shuffle your discard pile back into your Deed deck." },
+  "3": { "name": "Mana Steal", "effect": "When you take this Tactic, take one mana die of a basic color from the Source and put it on this card. You can use that mana on any of your turns this Day. If you do, reroll it at the end of that turn and return it to the Source." },
+  "4": { "name": "Planning", "effect": "At the end of each turn, if you have at least two cards in your hand before you draw, draw as if your Hand limit is 1 higher." },
+  "5": { "name": "Great Start", "effect": "You may immediately draw 2 cards." },
+  "6": { "name": "The Right Moment", "effect": "One time this Day during your turn, you can announce that you will take another turn immediately after this. If you do, flip this card face down." },
+  "7": { "name": "From the Dusk", "effect": "This tactic card has no effect besides guaranteeing the player picking it will go first." },
+  "8": { "name": "Long Night", "effect": "One time this Night, if your Deed deck is empty, you may shuffle your discard pile and put 3 cards at random back into your Deed deck. Then flip this card face down." },
+  "9": { "name": "Mana Search", "effect": "Once per turn, before you use mana from the Source, you may reroll up to two mana dice in the Source. When choosing dice to reroll, you must pick gold (depleted) dice first, if there are any." },
+  "10": { "name": "Midnight Meditation", "effect": "One time this Night, before any of your turns, you may shuffle up to 5 cards (including Wounds) from your hand back into your Deed deck and then draw that many cards. Then, flip this card face down." },
+  "11": { "name": "Preparation", "effect": "When you take this Tactic, search your deck for any one card and put it into your hand, then shuffle your deck." },
+  "12": { "name": "Sparing Power", "effect": "Once before the start of each of your turns, choose one: Put the top card of your Deed deck face down under this card, or flip this card face down and put all Deed cards under it into your hand." }
+}

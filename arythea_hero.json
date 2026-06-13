@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "name": "Arythea",
+    "starting_stats": {
+      "NOT_FOUND_ON_WIKI": true,
+      "note": "Armor, hand limit, and unit limit not listed on the wiki. Check the rulebook or hero board."
+    },
+    "level_up_progression": {
+      "NOT_FOUND_ON_WIKI": true,
+      "note": "Level-up table (fame thresholds, card/skill rewards per level) not found on the wiki. Check the rulebook or hero board."
+    },
+    "starting_deck": {
+      "total_cards": 16,
+      "note": "Arythea uses the standard 16-card starting deck with one substitution: one Rage is replaced by Battle Versatility.",
+      "cards": [
+        { "name": "Rage", "quantity": 1 },
+        { "name": "Determination", "quantity": 1 },
+        { "name": "Swiftness", "quantity": 2 },
+        { "name": "March", "quantity": 2 },
+        { "name": "Stamina", "quantity": 2 },
+        { "name": "Tranquility", "quantity": 1 },
+        { "name": "Promise", "quantity": 1 },
+        { "name": "Threaten", "quantity": 1 },
+        { "name": "Crystallize", "quantity": 1 },
+        { "name": "Mana Draw", "quantity": 1 },
+        { "name": "Concentration", "quantity": 1 },
+        { "name": "Improvisation", "quantity": 1 },
+        { "name": "Battle Versatility", "quantity": 1, "unique_to_arythea": true }
+      ],
+      "expansion_variant": {
+        "note": "With the Lost Legion expansion, Mana Draw is replaced by Mana Pull.",
+        "replaces": "Mana Draw",
+        "with": "Mana Pull"
+      }
+    },
+    "unique_cards": [
+      {
+        "name": "Battle Versatility",
+        "replaces": "Rage (one copy)",
+        "basic_effect": "Attack 2, Block 2 or Ranged Attack 1.",
+        "powered_effect": "Attack 4, Block 4, Fire Attack 3, Fire Block 3, Ranged Attack 3 or Siege Attack 2.",
+        "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Battle_Versatility"
+      },
+      {
+        "name": "Mana Pull",
+        "replaces": "Mana Draw (Lost Legion expansion only)",
+        "basic_effect": "You can use one additional mana die from the Source this turn. If that die is black, use it to produce mana of any color.",
+        "powered_effect": "Take two mana dice from the source and set them to any color except gold. Gain a mana token of each of these colors. Do not reroll these dice when you return them to the Source.",
+        "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Mana_Pull"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Dark Paths",
+        "type": "Standard Skill",
+        "effect": "Once a turn: Move 1 (during the Day), or Move 2 (at Night)."
+      },
+      {
+        "name": "Burning Power",
+        "type": "Standard Skill",
+        "effect": "Once a turn: Siege Attack 1, or Fire Siege Attack 1."
+      },
+      {
+        "name": "Hot Swordsmanship",
+        "type": "Standard Skill",
+        "effect": "Once a turn: Attack 2, or Fire Attack 2."
+      },
+      {
+        "name": "Dark Negotiation",
+        "type": "Standard Skill",
+        "effect": "Once a turn: Influence 2 (during the Day), or Influence 3 (at Night)."
+      },
+      {
+        "name": "Dark Fire Magic",
+        "type": "Standard Skill",
+        "effect": "Once a Round: Flip this to gain one red crystal to your inventory, and one red or one black mana token."
+      },
+      {
+        "name": "Power of Pain",
+        "type": "Standard Skill",
+        "effect": "Once a turn: You can play one Wound sideways, as if it were a non-Wound card. It gives +2 instead of +1. At the end of your turn, put that Wound in your discard pile."
+      },
+      {
+        "name": "Invocation",
+        "type": "Standard Skill",
+        "effect": "Once a turn: Discard a Wound card to gain a red or black mana token, or discard a non-wound card to gain a white or green mana token. You must spend a mana token gained this way immediately, or you cannot use the ability."
+      },
+      {
+        "name": "Polarization",
+        "type": "Standard Skill",
+        "effect": "Once a turn: You can use one mana as a mana of the opposite color (see token diagram). During the Day, you could use a black mana as any color other than black (not to power the stronger effect of spells). At Night, you could use a gold mana as black to power the stronger effect of a Spell, but not as any other color."
+      },
+      {
+        "name": "Motivation",
+        "type": "Interactive Skill",
+        "effect": "Once a round, on any player's turn: Flip this to draw 2 cards. If you have the least fame (not tied), also gain a mana token depending on whose skill is chosen (Norowas=White, Goldyx=Green, Tovak=Blue, Arythea=Red). Fame 1 (Wolfhawk). You cannot use another motivation skill until the end of your next turn.",
+        "solo_note": "If you play a solo game, you get the extra mana token.",
+        "arythea_mana_color": "Red",
+        "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Motivation"
+      },
+      {
+        "name": "Healing Ritual",
+        "type": "Interactive Skill",
+        "effect": "Once a Round, except in combat: Flip this to throw away up to two Wounds from your hand. One of them goes to the hand of the closest hero (if tied, you choose) instead of to the Wound pile."
+      }
+    ],
+    "cooperative_skill": {
+      "name": "Arythea / Ritual of Pain",
+      "effect": "Once a Round, except in combat: Throw away up to two Wound cards from your hand. Put this Skill token in the center. Any player may return it to you, face down, to play a Wound card sideways as if it is a non-Wound card, and get +3 instead of +1.",
+      "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Arythea_/_Ritual_of_Pain"
+    }
+  },
+  "_meta": {
+    "source": "https://unofficialmageknighttheboardgame.fandom.com/wiki/Arythea",
+    "not_found_on_wiki": [
+      "Starting armor value",
+      "Starting hand limit",
+      "Starting unit limit",
+      "Level-up progression table (fame thresholds, card/skill rewards per level)"
+    ]
+  }
+}

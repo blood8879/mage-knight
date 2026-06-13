@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="64" fill="#0f172a"/>
+  <path d="M256 80L120 180v152l136 100 136-100V180L256 80z" fill="#7c3aed" stroke="#a78bfa" stroke-width="8"/>
+  <path d="M256 120l-96 70v108l96 70 96-70V190l-96-70z" fill="#1e1b4b"/>
+  <path d="M256 160l-56 41v63l56 41 56-41v-63l-56-41z" fill="#7c3aed"/>
+  <path d="M256 180v90M220 210l36 26 36-26" stroke="#c4b5fd" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="200" r="12" fill="#c4b5fd"/>
+  <text x="256" y="440" text-anchor="middle" font-family="serif" font-size="48" font-weight="bold" fill="#a78bfa">MK</text>
+</svg>
