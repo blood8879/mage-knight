@@ -43,8 +43,5 @@ pnpm-debug.log*
 *.swp
 *.local
 
-# Copyrighted rulebooks / source PDFs (not for redistribution)
-*.pdf
-
 # Playwright test-run screenshots (regenerated each run)
 app/tests/e2e/screenshots/
