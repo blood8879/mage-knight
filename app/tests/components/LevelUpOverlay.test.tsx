@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, within, fireEvent } from '@testing-library/react'
 import '@/i18n/config' // initialize i18next
 import LevelUpOverlay from '@/components/levelup/LevelUpOverlay'
 import type { PendingLevelUp, HeroSkill, AdvancedActionCard } from '@/engine/types'
@@ -80,5 +80,36 @@ describe('LevelUpOverlay — card description rendering', () => {
     )
     const dialog = screen.getByRole('dialog')
     expect(within(dialog).getByText(/TEST_SKILL_EFFECT/)).toBeInTheDocument()
+  })
+})
+
+describe('LevelUpOverlay — choice B (common skill + bottom action)', () => {
+  const dummySkill = makeSkill(99201, 'Flight', 'TEST_COMMON_SKILL')
+
+  it('disables B and explains why when the Common pool is empty (first level-up)', () => {
+    render(<LevelUpOverlay pending={pending} commonSkills={[]} aaOffer={aaOffer} onResolve={vi.fn()} />)
+    const bBtn = screen.getByRole('button', { name: /^B:/ })
+    expect(bBtn).toBeDisabled()
+    // The reason is shown inline (visible on mobile, not just a hover title)
+    expect(screen.getByText(/Common pool|공용 풀/)).toBeInTheDocument()
+  })
+
+  it('enables B when a common skill exists and reveals it on select', () => {
+    render(<LevelUpOverlay pending={pending} commonSkills={[dummySkill]} aaOffer={aaOffer} onResolve={vi.fn()} />)
+    const bBtn = screen.getByRole('button', { name: /^B:/ })
+    expect(bBtn).toBeEnabled()
+    fireEvent.click(bBtn)
+    // The common-pool skill becomes selectable
+    expect(screen.getByText('Flight')).toBeInTheDocument()
+    expect(screen.getByText(/TEST_COMMON_SKILL/)).toBeInTheDocument()
+  })
+
+  it('resolves with choice B (common skill index + bottom AA)', () => {
+    const onResolve = vi.fn()
+    render(<LevelUpOverlay pending={pending} commonSkills={[dummySkill]} aaOffer={aaOffer} onResolve={onResolve} />)
+    fireEvent.click(screen.getByRole('button', { name: /^B:/ }))
+    fireEvent.click(screen.getByText('Flight')) // pick the common skill
+    fireEvent.click(screen.getByRole('button', { name: /Continue|계속/ }))
+    expect(onResolve).toHaveBeenCalledWith(expect.objectContaining({ choice: 'B', skillIndex: 0 }))
   })
 })

@@ -178,35 +178,42 @@ export default function LevelUpOverlay({
                 <>
                   {/* Choice A / B toggle */}
                   {hasSkills && (
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => { setChoice('A'); setSkillIndex(null); setAaCardId(null) }}
-                        className={[
-                          'flex-1 rounded-lg px-2 py-2 text-xs font-bold transition-all',
-                          choice === 'A'
-                            ? 'bg-amber-600 text-white shadow'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700',
-                        ].join(' ')}
-                      >
-                        {t('game.levelUpChoiceA', 'A: New skill + any action')}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => { if (canChooseB) { setChoice('B'); setSkillIndex(null); setAaCardId(null) } }}
-                        disabled={!canChooseB}
-                        className={[
-                          'flex-1 rounded-lg px-2 py-2 text-xs font-bold transition-all',
-                          choice === 'B'
-                            ? 'bg-amber-600 text-white shadow'
-                            : canChooseB
-                              ? 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                              : 'cursor-not-allowed bg-slate-800/40 text-slate-600',
-                        ].join(' ')}
-                        title={!canChooseB ? t('game.levelUpNoCommon', 'No common skills available yet') : undefined}
-                      >
-                        {t('game.levelUpChoiceB', 'B: Common skill + bottom action')}
-                      </button>
+                    <div className="space-y-1">
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => { setChoice('A'); setSkillIndex(null); setAaCardId(null) }}
+                          className={[
+                            'flex-1 rounded-lg px-2 py-2 text-xs font-bold transition-all',
+                            choice === 'A'
+                              ? 'bg-amber-600 text-white shadow'
+                              : 'bg-slate-800 text-slate-400 hover:bg-slate-700',
+                          ].join(' ')}
+                        >
+                          {t('game.levelUpChoiceA', 'A: New skill + any action')}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { if (canChooseB) { setChoice('B'); setSkillIndex(null); setAaCardId(null) } }}
+                          disabled={!canChooseB}
+                          className={[
+                            'flex-1 rounded-lg px-2 py-2 text-xs font-bold transition-all',
+                            choice === 'B'
+                              ? 'bg-amber-600 text-white shadow'
+                              : canChooseB
+                                ? 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                                : 'cursor-not-allowed bg-slate-800/40 text-slate-600',
+                          ].join(' ')}
+                        >
+                          {t('game.levelUpChoiceB', 'B: Common skill + bottom action')}
+                        </button>
+                      </div>
+                      {/* Visible reason when B is unavailable (mobile has no hover) */}
+                      {!canChooseB && (
+                        <p className="px-1 text-[10px] leading-snug text-slate-500">
+                          {t('game.levelUpNoCommonHint', { defaultValue: 'B unlocks once a skill is in the Common pool — a Dummy skill is revealed there each time you gain a skill, so it becomes available from your next level-up.' })}
+                        </p>
+                      )}
                     </div>
                   )}
 

@@ -871,7 +871,8 @@
     "chooseColorTitle": "Choose Color",
     "chooseColorSubtitle": "Pick a mana color.",
     "comboTitle": "Choose a card to play with it",
-    "comboSubtitle": "Its strong effect resolves for free with +{{bonus}}."
+    "comboSubtitle": "Its strong effect resolves for free with +{{bonus}}.",
+    "levelUpNoCommonHint": "B unlocks once a skill is in the Common pool — a Dummy (Norowas) skill is revealed there each time you gain a skill, so it becomes available from your next level-up."
   },
   "combat": {
     "title": "Combat",
