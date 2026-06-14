@@ -13,8 +13,20 @@
     <title>Mage Knight</title>
     <script>
       if ('serviceWorker' in navigator) {
+        // Auto-reload once when a new service worker takes control, so a fresh
+        // deploy is shown immediately instead of being masked by an old cached
+        // bundle. (Guarded against reload loops.)
+        let __mkRefreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (__mkRefreshing) return;
+          __mkRefreshing = true;
+          window.location.reload();
+        });
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+          navigator.serviceWorker.register('/sw.js').then((reg) => {
+            // Poll for updates so long-lived tabs pick up new deploys
+            reg.update().catch(() => {});
+          }).catch(() => {});
         });
       }
     </script>
