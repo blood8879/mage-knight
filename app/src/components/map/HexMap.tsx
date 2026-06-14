@@ -43,6 +43,31 @@ const SITE_EMOJI: Record<SiteType, string> = {
   portal: '\u{1F300}',
 }
 
+// Short glyph + per-site disc colors so each site type is distinguishable at a
+// glance (the emoji may render monochrome on some platforms, so color carries
+// the distinction). [light, dark] radial gradient stops.
+const SITE_GLYPH: Record<SiteType, string> = {
+  village: '\u{1F3D8}', monastery: '\u26EA', keep: '\u{1F3F0}', mageTower: '\u{1F52E}',
+  dungeon: '\u{1F573}', tomb: '\u26B0', ancientRuins: '\u{1F3DA}', monsterDen: '\u{1F479}',
+  spawningGrounds: '\u{1F409}', crystalMine: '\u26CF', magicalGlade: '\u{1F33F}',
+  city: '\u{1F3D9}', portal: '\u{1F300}',
+}
+const SITE_DISC: Record<SiteType, [string, string]> = {
+  village: ['#fde68a', '#d97706'],
+  monastery: ['#bfdbfe', '#2563eb'],
+  keep: ['#e5e7eb', '#6b7280'],
+  mageTower: ['#ddd6fe', '#7c3aed'],
+  dungeon: ['#d6d3d1', '#44403c'],
+  tomb: ['#c7d2fe', '#4338ca'],
+  ancientRuins: ['#fed7aa', '#c2410c'],
+  monsterDen: ['#fecaca', '#b91c1c'],
+  spawningGrounds: ['#fbcfe8', '#be185d'],
+  crystalMine: ['#99f6e4', '#0d9488'],
+  magicalGlade: ['#bbf7d0', '#16a34a'],
+  city: ['#fca5a5', '#dc2626'],
+  portal: ['#e9d5ff', '#9333ea'],
+}
+
 const ENEMY_DOT_COLOR: Record<EnemyColor, string> = {
   green: '#22c55e',
   grey: '#9ca3af',
@@ -252,19 +277,22 @@ function drawHexCell(
     // medallion disc
     ctx.beginPath()
     ctx.arc(cx, my, mr, 0, Math.PI * 2)
+    const [discLight, discDark] = SITE_DISC[cell.site] ?? ['#f4e9cf', '#c9b389']
     const disc = ctx.createRadialGradient(cx - mr * 0.3, my - mr * 0.4, mr * 0.15, cx, my, mr)
-    disc.addColorStop(0, '#f4e9cf')
-    disc.addColorStop(1, '#c9b389')
+    disc.addColorStop(0, discLight)
+    disc.addColorStop(1, discDark)
     ctx.fillStyle = disc
     ctx.fill()
-    ctx.strokeStyle = cell.siteData?.isConquered ? '#8a6d1f' : '#6b5a36'
-    ctx.lineWidth = Math.max(1.2, size * 0.045)
+    ctx.strokeStyle = cell.siteData?.isConquered ? '#facc15' : 'rgba(0,0,0,0.45)'
+    ctx.lineWidth = Math.max(1.2, size * 0.05)
     ctx.stroke()
 
-    const emoji = SITE_EMOJI[cell.site]
-    ctx.font = `${size * 0.42}px serif`
+    const emoji = SITE_GLYPH[cell.site] ?? SITE_EMOJI[cell.site]
+    ctx.font = `${size * 0.4}px serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
+    // dark fill so a monochrome glyph stays visible over the colored disc
+    ctx.fillStyle = 'rgba(20,16,10,0.92)'
     ctx.fillText(emoji, cx, my + size * 0.02)
 
     // conquered banner
