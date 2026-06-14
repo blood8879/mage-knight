@@ -1778,6 +1778,7 @@ export default function GameScreen() {
         pending={pendingLevelUp}
         commonSkills={engineState?.player.commonSkillsAvailable ?? []}
         aaOffer={engineState?.offers.advancedActions ?? []}
+        dummyHeroName={engineState?.dummyPlayer.heroName}
         onResolve={handleResolveLevelUp}
       />
 

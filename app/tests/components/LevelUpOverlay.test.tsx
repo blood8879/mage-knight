@@ -104,6 +104,13 @@ describe('LevelUpOverlay — choice B (common skill + bottom action)', () => {
     expect(screen.getByText(/TEST_COMMON_SKILL/)).toBeInTheDocument()
   })
 
+  it('shows the Dummy hero name on the common-pool header', () => {
+    render(<LevelUpOverlay pending={pending} commonSkills={[dummySkill]} aaOffer={aaOffer} dummyHeroName="Goldyx" onResolve={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: /^B:/ }))
+    // Header names the Dummy hero whose skills fill the common pool
+    expect(screen.getByText(/Goldyx/)).toBeInTheDocument()
+  })
+
   it('resolves with choice B (common skill index + bottom AA)', () => {
     const onResolve = vi.fn()
     render(<LevelUpOverlay pending={pending} commonSkills={[dummySkill]} aaOffer={aaOffer} onResolve={onResolve} />)

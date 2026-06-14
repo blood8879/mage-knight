@@ -9,6 +9,8 @@ interface LevelUpOverlayProps {
   pending: PendingLevelUp | null
   commonSkills: HeroSkill[]
   aaOffer: AdvancedActionCard[]
+  /** Solo Dummy hero whose skills populate the Common pool (for choice B label) */
+  dummyHeroName?: string
   onResolve: (params: { choice?: 'A' | 'B'; skillIndex?: number; aaCardId?: number }) => void
 }
 
@@ -74,6 +76,7 @@ export default function LevelUpOverlay({
   pending,
   commonSkills,
   aaOffer,
+  dummyHeroName,
   onResolve,
 }: LevelUpOverlayProps) {
   const { t } = useTranslation('ui')
@@ -211,7 +214,9 @@ export default function LevelUpOverlay({
                       {/* Visible reason when B is unavailable (mobile has no hover) */}
                       {!canChooseB && (
                         <p className="px-1 text-[10px] leading-snug text-slate-500">
-                          {t('game.levelUpNoCommonHint', { defaultValue: 'B unlocks once a skill is in the Common pool — a Dummy skill is revealed there each time you gain a skill, so it becomes available from your next level-up.' })}
+                          {dummyHeroName
+                            ? t('game.levelUpNoCommonHintHero', { defaultValue: 'B unlocks once a skill is in the Common pool — a {{hero}} skill is revealed there each time you gain a skill, so it becomes available from your next level-up.', hero: dummyHeroName })
+                            : t('game.levelUpNoCommonHint', { defaultValue: 'B unlocks once a skill is in the Common pool — a Dummy skill is revealed there each time you gain a skill, so it becomes available from your next level-up.' })}
                         </p>
                       )}
                     </div>
@@ -223,7 +228,9 @@ export default function LevelUpOverlay({
                       <h3 className="text-[10px] font-black uppercase tracking-widest text-amber-400">
                         {choice === 'A'
                           ? t('game.levelUpPickRevealed', 'Pick one of your revealed skills')
-                          : t('game.levelUpPickCommon', 'Pick a skill from the common pool')}
+                          : dummyHeroName
+                            ? t('game.levelUpPickCommonFrom', { defaultValue: 'Pick a skill from the common pool ({{hero}})', hero: dummyHeroName })
+                            : t('game.levelUpPickCommon', 'Pick a skill from the common pool')}
                       </h3>
                       {(choice === 'A' ? pending.revealedSkills : commonSkills).map((skill, idx) => (
                         <SkillCard

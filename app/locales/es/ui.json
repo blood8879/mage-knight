@@ -872,7 +872,9 @@
     "chooseColorSubtitle": "Elige un color de maná.",
     "comboTitle": "Elige una carta para jugar con ella",
     "comboSubtitle": "Su efecto fuerte se resuelve gratis con +{{bonus}}.",
-    "levelUpNoCommonHint": "B se desbloquea cuando hay una habilidad en el grupo común — cada vez que ganas una habilidad se revela una del Dummy (Norowas), así que estará disponible desde tu próxima subida de nivel."
+    "levelUpNoCommonHint": "B se desbloquea cuando hay una habilidad en el grupo común — cada vez que ganas una habilidad se revela una del Dummy (Norowas), así que estará disponible desde tu próxima subida de nivel.",
+    "levelUpPickCommonFrom": "Elige una habilidad del grupo común ({{hero}})",
+    "levelUpNoCommonHintHero": "B se desbloquea cuando hay una habilidad en el grupo común — cada vez que ganas una habilidad se revela una de {{hero}}, así que estará disponible desde tu próxima subida de nivel."
   },
   "track": {
     "fame": "Fama",
