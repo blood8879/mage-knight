@@ -195,8 +195,14 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
           amber={canPlayStrong} mana={mana}
           onClick={() => pick('strong', a)} />
       ))}
-      <div className="my-1 h-px bg-slate-700/60" />
-      <PickerRow label={t('combat.playSideways')} icon="↗" amber onClick={side} />
+      {/* Sideways play is forbidden in the Ranged/Siege phase (rulebook p.7):
+          cards cannot be played sideways to contribute to Ranged or Siege Attacks. */}
+      {phase !== 'ranged_siege' && (
+        <>
+          <div className="my-1 h-px bg-slate-700/60" />
+          <PickerRow label={t('combat.playSideways')} icon="↗" amber onClick={side} />
+        </>
+      )}
     </motion.div>
   )
 }

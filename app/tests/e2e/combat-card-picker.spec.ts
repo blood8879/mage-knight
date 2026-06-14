@@ -67,8 +67,10 @@ test.describe('Combat card picker visibility', () => {
     const detailRow = combat.getByRole('button', { name: /View Card Details/i })
     await expect(detailRow).toBeVisible({ timeout: 3_000 })
 
+    // Rulebook p.7: sideways play is NOT allowed in the Ranged/Siege phase
+    // (combat opens in the ranged_siege phase), so the picker must not offer it.
     const sidewaysRow = combat.getByRole('button', { name: /Play Sideways/i })
-    await expect(sidewaysRow).toBeVisible({ timeout: 3_000 })
+    await expect(sidewaysRow).toHaveCount(0)
 
     // CSS overflow clipping does NOT change an element's geometric box, so
     // boundingBox() can't see it, and whether the popover actually overflows the

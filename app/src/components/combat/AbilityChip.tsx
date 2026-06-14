@@ -61,28 +61,40 @@ export default function AbilityChip({ ability, size = 'text-[10px]' }: AbilityCh
     }
   }, [open])
 
+  // NB: rendered as a span[role=button] (not <button>) so it can be nested
+  // inside parent <button> elements (e.g. the selectable combat EnemyCard)
+  // without producing invalid button-in-button HTML.
+  const toggle = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation()
+    if (hasTooltip) (open ? setOpen(false) : show())
+  }
+
   return (
     <span ref={ref} className="relative inline-flex">
-      <button
-        type="button"
+      <span
+        role={hasTooltip ? 'button' : undefined}
+        tabIndex={hasTooltip ? 0 : undefined}
         aria-label={hasTooltip ? `${label}: ${desc}` : label}
         aria-describedby={open ? tooltipId : undefined}
         aria-expanded={hasTooltip ? open : undefined}
-        onClick={(e) => {
-          e.stopPropagation()
-          if (hasTooltip) (open ? setOpen(false) : show())
+        onClick={toggle}
+        onKeyDown={(e) => {
+          if (hasTooltip && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault()
+            toggle(e)
+          }
         }}
         onMouseEnter={show}
         onMouseLeave={() => setOpen(false)}
         className={[
-          'rounded bg-slate-700/60 px-1.5 py-0.5 font-semibold leading-none transition-colors',
+          'inline-block rounded bg-slate-700/60 px-1.5 py-0.5 font-semibold leading-none transition-colors',
           size,
           meta.color,
           hasTooltip ? 'cursor-help underline decoration-dotted decoration-slate-500 underline-offset-2 hover:bg-slate-600/70' : '',
         ].join(' ')}
       >
         {label}
-      </button>
+      </span>
       {open && hasTooltip && pos &&
         createPortal(
           <span

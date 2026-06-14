@@ -246,6 +246,9 @@ export function useCombatCards(
 
   const playCardSideways = useCallback(
     (handIndex: number) => {
+      // Rulebook p.7: cards cannot be played sideways to contribute to
+      // Ranged or Siege Attacks (only Block and melee Attack phases allow it).
+      if (phase === 'ranged_siege') return
       setState((prev) => {
         const card = hand[handIndex]
         if (!card) return prev
@@ -276,7 +279,7 @@ export function useCombatCards(
         return autoAssignPlay(play, nextState)
       })
     },
-    [hand, nextPlayId, autoAssignPlay],
+    [hand, nextPlayId, autoAssignPlay, phase],
   )
 
   // ── activateUnit ──────────────────────────
