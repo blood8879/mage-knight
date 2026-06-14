@@ -53,6 +53,8 @@ import {
   getSites,
   getArythea,
   getNorowasSkills,
+  getGoldyxSkills,
+  getTovakSkills,
 } from '@/data/loader'
 import type { TacticCardData } from '@/data/loader'
 import { createChapterState } from '@/engine/TutorialScenario'
@@ -372,12 +374,21 @@ export function useGameEngine() {
         })),
     )
 
-    // Dummy player state — uses common basic actions only
+    // Dummy player — solo rule: randomly pick a hero NOT in the game as the
+    // Dummy. Its skills are revealed into the Common Skills pool on the player's
+    // level-ups (so choice B can use them). Player is Arythea, so the Dummy is
+    // one of {Norowas, Goldyx, Tovak}.
+    const DUMMY_HERO_OPTIONS = [
+      { name: 'Norowas', skills: getNorowasSkills },
+      { name: 'Goldyx', skills: getGoldyxSkills },
+      { name: 'Tovak', skills: getTovakSkills },
+    ]
+    const dummyHero = random.pick(DUMMY_HERO_OPTIONS)
     const dummyState = {
-      ...scenarioSetup.getInitialDummyState('Norowas', basicActions.commonCards),
+      ...scenarioSetup.getInitialDummyState(dummyHero.name, basicActions.commonCards),
       // EC-09-A-3: dummy skill deck — revealed into Common Skills on player level-ups
       skillDeck: random.shuffle(
-        getNorowasSkills()
+        dummyHero.skills()
           .filter((s) => !s.type.startsWith('interactive'))
           .map((s) => ({
             id: s.id,
