@@ -1021,7 +1021,9 @@
     "abilityDefend2Desc": "Otorga +2 de Armadura a los demás defensores de este lugar.",
     "abilityRepMinus1Desc": "Derrotarlo o enfrentarlo te cuesta 1 de Reputación.",
     "unassignedBlockWarning": "Jugaste cartas de bloqueo pero no las asignaste a un enemigo. Pulsa \"Asignar bloqueo\" en un enemigo primero, o las cartas se descartan sin defensa y recibes el daño.",
-    "confirmWasteBlocks": "Confirmar — descartar cartas, recibir daño"
+    "confirmWasteBlocks": "Confirmar — descartar cartas, recibir daño",
+    "unassignedAttackWarning": "Jugaste cartas de ataque pero no las asignaste a un enemigo. Pulsa un enemigo arriba primero, o las cartas se descartan sin ataque.",
+    "confirmWasteAttacks": "Confirmar — descartar cartas"
   },
   "interaction": {
     "title": "Site Interaction",

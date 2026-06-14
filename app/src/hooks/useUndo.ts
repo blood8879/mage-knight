@@ -1,7 +1,18 @@
-import { useRef, useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import type { GameState } from '@/engine/GameState'
+import { useGameStore } from '@/store/gameStore'
 
 const MAX_UNDO_STACK_SIZE = 20
+
+/**
+ * Module-global undo stack — shared across ALL useGameEngine instances.
+ * Previously each hook instance kept its own stackRef/canUndo, so an action
+ * pushed by one instance (card play in GameScreen) and a clearStack from another
+ * (exploreTile via useMovement's own instance) hit different stacks — letting
+ * revealed map tiles be undone (rule violation). A single global stack plus a
+ * store-backed canUndo keeps every instance consistent.
+ */
+let undoStack: GameState[] = []
 
 function cloneGameState(state: GameState): GameState {
   const cloned: GameState = {
@@ -60,31 +71,26 @@ export interface UseUndoReturn {
 }
 
 export function useUndo(): UseUndoReturn {
-  const stackRef = useRef<GameState[]>([])
-  const [canUndo, setCanUndo] = useState(false)
+  const canUndo = useGameStore((s) => s.canUndo)
+  const setCanUndo = useGameStore((s) => s.setCanUndo)
 
   const pushState = useCallback((state: GameState) => {
-    const snapshot = cloneGameState(state)
-    const stack = stackRef.current
-    stack.push(snapshot)
-    if (stack.length > MAX_UNDO_STACK_SIZE) {
-      stack.shift()
-    }
+    undoStack.push(cloneGameState(state))
+    if (undoStack.length > MAX_UNDO_STACK_SIZE) undoStack.shift()
     setCanUndo(true)
-  }, [])
+  }, [setCanUndo])
 
   const undo = useCallback((): GameState | null => {
-    const stack = stackRef.current
-    if (stack.length === 0) return null
-    const previous = stack.pop()!
-    setCanUndo(stack.length > 0)
+    if (undoStack.length === 0) return null
+    const previous = undoStack.pop()!
+    setCanUndo(undoStack.length > 0)
     return previous
-  }, [])
+  }, [setCanUndo])
 
   const clearStack = useCallback(() => {
-    stackRef.current = []
+    undoStack = []
     setCanUndo(false)
-  }, [])
+  }, [setCanUndo])
 
   return {
     pushState,

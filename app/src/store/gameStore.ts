@@ -29,6 +29,9 @@ interface GameStoreState {
 
   engineState: FullGameState | null
 
+  /** Shared undo availability (the undo stack is module-global in useUndo) */
+  canUndo: boolean
+
   startNewGame: () => void
   startTutorial: () => void
   startTutorialChapter: (chapter: number) => void
@@ -36,6 +39,7 @@ interface GameStoreState {
   reset: () => void
   setPhase: (phase: GamePhase) => void
   setEngineState: (state: FullGameState) => void
+  setCanUndo: (v: boolean) => void
   addLogEntry: (entry: GameLogEntry) => void
   syncFromEngine: (state: FullGameState) => void
 }
@@ -61,6 +65,7 @@ const initialState = {
   finalScore: null as FinalScore | null,
   log: [] as GameLogEntry[],
   engineState: null as FullGameState | null,
+  canUndo: false,
 }
 
 export const useGameStore = create<GameStoreState>((set) => ({
@@ -112,6 +117,7 @@ export const useGameStore = create<GameStoreState>((set) => ({
   setPhase: (phase) => set({ phase }),
 
   setEngineState: (state) => set({ engineState: state }),
+  setCanUndo: (v) => set({ canUndo: v }),
 
   addLogEntry: (entry) =>
     set((prev) => ({ log: [...prev.log, entry] })),

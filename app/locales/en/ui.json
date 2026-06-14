@@ -1000,7 +1000,9 @@
     "abilityDefend2Desc": "Adds +2 Armor to fellow defenders at this site.",
     "abilityRepMinus1Desc": "Defeating or fighting it costs you 1 Reputation.",
     "unassignedBlockWarning": "You played block cards but did not assign them to an enemy. Tap \"Assign Block\" on an enemy first — otherwise the cards are discarded with no defense and you take the damage.",
-    "confirmWasteBlocks": "Confirm — discard cards, take damage"
+    "confirmWasteBlocks": "Confirm — discard cards, take damage",
+    "unassignedAttackWarning": "You played attack cards but did not assign them to an enemy. Tap an enemy above first — otherwise the cards are discarded with no attack.",
+    "confirmWasteAttacks": "Confirm — discard cards"
   },
   "interaction": {
     "title": "Site Interaction",

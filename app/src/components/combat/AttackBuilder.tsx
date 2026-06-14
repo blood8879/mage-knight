@@ -121,6 +121,9 @@ export default function AttackBuilder({
     }
   }, [combatCards])
 
+  // Attack cards were played but not assigned to any enemy → confirming wastes them
+  const unassignedAttack = combatCards.plays.length > 0 && combatCards.pendingAttacks.length === 0
+
   const handleConfirm = useCallback(() => {
     const declarations = combatCards.buildAttackDeclarations()
     onConfirm(declarations, combatCards.plays)
@@ -402,6 +405,16 @@ export default function AttackBuilder({
         )}
       </div>
 
+      {/* Warning: attack cards played but not assigned to an enemy → wasted */}
+      {unassignedAttack && (
+        <div className="flex items-start gap-2 rounded-lg border border-amber-600/50 bg-amber-950/40 px-3 py-2">
+          <span className="text-sm">⚠️</span>
+          <p className="text-[11px] leading-snug text-amber-200">
+            {t('combat.unassignedAttackWarning', 'You played attack cards but did not assign them to an enemy. Tap an enemy above first — otherwise the cards are discarded with no attack.')}
+          </p>
+        </div>
+      )}
+
       {/* ── Footer Actions ── */}
       <div className="flex items-center justify-end gap-2 pt-1">
         <button
@@ -417,14 +430,18 @@ export default function AttackBuilder({
           disabled={!canConfirmAttacks}
           className={[
             'min-h-[44px] rounded-lg px-5 py-2.5 text-sm font-bold shadow-lg transition-all active:scale-95',
-            canConfirmAttacks
-              ? phase === 'ranged_siege'
+            !canConfirmAttacks
+              ? 'cursor-not-allowed bg-slate-800 text-slate-600 shadow-none'
+              : unassignedAttack
                 ? 'bg-amber-700 text-white shadow-amber-900/30 hover:bg-amber-600'
-                : 'bg-orange-700 text-white shadow-orange-900/30 hover:bg-orange-600'
-              : 'cursor-not-allowed bg-slate-800 text-slate-600 shadow-none',
+                : phase === 'ranged_siege'
+                  ? 'bg-amber-700 text-white shadow-amber-900/30 hover:bg-amber-600'
+                  : 'bg-orange-700 text-white shadow-orange-900/30 hover:bg-orange-600',
           ].join(' ')}
         >
-          {t('combat.confirmAttacks', 'Confirm')} ✓
+          {unassignedAttack
+            ? t('combat.confirmWasteAttacks', 'Confirm — discard cards')
+            : `${t('combat.confirmAttacks', 'Confirm')} ✓`}
         </button>
       </div>
     </div>
