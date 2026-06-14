@@ -101,6 +101,9 @@ export default function BlockBuilder({
     [combatCards],
   )
 
+  // Block cards were played but none assigned to an enemy → confirming wastes them
+  const unassignedBlock = combatCards.plays.length > 0 && combatCards.pendingBlocks.length === 0
+
   const handleConfirm = useCallback(() => {
     const declarations = combatCards.buildBlockDeclarations()
     onConfirm(declarations, combatCards.plays)
@@ -331,6 +334,17 @@ export default function BlockBuilder({
         </div>
       )}
 
+      {/* Warning: block cards played but not assigned to any enemy → they'd be
+          wasted with no defense. Make the consequence explicit. */}
+      {unassignedBlock && (
+        <div className="flex items-start gap-2 rounded-lg border border-amber-600/50 bg-amber-950/40 px-3 py-2">
+          <span className="text-sm">⚠️</span>
+          <p className="text-[11px] leading-snug text-amber-200">
+            {t('combat.unassignedBlockWarning', 'You played block cards but did not assign them to an enemy. Tap "Assign Block" on an enemy first — otherwise the cards are discarded with no defense and you take the damage.')}
+          </p>
+        </div>
+      )}
+
       {/* ── Footer buttons ── */}
       <div className="flex items-center justify-end gap-2 pt-2">
         <button
@@ -343,9 +357,16 @@ export default function BlockBuilder({
         <button
           type="button"
           onClick={handleConfirm}
-          className="min-h-[44px] rounded-lg bg-sky-700 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-sky-900/30 transition-all hover:bg-sky-600 active:scale-95"
+          className={[
+            'min-h-[44px] rounded-lg px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all active:scale-95',
+            unassignedBlock
+              ? 'bg-amber-700 shadow-amber-900/30 hover:bg-amber-600'
+              : 'bg-sky-700 shadow-sky-900/30 hover:bg-sky-600',
+          ].join(' ')}
         >
-          {t('combat.confirmBlocks', 'Confirm Blocks')} ✓
+          {unassignedBlock
+            ? t('combat.confirmWasteBlocks', 'Confirm — discard cards, take damage')
+            : `${t('combat.confirmBlocks', 'Confirm Blocks')} ✓`}
         </button>
       </div>
     </div>

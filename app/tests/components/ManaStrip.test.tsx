@@ -5,8 +5,9 @@ import i18n from '@/i18n/config'
 // Mock the engine hook so we can assert the strip wires clicks to it
 const takeManaFromSource = vi.fn()
 const useCrystal = vi.fn()
+const returnManaToken = vi.fn()
 vi.mock('@/hooks/useGameEngine', () => ({
-  useGameEngine: () => ({ takeManaFromSource, useCrystal }),
+  useGameEngine: () => ({ takeManaFromSource, useCrystal, returnManaToken }),
 }))
 
 // Controllable store state
@@ -37,6 +38,7 @@ describe('ManaStrip — take Source dice & spend crystals in overlays', () => {
     await i18n.changeLanguage('ko')
     takeManaFromSource.mockClear()
     useCrystal.mockClear()
+    returnManaToken.mockClear()
   })
 
   it('renders Source dice and taking a basic die calls takeManaFromSource', () => {
@@ -73,5 +75,19 @@ describe('ManaStrip — take Source dice & spend crystals in overlays', () => {
     const btn = screen.getByLabelText(/파란색 crystal/)
     fireEvent.click(btn)
     expect(useCrystal).toHaveBeenCalledWith('blue')
+  })
+
+  it('an active crystal/die mana token is undoable (returnManaToken)', () => {
+    setMana({ playerMana: [{ color: 'red', source: 'crystal' }] })
+    render(<ManaStrip />)
+    const tokenBtn = screen.getByLabelText(/빨간색 마나 되돌리기/)
+    fireEvent.click(tokenBtn)
+    expect(returnManaToken).toHaveBeenCalledWith(0)
+  })
+
+  it('an effect-sourced mana token is NOT undoable (no button)', () => {
+    setMana({ playerMana: [{ color: 'red', source: 'effect' }] })
+    render(<ManaStrip />)
+    expect(screen.queryByLabelText(/되돌리기/)).toBeNull()
   })
 })

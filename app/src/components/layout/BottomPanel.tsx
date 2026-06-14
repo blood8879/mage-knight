@@ -8,23 +8,10 @@ import { useCardTranslation } from '@/hooks/useCardTranslation'
 import DragPreview from '@/components/cards/DragPreview'
 import CardDetail from '@/components/cards/CardDetail'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
-import type { CardPlayValidation } from '@/engine/CardPlayValidator'
 import type { AnyCard, CardColor, DeedCard, ManaColor, UnitStatus } from '@/engine/types'
+import { translateValidationReason } from '@/utils/validationReason'
 
 // Translates a validator reason via its stable key, falling back to the raw English reason
-function translateValidationReason(
-  validation: CardPlayValidation,
-  t: (key: string, options?: Record<string, unknown>) => string,
-): string | undefined {
-  if (!validation.reason) return undefined
-  if (!validation.reasonKey) return validation.reason
-  const color = validation.reasonParams?.color
-  return t(`validation.${validation.reasonKey}`, {
-    defaultValue: validation.reason,
-    color: color ? t(`colors.${color}`, { defaultValue: color }) : undefined,
-  })
-}
-
 const CARD_COLOR_BG: Record<string, string> = {
   red: 'bg-red-500',
   blue: 'bg-blue-500',

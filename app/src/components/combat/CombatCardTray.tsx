@@ -6,6 +6,8 @@ import { useGameStore } from '@/store/gameStore'
 import CardDetail from '@/components/cards/CardDetail'
 import ManaStrip from '@/components/common/ManaStrip'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
+import type { CardPlayValidation } from '@/engine/CardPlayValidator'
+import { translateValidationReason } from '@/utils/validationReason'
 import type { UseCombatCardsReturn } from '@/hooks/useCombatCards'
 import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor } from '@/engine/types'
 import type { GameState } from '@/engine/GameState'
@@ -110,6 +112,8 @@ interface PickerProps {
   onViewDetail: (card: AnyCard) => void
   onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
   canPlayStrong: boolean
+  /** Localized reason why strong can't be played (e.g. "needs black mana at night") */
+  strongReason?: string
 }
 
 /** Check if a card is Improvisation (special discard-to-choose card) */
@@ -131,7 +135,7 @@ function getImprovisationActionsForPhase(phase: CombatPhase, value: number): Car
   }
 }
 
-function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, canPlayStrong }: PickerProps) {
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, canPlayStrong, strongReason }: PickerProps) {
   const { t } = useTranslation('ui')
   if (card.type === 'wound') return null
   const basic = getCardEffect(card, 'basic')
@@ -181,7 +185,7 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
         <PickerRow
           label={canPlayStrong
             ? `${t('combat.strongEffect')}: ${sNon.map(fmtAction).join(', ')}`
-            : `${t('combat.strongEffect')}: ${sNon.map(fmtAction).join(', ')} (${t('combat.noMana', 'No Mana')})`}
+            : `${t('combat.strongEffect')}: ${sNon.map(fmtAction).join(', ')} (${strongReason ?? t('combat.noMana', 'No Mana')})`}
           icon={ACT_ICON[sNon[0].type] ?? '◈'}
           amber={canPlayStrong} mana={mana}
           onClick={() => pick('strong', sNon[0])} />
@@ -190,7 +194,7 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
         <PickerRow key={`sc-${i}`}
           label={canPlayStrong
             ? `${t('combat.strongEffect')}: ${fmtAction(a)}`
-            : `${t('combat.strongEffect')}: ${fmtAction(a)} (${t('combat.noMana', 'No Mana')})`}
+            : `${t('combat.strongEffect')}: ${fmtAction(a)} (${strongReason ?? t('combat.noMana', 'No Mana')})`}
           icon={ACT_ICON[a.type] ?? '◈'}
           amber={canPlayStrong} mana={mana}
           onClick={() => pick('strong', a)} />
@@ -245,23 +249,21 @@ interface CombatCardTrayProps {
 }
 
 /** Check if a card's strong effect can be played given current mana */
-function checkCanPlayStrong(card: AnyCard, engineState: GameState | null, dayNight: 'day' | 'night'): boolean {
-  if (!engineState) return false
-  if (card.type === 'wound') return false
-  // Artifacts always playable strong
-  if (card.type === 'artifact') return true
-
-  const manaState = engineState.player.mana
-  const hasColor = (c: ManaColor) => {
-    if (manaState.playerMana.some((t) => t.color === c)) return true
-    if (manaState.crystals[c] > 0) return true
-    return false
+function evaluateStrongPlay(
+  card: AnyCard,
+  engineState: GameState | null,
+  dayNight: 'day' | 'night',
+): CardPlayValidation | null {
+  if (!engineState || card.type === 'wound') return null
+  if (card.type === 'artifact') {
+    return { canPlayBasic: true, canPlayStrong: true, requiredMana: null, requiresBlackMana: false }
   }
+  const manaState = engineState.player.mana
+  const hasColor = (c: ManaColor) =>
+    manaState.playerMana.some((t) => t.color === c) || manaState.crystals[c] > 0
   const hasGold = manaState.playerMana.some((t) => t.color === 'gold') && dayNight === 'day'
   const hasBlack = manaState.playerMana.some((t) => t.color === 'black') && dayNight === 'night'
-
-  const result = validateCardPlay(card as DeedCard, dayNight, { hasColor, hasBlack, hasGold })
-  return result.canPlayStrong
+  return validateCardPlay(card as DeedCard, dayNight, { hasColor, hasBlack, hasGold })
 }
 
 export default function CombatCardTray({ phase, combatCards }: CombatCardTrayProps) {
@@ -468,12 +470,16 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                           )}
                         </div>
                         <AnimatePresence>
-                          {sel && !w && !used && (
-                            <CardActionPicker card={card} handIndex={index} phase={phase}
-                              onSelect={handleSelect} onSideways={handleSideways} onClose={closePicker} onViewDetail={handleViewDetail}
-                              onImprovisation={handleImprovisation}
-                              canPlayStrong={checkCanPlayStrong(card, engineState, dayNight)} />
-                          )}
+                          {sel && !w && !used && (() => {
+                            const strongEval = evaluateStrongPlay(card, engineState, dayNight)
+                            return (
+                              <CardActionPicker card={card} handIndex={index} phase={phase}
+                                onSelect={handleSelect} onSideways={handleSideways} onClose={closePicker} onViewDetail={handleViewDetail}
+                                onImprovisation={handleImprovisation}
+                                canPlayStrong={strongEval?.canPlayStrong ?? false}
+                                strongReason={strongEval && !strongEval.canPlayStrong ? translateValidationReason(strongEval, t) : undefined} />
+                            )
+                          })()}
                         </AnimatePresence>
                       </div>
                     )

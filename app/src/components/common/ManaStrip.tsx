@@ -85,13 +85,28 @@ export default function ManaStrip() {
           <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400/80">
             {t('track.activeMana', 'Active')}
           </span>
-          {mana.playerMana.map((token, i) => (
-            <span
-              key={i}
-              className={`h-4 w-4 shrink-0 rounded-full ${TOKEN_BG[token.color] ?? 'bg-slate-500'} shadow`}
-              title={t(`colors.${token.color}`, { defaultValue: token.color })}
-            />
-          ))}
+          {mana.playerMana.map((token, i) => {
+            const undoable = token.source === 'crystal' || token.source === 'die'
+            const colorName = t(`colors.${token.color}`, { defaultValue: token.color })
+            return undoable ? (
+              <button
+                key={i}
+                type="button"
+                onClick={() => engine.returnManaToken(i)}
+                title={t('track.returnMana', { defaultValue: 'Undo {{color}} mana', color: colorName })}
+                aria-label={t('track.returnMana', { defaultValue: 'Undo {{color}} mana', color: colorName })}
+                className={`relative h-4 w-4 shrink-0 rounded-full ${TOKEN_BG[token.color] ?? 'bg-slate-500'} shadow transition-transform hover:brightness-110 hover:ring-1 hover:ring-white/60 active:scale-90`}
+              >
+                <span className="pointer-events-none absolute -right-1 -top-1 text-[8px] leading-none text-slate-300 opacity-0 transition-opacity hover:opacity-100">↩</span>
+              </button>
+            ) : (
+              <span
+                key={i}
+                className={`h-4 w-4 shrink-0 rounded-full ${TOKEN_BG[token.color] ?? 'bg-slate-500'} shadow`}
+                title={colorName}
+              />
+            )
+          })}
         </>
       )}
 

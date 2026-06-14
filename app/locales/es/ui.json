@@ -894,7 +894,8 @@
     "goldDayOnly": "Dado dorado — solo de Día",
     "blackNightOnly": "Dado negro — solo de Noche",
     "dieTaken": "Ya tomaste un dado este turno",
-    "spendCrystal": "Usar cristal {{color}} como maná"
+    "spendCrystal": "Usar cristal {{color}} como maná",
+    "returnMana": "Deshacer maná {{color}}"
   },
   "combat": {
     "title": "Combat",
@@ -1018,7 +1019,9 @@
     "abilityAssassinationDesc": "El daño no puede asignarse a Unidades — tu Héroe debe recibirlo todo.",
     "abilityDefend1Desc": "Otorga +1 de Armadura a los demás defensores de este lugar.",
     "abilityDefend2Desc": "Otorga +2 de Armadura a los demás defensores de este lugar.",
-    "abilityRepMinus1Desc": "Derrotarlo o enfrentarlo te cuesta 1 de Reputación."
+    "abilityRepMinus1Desc": "Derrotarlo o enfrentarlo te cuesta 1 de Reputación.",
+    "unassignedBlockWarning": "Jugaste cartas de bloqueo pero no las asignaste a un enemigo. Pulsa \"Asignar bloqueo\" en un enemigo primero, o las cartas se descartan sin defensa y recibes el daño.",
+    "confirmWasteBlocks": "Confirmar — descartar cartas, recibir daño"
   },
   "interaction": {
     "title": "Site Interaction",

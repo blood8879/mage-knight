@@ -1961,6 +1961,45 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  /**
+   * Undo an active mana token (works in combat/interaction overlays where the
+   * combat-tray undo only reverts card plays). Crystal-sourced tokens return to
+   * the crystal inventory; die-sourced tokens return to the Source.
+   * Effect/glade tokens cannot be undone.
+   */
+  const returnManaToken = useCallback(
+    (index: number) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      const token = state.player.mana.playerMana[index]
+      if (!token || (token.source !== 'crystal' && token.source !== 'die')) return
+
+      pushState(state)
+      let newMana = engine.manaPool.removeManaToken(state.player.mana, index)
+
+      if (token.source === 'crystal' && token.color !== 'gold' && token.color !== 'black') {
+        const color = token.color as ManaColor
+        newMana = {
+          ...newMana,
+          crystals: { ...newMana.crystals, [color]: newMana.crystals[color] + 1 },
+        }
+      } else if (token.source === 'die') {
+        const dice = [...newMana.dice]
+        const di = dice.findIndex((d) => !d.isInSource && d.color === token.color)
+        if (di >= 0) {
+          dice[di] = { ...dice[di], isInSource: true }
+          newMana = { ...newMana, dice, sourceDieTakenThisTurn: false }
+        }
+      }
+
+      let newState: GameState = { ...state, player: { ...state.player, mana: newMana } }
+      newState = withLog(newState, 'mana_use', `Returned ${token.color} mana (${token.source})`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
   // ════════════════════════════════════════════
   //  COMBAT
   // ════════════════════════════════════════════
@@ -3694,6 +3733,7 @@ export function useGameEngine() {
     playSidewaysCard,
     takeManaFromSource,
     useCrystal,
+    returnManaToken,
 
     initiateCombat,
     endCombat,

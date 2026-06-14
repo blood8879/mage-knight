@@ -998,7 +998,9 @@
     "abilityAssassinationDesc": "Damage cannot be assigned to Units — your Hero must take it all.",
     "abilityDefend1Desc": "Adds +1 Armor to fellow defenders at this site.",
     "abilityDefend2Desc": "Adds +2 Armor to fellow defenders at this site.",
-    "abilityRepMinus1Desc": "Defeating or fighting it costs you 1 Reputation."
+    "abilityRepMinus1Desc": "Defeating or fighting it costs you 1 Reputation.",
+    "unassignedBlockWarning": "You played block cards but did not assign them to an enemy. Tap \"Assign Block\" on an enemy first — otherwise the cards are discarded with no defense and you take the damage.",
+    "confirmWasteBlocks": "Confirm — discard cards, take damage"
   },
   "interaction": {
     "title": "Site Interaction",
@@ -1077,7 +1079,8 @@
     "goldDayOnly": "Gold die — Day only",
     "blackNightOnly": "Black die — Night only",
     "dieTaken": "Already took a die this turn",
-    "spendCrystal": "Use {{color}} crystal as mana"
+    "spendCrystal": "Use {{color}} crystal as mana",
+    "returnMana": "Undo {{color}} mana"
   },
   "ad": {
     "banner": "Advertisement",
