@@ -14,6 +14,7 @@ async function newGame(page: Page, url: string) {
   })
   await page.goto(url)
   await page.getByRole('button', { name: /New Game/i }).click()
+    await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
   await page.waitForSelector('canvas', { timeout: 15_000 })
   await page.waitForTimeout(1000)
   const tac = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })

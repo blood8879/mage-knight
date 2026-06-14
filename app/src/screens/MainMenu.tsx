@@ -8,12 +8,20 @@ import { useGameEngine } from '@/hooks/useGameEngine'
 import { saveService } from '@/services/saveService'
 import TutorialChapterSelect from '@/components/common/TutorialChapterSelect'
 import AdBanner from '@/components/ads/AdBanner'
+import { PLAYABLE_HEROES } from '@/data/loader'
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
   { code: 'ko', label: '한국어' },
   { code: 'es', label: 'Español' },
 ] as const
+
+const HERO_INFO: Record<string, { ring: string; dot: string }> = {
+  Arythea: { ring: 'hover:border-red-400/60 focus-visible:ring-red-400', dot: 'bg-red-500' },
+  Tovak: { ring: 'hover:border-blue-400/60 focus-visible:ring-blue-400', dot: 'bg-blue-500' },
+  Goldyx: { ring: 'hover:border-emerald-400/60 focus-visible:ring-emerald-400', dot: 'bg-emerald-500' },
+  Norowas: { ring: 'hover:border-slate-300/60 focus-visible:ring-slate-300', dot: 'bg-slate-200' },
+}
 
 export default function MainMenu() {
   const { t } = useTranslation('ui')
@@ -23,6 +31,7 @@ export default function MainMenu() {
   const { language, setLanguage } = useSettingsStore()
   const { isFirstVisit, markFirstVisitDone, completedChapters } = useTutorialProgress()
   const [showChapterSelect, setShowChapterSelect] = useState(false)
+  const [showHeroSelect, setShowHeroSelect] = useState(false)
   const engine = useGameEngine()
   const [autoSaveInfo, setAutoSaveInfo] = useState<{ round: number; dayNight: string } | null>(null)
 
@@ -35,7 +44,12 @@ export default function MainMenu() {
   }, [])
 
   const handleNewGame = () => {
-    startNewGame()
+    setShowHeroSelect(true)
+  }
+
+  const handleSelectHero = (hero: string) => {
+    setShowHeroSelect(false)
+    startNewGame(hero)
     navigate('game')
   }
 
@@ -182,6 +196,55 @@ export default function MainMenu() {
           onSelectChapter={handleSelectChapter}
           onClose={() => setShowChapterSelect(false)}
         />
+      )}
+
+      {showHeroSelect && (
+        <div
+          className="absolute inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm p-4"
+          onClick={() => setShowHeroSelect(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl border border-slate-700/60 bg-slate-900 p-5 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="mb-1 text-center text-lg font-black tracking-wide text-amber-300">
+              {t('hero.selectTitle', 'Choose your hero')}
+            </h2>
+            <p className="mb-4 text-center text-xs text-slate-500">
+              {t('hero.selectSubtitle', 'Each hero has a unique starting card and skill set.')}
+            </p>
+            <div className="grid grid-cols-1 gap-2">
+              {PLAYABLE_HEROES.map((hero) => {
+                const info = HERO_INFO[hero]
+                return (
+                  <button
+                    key={hero}
+                    type="button"
+                    onClick={() => handleSelectHero(hero)}
+                    className={`flex items-center gap-3 rounded-xl border border-slate-700/50 bg-slate-800/60 px-4 py-3 text-left transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 ${info.ring}`}
+                  >
+                    <span className={`h-3 w-3 shrink-0 rounded-full ${info.dot}`} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-slate-100">
+                        {t(`hero.${hero.toLowerCase()}`, { defaultValue: hero })}
+                      </span>
+                      <span className="block text-[11px] leading-snug text-slate-500">
+                        {t(`hero.${hero.toLowerCase()}Tag`, { defaultValue: '' })}
+                      </span>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowHeroSelect(false)}
+              className="mt-4 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+            >
+              {t('game.cancel', 'Cancel')}
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )

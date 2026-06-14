@@ -37,6 +37,7 @@ test.describe('Combat System Test', () => {
     console.log('COMBAT TEST: Starting new game')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 10_000 })
     await page.getByRole('button', { name: /New Game/i }).click()
+    await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
     await page.waitForSelector('canvas', { timeout: 15_000 })
     await page.waitForTimeout(1500)
 

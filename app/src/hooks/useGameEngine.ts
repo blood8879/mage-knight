@@ -51,10 +51,8 @@ import {
   getEnemies,
   getTactics,
   getSites,
-  getArythea,
-  getNorowasSkills,
-  getGoldyxSkills,
-  getTovakSkills,
+  getHeroSkills,
+  PLAYABLE_HEROES,
 } from '@/data/loader'
 import type { TacticCardData } from '@/data/loader'
 import { createChapterState } from '@/engine/TutorialScenario'
@@ -288,7 +286,7 @@ export function useGameEngine() {
   // ════════════════════════════════════════════
   //  GAME INITIALIZATION
   // ════════════════════════════════════════════
-  const initializeGame = useCallback(() => {
+  const initializeGame = useCallback((heroName: string = 'Arythea') => {
     // Deterministic seed via ?seed= for QA/E2E reproducibility
     const urlSeed =
       typeof window !== 'undefined'
@@ -349,19 +347,18 @@ export function useGameEngine() {
 
     // Player deck — hero-specific cards merged with common cards
     const allBasicCards = basicActions.commonCards.concat(basicActions.heroSpecificCards)
-    const playerDeck = scenarioSetup.setupPlayerDeck('Arythea', allBasicCards)
+    const playerDeck = scenarioSetup.setupPlayerDeck(heroName, allBasicCards)
 
     // Player state
     const playerState = scenarioSetup.getInitialPlayerState(
-      'Arythea',
+      heroName,
       playerDeck,
       { q: 0, r: 0 },
     )
 
     // Skill deck — shuffled, interactive skills removed in solo (EC-12-A-2)
-    const heroData = getArythea()
     const skillDeck: HeroSkill[] = random.shuffle(
-      heroData.skills
+      getHeroSkills(heroName)
         .filter((s) => !s.type.startsWith('interactive'))
         .map((s) => ({
           id: s.id,
@@ -376,19 +373,13 @@ export function useGameEngine() {
 
     // Dummy player — solo rule: randomly pick a hero NOT in the game as the
     // Dummy. Its skills are revealed into the Common Skills pool on the player's
-    // level-ups (so choice B can use them). Player is Arythea, so the Dummy is
-    // one of {Norowas, Goldyx, Tovak}.
-    const DUMMY_HERO_OPTIONS = [
-      { name: 'Norowas', skills: getNorowasSkills },
-      { name: 'Goldyx', skills: getGoldyxSkills },
-      { name: 'Tovak', skills: getTovakSkills },
-    ]
-    const dummyHero = random.pick(DUMMY_HERO_OPTIONS)
+    // level-ups (so choice B can use them). Exclude the player's chosen hero.
+    const dummyName = random.pick(PLAYABLE_HEROES.filter((h) => h !== heroName))
     const dummyState = {
-      ...scenarioSetup.getInitialDummyState(dummyHero.name, basicActions.commonCards),
+      ...scenarioSetup.getInitialDummyState(dummyName, basicActions.commonCards),
       // EC-09-A-3: dummy skill deck — revealed into Common Skills on player level-ups
       skillDeck: random.shuffle(
-        dummyHero.skills()
+        getHeroSkills(dummyName)
           .filter((s) => !s.type.startsWith('interactive'))
           .map((s) => ({
             id: s.id,

@@ -1193,5 +1193,17 @@
     "actionStrongNightNeedsBoth": "강화 효과는 밤에 {{color}} (또는 금색) 마나와 검은색 마나가 모두 필요합니다",
     "actionStrongNightNeedsColor": "강화 효과는 밤에 {{color}} (또는 금색) 마나가 필요합니다",
     "actionStrongNightNeedsBlack": "강화 효과는 밤에 검은색 마나가 필요합니다"
+  },
+  "hero": {
+    "selectTitle": "영웅 선택",
+    "selectSubtitle": "각 영웅은 고유 시작 카드와 스킬 세트를 가집니다.",
+    "arythea": "아리시아",
+    "arytheaTag": "화염과 공격 — 적을 불태우는 마녀",
+    "tovak": "토박",
+    "tovakTag": "방어와 얼음 — 단단한 전사",
+    "goldyx": "골딕스",
+    "goldyxTag": "마나 운용과 기동성",
+    "norowas": "노로와스",
+    "norowasTag": "유닛과 영향력 — 타고난 지휘관"
   }
 }

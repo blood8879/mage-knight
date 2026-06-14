@@ -28,6 +28,8 @@ test.describe('Navigation', () => {
 
   test('should navigate from main menu to game screen', async ({ page }) => {
     await page.getByRole('button', { name: 'New Game' }).click()
+    // New Game opens a hero picker — pick the first hero to enter the game
+    await page.getByRole('button', { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
 
     const gameContent = page
       .locator('.bg-slate-950')

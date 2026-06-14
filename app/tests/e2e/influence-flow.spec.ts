@@ -78,6 +78,7 @@ test.describe('Influence Flow', () => {
     await page.goto('/')
     await suppressTips(page)
     await page.getByRole('button', { name: /New Game/i }).click()
+    await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
     await page.waitForSelector('canvas', { timeout: 15_000 })
     await selectTacticIfVisible(page)
 

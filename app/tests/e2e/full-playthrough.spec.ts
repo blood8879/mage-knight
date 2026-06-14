@@ -67,6 +67,7 @@ test.describe('Full Game Playthrough', () => {
     await ss(page, '01-main-menu')
 
     await page.getByRole('button', { name: /New Game/i }).click()
+    await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
     console.log('  -> Clicked New Game')
 
     // ── STEP 2: Game Init ──

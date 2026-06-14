@@ -32,7 +32,10 @@ interface GameStoreState {
   /** Shared undo availability (the undo stack is module-global in useUndo) */
   canUndo: boolean
 
-  startNewGame: () => void
+  /** Hero the player chose for the current game */
+  selectedHero: string
+
+  startNewGame: (hero?: string) => void
   startTutorial: () => void
   startTutorialChapter: (chapter: number) => void
   endGame: (score?: FinalScore) => void
@@ -66,14 +69,16 @@ const initialState = {
   log: [] as GameLogEntry[],
   engineState: null as FullGameState | null,
   canUndo: false,
+  selectedHero: 'Arythea',
 }
 
 export const useGameStore = create<GameStoreState>((set) => ({
   ...initialState,
 
-  startNewGame: () =>
+  startNewGame: (hero = 'Arythea') =>
     set({
       ...initialState,
+      selectedHero: hero,
       isGameActive: true,
       isTutorialMode: false,
       tutorialChapter: null,

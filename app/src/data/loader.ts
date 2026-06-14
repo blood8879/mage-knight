@@ -292,6 +292,21 @@ export function getTovakSkills(): HeroSkillData[] {
   return (tovakData as unknown as { hero: { skills: HeroSkillData[] } }).hero.skills
 }
 
+/** Playable heroes for the solo scenario */
+export const PLAYABLE_HEROES = ['Arythea', 'Tovak', 'Goldyx', 'Norowas'] as const
+export type HeroName = (typeof PLAYABLE_HEROES)[number]
+
+/** Skill tokens for any hero (used for the player's skill deck and the dummy pool) */
+export function getHeroSkills(heroName: string): HeroSkillData[] {
+  switch (heroName) {
+    case 'Goldyx': return getGoldyxSkills()
+    case 'Tovak': return getTovakSkills()
+    case 'Norowas': return getNorowasSkills()
+    case 'Arythea':
+    default: return getArythea().skills
+  }
+}
+
 export function getFirstReconScenario(): ScenarioData {
   return (firstReconData as { scenario: ScenarioData }).scenario
 }

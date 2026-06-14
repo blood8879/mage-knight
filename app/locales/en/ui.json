@@ -1193,5 +1193,17 @@
     "actionStrongNightNeedsBoth": "Action strong at night requires {{color}} (or gold) mana AND black mana",
     "actionStrongNightNeedsColor": "Action strong at night requires {{color}} (or gold) mana",
     "actionStrongNightNeedsBlack": "Action strong at night requires black mana"
+  },
+  "hero": {
+    "selectTitle": "Choose your hero",
+    "selectSubtitle": "Each hero has a unique starting card and skill set.",
+    "arythea": "Arythea",
+    "arytheaTag": "Fire & aggression — burns through enemies",
+    "tovak": "Tovak",
+    "tovakTag": "Defense & ice — a sturdy brawler",
+    "goldyx": "Goldyx",
+    "goldyxTag": "Mana mastery & mobility",
+    "norowas": "Norowas",
+    "norowasTag": "Units & influence — a born leader"
   }
 }

@@ -1193,5 +1193,17 @@
     "actionStrongNightNeedsBoth": "El efecto potenciado requiere de noche maná {{color}} (u oro) Y maná negro",
     "actionStrongNightNeedsColor": "El efecto potenciado requiere maná {{color}} (u oro) de noche",
     "actionStrongNightNeedsBlack": "El efecto potenciado requiere maná negro de noche"
+  },
+  "hero": {
+    "selectTitle": "Elige tu héroe",
+    "selectSubtitle": "Cada héroe tiene una carta inicial y habilidades únicas.",
+    "arythea": "Arythea",
+    "arytheaTag": "Fuego y agresión",
+    "tovak": "Tovak",
+    "tovakTag": "Defensa y hielo",
+    "goldyx": "Goldyx",
+    "goldyxTag": "Dominio del maná y movilidad",
+    "norowas": "Norowas",
+    "norowasTag": "Unidades e influencia"
   }
 }

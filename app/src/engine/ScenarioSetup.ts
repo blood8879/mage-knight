@@ -82,10 +82,8 @@ export class ScenarioSetup {
   }
 
   setupPlayerDeck(heroName: string, basicActionCards: BasicActionCard[]): AnyCard[] {
-    if (heroName !== 'Arythea') {
-      return [...basicActionCards]
-    }
-
+    // Works for any hero: keep common cards, swap in this hero's unique card
+    // (heroSpecific with a `replaces` target), and drop other heroes' cards.
     const deck: AnyCard[] = []
 
     for (const card of basicActionCards) {

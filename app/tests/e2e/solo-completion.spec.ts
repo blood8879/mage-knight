@@ -40,6 +40,7 @@ test.describe('Solo Completion', () => {
     await page.goto('/?seed=5')
     await suppressAllTips(page)
     await page.getByRole('button', { name: /New Game/i }).click()
+    await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
     await page.waitForSelector('canvas', { timeout: 15_000 })
 
     let roundsCompleted = 0

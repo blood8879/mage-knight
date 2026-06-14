@@ -282,6 +282,7 @@ export default function GameScreen() {
   const phase = useGameStore((s) => s.phase)
   const isTutorialMode = useGameStore((s) => s.isTutorialMode)
   const tutorialChapter = useGameStore((s) => s.tutorialChapter)
+  const selectedHero = useGameStore((s) => s.selectedHero)
   const fame = useGameStore((s) => s.fame)
   const reputation = useGameStore((s) => s.reputation)
   const level = useGameStore((s) => s.level)
@@ -430,10 +431,10 @@ export default function GameScreen() {
       if (isTutorialMode) {
         engine.initializeTutorial(tutorialChapter ?? 1)
       } else {
-        engine.initializeGame()
+        engine.initializeGame(selectedHero)
       }
     }
-  }, [engine, isTutorialMode, tutorialChapter])
+  }, [engine, isTutorialMode, tutorialChapter, selectedHero])
 
   useEffect(() => {
     if (phase === 'player_turn_start' && engineState && engineState.turnCount === 0) {
