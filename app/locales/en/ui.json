@@ -288,7 +288,7 @@
       },
       "movementPoints": {
         "title": "Movement Points",
-        "desc": "You now have movement points shown on the action bar. Each terrain type costs a different number of points to enter."
+        "desc": "You now have movement points shown on the action bar. Each terrain type costs a different number of points to enter. In a turn you first finish all your movement, then take a single action such as combat. Once you start a fight you cannot move again this turn, so move first."
       },
       "selectHex": {
         "title": "Choose a Hex",
@@ -308,7 +308,7 @@
       },
       "enemySpotted": {
         "title": "Enemy Ahead!",
-        "desc": "An enemy guards a nearby hex. Press the 'Fight' button to engage it in combat. Defeating enemies earns you fame points."
+        "desc": "An enemy guards a nearby hex. Press the 'Fight' button to engage it in combat. Defeating enemies earns you fame points. Combat is your turn's action — once it starts you cannot move again this turn, so finish any movement first."
       },
       "combatRanged": {
         "title": "Ranged Phase",

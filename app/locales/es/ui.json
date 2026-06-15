@@ -288,7 +288,7 @@
       },
       "movementPoints": {
         "title": "Puntos de Movimiento",
-        "desc": "Ahora tienes puntos de movimiento en la barra de acción. Cada tipo de terreno cuesta una cantidad distinta de puntos para entrar."
+        "desc": "Ahora tienes puntos de movimiento en la barra de acción. Cada tipo de terreno cuesta una cantidad distinta de puntos para entrar. En un turno primero terminas todo tu movimiento y luego realizas una única acción como el combate. Una vez que empiezas a luchar ya no puedes moverte este turno, así que muévete primero."
       },
       "selectHex": {
         "title": "Elige un Hexágono",
@@ -308,7 +308,7 @@
       },
       "enemySpotted": {
         "title": "¡Enemigo al Frente!",
-        "desc": "Un enemigo custodia un hexágono cercano. Pulsa 'Luchar' para enfrentarlo. Derrotar enemigos te otorga puntos de fama."
+        "desc": "Un enemigo custodia un hexágono cercano. Pulsa 'Luchar' para enfrentarlo. Derrotar enemigos te otorga puntos de fama. El combate es la acción de tu turno: una vez que empieza ya no puedes moverte este turno, así que termina antes cualquier movimiento."
       },
       "combatRanged": {
         "title": "Fase a Distancia",
