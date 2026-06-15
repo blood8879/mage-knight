@@ -179,10 +179,12 @@ describe('BUG-4: City Assault Reputation', () => {
     expect(combat.reputationChange).toBe(0)
   })
 
-  test('keep/tower assault (no cityColor) has reputationChange 0', () => {
+  test('keep/tower assault (fortified, no cityColor) costs -1 reputation', () => {
+    // Rulebook: assaulting an unconquered keep or mage tower costs 1 Reputation,
+    // just like a city — not only cities.
     const cr = new CombatResolver(makeRandom())
     const combat = cr.initiateCombat([enemy], true)
-    expect(combat.reputationChange).toBe(0)
+    expect(combat.reputationChange).toBe(-1)
   })
 
   test('each city color applies -1 reputation', () => {

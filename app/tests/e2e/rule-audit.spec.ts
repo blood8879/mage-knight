@@ -33,6 +33,8 @@ type Snapshot = {
 }
 
 async function readState(page: Page): Promise<Snapshot | null> {
+  // Wrapped: a service-worker controllerchange reload can destroy the execution
+  // context mid-evaluate; treat that as "no snapshot this step" rather than a failure.
   return await page.evaluate(() => {
     const s = (window as unknown as Record<string, unknown>).__MK_STATE__ as
       | Record<string, unknown>
@@ -57,7 +59,7 @@ async function readState(page: Page): Promise<Snapshot | null> {
       movePointsSpent: turn.movePointsSpent as number,
       handSize: (deck.hand as unknown[]).length,
     }
-  })
+  }).catch(() => null)
 }
 
 /** Returns a rule-violation string, or null if the snapshot is legal. */
@@ -111,6 +113,11 @@ test.describe('Rule-audit playthrough', () => {
     })
     page.on('pageerror', (err) => errors.push(`[CRASH] ${err.message}`))
 
+    // Block the service worker: its controllerchange auto-reload would destroy
+    // the execution context mid-evaluate and flake the audit. (Production
+    // behaviour is unchanged; this only affects the test browser context.)
+    await page.route('**/sw.js', (r) => r.abort())
+
     await page.goto(`/?seed=${SEED}&debug=1`)
     await page.evaluate(() => {
       ;['tipTactic','tipTurn','tipMove','tipCombat','tipDamage','tipLevelUp','tipSite','tipEndTurn'].forEach((k) =>
@@ -127,23 +134,32 @@ test.describe('Rule-audit playthrough', () => {
     let turnsEnded = 0
     let stuckCounter = 0
     let lastSig = ''
+    const prev = { fame: 0, level: 1, round: 1 }
 
     const audit = async (step: number) => {
       const snap = await readState(page)
       if (!snap) return
       if (expectedDice == null && snap.diceCount > 0) expectedDice = snap.diceCount
-      const v = checkInvariants(snap, expectedDice)
-      if (v) {
+      const record = (v: string | null) => {
+        if (!v) return
         const msg = `[seed ${SEED}] step ${step} (phase=${snap.phase}, round=${snap.round}): ${v}`
         if (!violations.includes(msg)) violations.push(msg)
       }
+      record(checkInvariants(snap, expectedDice))
+      // Monotonic invariants: Fame / level / round never decrease in solo play.
+      if (snap.fame < prev.fame) record(`fame decreased ${prev.fame} → ${snap.fame}`)
+      if (snap.level < prev.level) record(`level decreased ${prev.level} → ${snap.level}`)
+      if (snap.round < prev.round) record(`round decreased ${prev.round} → ${snap.round}`)
+      prev.fame = Math.max(prev.fame, snap.fame)
+      prev.level = Math.max(prev.level, snap.level)
+      prev.round = Math.max(prev.round, snap.round)
     }
 
     for (let step = 0; step < 600; step++) {
       if (violations.length > 0) break
       if (await visible(page, page.getByText(/Total Score/i))) { reachedScore = true; break }
 
-      const sig = (await page.evaluate(() => document.body.innerText.length)) + ''
+      const sig = (await page.evaluate(() => document.body.innerText.length).catch(() => -1)) + ''
       stuckCounter = sig === lastSig ? stuckCounter + 1 : 0
       lastSig = sig
       if (stuckCounter > 50) throw new Error(`[seed ${SEED}] stuck at step ${step}`)

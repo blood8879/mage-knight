@@ -84,7 +84,9 @@ export class CombatResolver {
       isFortifiedSite,
       cityColor,
       fameEarned: 0,
-      reputationChange: cityColor ? -1 : 0,
+      // Rulebook: assaulting ANY unconquered fortified site (keep, mage tower
+      // OR city) costs 1 Reputation, regardless of the combat's outcome.
+      reputationChange: isFortifiedSite || cityColor ? -1 : 0,
       rewards: [],
       combatHexCoord: hexCoord,
     }
