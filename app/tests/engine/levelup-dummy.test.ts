@@ -311,7 +311,10 @@ describe('DummyPlayer', () => {
       expect(result.hasEndedRound).toBe(false)
     })
 
-    it('chains additional flips when crystal matches last card color', () => {
+    it('flips additional cards equal to crystals of the topmost color, without spending crystals', () => {
+      // After flipping C0/C1/C2, the topmost is C2 (green). Dummy has 2 green
+      // crystals → flip exactly 2 more cards (C3, C4). Crystals are NOT spent
+      // and only the topmost color is checked (no cascade).
       const cards: BasicActionCard[] = [
         makeCard(0, 'C0', 'red'),
         makeCard(1, 'C1', 'blue'),
@@ -331,11 +334,40 @@ describe('DummyPlayer', () => {
 
       const result = dp.executeDummyTurn(state)
 
-      expect(result.cardsFlippedThisRound).toBeGreaterThan(3)
-      expect(result.crystals.green).toBeLessThan(2)
+      expect(result.cardsFlippedThisRound).toBe(5)
+      expect(result.crystals.green).toBe(2) // crystals persist (speed counter, not a cost)
+      expect(result.deedDeck).toHaveLength(0)
     })
 
-    it('ends round when deck is exhausted during initial flip', () => {
+    it('only the topmost color counts — no cascade through later cards', () => {
+      // Topmost after 3 flips is C2 (red). Dummy has 0 red but 2 green; per the
+      // rulebook NO extra cards are flipped (the green crystals are irrelevant).
+      const cards: BasicActionCard[] = [
+        makeCard(0, 'C0', 'green'),
+        makeCard(1, 'C1', 'green'),
+        makeCard(2, 'C2', 'red'),
+        makeCard(3, 'C3', 'green'),
+        makeCard(4, 'C4', 'green'),
+      ]
+      const state: DummyPlayerState = {
+        heroName: 'Goldyx',
+        deedDeck: [...cards],
+        discardPile: [],
+        crystals: { red: 0, blue: 0, green: 2, white: 0 },
+        tacticCard: null,
+        hasEndedRound: false,
+        cardsFlippedThisRound: 0,
+      }
+
+      const result = dp.executeDummyTurn(state)
+
+      expect(result.cardsFlippedThisRound).toBe(3)
+      expect(result.deedDeck).toHaveLength(2)
+    })
+
+    it('does not end the round when the deck empties mid-flip — ends on the next turn', () => {
+      // Rulebook: "flip as many as you can. On his next turn, the Dummy player
+      // announces End of the Round." Emptying the deck does NOT end it this turn.
       const cards = makeCards(2)
       const state: DummyPlayerState = {
         heroName: 'Goldyx',
@@ -348,10 +380,13 @@ describe('DummyPlayer', () => {
       }
 
       const result = dp.executeDummyTurn(state)
-
-      expect(result.hasEndedRound).toBe(true)
+      expect(result.hasEndedRound).toBe(false)
       expect(result.deedDeck).toHaveLength(0)
       expect(result.discardPile).toHaveLength(2)
+
+      // Next turn, with the deck empty, the dummy announces End of the Round.
+      const next = dp.executeDummyTurn(result)
+      expect(next.hasEndedRound).toBe(true)
     })
 
     it('sets hasEndedRound when deck is already empty', () => {

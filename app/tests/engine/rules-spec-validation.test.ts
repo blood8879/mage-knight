@@ -529,7 +529,7 @@ describe('UNIT-07: Combat — Edge Case Verification', () => {
 // ═══════════════════════════════════════════════
 
 describe('UNIT-11: Dummy Player — Behavior Verification', () => {
-  it('EC-11-A-1: deck exhausted mid-flip → end of round', () => {
+  it('EC-11-A-1: deck exhausted mid-flip → flip what you can, End of Round next turn', () => {
     const random = new SeededRandom(42)
     const dummy = new DummyPlayer(random)
 
@@ -539,10 +539,15 @@ describe('UNIT-11: Dummy Player — Behavior Verification', () => {
       { type: 'basic_action', id: 101, name: 'B', color: 'blue', basicEffect: { text: '', actions: [] }, strongEffect: { text: '', actions: [] }, copies: 1, heroSpecific: null, replaces: null, set: 'base' },
     ] as any)
 
+    // Rulebook: flip as many as you can this turn; End of Round is announced
+    // on the NEXT turn (when the deck is empty at the start of the turn).
     const result = dummy.executeDummyTurn(state)
-    expect(result.hasEndedRound).toBe(true)
+    expect(result.hasEndedRound).toBe(false)
     expect(result.deedDeck).toHaveLength(0)
     expect(result.discardPile).toHaveLength(2)
+
+    const next = dummy.executeDummyTurn(result)
+    expect(next.hasEndedRound).toBe(true)
   })
 
   it('EC-11-B-1: dummy crystal count can exceed 3 per color', () => {

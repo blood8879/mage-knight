@@ -38,46 +38,52 @@ export class DummyPlayer {
     }
   }
 
+  /**
+   * Rulebook (Scenario Book — "Cooperative and Solo Scenarios", Dummy player's
+   * turn):
+   *  - Deck empty at the START of the turn → announce End of the Round.
+   *  - Otherwise flip three cards, then check the color of the topmost (last
+   *    flipped) card and flip a number of ADDITIONAL cards equal to the dummy's
+   *    crystals of that color. Crystals are NOT spent, the color is checked only
+   *    ONCE, and the colors of the additional cards do not matter.
+   *  - If there are not enough cards, flip as many as you can; End of the Round
+   *    is announced on the dummy's NEXT turn (when the deck is empty), not this
+   *    one.
+   */
   executeDummyTurn(state: DummyPlayerState): DummyPlayerState {
     if (state.deedDeck.length === 0) {
       return { ...state, hasEndedRound: true }
     }
 
-    let deck = [...state.deedDeck]
-    let discard = [...state.discardPile]
-    let crystals = { ...state.crystals }
+    const deck = [...state.deedDeck]
+    const discard = [...state.discardPile]
     let flipped = state.cardsFlippedThisRound
 
-    const cardsToFlip = Math.min(3, deck.length)
-    for (let i = 0; i < cardsToFlip; i++) {
-      const card = deck.shift()!
-      discard.push(card)
+    // 1) Flip up to three cards into the discard pile.
+    const initialFlips = Math.min(3, deck.length)
+    for (let i = 0; i < initialFlips; i++) {
+      discard.push(deck.shift()!)
       flipped++
     }
 
-    let hasEndedRound = deck.length === 0
-
-    if (!hasEndedRound && discard.length > 0) {
-      let lastColor = this.getCardColor(discard[discard.length - 1])
-      while (lastColor && this.hasCrystal(crystals, lastColor) && deck.length > 0) {
-        crystals = this.removeCrystal(crystals, lastColor)
-        const card = deck.shift()!
-        discard.push(card)
+    // 2) Flip additional cards equal to crystals of the topmost card's color.
+    //    Crystals persist (they are a per-round speed counter, not a cost).
+    if (deck.length > 0) {
+      const color = this.getCardColor(discard[discard.length - 1])
+      const extra = color ? Math.min(state.crystals[color], deck.length) : 0
+      for (let i = 0; i < extra; i++) {
+        discard.push(deck.shift()!)
         flipped++
-        if (deck.length === 0) {
-          hasEndedRound = true
-          break
-        }
-        lastColor = this.getCardColor(discard[discard.length - 1])
       }
     }
 
+    // Running out of cards does not end the round this turn — End of the Round
+    // is announced on the next turn, when the deck is empty at turn start.
     return {
       ...state,
       deedDeck: deck,
       discardPile: discard,
-      crystals,
-      hasEndedRound,
+      hasEndedRound: false,
       cardsFlippedThisRound: flipped,
     }
   }

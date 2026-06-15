@@ -795,18 +795,20 @@ Ready (healthy) ─── 활성화 ──→ Spent
 
 **로직**:
 ```
-IF Deed 덱 비어있음:
+IF (턴 시작 시) Deed 덱 비어있음:
     → End of Round 선언
 ELSE:
-    1. 3장 뒤집기 → discard
-    2. 마지막 카드 색상 확인
-    3. 해당 색상 Crystal이 Inventory에 있으면:
-       → 같은 색상 나올 때까지 계속 뒤집기 (Crystal 있는 한)
-    4. Crystal 없거나 다른 색상 나오면 → 턴 종료
+    1. 3장 뒤집기 → discard (모자라면 가능한 만큼만)
+    2. 맨 위(마지막) 카드 색상 C 확인 — 단 한 번만
+    3. Crystal[C]개 만큼 추가로 뒤집기
+       · Crystal은 소모하지 않음 (라운드 내 템포 카운터)
+       · 추가로 뒤집힌 카드의 색상은 무관 (캐스케이드 없음)
+    4. 덱이 도중에 비어도 이번 턴엔 End of Round 선언 안 함
+       → 다음 턴(덱 비어있음)에 선언
 ```
 
 **엣지케이스**:
-- **EC-11-A-1**: 뒤집기 도중 Deed 덱 소진 → 즉시 End of Round
+- **EC-11-A-1**: 뒤집기 도중 Deed 덱 소진 → 이번 턴엔 가능한 만큼만 뒤집고, **다음 턴**에 End of Round 선언 (룰북: "flip as many as you can. On his next turn... announces End of the Round")
 - **EC-11-A-2**: Crystal이 3개 초과 가능 (Spell 오퍼 갱신으로 추가됨)
 - **EC-11-A-3**: Dummy Player는 이동/전투/상호작용 없음 (순수 템포 역할)
 - **EC-11-A-4**: Dummy Player의 Deed 덱에 AA 카드 추가됨 (라운드 준비 시)
@@ -1061,7 +1063,7 @@ ELIF 6라운드 완료:
 | 항목 | 구현 | 테스트 | 비고 |
 |------|:----:|:------:|------|
 | 11-A: Dummy 턴 | [v] | [v] | 3장 뒤집기, Crystal 소비 연쇄, 덱 소진 시 EoR |
-| EC-11-A-1: 덱 소진 mid-flip | [v] | [v] | 2장 덱으로 테스트 |
+| EC-11-A-1: 덱 소진 mid-flip → 다음 턴 End of Round | [v] | [v] | 2장 덱으로 테스트 |
 | 11-B: 라운드 준비 | [v] | [v] | AA 카드 추가, Spell Crystal 추가 |
 | EC-11-B-1: Crystal 초과 가능 | [v] | [v] | 3개 제한 없음 확인 |
 
