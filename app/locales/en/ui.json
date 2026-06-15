@@ -1205,5 +1205,18 @@
     "goldyxTag": "Mana mastery & mobility",
     "norowas": "Norowas",
     "norowasTag": "Units & influence — a born leader"
+  },
+  "offer": {
+    "levelShort": "Lv",
+    "costShort": "Cost",
+    "armorShort": "Arm"
+  },
+  "recruitSite": {
+    "village": "Village",
+    "keep": "Keep",
+    "city": "City",
+    "monastery": "Monastery",
+    "mage_tower": "Mage Tower",
+    "glade": "Glade"
   }
 }

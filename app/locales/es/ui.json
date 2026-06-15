@@ -1205,5 +1205,18 @@
     "goldyxTag": "Dominio del maná y movilidad",
     "norowas": "Norowas",
     "norowasTag": "Unidades e influencia"
+  },
+  "offer": {
+    "levelShort": "Niv",
+    "costShort": "Coste",
+    "armorShort": "Arm"
+  },
+  "recruitSite": {
+    "village": "Aldea",
+    "keep": "Fortaleza",
+    "city": "Ciudad",
+    "monastery": "Monasterio",
+    "mage_tower": "Torre de Mago",
+    "glade": "Claro"
   }
 }

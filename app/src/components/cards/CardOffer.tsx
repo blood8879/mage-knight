@@ -70,6 +70,7 @@ function renderUnitCard(
   translatedName: string,
   translatedEffect: string,
   vertical: boolean,
+  t: (key: string, options?: Record<string, unknown>) => string,
 ) {
   return (
     <button
@@ -94,13 +95,13 @@ function renderUnitCard(
 
       <div className="flex flex-1 flex-col gap-1.5 px-2.5 py-2">
         <div className="flex items-center gap-2 text-[10px]">
-          <span className="text-slate-500">Lv</span>
+          <span className="text-slate-500">{t('offer.levelShort', { defaultValue: 'Lv' })}</span>
           <span className="font-bold text-slate-200">{item.level}</span>
           <span className="text-slate-700">│</span>
-          <span className="text-slate-500">Cost</span>
+          <span className="text-slate-500">{t('offer.costShort', { defaultValue: 'Cost' })}</span>
           <span className="font-bold text-amber-400">{item.cost}</span>
           <span className="text-slate-700">│</span>
-          <span className="text-slate-500">Arm</span>
+          <span className="text-slate-500">{t('offer.armorShort', { defaultValue: 'Arm' })}</span>
           <span className="font-bold text-blue-400">{item.armor}</span>
         </div>
 
@@ -113,9 +114,9 @@ function renderUnitCard(
             {item.recruitSites.map((site) => (
               <span
                 key={site}
-                className="rounded bg-slate-700/50 px-1 py-0.5 text-[8px] font-medium capitalize text-slate-500"
+                className="rounded bg-slate-700/50 px-1 py-0.5 text-[8px] font-medium text-slate-500"
               >
-                {site}
+                {t(`recruitSite.${site}`, { defaultValue: site })}
               </span>
             ))}
           </div>
@@ -226,7 +227,7 @@ export default function CardOffer({ cards, type, onSelect, title, layout = 'hori
           const isVertical = layout === 'vertical'
 
           if (isUnit(item)) {
-            return renderUnitCard(item, idx, isSelected, handleSelect, getOfferItemName(item), getOfferItemEffect(item), isVertical)
+            return renderUnitCard(item, idx, isSelected, handleSelect, getOfferItemName(item), getOfferItemEffect(item), isVertical, t)
           }
 
           return renderDeedCard(
