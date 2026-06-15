@@ -1218,5 +1218,23 @@
     "monastery": "Monasterio",
     "mage_tower": "Torre de Mago",
     "glade": "Claro"
+  },
+  "unitAbility": {
+    "title": "Habilidades de unidad",
+    "oncePerRound": "Una vez por ronda",
+    "act": {
+      "move": "Movimiento",
+      "influence": "Influencia",
+      "heal": "Curar",
+      "attack": "Ataque",
+      "block": "Bloqueo",
+      "ranged_attack": "Ataque a distancia",
+      "siege_attack": "Ataque de asedio"
+    },
+    "woundedHint": "Las unidades heridas no pueden actuar",
+    "spentHint": "Ya usada esta ronda",
+    "combatOnly": "Úsala durante el combate",
+    "interactionOnly": "Úsala durante una interacción",
+    "combatBusy": "Resuelve el combate primero"
   }
 }

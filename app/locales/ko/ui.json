@@ -1218,5 +1218,23 @@
     "monastery": "수도원",
     "mage_tower": "마법사 탑",
     "glade": "마법 숲"
+  },
+  "unitAbility": {
+    "title": "유닛 능력",
+    "oncePerRound": "라운드당 1회",
+    "act": {
+      "move": "이동",
+      "influence": "영향력",
+      "heal": "치유",
+      "attack": "공격",
+      "block": "블록",
+      "ranged_attack": "원거리 공격",
+      "siege_attack": "공성 공격"
+    },
+    "woundedHint": "부상당한 유닛은 사용할 수 없습니다",
+    "spentHint": "이번 라운드에 이미 사용함",
+    "combatOnly": "전투 중에만 사용 가능",
+    "interactionOnly": "상호작용 중에만 사용 가능",
+    "combatBusy": "전투를 먼저 끝내세요"
   }
 }

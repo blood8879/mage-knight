@@ -1218,5 +1218,23 @@
     "monastery": "Monastery",
     "mage_tower": "Mage Tower",
     "glade": "Glade"
+  },
+  "unitAbility": {
+    "title": "Unit Abilities",
+    "oncePerRound": "Once per round",
+    "act": {
+      "move": "Move",
+      "influence": "Influence",
+      "heal": "Heal",
+      "attack": "Attack",
+      "block": "Block",
+      "ranged_attack": "Ranged Attack",
+      "siege_attack": "Siege Attack"
+    },
+    "woundedHint": "Wounded units cannot act",
+    "spentHint": "Already used this round",
+    "combatOnly": "Use during combat",
+    "interactionOnly": "Use during an interaction",
+    "combatBusy": "Resolve combat first"
   }
 }

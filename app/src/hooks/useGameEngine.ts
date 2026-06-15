@@ -1780,6 +1780,64 @@ export function useGameEngine() {
   )
 
   /**
+   * Activate a recruited unit's ability outside combat (Move / Influence / Heal).
+   * Attack / Block abilities are combat-only and handled by the combat tray.
+   * Influence only applies while an interaction is open. The unit becomes
+   * spent for the rest of the round once activated.
+   */
+  const activateUnit = useCallback(
+    (unitIndex: number, action: import('@/engine/types').CardAction) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      if (state.combat.isActive) return // combat units go through the combat tray
+
+      const inst = state.player.units[unitIndex]
+      if (!inst || !engine.unitManager.isUnitActivatable(inst)) return
+
+      // Attack/Block (and ranged/siege) are only meaningful in combat.
+      if (
+        action.type === 'attack' || action.type === 'block' ||
+        action.type === 'ranged_attack' || action.type === 'siege_attack'
+      ) return
+      // Influence is wasted outside an interaction — don't spend the unit.
+      if (action.type === 'influence' && !state.interaction?.isActive) return
+
+      const value = typeof action.value === 'number' ? action.value : 0
+
+      pushState(state)
+
+      let newTurn = {
+        ...state.player.turn,
+        unitsActivatedThisTurn: [...state.player.turn.unitsActivatedThisTurn, String(inst.unit.id)],
+      }
+      if (action.type === 'move') {
+        newTurn = { ...newTurn, movePointsAvailable: newTurn.movePointsAvailable + value }
+      } else if (action.type === 'heal') {
+        newTurn = { ...newTurn, healingAvailable: (newTurn.healingAvailable ?? 0) + value }
+      }
+
+      const newUnits = engine.unitManager.activateUnit(state.player.units, unitIndex)
+      let newState: GameState = {
+        ...state,
+        player: { ...state.player, units: newUnits, turn: newTurn },
+      }
+      if (action.type === 'influence' && newState.interaction?.isActive) {
+        newState = {
+          ...newState,
+          interaction: engine.interactionManager.addInfluence(newState.interaction, value),
+        }
+      }
+      if (action.type === 'move' && state.phase === 'player_turn_start' && newTurn.movePointsAvailable > 0) {
+        newState = { ...newState, phase: 'movement' as GamePhase }
+      }
+      newState = withLog(newState, 'unit_activate', `${inst.unit.name} — ${action.type} ${value}`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
+  /**
    * Concentration / Will Focus strong: play another Action card with it and
    * resolve that card's strong effect for free, with +2/+3 added to the
    * Move / Influence / Attack / Block it grants.
@@ -3722,6 +3780,7 @@ export function useGameEngine() {
     drawCards,
 
     playSidewaysCard,
+    activateUnit,
     takeManaFromSource,
     useCrystal,
     returnManaToken,

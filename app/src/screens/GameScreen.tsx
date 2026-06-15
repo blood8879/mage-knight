@@ -21,6 +21,7 @@ import FameTrack from '@/components/tracks/FameTrack'
 import ReputationTrack from '@/components/tracks/ReputationTrack'
 import ManaPoolDisplay from '@/components/tracks/ManaPoolDisplay'
 import UnitSlots from '@/components/tracks/UnitSlots'
+import UnitAbilityOverlay from '@/components/tracks/UnitAbilityOverlay'
 import SkillPanel from '@/components/tracks/SkillPanel'
 import CardOffer from '@/components/cards/CardOffer'
 import Modal from '@/components/common/Modal'
@@ -374,6 +375,7 @@ export default function GameScreen() {
     colorQueue: { allowed: string[] }[]
     chosenColors: string[]
   } | null>(null)
+  const [unitAbilityIndex, setUnitAbilityIndex] = useState<number | null>(null)
   const prevPhaseRef = useRef<GamePhase>(phase)
 
   useEffect(() => {
@@ -1480,6 +1482,16 @@ export default function GameScreen() {
               document.body,
             )}
 
+          {/* Unit ability activation (Move / Influence / Heal outside combat) */}
+          <UnitAbilityOverlay
+            unit={unitAbilityIndex != null ? units[unitAbilityIndex] ?? null : null}
+            unitIndex={unitAbilityIndex}
+            combatActive={engineState?.combat.isActive === true}
+            interactionActive={engineState?.interaction?.isActive === true}
+            onActivate={(idx, action) => engine.activateUnit(idx, action)}
+            onClose={() => setUnitAbilityIndex(null)}
+          />
+
           {/* Banner attach: pick a unit (EC-02-C-3) */}
           <AnimatePresence>
             {bannerAttachMode && engineState && (
@@ -1571,7 +1583,7 @@ export default function GameScreen() {
             />
           )}
 
-          <UnitSlots units={units} unitLimit={unitLimit} />
+          <UnitSlots units={units} unitLimit={unitLimit} onUnitClick={setUnitAbilityIndex} />
 
           <SkillPanel
             skills={engineState.player.skills}
@@ -1670,7 +1682,7 @@ export default function GameScreen() {
                   />
                 )}
 
-                <UnitSlots units={units} unitLimit={unitLimit} />
+                <UnitSlots units={units} unitLimit={unitLimit} onUnitClick={(idx) => { setUnitAbilityIndex(idx); setMobileDrawerOpen(false) }} />
 
                 <div className="border-t border-slate-800" />
 
