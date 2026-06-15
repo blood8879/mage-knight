@@ -43,10 +43,20 @@ export function filterActionsForPhase(actions: CardAction[], phase: CombatPhase)
     case 'attack':
       // EC-07-E-1: ranged/siege attacks not used in Phase 1 may also be
       // declared during the melee phase (all attack types are valid).
+      // Element-specific melee attacks (ice_attack / fire_attack /
+      // cold_fire_attack) must be allowed too — otherwise a card like
+      // Cold Toughness ("Ice Attack 2") would only offer its sideways play.
       return actions.filter((a) => {
         const t = a.type
         if (SPECIALS_ATTACK.has(t)) return true
-        return t === 'attack' || t === 'ranged_attack' || t === 'siege_attack'
+        return (
+          t === 'attack' ||
+          t === 'ranged_attack' ||
+          t === 'siege_attack' ||
+          t === 'fire_attack' ||
+          t === 'ice_attack' ||
+          t === 'cold_fire_attack'
+        )
       })
     default:
       return []
@@ -91,6 +101,7 @@ export function getActionElement(action: CardAction): Element {
   if (action.element) return action.element as Element
 
   const t = action.type
+  if (t.startsWith('cold_fire_')) return 'cold_fire'
   if (t.startsWith('fire_')) return 'fire'
   if (t.startsWith('ice_')) return 'ice'
 
