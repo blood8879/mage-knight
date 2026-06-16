@@ -2238,6 +2238,24 @@ export function useGameEngine() {
           }
         }
       }
+    } else if (combatHexCoord) {
+      // Partial defeat (rulebook — Spawning Grounds / any multi-enemy site:
+      // "Partial defeat leaves remaining enemy tokens in place"). Remove the
+      // enemies that were defeated and keep the survivors on the hex so they
+      // must be fought again on a later turn. No site reward is granted until
+      // every enemy is defeated.
+      const combatHexKey = hexKey(combatHexCoord)
+      const hexCell = newState.map.hexGrid.get(combatHexKey)
+      if (hexCell && hexCell.enemyTokens.length > 0) {
+        const survivors = resolvedCombat.enemies
+          .filter((e) => !e.isDefeated)
+          .map((e) => e.token)
+        if (survivors.length !== hexCell.enemyTokens.length) {
+          const newHexGrid = new Map(newState.map.hexGrid)
+          newHexGrid.set(combatHexKey, { ...hexCell, enemyTokens: survivors })
+          newState = { ...newState, map: { ...newState.map, hexGrid: newHexGrid } }
+        }
+      }
     }
 
     if (knockedOut) {
