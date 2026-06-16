@@ -2105,16 +2105,24 @@ export function useGameEngine() {
     // FIX 4: Apply combat damage from damageAssignments
     let newDeck = newState.player.deck
     let newUnits = [...newState.player.units]
+    // Paralyze (rulebook, Special combat abilities): a Unit assigned damage by a
+    // Paralyzing enemy that would be Wounded is destroyed instead; a Hero so
+    // assigned must discard all non-Wound cards. Track these as we apply damage.
+    const destroyedUnitIndices = new Set<number>()
+    let heroParalyzed = false
     for (const assignment of state.combat.damageAssignments) {
+      const sourceEnemy = state.combat.enemies.find(e => e.instanceId === assignment.enemyInstanceId)
+      const isParalyzing = sourceEnemy?.appliedAbilities.includes('paralyze') ?? false
       for (const target of assignment.assignments) {
         if (target.targetType === 'hero' && target.woundsInflicted > 0) {
           newDeck = engine.deckManager.addWound(newDeck, target.woundsInflicted)
+          if (isParalyzing) heroParalyzed = true
         } else if (target.targetType === 'unit' && target.unitInstanceIndex != null && target.woundsInflicted > 0) {
           const unitIdx = target.unitInstanceIndex
           if (unitIdx >= 0 && unitIdx < newUnits.length) {
             const targetUnit = newUnits[unitIdx]
             // Banner of Fortitude: once a round, flip to ignore the wound
-            // and its additional effects entirely
+            // and its additional effects entirely (also negates paralysis).
             if (
               targetUnit.bannerCard?.name === 'Banner of Fortitude' &&
               !targetUnit.bannerFlipped
@@ -2125,6 +2133,13 @@ export function useGameEngine() {
                 ...newUnits.slice(unitIdx + 1),
               ]
               newState = withLog(newState, 'combat_end', `Banner of Fortitude: ${targetUnit.unit.name} ignored a wound`)
+              continue
+            }
+            // Paralyze: a Unit that would take a Wound is destroyed (removed from
+            // the game), not merely wounded.
+            if (isParalyzing) {
+              destroyedUnitIndices.add(unitIdx)
+              newState = withLog(newState, 'unit_disband', `${targetUnit.unit.name} destroyed by paralysis`)
               continue
             }
             // A Unit can hold at most one Wound (two cards under Poison) — the
@@ -2144,16 +2159,24 @@ export function useGameEngine() {
       }
     }
 
+    // Remove units destroyed by paralysis (filter by original index in one pass).
+    if (destroyedUnitIndices.size > 0) {
+      newUnits = newUnits.filter((_, i) => !destroyedUnitIndices.has(i))
+    }
+
     // Bug #5: Knock Out check — if wounds in hand >= handLimit, discard all non-wound cards
     const woundsInHand = newDeck.hand.filter(c => c.type === 'wound').length
     const knockedOut = woundsInHand >= newState.player.handLimit
-    if (knockedOut) {
+    if (knockedOut || heroParalyzed) {
       const nonWoundCards = newDeck.hand.filter(c => c.type !== 'wound')
       const woundCards = newDeck.hand.filter(c => c.type === 'wound')
       newDeck = {
         ...newDeck,
         hand: woundCards,
         discardPile: [...newDeck.discardPile, ...nonWoundCards],
+      }
+      if (heroParalyzed && !knockedOut) {
+        newState = withLog(newState, 'combat_end', 'Paralyzed — all non-Wound cards discarded')
       }
     }
 
