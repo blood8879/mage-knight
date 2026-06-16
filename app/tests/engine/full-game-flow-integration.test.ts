@@ -194,27 +194,27 @@ describe('US-001: Card Play Integration — Basic/Strong with Mana', () => {
       expect(result.canPlayStrong).toBe(true)
     })
 
-    it('strong effect at night requires matching color + black mana', () => {
+    it('action strong effect at night needs only its color (no black; rulebook)', () => {
       const card = makeBasicAction({ color: 'red' })
 
-      // Only color — missing black
+      // Color alone is enough — actions never require black
       let result = validateCardPlay(card, 'night', {
         hasColor: (c) => c === 'red', hasBlack: false, hasGold: false,
       })
-      expect(result.canPlayStrong).toBe(false)
-      expect(result.requiresBlackMana).toBe(true)
+      expect(result.canPlayStrong).toBe(true)
+      expect(result.requiresBlackMana).toBe(false)
 
-      // Color + black
+      // Color + black still fine (black simply unused)
       result = validateCardPlay(card, 'night', {
         hasColor: (c) => c === 'red', hasBlack: true, hasGold: false,
       })
       expect(result.canPlayStrong).toBe(true)
 
-      // Gold + black
+      // Gold is unusable at night, so gold-only cannot satisfy the color
       result = validateCardPlay(card, 'night', {
         hasColor: () => false, hasBlack: true, hasGold: true,
       })
-      expect(result.canPlayStrong).toBe(true)
+      expect(result.canPlayStrong).toBe(false)
     })
   })
 
@@ -242,29 +242,30 @@ describe('US-001: Card Play Integration — Basic/Strong with Mana', () => {
       })
       expect(result.canPlayStrong).toBe(false)
 
-      // Night: strong with matching color
+      // Night: strong needs matching color + black
       result = validateCardPlay(spell, 'night', {
-        hasColor: (c) => c === 'red', hasBlack: false, hasGold: false,
+        hasColor: (c) => c === 'red', hasBlack: true, hasGold: false,
       })
       expect(result.canPlayStrong).toBe(true)
     })
   })
 
-  describe('Night + Gold Wildcard', () => {
-    it('gold mana substitutes for color at night (action strong)', () => {
+  describe('Night + Gold Wildcard (gold is unusable at night)', () => {
+    it('gold does NOT substitute for color at night (action strong)', () => {
       const card = makeBasicAction({ color: 'red' })
       const result = validateCardPlay(card, 'night', {
         hasColor: () => false, hasBlack: true, hasGold: true,
       })
-      expect(result.canPlayStrong).toBe(true) // gold replaces red, black present
+      // Gold cannot be used at night, so gold-only cannot pay the red cost.
+      expect(result.canPlayStrong).toBe(false)
     })
 
-    it('gold mana substitutes for color at night (spell strong)', () => {
+    it('gold does NOT substitute for color at night (spell strong)', () => {
       const spell = makeSpell({ color: 'blue' })
       const result = validateCardPlay(spell, 'night', {
-        hasColor: () => false, hasBlack: false, hasGold: true,
+        hasColor: () => false, hasBlack: true, hasGold: true,
       })
-      expect(result.canPlayStrong).toBe(true) // gold replaces blue, no black needed for spell
+      expect(result.canPlayStrong).toBe(false)
     })
   })
 
@@ -1197,25 +1198,24 @@ describe('US-005: Full Multi-Round Game Flow', () => {
     // Draw hand
     playerDeck = dm.drawToHandLimit(playerDeck, 5)
 
-    // ── Night rules test: Spell strong is available at night ──
+    // ── Night rules test: Spell strong needs color + black at night ──
     const fireSpell = makeSpell({ color: 'red' })
-    const nightSpellCheck = validateCardPlay(fireSpell, 'night', {
+    const nightSpellNoBlack = validateCardPlay(fireSpell, 'night', {
       hasColor: (c) => c === 'red', hasBlack: false, hasGold: false,
     })
-    expect(nightSpellCheck.canPlayStrong).toBe(true) // spell strong OK at night
+    expect(nightSpellNoBlack.canPlayStrong).toBe(false) // spell strong needs black
+    const nightSpellCheck = validateCardPlay(fireSpell, 'night', {
+      hasColor: (c) => c === 'red', hasBlack: true, hasGold: false,
+    })
+    expect(nightSpellCheck.canPlayStrong).toBe(true) // color + black at night
 
-    // ── Night rules: Action strong requires black + color mana ──
+    // ── Night rules: Action strong needs only its color (no black; rulebook) ──
     const greenAction = makeBasicAction({ color: 'green' })
     const nightActionCheck = validateCardPlay(greenAction, 'night', {
       hasColor: (c) => c === 'green', hasBlack: false, hasGold: false,
     })
-    expect(nightActionCheck.canPlayStrong).toBe(false) // needs black too
-    expect(nightActionCheck.requiresBlackMana).toBe(true)
-
-    const nightActionWithBlack = validateCardPlay(greenAction, 'night', {
-      hasColor: (c) => c === 'green', hasBlack: true, hasGold: false,
-    })
-    expect(nightActionWithBlack.canPlayStrong).toBe(true)
+    expect(nightActionCheck.canPlayStrong).toBe(true) // color alone suffices
+    expect(nightActionCheck.requiresBlackMana).toBe(false)
 
     // ── Player Turn: Combat + earn enough fame for level up ──
     const elite = makeEnemy({ id: 10, name: 'Ice Dragon', armor: 5, attack: 6, fameReward: 8 })

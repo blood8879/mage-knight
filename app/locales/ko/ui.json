@@ -1209,7 +1209,10 @@
     "actionStrongDayNeedsColor": "강화 효과는 낮에 {{color}} (또는 금색) 마나가 필요합니다",
     "actionStrongNightNeedsBoth": "강화 효과는 밤에 {{color}} (또는 금색) 마나와 검은색 마나가 모두 필요합니다",
     "actionStrongNightNeedsColor": "강화 효과는 밤에 {{color}} (또는 금색) 마나가 필요합니다",
-    "actionStrongNightNeedsBlack": "강화 효과는 밤에 검은색 마나가 필요합니다"
+    "actionStrongNightNeedsBlack": "강화 효과는 밤에 검은색 마나가 필요합니다",
+    "actionStrongNeedsColor": "강화 효과는 {{color}} (또는 금색) 마나가 필요합니다",
+    "spellStrongNightNeedsBoth": "강화 주문은 밤에 {{color}} (또는 금색) 마나와 검은색 마나가 필요합니다",
+    "spellStrongNeedsBlack": "강화 주문은 밤에 검은색 마나가 필요합니다"
   },
   "hero": {
     "selectTitle": "영웅 선택",

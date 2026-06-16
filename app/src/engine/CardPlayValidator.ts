@@ -10,7 +10,7 @@ export interface CardPlayValidation {
   canPlayBasic: boolean
   canPlayStrong: boolean
   requiredMana: ManaColor | null
-  requiresBlackMana: boolean // for Action strong at night
+  requiresBlackMana: boolean // for Spell strong at night
   reason?: string
   /** Stable key for i18n (validation.<key>) with optional params */
   reasonKey?: string
@@ -43,13 +43,15 @@ function primaryColor(card: DeedCard): ManaColor | null {
 
 /**
  * Check if a mana availability satisfies a color requirement.
- * Gold acts as a wildcard for any basic color.
+ * Gold acts as a wildcard for any basic color, but ONLY during the Day —
+ * gold mana cannot be used at Night (rulebook, Using Mana).
  */
 function canSatisfyColor(
   color: ManaColor,
-  mana: ManaAvailability
+  mana: ManaAvailability,
+  dayNight: 'day' | 'night',
 ): boolean {
-  return mana.hasColor(color) || mana.hasGold
+  return mana.hasColor(color) || (mana.hasGold && dayNight === 'day')
 }
 
 // ── Main Validator ─────────────────────────
@@ -60,11 +62,10 @@ function canSatisfyColor(
  *
  * Rules:
  *  Action Basic   → always playable (no mana needed)
- *  Action Strong Day   → needs matching color (or gold)
- *  Action Strong Night → needs matching color (or gold) + black mana
- *  Spell Basic    → needs matching color (or gold)
- *  Spell Strong Day    → IMPOSSIBLE (would need black during day)
- *  Spell Strong Night  → needs matching color (or gold) only
+ *  Action Strong  → needs matching color (gold counts only by Day); no black, any time
+ *  Spell Basic    → needs matching color (gold counts only by Day)
+ *  Spell Strong Day    → IMPOSSIBLE (requires black, unavailable by Day)
+ *  Spell Strong Night  → needs matching color + black mana
  *  Artifact Basic → always playable
  *  Artifact Strong → always playable (card is expended/thrown away)
  *  Wound          → NEVER playable (handled by callers via AnyCard type guard)
@@ -89,7 +90,7 @@ export function validateCardPlay(
   // ── Spell ─────────────────────────────────
   if (card.type === 'spell') {
     // Basic: always needs matching color mana
-    const basicColorMet = color !== null && canSatisfyColor(color, availableMana)
+    const basicColorMet = color !== null && canSatisfyColor(color, availableMana, dayNight)
     const canPlayBasic = basicColorMet
     const basicReason = canPlayBasic
       ? undefined
@@ -98,10 +99,10 @@ export function validateCardPlay(
         : `Spell basic requires ${color} (or gold) mana`
     const basicReasonKey = canPlayBasic ? undefined : color === null ? 'spellNoColor' : 'spellBasicNeedsColor'
 
-    // Strong Day: IMPOSSIBLE — spells strong are powered by black mana which
-    // doesn't exist during day phase.
-    // Strong Night: needs matching color only (black mana is not additionally required)
+    // Rulebook: a Spell's strong effect is powered by one mana of its color
+    // PLUS one black mana, and is only available at Night.
     let canPlayStrong: boolean
+    let requiresBlackMana = false
     let strongReason: string | undefined
     let strongReasonKey: string | undefined
     if (dayNight === 'day') {
@@ -109,21 +110,33 @@ export function validateCardPlay(
       strongReason = 'Spell strong cannot be played during day (requires black mana which is unavailable)'
       strongReasonKey = 'spellStrongDay'
     } else {
-      // Night: just needs matching color
-      canPlayStrong = color !== null && canSatisfyColor(color, availableMana)
-      strongReason = canPlayStrong
-        ? undefined
-        : color === null
-          ? 'Spell has no color defined'
-          : `Spell strong requires ${color} (or gold) mana at night`
-      strongReasonKey = canPlayStrong ? undefined : color === null ? 'spellNoColor' : 'spellStrongNeedsColor'
+      // Night: needs matching color (or gold) AND black mana
+      const colorMet = color !== null && canSatisfyColor(color, availableMana, dayNight)
+      const blackMet = availableMana.hasBlack
+      requiresBlackMana = true
+      canPlayStrong = colorMet && blackMet
+      if (!canPlayStrong) {
+        if (color === null) {
+          strongReason = 'Spell has no color defined'
+          strongReasonKey = 'spellNoColor'
+        } else if (!colorMet && !blackMet) {
+          strongReason = `Spell strong at night requires ${color} (or gold) mana AND black mana`
+          strongReasonKey = 'spellStrongNightNeedsBoth'
+        } else if (!colorMet) {
+          strongReason = `Spell strong requires ${color} (or gold) mana at night`
+          strongReasonKey = 'spellStrongNeedsColor'
+        } else {
+          strongReason = 'Spell strong at night requires black mana'
+          strongReasonKey = 'spellStrongNeedsBlack'
+        }
+      }
     }
 
     return {
       canPlayBasic,
       canPlayStrong,
       requiredMana: color,
-      requiresBlackMana: false,
+      requiresBlackMana,
       reason: canPlayBasic ? strongReason : basicReason,
       reasonKey: canPlayBasic ? strongReasonKey : basicReasonKey,
       reasonParams: color ? { color } : undefined,
@@ -137,38 +150,22 @@ export function validateCardPlay(
 
     // Strong requires mana
     let canPlayStrong: boolean
-    let requiresBlackMana = false
+    const requiresBlackMana = false
     let strongReason: string | undefined
     let strongReasonKey: string | undefined
 
     if (color === null) {
       // Colorless action strong — treat as always playable (no cost defined)
       canPlayStrong = true
-    } else if (dayNight === 'day') {
-      // Day: needs matching color (or gold)
-      canPlayStrong = canSatisfyColor(color, availableMana)
+    } else {
+      // Rulebook: an Action card's strong effect is powered by ONE mana of its
+      // depicted color (gold counts during day). No black mana is required, and
+      // there is no day/night restriction — unlike Spells.
+      canPlayStrong = canSatisfyColor(color, availableMana, dayNight)
       strongReason = canPlayStrong
         ? undefined
-        : `Action strong requires ${color} (or gold) mana during day`
-      strongReasonKey = canPlayStrong ? undefined : 'actionStrongDayNeedsColor'
-    } else {
-      // Night: needs matching color (or gold) AND black mana
-      const colorMet = canSatisfyColor(color, availableMana)
-      const blackMet = availableMana.hasBlack
-      requiresBlackMana = true
-      canPlayStrong = colorMet && blackMet
-      if (!canPlayStrong) {
-        if (!colorMet && !blackMet) {
-          strongReason = `Action strong at night requires ${color} (or gold) mana AND black mana`
-          strongReasonKey = 'actionStrongNightNeedsBoth'
-        } else if (!colorMet) {
-          strongReason = `Action strong at night requires ${color} (or gold) mana`
-          strongReasonKey = 'actionStrongNightNeedsColor'
-        } else {
-          strongReason = 'Action strong at night requires black mana'
-          strongReasonKey = 'actionStrongNightNeedsBlack'
-        }
-      }
+        : `Action strong requires ${color} (or gold) mana`
+      strongReasonKey = canPlayStrong ? undefined : 'actionStrongNeedsColor'
     }
 
     return {

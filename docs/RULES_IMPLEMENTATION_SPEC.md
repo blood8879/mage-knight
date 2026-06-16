@@ -127,9 +127,11 @@
 
 **입력**: 카드 ID, 선택한 효과(basic/strong), 마나 (있다면)
 **로직**:
-- **Basic Effect**: 마나 불필요, 그냥 플레이
-- **Strong Effect (Day)**: 카드 색상과 일치하는 마나 1개 소비
-- **Strong Effect (Night)**: 카드 색상 마나 1개 + Black 마나 1개 소비
+- **Action 카드 Basic**: 마나 불필요, 그냥 플레이
+- **Action 카드 Strong**: 카드 색상 마나 1개 소비 (낮/밤 무관, Black 불필요. 골드는 낮에만 색 대체)
+- **Spell Basic**: 카드 색상 마나 1개 (골드는 낮에만)
+- **Spell Strong**: 카드 색상 마나 1개 + Black 1개, **밤 전용** (낮엔 불가)
+- ※ 룰북: Black 마나 추가 요구는 **Spell Strong에만** 해당. Action 카드는 밤에도 색 마나만.
 
 **엣지케이스**:
 - **EC-02-A-1**: 다색 카드 (color가 배열). Strong effect에 필요한 마나 색상은 배열 중 하나를 선택
@@ -1089,7 +1091,7 @@ ELIF 6라운드 완료:
 | Gold/Black 마나 제한 | [v] | [v] | Source 선택 + 사용 모두 Day/Night 체크 |
 | Forest/Desert 비용 차이 | [v] | [v] | `TERRAIN_MOVE_COST` |
 | Spell Strong Day 불가 | [v] | [v] | `CardPlayValidator` — Day에 Spell Strong은 canPlayStrong=false |
-| Action Strong Night = +Black | [v] | [v] | `CardPlayValidator` — Night Action Strong에 requiresBlackMana=true |
+| Spell Strong Night = 색+Black | [v] | [v] | `CardPlayValidator` — Spell Strong(밤)에 requiresBlackMana=true. **Action 카드는 색만**(룰북: Black은 Spell 전용) |
 
 ---
 

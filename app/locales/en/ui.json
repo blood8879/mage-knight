@@ -1209,7 +1209,10 @@
     "actionStrongDayNeedsColor": "Action strong requires {{color}} (or gold) mana during day",
     "actionStrongNightNeedsBoth": "Action strong at night requires {{color}} (or gold) mana AND black mana",
     "actionStrongNightNeedsColor": "Action strong at night requires {{color}} (or gold) mana",
-    "actionStrongNightNeedsBlack": "Action strong at night requires black mana"
+    "actionStrongNightNeedsBlack": "Action strong at night requires black mana",
+    "actionStrongNeedsColor": "Strong effect requires {{color}} (or gold) mana",
+    "spellStrongNightNeedsBoth": "Spell strong at night requires {{color}} (or gold) mana AND black mana",
+    "spellStrongNeedsBlack": "Spell strong at night requires black mana"
   },
   "hero": {
     "selectTitle": "Choose your hero",

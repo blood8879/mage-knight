@@ -1322,12 +1322,6 @@ export function useGameEngine() {
               ? [Array.isArray(card.color) ? card.color.join('_or_') : (card.color as string)]
               : [])
 
-        // UNIT-14 #5: Action strong at night additionally requires black mana
-        const needsExtraBlack =
-          (card.type === 'basic_action' || card.type === 'advanced_action') &&
-          state.dayNight === 'night' &&
-          !rawCosts.includes('black')
-
         for (const cost of rawCosts) {
           if (cost === 'black') {
             const result = engine.manaPool.spendBlackMana(newMana)
@@ -1342,11 +1336,6 @@ export function useGameEngine() {
             }
             if (!spent) return // cost unpaid → refuse the play
           }
-        }
-        if (needsExtraBlack) {
-          const result = engine.manaPool.spendBlackMana(newMana)
-          if (!result) return
-          newMana = result
         }
       }
 

@@ -1209,7 +1209,10 @@
     "actionStrongDayNeedsColor": "El efecto potenciado requiere maná {{color}} (u oro) de día",
     "actionStrongNightNeedsBoth": "El efecto potenciado requiere de noche maná {{color}} (u oro) Y maná negro",
     "actionStrongNightNeedsColor": "El efecto potenciado requiere maná {{color}} (u oro) de noche",
-    "actionStrongNightNeedsBlack": "El efecto potenciado requiere maná negro de noche"
+    "actionStrongNightNeedsBlack": "El efecto potenciado requiere maná negro de noche",
+    "actionStrongNeedsColor": "El efecto fuerte requiere maná {{color}} (u oro)",
+    "spellStrongNightNeedsBoth": "El hechizo fuerte de noche requiere maná {{color}} (u oro) Y maná negro",
+    "spellStrongNeedsBlack": "El hechizo fuerte de noche requiere maná negro"
   },
   "hero": {
     "selectTitle": "Elige tu héroe",

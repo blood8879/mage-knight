@@ -161,45 +161,44 @@ describe('UNIT-02-B: validateCardPlay — Action cards', () => {
     })
   })
 
-  describe('Action Strong Night — needs matching color + black mana', () => {
-    it('EC-02-B-3: strong night requires color AND black — succeeds with both', () => {
+  describe('Action Strong Night — needs matching color only (no black; rulebook)', () => {
+    it('EC-02-B-3: action strong at night needs only its color, no black', () => {
+      const card = makeBasicAction('blue')
+      const result = validateCardPlay(card, 'night', withColors('blue'))
+      expect(result.canPlayStrong).toBe(true)
+      expect(result.requiresBlackMana).toBe(false)
+    })
+
+    it('EC-02-B-3: action strong at night still works with black present (black unused)', () => {
       const card = makeBasicAction('blue')
       const result = validateCardPlay(card, 'night', withColorsAndBlack('blue'))
       expect(result.canPlayStrong).toBe(true)
-      expect(result.requiresBlackMana).toBe(true)
+      expect(result.requiresBlackMana).toBe(false)
     })
 
-    it('EC-02-B-3: strong night fails with color but no black', () => {
-      const card = makeBasicAction('blue')
-      const result = validateCardPlay(card, 'night', withColors('blue'))
-      expect(result.canPlayStrong).toBe(false)
-      expect(result.requiresBlackMana).toBe(true)
-      expect(result.reason).toMatch(/black/i)
-    })
-
-    it('EC-02-B-3: strong night fails with black but no color', () => {
+    it('EC-02-B-3: action strong night fails without matching color', () => {
       const card = makeBasicAction('red')
       const result = validateCardPlay(card, 'night', withColorsAndBlack('blue')) // has blue, not red
       expect(result.canPlayStrong).toBe(false)
       expect(result.reason).toMatch(/red/)
     })
 
-    it('EC-02-B-3: strong night fails with no mana', () => {
+    it('EC-02-B-3: action strong night fails with no mana', () => {
       const card = makeBasicAction('green')
       const result = validateCardPlay(card, 'night', noMana())
       expect(result.canPlayStrong).toBe(false)
     })
 
-    it('gold substitutes color requirement at night when combined with black', () => {
+    it('gold CANNOT satisfy an action strong at night (gold is unusable at night)', () => {
       const card = makeBasicAction('white')
-      const result = validateCardPlay(card, 'night', withGold(true)) // gold + black
-      expect(result.canPlayStrong).toBe(true)
+      const result = validateCardPlay(card, 'night', withGold(true)) // gold (+black) but no white
+      expect(result.canPlayStrong).toBe(false)
     })
 
-    it('gold without black still fails at night', () => {
+    it('gold satisfies an action strong during the day', () => {
       const card = makeBasicAction('white')
-      const result = validateCardPlay(card, 'night', withGold(false))
-      expect(result.canPlayStrong).toBe(false)
+      const result = validateCardPlay(card, 'day', withGold(false))
+      expect(result.canPlayStrong).toBe(true)
     })
   })
 
@@ -263,35 +262,42 @@ describe('UNIT-02-B: validateCardPlay — Spell cards', () => {
     })
   })
 
-  describe('Spell Strong Night — needs matching color only (no black needed)', () => {
-    it('EC-02-B-6: spell strong night succeeds with matching color, no black needed', () => {
+  describe('Spell Strong Night — needs matching color + black mana (rulebook)', () => {
+    it('EC-02-B-6: spell strong night succeeds with color AND black', () => {
       const card = makeSpell('blue')
-      // Has color but NOT black — should still work
-      const result = validateCardPlay(card, 'night', withColors('blue'))
+      const result = validateCardPlay(card, 'night', withColorsAndBlack('blue'))
       expect(result.canPlayStrong).toBe(true)
-      expect(result.requiresBlackMana).toBe(false)
+      expect(result.requiresBlackMana).toBe(true)
+    })
+
+    it('EC-02-B-6: spell strong night fails with color but no black', () => {
+      const card = makeSpell('blue')
+      const result = validateCardPlay(card, 'night', withColors('blue'))
+      expect(result.canPlayStrong).toBe(false)
+      expect(result.requiresBlackMana).toBe(true)
+      expect(result.reason).toMatch(/black/i)
     })
 
     it('EC-02-B-6: spell strong night fails without matching color', () => {
       const card = makeSpell('red')
-      const result = validateCardPlay(card, 'night', withColors('blue'))
+      const result = validateCardPlay(card, 'night', withColorsAndBlack('blue'))
       expect(result.canPlayStrong).toBe(false)
     })
 
-    it('spell strong night succeeds with gold (no black needed)', () => {
+    it('gold CANNOT satisfy a spell strong at night (gold unusable at night)', () => {
       const card = makeSpell('green')
-      const result = validateCardPlay(card, 'night', withGold(false))
-      expect(result.canPlayStrong).toBe(true)
+      const result = validateCardPlay(card, 'night', withGold(true)) // gold + black, no green
+      expect(result.canPlayStrong).toBe(false)
     })
   })
 
   describe('Spell requiresBlackMana', () => {
-    it('spell never sets requiresBlackMana=true', () => {
+    it('spell sets requiresBlackMana=true at night, false by day', () => {
       const card = makeSpell('red')
       const dayResult = validateCardPlay(card, 'day', withAll())
       const nightResult = validateCardPlay(card, 'night', withAll())
       expect(dayResult.requiresBlackMana).toBe(false)
-      expect(nightResult.requiresBlackMana).toBe(false)
+      expect(nightResult.requiresBlackMana).toBe(true)
     })
   })
 })
