@@ -2012,6 +2012,47 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  /**
+   * Mana Draw played during combat (rulebook: mana-generating special effects
+   * may be played in any combat phase). Applies ONLY the mana effect to the
+   * pool — the card itself is consumed by the combat card system at combat end,
+   * so the hand is left untouched here (no index desync with combat plays).
+   *  - basic: gain one extra Source die usable this turn
+   *  - strong: take a Source die, set it to a chosen colour, gain 2 mana tokens
+   */
+  const applyManaDrawInCombat = useCallback(
+    (mode: 'basic' | 'strong', color?: ManaColor) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine || !state.combat.isActive) return
+
+      let newMana = state.player.mana
+      if (mode === 'basic') {
+        newMana = { ...newMana, extraSourceDice: (newMana.extraSourceDice ?? 0) + 1 }
+      } else {
+        if (!color || color === 'gold') return
+        if (color === 'black' && state.dayNight !== 'night') return
+        const dieIdx = newMana.dice.findIndex((d) => d.isInSource)
+        if (dieIdx === -1) return // strong needs a die left in the Source
+        newMana = {
+          ...newMana,
+          dice: newMana.dice.map((d, i) =>
+            i === dieIdx ? { ...d, color, isInSource: false } : d,
+          ),
+          playerMana: [
+            ...newMana.playerMana,
+            { color, source: 'effect' as const },
+            { color, source: 'effect' as const },
+          ],
+        }
+      }
+      let newState: GameState = { ...state, player: { ...state.player, mana: newMana } }
+      newState = withLog(newState, 'mana_use', `Mana Draw (combat, ${mode})`)
+      updateState(newState)
+    },
+    [updateState, withLog],
+  )
+
   const useCrystal = useCallback(
     (color: ManaColor) => {
       const state = sharedState
@@ -3853,6 +3894,7 @@ export function useGameEngine() {
     playSidewaysCard,
     activateUnit,
     takeManaFromSource,
+    applyManaDrawInCombat,
     useCrystal,
     returnManaToken,
 

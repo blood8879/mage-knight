@@ -73,6 +73,7 @@ export interface UseCombatCardsReturn {
   ) => void
   activateUnit: (unitIndex: number, action: CardAction, ability: UnitAbility) => void
   activateSkillForCombat: (skillIndex: number, action: CardAction) => void
+  playManaCardForCombat: (handIndex: number) => void
   setActiveTarget: (enemyId: string | null) => void
   startNewAttack: (targetEnemyIds: string[]) => void
   assignBlockToEnemy: (enemyInstanceId: string) => void
@@ -462,6 +463,36 @@ export function useCombatCards(
     [skills, hand, nextPlayId, autoAssignPlay],
   )
 
+  // ── playManaCardForCombat ─────────────────
+  // Register a mana-generating card (e.g. Mana Draw) as played this phase so it
+  // is consumed at combat end. The mana itself is applied separately by the
+  // engine; this only adds a 0-value play + marks the hand index used. No
+  // attack/block value, so it is NOT auto-assigned to an enemy.
+  const playManaCardForCombat = useCallback(
+    (handIndex: number) => {
+      setState((prev) => {
+        if (prev.usedCardIndices.has(handIndex)) return prev
+        const card = hand[handIndex]
+        if (!card) return prev
+        const play: CombatCardPlay = {
+          id: nextPlayId(),
+          sourceType: 'card',
+          cardIndex: handIndex,
+          cardId: card.id,
+          cardName: getCardName(card),
+          effectType: 'basic',
+          chosenAction: { type: 'mana', value: 0, description: 'mana generation' },
+          value: 0,
+          element: 'physical',
+        }
+        const used = new Set(prev.usedCardIndices)
+        used.add(handIndex)
+        return { ...prev, plays: [...prev.plays, play], usedCardIndices: used }
+      })
+    },
+    [hand, nextPlayId, getCardName],
+  )
+
   // ── setActiveTarget ───────────────────────
 
   const setActiveTarget = useCallback((enemyId: string | null) => {
@@ -809,6 +840,7 @@ export function useCombatCards(
     playConcentrationCombo,
     activateUnit,
     activateSkillForCombat,
+    playManaCardForCombat,
     setActiveTarget,
     startNewAttack,
     assignBlockToEnemy,

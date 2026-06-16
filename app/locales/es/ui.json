@@ -1040,7 +1040,9 @@
     "unassignedBlockWarning": "Jugaste cartas de bloqueo pero no las asignaste a un enemigo. Pulsa \"Asignar bloqueo\" en un enemigo primero, o las cartas se descartan sin defensa y recibes el daño.",
     "confirmWasteBlocks": "Confirmar — descartar cartas, recibir daño",
     "unassignedAttackWarning": "Jugaste cartas de ataque pero no las asignaste a un enemigo. Pulsa un enemigo arriba primero, o las cartas se descartan sin ataque.",
-    "confirmWasteAttacks": "Confirmar — descartar cartas"
+    "confirmWasteAttacks": "Confirmar — descartar cartas",
+    "manaDrawBasic": "Robo de maná: +1 dado de Fuente",
+    "manaDrawStrong": "Robo de maná: +2 maná {{color}}"
   },
   "interaction": {
     "title": "Site Interaction",

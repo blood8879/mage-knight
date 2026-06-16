@@ -82,6 +82,9 @@ export function isCardRelevantForPhase(card: AnyCard, phase: CombatPhase): boole
     return phase === 'block' || phase === 'attack'
   }
 
+  // Mana Draw: a mana-generating special effect, playable in any combat phase.
+  if ('name' in card && card.name === 'Mana Draw') return true
+
   const basicEffect = getCardEffect(card, 'basic')
   const strongEffect = getCardEffect(card, 'strong')
 

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useCardTranslation } from '@/hooks/useCardTranslation'
 import { useGameStore } from '@/store/gameStore'
+import { useGameEngine } from '@/hooks/useGameEngine'
 import CardDetail from '@/components/cards/CardDetail'
 import ManaStrip from '@/components/common/ManaStrip'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
@@ -113,9 +114,16 @@ interface PickerProps {
   onViewDetail: (card: AnyCard) => void
   onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
   onConcentration?: (idx: number, bonus: number) => void
+  onPlayMana?: (idx: number, mode: 'basic' | 'strong', color?: ManaColor) => void
+  dayNight?: 'day' | 'night'
   canPlayStrong: boolean
   /** Localized reason why strong can't be played (e.g. "needs black mana at night") */
   strongReason?: string
+}
+
+/** Cards that generate mana and may be played during combat (rulebook special effects). */
+function isManaCard(card: AnyCard): boolean {
+  return card.type !== 'wound' && 'name' in card && card.name === 'Mana Draw'
 }
 
 /** Check if a card is Improvisation (special discard-to-choose card) */
@@ -137,9 +145,10 @@ function getImprovisationActionsForPhase(phase: CombatPhase, value: number): Car
   }
 }
 
-function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, canPlayStrong, strongReason }: PickerProps) {
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, onPlayMana, dayNight, canPlayStrong, strongReason }: PickerProps) {
   const { t } = useTranslation('ui')
   if (card.type === 'wound') return null
+  const manaCard = isManaCard(card)
   const basic = getCardEffect(card, 'basic')
   const strong = getCardEffect(card, 'strong')
   const mana = getManaCost(card)
@@ -178,6 +187,27 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
     >
       <PickerRow label={t('combat.viewCardDetail')} icon="🔍" onClick={() => { onViewDetail(card); onClose() }} />
       <div className="my-1 h-px bg-slate-700/60" />
+      {manaCard && onPlayMana && (
+        <>
+          <PickerRow
+            label={t('combat.manaDrawBasic', { defaultValue: 'Mana Draw: +1 Source die' })}
+            icon="🎲"
+            onClick={() => { onPlayMana(handIndex, 'basic'); onClose() }}
+          />
+          {(['red', 'blue', 'green', 'white', 'black'] as ManaColor[])
+            .filter((c) => c !== 'black' || dayNight === 'night')
+            .map((c) => (
+              <PickerRow
+                key={`md-${c}`}
+                label={t('combat.manaDrawStrong', { defaultValue: 'Mana Draw: +2 {{color}} mana', color: t(`colors.${c}`, { defaultValue: c }) })}
+                icon="✦"
+                amber
+                onClick={() => { onPlayMana(handIndex, 'strong', c); onClose() }}
+              />
+            ))}
+          <div className="my-1 h-px bg-slate-700/60" />
+        </>
+      )}
       {bNon.length > 0 && (
         <PickerRow label={`${t('combat.basicEffect')}: ${bNon.map(fmtAction).join(', ')}`} icon={ACT_ICON[bNon[0].type] ?? '◈'}
           onClick={() => pick('basic', bNon[0])} />
@@ -302,10 +332,19 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
     manaCost: string | string[] | undefined
   } | null>(null)
 
+  const engine = useGameEngine()
   const {
     plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue,
-    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, removePlay, undoLastPlay, resetPhase,
+    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, playManaCardForCombat, removePlay, undoLastPlay, resetPhase,
   } = combatCards
+
+  // Mana Draw (and other mana-generating specials) played in combat: apply the
+  // mana to the pool now, and register the card so it's consumed at combat end.
+  const handlePlayMana = useCallback((idx: number, mode: 'basic' | 'strong', color?: ManaColor) => {
+    engine.applyManaDrawInCombat(mode, color)
+    playManaCardForCombat(idx)
+    setPickerIdx(null)
+  }, [engine, playManaCardForCombat])
 
   const unitsWithActions = useMemo(() => availableUnits.filter((u) => u.actions.length > 0), [availableUnits])
 
@@ -516,6 +555,8 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                                 onSelect={handleSelect} onSideways={handleSideways} onClose={closePicker} onViewDetail={handleViewDetail}
                                 onImprovisation={handleImprovisation}
                                 onConcentration={handleConcentration}
+                                onPlayMana={handlePlayMana}
+                                dayNight={dayNight}
                                 canPlayStrong={strongEval?.canPlayStrong ?? false}
                                 strongReason={strongEval && !strongEval.canPlayStrong ? translateValidationReason(strongEval, t) : undefined} />
                             )
