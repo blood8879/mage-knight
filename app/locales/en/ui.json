@@ -1078,7 +1078,8 @@
     "playBasic": "Basic +{{value}}",
     "playStrong": "Strong +{{value}}",
     "playSideways": "Sideways +1",
-    "woundsInHand": "{{count}} wound(s) in hand"
+    "woundsInHand": "{{count}} wound(s) in hand",
+    "plunderVillageDone": "Already plundered this turn"
   },
   "track": {
     "fame": "Fame",

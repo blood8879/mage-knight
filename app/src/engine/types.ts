@@ -425,6 +425,8 @@ export interface TurnState {
   extraTurnGranted?: boolean
   /** Healing points accumulated from card effects this turn (EC-03-B-7: unusable in combat) */
   healingAvailable?: number
+  /** A village may be plundered only once per turn (rulebook). */
+  hasPlunderedThisTurn?: boolean
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */

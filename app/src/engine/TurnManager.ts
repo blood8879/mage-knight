@@ -132,6 +132,7 @@ export class TurnManager {
       endOfRoundDeclared: false,
       healingAvailable: 0,
       terrainModifiers: [],
+      hasPlunderedThisTurn: false,
     }
   }
 

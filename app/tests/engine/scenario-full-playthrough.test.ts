@@ -47,7 +47,7 @@ describe('Walkthrough: Full Playthrough Integration (Phase 13)', () => {
   it('simulates a complete round: setup → tactic → turn → combat → end round', () => {
     // Setup
     const config = setup.setupFirstReconnaissance()
-    expect(config.totalRounds).toBe(3)
+    expect(config.totalRounds).toBe(6)
 
     // Start round 1
     const tactics = makeDayTactics()

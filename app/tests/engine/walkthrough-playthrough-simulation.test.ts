@@ -196,12 +196,12 @@ describe('Full Playthrough Simulation — First Reconnaissance', () => {
   // ═══════════════════════════════════════════════════════════════
 
   describe('Chapter 1: Game Setup', () => {
-    it('should configure the First Reconnaissance scenario', () => {
+    it('should configure the Solo Conquest scenario', () => {
       config = scenarioSetup.setupFirstReconnaissance()
 
-      expect(config.name).toBe('First Reconnaissance')
-      expect(config.totalRounds).toBe(3)
-      expect(config.roundPattern).toEqual(['day', 'night', 'day'])
+      expect(config.name).toBe('Solo Conquest')
+      expect(config.totalRounds).toBe(6)
+      expect(config.roundPattern).toEqual(['day', 'night', 'day', 'night', 'day', 'night'])
       expect(config.useDummyPlayer).toBe(true)
       expect(config.diceCount).toBe(4)
       expect(config.useEliteUnits).toBe(false)
@@ -1144,9 +1144,11 @@ describe('Full Playthrough Simulation — First Reconnaissance', () => {
     it('should process end of Round 3 — game over', () => {
       roundState = turnManager.endRound(roundState)
 
+      // This narrative walkthrough models a short 3-round playthrough; the
+      // game-over check uses the final round of that narrative explicitly.
       const result = turnManager.processEndOfRound({
         currentRound: 3,
-        totalRounds: config.totalRounds,
+        totalRounds: 3,
         roundPattern: config.roundPattern,
       })
 
@@ -1225,7 +1227,7 @@ describe('Full Playthrough Simulation — First Reconnaissance', () => {
       // means the engine can be composed into a working game.
 
       // ScenarioSetup ✓ — config, player deck, offers, enemy pools, tactics
-      expect(config.name).toBe('First Reconnaissance')
+      expect(config.name).toBe('Solo Conquest')
 
       // TurnManager ✓ — rounds, turns, tactics, phase advancement
       expect(turnCount).toBeGreaterThan(0)

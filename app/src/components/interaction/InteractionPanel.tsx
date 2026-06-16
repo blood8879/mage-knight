@@ -472,10 +472,13 @@ export default function InteractionPanel() {
                   </p>
                   <button
                     type="button"
+                    disabled={engineState?.player.turn.hasPlunderedThisTurn === true}
                     onClick={() => engine.plunderVillage()}
-                    className="min-h-[40px] rounded-lg bg-amber-700 px-4 py-2 text-sm font-bold text-white shadow shadow-amber-900/30 transition-all hover:bg-amber-600 active:scale-[0.97]"
+                    className="min-h-[40px] rounded-lg bg-amber-700 px-4 py-2 text-sm font-bold text-white shadow shadow-amber-900/30 transition-all hover:bg-amber-600 active:scale-[0.97] disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-500 disabled:shadow-none"
                   >
-                    {t('interaction.plunderVillage', 'Plunder Village')}
+                    {engineState?.player.turn.hasPlunderedThisTurn
+                      ? t('interaction.plunderVillageDone', 'Already plundered this turn')
+                      : t('interaction.plunderVillage', 'Plunder Village')}
                   </button>
                 </SectionBlock>
               )}

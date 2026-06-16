@@ -1099,7 +1099,8 @@
     "playBasic": "Básico +{{value}}",
     "playStrong": "Fuerte +{{value}}",
     "playSideways": "De lado +1",
-    "woundsInHand": "{{count}} herida(s) en mano"
+    "woundsInHand": "{{count}} herida(s) en mano",
+    "plunderVillageDone": "Ya saqueada este turno"
   },
   "ad": {
     "banner": "Publicidad",

@@ -53,15 +53,18 @@ export class ScenarioSetup {
   }
 
   setupFirstReconnaissance(): ScenarioConfig {
+    // Solo Conquest (rulebook, Scenario List): the standard solo game — six
+    // rounds (3 days, 3 nights), conquer the cities. (Kept the method name for
+    // call-site stability.)
     return {
-      name: 'First Reconnaissance',
-      totalRounds: 3,
-      roundPattern: ['day', 'night', 'day'],
+      name: 'Solo Conquest',
+      totalRounds: 6,
+      roundPattern: ['day', 'night', 'day', 'night', 'day', 'night'],
       mapConfig: {
         startingSide: 'A',
-        countrysideTileCount: 8,
-        coreTileCount: 3,
-        coreCityCount: 1,
+        countrysideTileCount: 7,
+        coreTileCount: 4, // 2 city + 2 non-city
+        coreCityCount: 2,
       },
       playerCount: 2,
       useDummyPlayer: true,
@@ -69,12 +72,10 @@ export class ScenarioSetup {
       unitOfferSlots: 4,
       spellOfferSlots: 3,
       aaOfferSlots: 3,
+      // Solo Conquest removes the four competitive Spells (17-20). It does NOT
+      // grant Fame on tile reveal (that is a First Reconnaissance rule).
       specialRules: [
-        'tile_fame',
         'no_pvp',
-        'no_gold_units',
-        'no_city_conquest',
-        'delayed_reveal',
       ],
       useEliteUnits: false,
       removedSpellIds: [...COMPETITIVE_SPELL_IDS],

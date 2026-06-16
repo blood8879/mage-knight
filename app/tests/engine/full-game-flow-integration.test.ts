@@ -994,8 +994,8 @@ describe('US-005: Full Multi-Round Game Flow', () => {
     // ── Setup ──────────────────────────────────────────────
     const setup = new ScenarioSetup(random)
     const config = setup.setupFirstReconnaissance()
-    expect(config.totalRounds).toBe(3)
-    expect(config.roundPattern).toEqual(['day', 'night', 'day'])
+    expect(config.totalRounds).toBe(6)
+    expect(config.roundPattern).toEqual(['day', 'night', 'day', 'night', 'day', 'night'])
 
     const tactics = makeDayTactics()
     const nightTactics = [

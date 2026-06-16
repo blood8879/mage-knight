@@ -155,21 +155,40 @@ test.describe('Rule-audit playthrough', () => {
       prev.round = Math.max(prev.round, snap.round)
     }
 
-    for (let step = 0; step < 600; step++) {
+    for (let step = 0; step < 1200; step++) {
       if (violations.length > 0) break
       if (await visible(page, page.getByText(/Total Score/i))) { reachedScore = true; break }
 
       const sig = (await page.evaluate(() => document.body.innerText.length).catch(() => -1)) + ''
       stuckCounter = sig === lastSig ? stuckCounter + 1 : 0
       lastSig = sig
-      if (stuckCounter > 50) throw new Error(`[seed ${SEED}] stuck at step ${step}`)
+      if (stuckCounter > 50) {
+        const snap = await readState(page)
+        const btns = await page.locator('button:visible').allInnerTexts().catch(() => [])
+        console.log(`[seed ${SEED}] STUCK at step ${step}. phase=${snap?.phase} round=${snap?.round} fame=${snap?.fame}`)
+        console.log(`[seed ${SEED}] visible buttons: ${JSON.stringify(btns.slice(0, 30))}`)
+        throw new Error(`[seed ${SEED}] stuck at step ${step}`)
+      }
 
-      const roundContinue = page.locator('.backdrop-blur-sm').filter({ hasText: /Round Complete/i }).getByRole('button', { name: /Continue/i })
+      const roundContinue = page.getByRole('button', { name: /Continue/i }).first()
       if (await visible(page, roundContinue)) { await roundContinue.click({ force: true }).catch(() => undefined); await page.waitForTimeout(400); await audit(step); continue }
 
       const tacticOverlay = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })
       if (await visible(page, tacticOverlay)) {
-        await tacticOverlay.locator('button.group').last().click({ force: true }).catch(() => undefined)
+        // Pick a tactic that does NOT open a follow-up picker (Rethink, Mana
+        // Steal, Midnight Meditation, Preparation, Sparing Power) so the bot
+        // never stalls on a sub-overlay. Fall back to the last card.
+        const cards = tacticOverlay.locator('button.group')
+        const n = await cards.count()
+        let picked = false
+        for (let c = 0; c < n; c++) {
+          const txt = (await cards.nth(c).innerText().catch(() => '')) || ''
+          if (/Rethink|Mana Steal|Meditation|Preparation|Sparing/i.test(txt)) continue
+          await cards.nth(c).click({ force: true }).catch(() => undefined)
+          picked = true
+          break
+        }
+        if (!picked) await cards.last().click({ force: true }).catch(() => undefined)
         const skip = page.getByText('Skip', { exact: true })
         if (await visible(page, skip, 600)) await skip.click({ force: true }).catch(() => undefined)
         await page.waitForTimeout(300); await audit(step); continue

@@ -1271,14 +1271,13 @@ export function useGameEngine() {
       map: { ...newState.map, hexGrid: newHexGrid },
     }
 
-    // First Reconnaissance special rule (scenario 'tile_fame'): a player scores
-    // 1 Fame whenever a new tile is revealed, regardless of its type.
-    newState = applyFameGain(engine, newState, 1)
+    // (Solo Conquest does not grant Fame for revealing tiles — that is a
+    // First Reconnaissance special rule only.)
 
     newState = withLog(
       newState,
       'tile_reveal',
-      `Explored tile at (${position.q}, ${position.r}) — +1 Fame${enemiesAssigned > 0 ? `, placed ${enemiesAssigned} enemy token(s)` : ''}`,
+      `Explored tile at (${position.q}, ${position.r})${enemiesAssigned > 0 ? ` — placed ${enemiesAssigned} enemy token(s)` : ''}`,
       { position, cost: revealCost, enemiesAssigned },
     )
 
@@ -2413,9 +2412,12 @@ export function useGameEngine() {
         newState = { ...newState, phase: engine.turnManager.advancePhase('level_up', {}) }
       }
 
+      // A level-up reward (Skill / Advanced Action) is a permanent choice — once
+      // taken it must not be undoable. Clear the undo stack to lock it in.
+      clearUndoStack()
       updateState(newState)
     },
-    [updateState, withLog],
+    [updateState, withLog, clearUndoStack],
   )
 
   // ════════════════════════════════════════════
@@ -3600,6 +3602,8 @@ export function useGameEngine() {
     const engine = sharedEngine
     if (!state || !engine || !state.interaction?.isActive) return
     if (state.interaction.siteType !== 'village') return
+    // Rulebook: a village may be plundered only once per turn.
+    if (state.player.turn.hasPlunderedThisTurn) return
 
     pushState(state)
 
@@ -3612,6 +3616,7 @@ export function useGameEngine() {
         ...state.player,
         reputation: newReputation,
         deck: newDeck,
+        turn: { ...state.player.turn, hasPlunderedThisTurn: true },
       },
     }
     newState = withLog(newState, 'interaction', 'Plundered village: drew 2 cards and lost 1 reputation')

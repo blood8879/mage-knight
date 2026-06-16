@@ -167,16 +167,16 @@ describe('ScenarioSetup', () => {
   })
 
   describe('setupFirstReconnaissance', () => {
-    it('returns correct config for First Reconnaissance', () => {
+    it('returns correct config for Solo Conquest', () => {
       const config = setup.setupFirstReconnaissance()
 
-      expect(config.name).toBe('First Reconnaissance')
-      expect(config.totalRounds).toBe(3)
-      expect(config.roundPattern).toEqual(['day', 'night', 'day'])
+      expect(config.name).toBe('Solo Conquest')
+      expect(config.totalRounds).toBe(6)
+      expect(config.roundPattern).toEqual(['day', 'night', 'day', 'night', 'day', 'night'])
       expect(config.mapConfig.startingSide).toBe('A')
-      expect(config.mapConfig.countrysideTileCount).toBe(8)
-      expect(config.mapConfig.coreTileCount).toBe(3)
-      expect(config.mapConfig.coreCityCount).toBe(1)
+      expect(config.mapConfig.countrysideTileCount).toBe(7)
+      expect(config.mapConfig.coreTileCount).toBe(4)
+      expect(config.mapConfig.coreCityCount).toBe(2)
       expect(config.playerCount).toBe(2)
       expect(config.useDummyPlayer).toBe(true)
     })
@@ -190,14 +190,12 @@ describe('ScenarioSetup', () => {
       expect(config.aaOfferSlots).toBe(3)
     })
 
-    it('includes all required special rules', () => {
+    it('includes the Solo Conquest special rules', () => {
       const config = setup.setupFirstReconnaissance()
 
-      expect(config.specialRules).toContain('tile_fame')
       expect(config.specialRules).toContain('no_pvp')
-      expect(config.specialRules).toContain('no_gold_units')
-      expect(config.specialRules).toContain('no_city_conquest')
-      expect(config.specialRules).toContain('delayed_reveal')
+      expect(config.specialRules).not.toContain('tile_fame')
+      expect(config.specialRules).not.toContain('no_city_conquest')
     })
 
     it('disables elite units and removes competitive spells', () => {

@@ -16,12 +16,12 @@ describe('Walkthrough: Game Setup (Phase 0)', () => {
   })
 
   describe('scenario configuration', () => {
-    it('First Reconnaissance has 3 rounds', () => {
-      expect(config.totalRounds).toBe(3)
+    it('Solo Conquest has 6 rounds', () => {
+      expect(config.totalRounds).toBe(6)
     })
 
-    it('round pattern is [day, night, day]', () => {
-      expect(config.roundPattern).toEqual(['day', 'night', 'day'])
+    it('round pattern is 3 days and 3 nights', () => {
+      expect(config.roundPattern).toEqual(['day', 'night', 'day', 'night', 'day', 'night'])
     })
 
     it('uses dummy player', () => {
@@ -47,12 +47,11 @@ describe('Walkthrough: Game Setup (Phase 0)', () => {
       expect(config.removedSpellIds).toContain(20)
     })
 
-    it('has correct special rules', () => {
-      expect(config.specialRules).toContain('no_city_conquest')
+    it('has correct special rules (Solo Conquest)', () => {
       expect(config.specialRules).toContain('no_pvp')
-      expect(config.specialRules).toContain('tile_fame')
-      expect(config.specialRules).toContain('no_gold_units')
-      expect(config.specialRules).toContain('delayed_reveal')
+      // Solo Conquest does not use the First Reconnaissance training rules
+      expect(config.specialRules).not.toContain('tile_fame')
+      expect(config.specialRules).not.toContain('no_city_conquest')
     })
   })
 
