@@ -14,6 +14,21 @@ import type {
 } from './types'
 import type { SeededRandom } from '@/utils/random'
 
+/** Map an enemy AttackType to the damage Element used for unit resistance checks */
+export function attackTypeToElement(attackType: AttackType): Element {
+  switch (attackType) {
+    case 'fire':
+      return 'fire'
+    case 'ice':
+      return 'ice'
+    case 'cold_fire':
+      return 'cold_fire'
+    default:
+      // 'normal' and 'summon' deal physical damage
+      return 'physical'
+  }
+}
+
 const BROWN_ENEMY_TEMPLATES: EnemyToken[] = [
   {
     id: 901,
@@ -228,7 +243,7 @@ export class CombatResolver {
 
   calculateUnblockedDamage(
     combat: CombatState,
-  ): Array<{ enemyInstanceId: string; damage: number; abilities: EnemyAbility[] }> {
+  ): Array<{ enemyInstanceId: string; damage: number; element: Element; abilities: EnemyAbility[] }> {
     return combat.enemies
       .filter((e) => !e.isDefeated && !e.isBlocked)
       .map((enemy) => {
@@ -246,7 +261,12 @@ export class CombatResolver {
           abilities.push('paralyze')
         }
 
-        return { enemyInstanceId: enemy.instanceId, damage, abilities }
+        return {
+          enemyInstanceId: enemy.instanceId,
+          damage,
+          element: attackTypeToElement(enemy.token.attackType),
+          abilities,
+        }
       })
   }
 

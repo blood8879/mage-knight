@@ -1,11 +1,13 @@
 import { useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { EnemyAbility, DamageAssignment, UnitInstance } from '@/engine/types'
+import type { EnemyAbility, DamageAssignment, UnitInstance, Element } from '@/engine/types'
 import { getEffectiveUnitArmor } from '@/utils/bannerUtils'
+import { isUnitEligible, isUnitResistant, unitAbsorption } from '@/utils/damageAssignUtils'
 
 interface DamageSource {
   enemyInstanceId: string
   damage: number
+  element: Element
   abilities: EnemyAbility[]
 }
 
@@ -23,15 +25,18 @@ interface AssignmentTarget {
   woundsInflicted: number
 }
 
-interface LocalAssignment {
-  enemyInstanceId: string
-  totalDamage: number
-  assignments: AssignmentTarget[]
+const ELEMENT_LABEL: Record<Element, string> = {
+  physical: 'combat.elementPhysical',
+  fire: 'combat.elementFire',
+  ice: 'combat.elementIce',
+  cold_fire: 'combat.elementColdFire',
 }
 
-function calcWounds(damageAbsorbed: number, armor: number): number {
-  if (damageAbsorbed <= 0) return 0
-  return Math.ceil(damageAbsorbed / Math.max(armor, 1))
+const ELEMENT_ICON: Record<Element, string> = {
+  physical: '🗡',
+  fire: '🔥',
+  ice: '❄',
+  cold_fire: '💠',
 }
 
 export default function DamageAssign({
@@ -47,155 +52,90 @@ export default function DamageAssign({
     [unblockedDamage],
   )
 
-  const [localAssignments, setLocalAssignments] = useState<LocalAssignment[]>(() =>
-    unblockedDamage.map((src) => ({
-      enemyInstanceId: src.enemyInstanceId,
-      totalDamage: src.damage,
-      assignments: [],
-    })),
-  )
+  // Each Unit may be assigned to at most one enemy. We store, per enemy, the
+  // ordered list of unit indices the player has chosen to soak that attack.
+  const [unitOrder, setUnitOrder] = useState<Record<string, number[]>>({})
 
-  const totalAssigned = useMemo(
-    () =>
-      localAssignments.reduce(
-        (sum, la) => la.assignments.reduce((s, a) => s + a.damageAbsorbed, sum),
-        0,
-      ),
-    [localAssignments],
-  )
+  // Which enemy (if any) a given unit index is currently assigned to.
+  const unitToEnemy = useMemo(() => {
+    const map: Record<number, string> = {}
+    for (const [enemyId, idxs] of Object.entries(unitOrder)) {
+      for (const idx of idxs) map[idx] = enemyId
+    }
+    return map
+  }, [unitOrder])
 
-  const remaining = totalIncoming - totalAssigned
-  const isComplete = remaining === 0
+  /** Resolve the full assignment for one enemy: unit soaks first, hero takes the rest. */
+  const resolveEnemy = useCallback(
+    (src: DamageSource): AssignmentTarget[] => {
+      const poison = src.abilities.includes('poison')
+      const targets: AssignmentTarget[] = []
+      let remaining = src.damage
 
-  const assignToHero = useCallback(
-    (enemyInstanceId: string, amount: number) => {
-      setLocalAssignments((prev) =>
-        prev.map((la) => {
-          if (la.enemyInstanceId !== enemyInstanceId) return la
-          const currentHeroAssigned = la.assignments
-            .filter((a) => a.targetType === 'hero')
-            .reduce((s, a) => s + a.damageAbsorbed, 0)
-          const assignedToUnits = la.assignments
-            .filter((a) => a.targetType === 'unit')
-            .reduce((s, a) => s + a.damageAbsorbed, 0)
-          const maxCanAssign = la.totalDamage - assignedToUnits
-          const newAmount = Math.min(Math.max(0, amount), maxCanAssign)
+      for (const unitIdx of unitOrder[src.enemyInstanceId] ?? []) {
+        if (remaining <= 0) break
+        const unit = units[unitIdx]
+        if (!unit) continue
+        const { absorbed, wounds } = unitAbsorption(unit, src.element, remaining, poison)
+        if (absorbed <= 0) continue
+        targets.push({
+          targetType: 'unit',
+          unitInstanceIndex: unitIdx,
+          damageAbsorbed: absorbed,
+          woundsInflicted: wounds,
+        })
+        remaining -= absorbed
+      }
 
-          if (newAmount === currentHeroAssigned) return la
+      if (remaining > 0) {
+        targets.push({
+          targetType: 'hero',
+          damageAbsorbed: remaining,
+          woundsInflicted: Math.ceil(remaining / Math.max(heroArmor, 1)),
+        })
+      }
 
-          const nonHeroAssignments = la.assignments.filter((a) => a.targetType !== 'hero')
-          const heroAssignment: AssignmentTarget =
-            newAmount > 0
-              ? {
-                  targetType: 'hero',
-                  damageAbsorbed: newAmount,
-                  woundsInflicted: calcWounds(newAmount, heroArmor),
-                }
-              : { targetType: 'hero', damageAbsorbed: 0, woundsInflicted: 0 }
-
-          return {
-            ...la,
-            assignments:
-              newAmount > 0
-                ? [...nonHeroAssignments, heroAssignment]
-                : nonHeroAssignments,
-          }
-        }),
-      )
+      return targets
     },
-    [heroArmor],
+    [unitOrder, units, heroArmor],
   )
 
-  const assignToUnit = useCallback(
-    (enemyInstanceId: string, unitIndex: number, amount: number) => {
-      setLocalAssignments((prev) =>
-        prev.map((la) => {
-          if (la.enemyInstanceId !== enemyInstanceId) return la
-          const otherAssigned = la.assignments
-            .filter(
-              (a) =>
-                !(a.targetType === 'unit' && a.unitInstanceIndex === unitIndex),
-            )
-            .reduce((s, a) => s + a.damageAbsorbed, 0)
-          const maxCanAssign = la.totalDamage - otherAssigned
-          const newAmount = Math.min(Math.max(0, amount), maxCanAssign)
-
-          const unitArmor = units[unitIndex] ? getEffectiveUnitArmor(units[unitIndex]) : 1
-          const filtered = la.assignments.filter(
-            (a) =>
-              !(a.targetType === 'unit' && a.unitInstanceIndex === unitIndex),
-          )
-
-          if (newAmount <= 0) return { ...la, assignments: filtered }
-
-          return {
-            ...la,
-            assignments: [
-              ...filtered,
-              {
-                targetType: 'unit' as const,
-                unitInstanceIndex: unitIndex,
-                damageAbsorbed: newAmount,
-                woundsInflicted: calcWounds(newAmount, unitArmor),
-              },
-            ],
-          }
-        }),
-      )
+  /** Remaining damage that would spill to the hero for an enemy (before adding more units). */
+  const heroRemainingFor = useCallback(
+    (src: DamageSource): number => {
+      const hero = resolveEnemy(src).find((a) => a.targetType === 'hero')
+      return hero ? hero.damageAbsorbed : 0
     },
-    [units],
+    [resolveEnemy],
+  )
+
+  const toggleUnit = useCallback(
+    (enemyInstanceId: string, unitIdx: number) => {
+      setUnitOrder((prev) => {
+        const current = prev[enemyInstanceId] ?? []
+        if (current.includes(unitIdx)) {
+          // Unassign from this enemy
+          return { ...prev, [enemyInstanceId]: current.filter((i) => i !== unitIdx) }
+        }
+        // A unit can only be assigned to one enemy — drop it elsewhere first
+        const cleared: Record<string, number[]> = {}
+        for (const [eid, idxs] of Object.entries(prev)) {
+          cleared[eid] = idxs.filter((i) => i !== unitIdx)
+        }
+        return { ...cleared, [enemyInstanceId]: [...(cleared[enemyInstanceId] ?? []), unitIdx] }
+      })
+    },
+    [],
   )
 
   const handleConfirm = useCallback(() => {
-    if (!isComplete) return
-    const result: DamageAssignment[] = localAssignments
-      .filter((la) => la.assignments.length > 0)
-      .map((la) => ({
-        enemyInstanceId: la.enemyInstanceId,
-        totalDamage: la.totalDamage,
-        assignments: la.assignments,
-      }))
+    const result: DamageAssignment[] = unblockedDamage.map((src) => ({
+      enemyInstanceId: src.enemyInstanceId,
+      totalDamage: src.damage,
+      assignments: resolveEnemy(src),
+    }))
     onConfirm(result)
-  }, [isComplete, localAssignments, onConfirm])
-
-  const getAssignedToHero = useCallback(
-    (enemyInstanceId: string): number => {
-      const la = localAssignments.find((a) => a.enemyInstanceId === enemyInstanceId)
-      if (!la) return 0
-      return la.assignments
-        .filter((a) => a.targetType === 'hero')
-        .reduce((s, a) => s + a.damageAbsorbed, 0)
-    },
-    [localAssignments],
-  )
-
-  const getAssignedToUnit = useCallback(
-    (enemyInstanceId: string, unitIndex: number): number => {
-      const la = localAssignments.find((a) => a.enemyInstanceId === enemyInstanceId)
-      if (!la) return 0
-      return la.assignments
-        .filter(
-          (a) => a.targetType === 'unit' && a.unitInstanceIndex === unitIndex,
-        )
-        .reduce((s, a) => s + a.damageAbsorbed, 0)
-    },
-    [localAssignments],
-  )
-
-  const assignAllToHero = useCallback(() => {
-    setLocalAssignments((prev) =>
-      prev.map((la) => ({
-        ...la,
-        assignments: [
-          {
-            targetType: 'hero' as const,
-            damageAbsorbed: la.totalDamage,
-            woundsInflicted: calcWounds(la.totalDamage, heroArmor),
-          },
-        ],
-      })),
-    )
-  }, [heroArmor])
+  }, [unblockedDamage, resolveEnemy, onConfirm])
 
   if (totalIncoming === 0) {
     return (
@@ -222,23 +162,14 @@ export default function DamageAssign({
             {totalIncoming}
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-red-400/70">{t('combat.remaining')}</span>
-          <span
-            className={[
-              'rounded px-2 py-0.5 font-mono text-sm font-black',
-              remaining > 0
-                ? 'bg-red-700/50 text-red-200'
-                : 'bg-emerald-800/50 text-emerald-300',
-            ].join(' ')}
-          >
-            {remaining}
-          </span>
-        </div>
+        <p className="text-[10px] text-slate-500">
+          {t('combat.damageAssignHint', 'Units soak their Armor (one Wound); the rest hits your Hero.')}
+        </p>
       </div>
 
       {unblockedDamage.map((src) => {
-        const heroAmount = getAssignedToHero(src.enemyInstanceId)
+        const heroAmount = heroRemainingFor(src)
+        const heroWounds = Math.ceil(heroAmount / Math.max(heroArmor, 1))
         const hasPoisonOrParalyze =
           src.abilities.includes('poison') || src.abilities.includes('paralyze')
 
@@ -248,9 +179,14 @@ export default function DamageAssign({
             className="rounded-xl border border-red-900/30 bg-slate-900/60 p-3"
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-red-300">
-                {src.enemyInstanceId}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-red-300">
+                  {src.enemyInstanceId}
+                </span>
+                <span className="rounded bg-slate-700/60 px-1.5 py-0.5 text-[9px] font-bold text-slate-300">
+                  {ELEMENT_ICON[src.element]} {t(ELEMENT_LABEL[src.element])}
+                </span>
+              </div>
               <div className="flex items-center gap-1.5">
                 <span className="font-mono text-sm font-black text-red-400">
                   {src.damage} {t('combat.dmg')}
@@ -264,94 +200,117 @@ export default function DamageAssign({
             </div>
 
             <div className="space-y-1.5">
+              {/* Hero — automatically absorbs whatever the Units don't */}
               <div className="flex items-center justify-between rounded-md border border-slate-700/40 bg-slate-800/60 px-3 py-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm">{'\u2764\uFE0F'}</span>
+                  <span className="text-sm">{'❤️'}</span>
                   <span className="text-xs font-semibold text-slate-300">
                     {t('combat.heroLabel')} ({t('combat.armorLabel')} {heroArmor})
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      assignToHero(src.enemyInstanceId, heroAmount - 1)
-                    }
-                    disabled={heroAmount <= 0}
-                    className="flex h-9 w-9 items-center justify-center rounded bg-slate-700 text-sm font-bold text-slate-300 transition-colors hover:bg-slate-600 disabled:opacity-30"
-                  >
-                    -
-                  </button>
-                  <span className="w-6 text-center font-mono text-sm font-bold text-red-300">
-                    {heroAmount}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      assignToHero(src.enemyInstanceId, heroAmount + 1)
-                    }
-                    disabled={remaining <= 0 && heroAmount >= src.damage}
-                    className="flex h-9 w-9 items-center justify-center rounded bg-slate-700 text-sm font-bold text-slate-300 transition-colors hover:bg-slate-600 disabled:opacity-30"
-                  >
-                    +
-                  </button>
-                  {heroAmount > 0 && (
-                    <span className="ml-1 rounded bg-red-900/50 px-1.5 py-0.5 text-[9px] font-bold text-red-300">
-                      {calcWounds(heroAmount, heroArmor)}{t('combat.woundShort')}
+                  <span className="font-mono text-sm font-bold text-red-300">{heroAmount}</span>
+                  {heroWounds > 0 && (
+                    <span className="rounded bg-red-900/50 px-1.5 py-0.5 text-[9px] font-bold text-red-300">
+                      {heroWounds}
+                      {t('combat.woundShort')}
                     </span>
                   )}
                 </div>
               </div>
 
               {units.map((unit, unitIdx) => {
-                const unitAmount = getAssignedToUnit(src.enemyInstanceId, unitIdx)
+                const eligible = isUnitEligible(unit)
+                const assignedHere = (unitOrder[src.enemyInstanceId] ?? []).includes(unitIdx)
+                const assignedElsewhere =
+                  !assignedHere && unitToEnemy[unitIdx] !== undefined
+                const armor = getEffectiveUnitArmor(unit)
+                const resistant = isUnitResistant(unit, src.element)
+
+                // What this unit would soak if toggled on now
+                const preview = eligible
+                  ? unitAbsorption(unit, src.element, heroAmount, src.abilities.includes('poison'))
+                  : { absorbed: 0, wounds: 0 }
+                // No remaining damage to soak (and not already assigned here) → nothing to do
+                const noDamageLeft = !assignedHere && heroAmount <= 0
+
+                const disabled = !eligible || assignedElsewhere || noDamageLeft
+
                 return (
-                  <div
+                  <button
                     key={unitIdx}
-                    className="flex items-center justify-between rounded-md border border-slate-700/40 bg-slate-800/60 px-3 py-1.5"
+                    type="button"
+                    onClick={() => toggleUnit(src.enemyInstanceId, unitIdx)}
+                    disabled={disabled}
+                    className={[
+                      'flex w-full items-center justify-between rounded-md border px-3 py-1.5 text-left transition-colors',
+                      assignedHere
+                        ? 'border-amber-600/50 bg-amber-950/40 hover:bg-amber-900/40'
+                        : disabled
+                          ? 'cursor-not-allowed border-slate-800/40 bg-slate-900/40 opacity-50'
+                          : 'border-slate-700/40 bg-slate-800/60 hover:bg-slate-700/60',
+                    ].join(' ')}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-sm">{'\uD83D\uDEE1\uFE0F'}</span>
+                      <span className="text-sm">{'🛡️'}</span>
                       <div className="flex flex-col">
                         <span className="text-xs font-semibold text-slate-300">
                           {unit.unit.name}
                         </span>
                         <span className="text-[9px] text-slate-500">
-                          {t('combat.armorLabel')} {getEffectiveUnitArmor(unit)} | {unit.status}
+                          {t('combat.armorLabel')} {armor}
+                          {resistant && (
+                            <span className="ml-1 text-cyan-400">
+                              · {t('combat.resists', 'resists')}
+                            </span>
+                          )}
+                          {!eligible && (
+                            <span className="ml-1 text-red-400">
+                              · {t('combat.unitWounded', 'wounded')}
+                            </span>
+                          )}
+                          {assignedElsewhere && (
+                            <span className="ml-1 text-slate-400">
+                              · {t('combat.unitAssignedElsewhere', 'used elsewhere')}
+                            </span>
+                          )}
                         </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          assignToUnit(src.enemyInstanceId, unitIdx, unitAmount - 1)
-                        }
-                        disabled={unitAmount <= 0}
-                        className="flex h-9 w-9 items-center justify-center rounded bg-slate-700 text-sm font-bold text-slate-300 transition-colors hover:bg-slate-600 disabled:opacity-30"
-                      >
-                        -
-                      </button>
-                      <span className="w-6 text-center font-mono text-sm font-bold text-red-300">
-                        {unitAmount}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          assignToUnit(src.enemyInstanceId, unitIdx, unitAmount + 1)
-                        }
-                        disabled={remaining <= 0 && unitAmount >= src.damage}
-                        className="flex h-9 w-9 items-center justify-center rounded bg-slate-700 text-sm font-bold text-slate-300 transition-colors hover:bg-slate-600 disabled:opacity-30"
-                      >
-                        +
-                      </button>
-                      {unitAmount > 0 && (
-                        <span className="ml-1 rounded bg-red-900/50 px-1.5 py-0.5 text-[9px] font-bold text-red-300">
-                          {calcWounds(unitAmount, getEffectiveUnitArmor(unit))}{t('combat.woundShort')}
-                        </span>
+                      {assignedHere ? (
+                        <>
+                          <span className="font-mono text-xs font-bold text-amber-300">
+                            −{resolveEnemy(src).find(
+                              (a) => a.targetType === 'unit' && a.unitInstanceIndex === unitIdx,
+                            )?.damageAbsorbed ?? 0}
+                          </span>
+                          {(resolveEnemy(src).find(
+                            (a) => a.targetType === 'unit' && a.unitInstanceIndex === unitIdx,
+                          )?.woundsInflicted ?? 0) > 0 && (
+                            <span className="rounded bg-amber-800/40 px-1.5 py-0.5 text-[9px] font-bold text-amber-300">
+                              {resolveEnemy(src).find(
+                                (a) => a.targetType === 'unit' && a.unitInstanceIndex === unitIdx,
+                              )?.woundsInflicted}
+                              {t('combat.woundShort')}
+                            </span>
+                          )}
+                          <span className="text-[9px] font-bold text-amber-400">✓</span>
+                        </>
+                      ) : (
+                        !disabled && (
+                          <span className="text-[9px] text-slate-500">
+                            {t('combat.soak', 'soak')} {preview.absorbed}
+                            {preview.wounds === 0 && resistant && (
+                              <span className="ml-1 text-cyan-400">
+                                ({t('combat.noWound', 'no wound')})
+                              </span>
+                            )}
+                          </span>
+                        )
                       )}
                     </div>
-                  </div>
+                  </button>
                 )
               })}
             </div>
@@ -359,28 +318,12 @@ export default function DamageAssign({
         )
       })}
 
-      {remaining > 0 && (
-        <button
-          type="button"
-          onClick={assignAllToHero}
-          className="min-h-[44px] w-full rounded-lg border border-red-700/40 bg-red-950/50 py-2.5 text-sm font-bold tracking-wide text-red-200 shadow transition-all hover:bg-red-900/60 active:scale-[0.98]"
-        >
-          {t('combat.assignAllToHero', 'Assign all damage to hero')}
-        </button>
-      )}
-
       <button
         type="button"
         onClick={handleConfirm}
-        disabled={!isComplete}
-        className={[
-          'min-h-[44px] w-full rounded-lg py-3 text-sm font-bold tracking-wide shadow-lg transition-all active:scale-[0.98]',
-          isComplete
-            ? 'bg-red-700 text-white shadow-red-900/40 hover:bg-red-600'
-            : 'cursor-not-allowed bg-slate-800 text-slate-600 shadow-none',
-        ].join(' ')}
+        className="min-h-[44px] w-full rounded-lg bg-red-700 py-3 text-sm font-bold tracking-wide text-white shadow-lg shadow-red-900/40 transition-all hover:bg-red-600 active:scale-[0.98]"
       >
-        {isComplete ? t('combat.confirmDamage') : t('combat.assignMore', { count: remaining })}
+        {t('combat.confirmDamage')}
       </button>
     </div>
   )

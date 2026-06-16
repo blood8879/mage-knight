@@ -15,12 +15,14 @@ import type {
   TurnState,
   ManaPoolState,
   ManaColor,
+  Element,
 } from '@/engine/types'
 import type { CombatCardPlay } from '@/engine/combatCardTypes'
 
 interface UnblockedDamageEntry {
   enemyInstanceId: string
   damage: number
+  element: Element
   abilities: EnemyAbility[]
 }
 

@@ -2121,12 +2121,15 @@ export function useGameEngine() {
               newState = withLog(newState, 'combat_end', `Banner of Fortitude: ${targetUnit.unit.name} ignored a wound`)
               continue
             }
+            // A Unit can hold at most one Wound (two cards under Poison) — the
+            // damage-assign UI guarantees one assignment per Unit, but cap here
+            // defensively so a Unit can never accumulate extra Wounds.
             newUnits = [
               ...newUnits.slice(0, unitIdx),
               {
                 ...targetUnit,
                 status: 'wounded' as const,
-                woundCount: targetUnit.woundCount + target.woundsInflicted,
+                woundCount: Math.min(targetUnit.woundCount + target.woundsInflicted, 2),
               },
               ...newUnits.slice(unitIdx + 1),
             ]
