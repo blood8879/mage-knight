@@ -128,6 +128,26 @@ export function getManaCost(card: DeedCard): string | string[] | undefined {
   return strong?.manaCost
 }
 
+// ── Concentration / Will Focus combo ─────
+
+/** Combo bonus for Concentration (+2) / Will Focus (+3), or null if not such a card */
+export function getConcentrationBonus(card: AnyCard): number | null {
+  if (card.type === 'wound' || !('name' in card)) return null
+  if (card.name === 'Will Focus') return 3
+  if (card.name === 'Concentration') return 2
+  return null
+}
+
+/** The best (highest-value) strong combo action a target Action card offers for the phase */
+export function getStrongComboAction(card: AnyCard, phase: CombatPhase): CardAction | null {
+  if (card.type !== 'basic_action' && card.type !== 'advanced_action') return null
+  const strong = getCardEffect(card, 'strong')
+  if (!strong) return null
+  const acts = filterActionsForPhase(strong.actions, phase).filter((a) => !isCombatSpecialAction(a))
+  if (acts.length === 0) return null
+  return acts.reduce((best, a) => (getActionValue(a) > getActionValue(best) ? a : best), acts[0])
+}
+
 // ── Attack Type Checks ───────────────────
 
 /** Check ranged action */

@@ -62,6 +62,15 @@ export interface UseCombatCardsReturn {
   // Actions
   playCardForPhase: (handIndex: number, effectType: 'basic' | 'strong', chosenAction: CardAction) => void
   playCardSideways: (handIndex: number) => void
+  /** Concentration / Will Focus combo: play this card with another Action card,
+   *  taking that card's strong effect for free with +bonus to its value. */
+  playConcentrationCombo: (
+    concentrationIndex: number,
+    targetIndex: number,
+    targetAction: CardAction,
+    bonus: number,
+    concentrationManaCost: string | string[] | undefined,
+  ) => void
   activateUnit: (unitIndex: number, action: CardAction, ability: UnitAbility) => void
   activateSkillForCombat: (skillIndex: number, action: CardAction) => void
   setActiveTarget: (enemyId: string | null) => void
@@ -280,6 +289,73 @@ export function useCombatCards(
       })
     },
     [hand, nextPlayId, autoAssignPlay, phase],
+  )
+
+  // ── playConcentrationCombo ────────────────
+  // Concentration (+2) / Will Focus (+3): pay the green mana, then play another
+  // Action card's strong effect for free with +bonus added to its value.
+
+  const playConcentrationCombo = useCallback(
+    (
+      concentrationIndex: number,
+      targetIndex: number,
+      targetAction: CardAction,
+      bonus: number,
+      concentrationManaCost: string | string[] | undefined,
+    ) => {
+      setState((prev) => {
+        const cCard = hand[concentrationIndex]
+        const tCard = hand[targetIndex]
+        if (!cCard || !tCard) return prev
+        if (cCard.type === 'wound' || tCard.type === 'wound') return prev
+        if (prev.usedCardIndices.has(concentrationIndex) || prev.usedCardIndices.has(targetIndex)) return prev
+
+        const targetElement = getActionElement(targetAction)
+
+        // Concentration itself contributes no value; it shares the target's
+        // element so it doesn't dilute a fire/ice attack to physical.
+        const concentrationPlay: CombatCardPlay = {
+          id: nextPlayId(),
+          sourceType: 'card',
+          cardIndex: concentrationIndex,
+          cardId: cCard.id,
+          cardName: getCardName(cCard),
+          effectType: 'strong',
+          chosenAction: { type: 'special', value: 0, description: 'concentration combo' },
+          value: 0,
+          element: targetElement,
+          manaCost: concentrationManaCost,
+        }
+
+        const targetPlay: CombatCardPlay = {
+          id: nextPlayId(),
+          sourceType: 'card',
+          cardIndex: targetIndex,
+          cardId: tCard.id,
+          cardName: `${getCardName(tCard)} (+${bonus})`,
+          effectType: 'strong',
+          chosenAction: targetAction,
+          value: getActionValue(targetAction) + bonus,
+          element: targetElement,
+          // Free — the green mana paid for Concentration covers this card too.
+          manaCost: undefined,
+        }
+
+        const newUsed = new Set(prev.usedCardIndices)
+        newUsed.add(concentrationIndex)
+        newUsed.add(targetIndex)
+
+        let next: CombatCardsState = {
+          ...prev,
+          plays: [...prev.plays, concentrationPlay, targetPlay],
+          usedCardIndices: newUsed,
+        }
+        next = autoAssignPlay(concentrationPlay, next)
+        next = autoAssignPlay(targetPlay, next)
+        return next
+      })
+    },
+    [hand, nextPlayId, autoAssignPlay, getCardName],
   )
 
   // ── activateUnit ──────────────────────────
@@ -730,6 +806,7 @@ export function useCombatCards(
     // Actions
     playCardForPhase,
     playCardSideways,
+    playConcentrationCombo,
     activateUnit,
     activateSkillForCombat,
     setActiveTarget,

@@ -13,7 +13,8 @@ import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor
 import type { GameState } from '@/engine/GameState'
 import type { CombatCardPlay } from '@/engine/combatCardTypes'
 import {
-  getCardEffect, filterActionsForPhase, getManaCost,
+  getCardEffect, filterActionsForPhase, getManaCost, getActionValue,
+  getConcentrationBonus, getStrongComboAction,
 } from '@/utils/combatCardUtils'
 
 // ── Constants ────────────────────────────────
@@ -111,6 +112,7 @@ interface PickerProps {
   onSideways: (idx: number) => void; onClose: () => void
   onViewDetail: (card: AnyCard) => void
   onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
+  onConcentration?: (idx: number, bonus: number) => void
   canPlayStrong: boolean
   /** Localized reason why strong can't be played (e.g. "needs black mana at night") */
   strongReason?: string
@@ -135,7 +137,7 @@ function getImprovisationActionsForPhase(phase: CombatPhase, value: number): Car
   }
 }
 
-function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, canPlayStrong, strongReason }: PickerProps) {
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, canPlayStrong, strongReason }: PickerProps) {
   const { t } = useTranslation('ui')
   if (card.type === 'wound') return null
   const basic = getCardEffect(card, 'basic')
@@ -144,6 +146,9 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
 
   // Special handling for Improvisation
   const isImprov = isImprovisationCard(card)
+
+  // Concentration / Will Focus combo (boosts another Action card's strong effect)
+  const comboBonus = getConcentrationBonus(card)
 
   const bActs = isImprov
     ? getImprovisationActionsForPhase(phase, 3)
@@ -199,6 +204,17 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
           amber={canPlayStrong} mana={mana}
           onClick={() => pick('strong', a)} />
       ))}
+      {/* Concentration / Will Focus combo: play another Action card's strong
+          effect for free with +bonus. Needs the green mana (canPlayStrong). */}
+      {comboBonus != null && onConcentration && (
+        <PickerRow
+          label={canPlayStrong
+            ? `${t('combat.comboPlay', 'Combo')}: +${comboBonus} (${t('combat.comboPickCard', 'pick a card')})`
+            : `${t('combat.comboPlay', 'Combo')}: +${comboBonus} (${strongReason ?? t('combat.noMana', 'No Mana')})`}
+          icon="✶"
+          amber={canPlayStrong} mana={mana}
+          onClick={() => { if (canPlayStrong) { onConcentration(handIndex, comboBonus); onClose() } }} />
+      )}
       {/* Sideways play is forbidden in the Ranged/Siege phase (rulebook p.7):
           cards cannot be played sideways to contribute to Ranged or Siege Attacks. */}
       {phase !== 'ranged_siege' && (
@@ -280,10 +296,15 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
     effectType: 'basic' | 'strong'
     action: CardAction
   } | null>(null)
+  const [concentrationMode, setConcentrationMode] = useState<{
+    cardIndex: number
+    bonus: number
+    manaCost: string | string[] | undefined
+  } | null>(null)
 
   const {
     plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue,
-    playCardForPhase, playCardSideways, activateUnit, activateSkillForCombat, removePlay, undoLastPlay, resetPhase,
+    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, removePlay, undoLastPlay, resetPhase,
   } = combatCards
 
   const unitsWithActions = useMemo(() => availableUnits.filter((u) => u.actions.length > 0), [availableUnits])
@@ -318,6 +339,24 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
     playCardForPhase(discardIdx, 'basic', { type: 'discard_cost', value: 0, description: 'Improvisation discard' })
     setImprovMode(null)
   }, [improvMode, playCardForPhase])
+
+  // Concentration / Will Focus: step 1 — chose the combo, now pick a target card
+  const handleConcentration = useCallback((cardIndex: number, bonus: number) => {
+    const card = availableCards.find((c) => c.index === cardIndex)?.card
+    setConcentrationMode({ cardIndex, bonus, manaCost: card && card.type !== 'wound' ? getManaCost(card) : undefined })
+    setPickerIdx(null)
+  }, [availableCards])
+
+  // Concentration / Will Focus: step 2 — picked the target Action card
+  const handleConcentrationTarget = useCallback((targetIndex: number) => {
+    if (!concentrationMode) return
+    const targetCard = availableCards.find((c) => c.index === targetIndex)?.card
+    if (!targetCard) return
+    const action = getStrongComboAction(targetCard, phase)
+    if (!action) return
+    playConcentrationCombo(concentrationMode.cardIndex, targetIndex, action, concentrationMode.bonus, concentrationMode.manaCost)
+    setConcentrationMode(null)
+  }, [concentrationMode, availableCards, phase, playConcentrationCombo])
 
   const closePicker = useCallback(() => setPickerIdx(null), [])
 
@@ -476,6 +515,7 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                               <CardActionPicker card={card} handIndex={index} phase={phase}
                                 onSelect={handleSelect} onSideways={handleSideways} onClose={closePicker} onViewDetail={handleViewDetail}
                                 onImprovisation={handleImprovisation}
+                                onConcentration={handleConcentration}
                                 canPlayStrong={strongEval?.canPlayStrong ?? false}
                                 strongReason={strongEval && !strongEval.canPlayStrong ? translateValidationReason(strongEval, t) : undefined} />
                             )
@@ -598,6 +638,71 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
             </div>
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* Concentration / Will Focus: pick the Action card to boost */}
+      <AnimatePresence>
+        {concentrationMode && (() => {
+          const targets = availableCards.filter(
+            ({ card: c, index }) =>
+              index !== concentrationMode.cardIndex &&
+              !usedCardIndices.has(index) &&
+              getConcentrationBonus(c) == null &&
+              getStrongComboAction(c, phase) != null,
+          )
+          return (
+            <motion.div
+              key="concentration-pick"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm"
+            >
+              <div className="w-full max-w-sm rounded-xl border border-emerald-600/40 bg-slate-900 p-4 shadow-2xl">
+                <h3 className="mb-1 text-center text-sm font-black text-emerald-300">
+                  {t('combat.comboTitle', 'Concentration Combo')} (+{concentrationMode.bonus})
+                </h3>
+                <p className="mb-3 text-center text-[10px] text-slate-400">
+                  {t('combat.comboSubtitle', 'Pick an Action card — its strong effect is played for free with the bonus added.')}
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {targets.map(({ card: c, index: idx }) => {
+                    const action = getStrongComboAction(c, phase)
+                    const boosted = action ? getActionValue(action) + concentrationMode.bonus : 0
+                    return (
+                      <button
+                        key={`combo-${c.id}-${idx}`}
+                        type="button"
+                        onClick={() => handleConcentrationTarget(idx)}
+                        className="flex w-[80px] flex-col items-center rounded-md border border-slate-600/60 bg-slate-800 px-1 py-2 transition-all hover:border-emerald-500/60 hover:ring-2 hover:ring-emerald-400/50 active:scale-95"
+                      >
+                        <span className="text-base">{TYPE_ICON[c.type] ?? '?'}</span>
+                        <span className="mt-1 w-full truncate text-center text-[9px] font-medium text-slate-300">
+                          {getCardName(c)}
+                        </span>
+                        <span className="mt-0.5 rounded bg-emerald-900/50 px-1 text-[8px] font-bold text-emerald-300">
+                          {ACT_ICON[action?.type ?? ''] ?? '⚔'} {boosted}
+                        </span>
+                      </button>
+                    )
+                  })}
+                  {targets.length === 0 && (
+                    <p className="py-3 text-center text-[10px] italic text-slate-500">
+                      {t('combat.comboNoTarget', 'No Action card with a usable strong effect this phase.')}
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setConcentrationMode(null)}
+                  className="mt-3 w-full rounded-lg bg-slate-700 px-4 py-2 text-xs font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+                >
+                  {t('game.cancel', 'Cancel')}
+                </button>
+              </div>
+            </motion.div>
+          )
+        })()}
       </AnimatePresence>
     </div>
   )
