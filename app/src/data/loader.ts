@@ -209,6 +209,8 @@ export interface SiteData {
   type: string
   name: string
   enemyColor: string | null
+  /** Number of enemy tokens placed at this site (defaults to 1; Spawning Grounds = 2) */
+  enemyCount?: number
   enemyNote?: string
   isFortified: boolean
   special?: string

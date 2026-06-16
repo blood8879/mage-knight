@@ -179,14 +179,18 @@ describe('buildSiteRewards (UNIT-07-G)', () => {
     expect(artifactsConsumed).toBe(0)
   })
 
-  test('spawning grounds: two crystal rolls (EC-07-G-4)', () => {
-    const { rewards } = buildSiteRewards(makeEngine(), 'spawningGrounds', artifacts)
-    expect(rewards.map(r => r.type)).toEqual(['crystal_roll', 'crystal_roll'])
+  test('spawning grounds: 1 artifact + three crystal rolls (EC-07-G-4)', () => {
+    const { rewards, artifactsConsumed } = buildSiteRewards(makeEngine(), 'spawningGrounds', artifacts)
+    expect(rewards.map(r => r.type)).toEqual([
+      'artifact_choice', 'crystal_roll', 'crystal_roll', 'crystal_roll',
+    ])
+    expect(rewards[0]).toMatchObject({ type: 'artifact_choice', pickCount: 1 })
+    expect(artifactsConsumed).toBe(2)
   })
 
-  test('monster den: one crystal roll', () => {
+  test('monster den: two crystal rolls', () => {
     const { rewards } = buildSiteRewards(makeEngine(), 'monsterDen', artifacts)
-    expect(rewards.map(r => r.type)).toEqual(['crystal_roll'])
+    expect(rewards.map(r => r.type)).toEqual(['crystal_roll', 'crystal_roll'])
   })
 
   test('keep / mage tower / undefined: no extra rewards (conquest only)', () => {

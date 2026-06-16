@@ -209,9 +209,14 @@ export function buildSiteRewards(
       rewards.push({ type: 'artifact_or_spell' })
       break
     case 'monsterDen':
+      // Gain 2 mana crystals (roll the die twice)
+      rollCrystal()
       rollCrystal()
       break
     case 'spawningGrounds':
+      // Gain 1 Artifact and 3 mana crystals
+      drawArtifactChoice()
+      rollCrystal()
       rollCrystal()
       rollCrystal()
       break
@@ -420,15 +425,16 @@ export function useGameEngine() {
         if (siteInfo && siteInfo.enemyColor && siteInfo.enemyColor !== 'null' && siteInfo.enemyColor !== 'special' && siteInfo.enemyColor !== 'multiple') {
           const color = siteInfo.enemyColor as 'green' | 'grey' | 'violet' | 'brown' | 'red' | 'white'
 
-          // Draw one enemy from the pool
-          if (enemyPools[color].length > 0) {
-            const enemy = enemyPools[color][0]
-            enemyPools[color] = enemyPools[color].slice(1)
+          // Draw the site's enemies from the pool (Spawning Grounds = 2, else 1)
+          const count = siteInfo.enemyCount ?? 1
+          const drawn = enemyPools[color].slice(0, count)
+          if (drawn.length > 0) {
+            enemyPools[color] = enemyPools[color].slice(drawn.length)
 
-            // Update hex with enemy
+            // Update hex with enemies
             const updatedHex: typeof hex = {
               ...hex,
-              enemyTokens: [enemy],
+              enemyTokens: drawn,
             }
             newHexGrid.set(key, updatedHex)
           }
@@ -1229,24 +1235,24 @@ export function useGameEngine() {
             | 'red'
             | 'white'
 
-          if (newState.enemyPools[color].length > 0) {
-            const enemy = newState.enemyPools[color][0]
-            const remainingPool = newState.enemyPools[color].slice(1)
-
+          // Spawning Grounds places 2 enemy tokens; most sites place 1
+          const count = siteInfo.enemyCount ?? 1
+          const drawn = newState.enemyPools[color].slice(0, count)
+          if (drawn.length > 0) {
             newState = {
               ...newState,
               enemyPools: {
                 ...newState.enemyPools,
-                [color]: remainingPool,
+                [color]: newState.enemyPools[color].slice(drawn.length),
               },
             }
 
             const updatedHex: typeof hex = {
               ...hex,
-              enemyTokens: [enemy],
+              enemyTokens: drawn,
             }
             newHexGrid.set(key, updatedHex)
-            enemiesAssigned++
+            enemiesAssigned += drawn.length
           }
         }
       }

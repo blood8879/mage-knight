@@ -199,6 +199,7 @@
       "type": "spawningGrounds",
       "name": "Spawning Grounds",
       "enemyColor": "brown",
+      "enemyCount": 2,
       "enemyNote": "Two brown enemy tokens",
       "isFortified": false,
       "special": "Partial defeat leaves remaining enemy tokens in place.",
