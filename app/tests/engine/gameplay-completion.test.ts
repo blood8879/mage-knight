@@ -193,10 +193,20 @@ describe('buildSiteRewards (UNIT-07-G)', () => {
     expect(rewards.map(r => r.type)).toEqual(['crystal_roll', 'crystal_roll'])
   })
 
-  test('keep / mage tower / undefined: no extra rewards (conquest only)', () => {
+  test('keep / undefined: no extra rewards (conquest only)', () => {
     expect(buildSiteRewards(makeEngine(), 'keep', artifacts).rewards).toHaveLength(0)
-    expect(buildSiteRewards(makeEngine(), 'mageTower', artifacts).rewards).toHaveLength(0)
     expect(buildSiteRewards(makeEngine(), undefined, artifacts).rewards).toHaveLength(0)
+  })
+
+  test('mage tower: choose a Spell (rulebook reward)', () => {
+    const { rewards } = buildSiteRewards(makeEngine(), 'mageTower', artifacts)
+    expect(rewards.map(r => r.type)).toEqual(['spell_choice'])
+  })
+
+  test('monastery: an Artifact (burned monastery reward)', () => {
+    const { rewards, artifactsConsumed } = buildSiteRewards(makeEngine(), 'monastery', artifacts)
+    expect(rewards.map(r => r.type)).toEqual(['artifact_choice'])
+    expect(artifactsConsumed).toBe(2)
   })
 
   test('dungeon with an empty artifact deck yields nothing instead of crashing', () => {

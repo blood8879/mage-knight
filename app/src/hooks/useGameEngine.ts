@@ -198,6 +198,14 @@ export function buildSiteRewards(
   }
 
   switch (siteType) {
+    case 'mageTower':
+      // Rulebook (Combat Outcomes): conquering a mage tower lets you choose a Spell.
+      rewards.push({ type: 'spell_choice' })
+      break
+    case 'monastery':
+      // Rulebook: burning a monastery (defeating its defenders) yields an Artifact.
+      drawArtifactChoice()
+      break
     case 'dungeon':
       drawArtifactChoice()
       break
