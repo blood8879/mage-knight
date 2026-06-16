@@ -56,6 +56,9 @@ export default function DamageAssign({
   // ordered list of unit indices the player has chosen to soak that attack.
   const [unitOrder, setUnitOrder] = useState<Record<string, number[]>>({})
 
+  // Toggle the "how wounds work" help panel
+  const [showHelp, setShowHelp] = useState(false)
+
   // Which enemy (if any) a given unit index is currently assigned to.
   const unitToEnemy = useMemo(() => {
     const map: Record<number, string> = {}
@@ -162,10 +165,42 @@ export default function DamageAssign({
             {totalIncoming}
           </span>
         </div>
-        <p className="text-[10px] text-slate-500">
-          {t('combat.damageAssignHint', 'Units soak their Armor (one Wound); the rest hits your Hero.')}
-        </p>
+        <button
+          type="button"
+          onClick={() => setShowHelp((v) => !v)}
+          aria-expanded={showHelp}
+          className="flex items-center gap-1 rounded-full border border-slate-600/50 bg-slate-800/70 px-2 py-1 text-[10px] font-bold text-slate-300 transition-colors hover:bg-slate-700/70"
+        >
+          <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-600 text-[8px] text-white">
+            ?
+          </span>
+          {t('combat.howWoundsWork', 'How wounds work')}
+        </button>
       </div>
+
+      {/* Help panel — explains that Armor sets the wound ratio, not damage reduction */}
+      {showHelp && (
+        <div className="rounded-lg border border-slate-700/50 bg-slate-800/60 px-3 py-2.5 text-[11px] leading-relaxed text-slate-300">
+          <p className="mb-1 font-bold text-amber-300">
+            {t('combat.woundHelpTitle', 'Armor does not reduce damage')}
+          </p>
+          <p>
+            {t(
+              'combat.woundHelpBody',
+              'Armor sets how much damage equals one Wound. You take ⌈damage ÷ Armor⌉ Wounds (rounded up).',
+            )}
+          </p>
+          <p className="mt-1 text-slate-400">
+            {t('combat.woundHelpExample', 'Example: 6 damage with Armor 2 → 6 ÷ 2 = 3 Wounds.')}
+          </p>
+          <p className="mt-1 text-slate-400">
+            {t(
+              'combat.woundHelpUnit',
+              'A Unit instead soaks up to its Armor and takes a single Wound; assign damage to a Unit to spare your Hero.',
+            )}
+          </p>
+        </div>
+      )}
 
       {unblockedDamage.map((src) => {
         const heroAmount = heroRemainingFor(src)
@@ -209,9 +244,22 @@ export default function DamageAssign({
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
+                  {heroWounds > 0 && (
+                    <span className="font-mono text-[10px] text-slate-500">
+                      {heroAmount} ÷ {heroArmor} =
+                    </span>
+                  )}
                   <span className="font-mono text-sm font-bold text-red-300">{heroAmount}</span>
                   {heroWounds > 0 && (
-                    <span className="rounded bg-red-900/50 px-1.5 py-0.5 text-[9px] font-bold text-red-300">
+                    <span
+                      title={t('combat.woundFormula', {
+                        damage: heroAmount,
+                        armor: heroArmor,
+                        wounds: heroWounds,
+                        defaultValue: '{{damage}} damage ÷ Armor {{armor}} = {{wounds}} Wounds',
+                      })}
+                      className="rounded bg-red-900/50 px-1.5 py-0.5 text-[9px] font-bold text-red-300"
+                    >
                       {heroWounds}
                       {t('combat.woundShort')}
                     </span>
