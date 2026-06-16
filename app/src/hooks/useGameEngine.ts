@@ -1225,44 +1225,59 @@ export function useGameEngine() {
     const newHexGrid = new Map(updatedMap.hexGrid)
     let enemiesAssigned = 0
 
-    for (const [key, hex] of updatedMap.hexGrid.entries()) {
-      if (hex.site && hex.siteData) {
-        const siteInfo = sitesData.find((s) => s.type === hex.site)
-        if (
-          siteInfo &&
-          siteInfo.enemyColor &&
-          siteInfo.enemyColor !== 'null' &&
-          siteInfo.enemyColor !== 'special' &&
-          siteInfo.enemyColor !== 'multiple'
-        ) {
-          const color = siteInfo.enemyColor as
-            | 'green'
-            | 'grey'
-            | 'violet'
-            | 'brown'
-            | 'red'
-            | 'white'
+    // Solo Conquest: the first revealed city is level 5, the second level 8.
+    const CITY_LEVELS = [5, 8]
+    const CITY_POOLS: Array<'white' | 'grey' | 'red' | 'violet'> = ['white', 'grey', 'red', 'violet']
+    let citiesWithLevel = 0
+    for (const h of updatedMap.hexGrid.values()) {
+      if (h.site === 'city' && h.siteData?.cityLevel != null) citiesWithLevel++
+    }
 
-          // Spawning Grounds places 2 enemy tokens; most sites place 1
-          const count = siteInfo.enemyCount ?? 1
-          const drawn = newState.enemyPools[color].slice(0, count)
-          if (drawn.length > 0) {
+    for (const [key, hex] of updatedMap.hexGrid.entries()) {
+      if (!hex.site || !hex.siteData) continue
+      // Never re-garrison a site that already has enemies or is conquered.
+      if (hex.enemyTokens.length > 0 || hex.siteData.isConquered) continue
+      const siteInfo = sitesData.find((s) => s.type === hex.site)
+      if (
+        !siteInfo || !siteInfo.enemyColor ||
+        siteInfo.enemyColor === 'null' || siteInfo.enemyColor === 'special'
+      ) continue
+
+      if (siteInfo.enemyColor === 'multiple') {
+        // City garrison (rulebook-based approximation): defenders scale with the
+        // city level and are drawn from city-defender pools. They fight fortified
+        // with the city's colour bonuses, applied at combat start.
+        const level = CITY_LEVELS[Math.min(citiesWithLevel, CITY_LEVELS.length - 1)]
+        citiesWithLevel++
+        const garrisonSize = Math.ceil(level / 2) + 1 // L5 → 4, L8 → 5
+        const drawn: typeof hex.enemyTokens = []
+        for (const color of CITY_POOLS) {
+          while (drawn.length < garrisonSize && newState.enemyPools[color].length > 0) {
+            drawn.push(newState.enemyPools[color][0])
             newState = {
               ...newState,
-              enemyPools: {
-                ...newState.enemyPools,
-                [color]: newState.enemyPools[color].slice(drawn.length),
-              },
+              enemyPools: { ...newState.enemyPools, [color]: newState.enemyPools[color].slice(1) },
             }
-
-            const updatedHex: typeof hex = {
-              ...hex,
-              enemyTokens: drawn,
-            }
-            newHexGrid.set(key, updatedHex)
-            enemiesAssigned += drawn.length
           }
+          if (drawn.length >= garrisonSize) break
         }
+        if (drawn.length > 0) {
+          newHexGrid.set(key, { ...hex, enemyTokens: drawn, siteData: { ...hex.siteData, cityLevel: level } })
+          enemiesAssigned += drawn.length
+        }
+        continue
+      }
+
+      const color = siteInfo.enemyColor as 'green' | 'grey' | 'violet' | 'brown' | 'red' | 'white'
+      const count = siteInfo.enemyCount ?? 1
+      const drawn = newState.enemyPools[color].slice(0, count)
+      if (drawn.length > 0) {
+        newState = {
+          ...newState,
+          enemyPools: { ...newState.enemyPools, [color]: newState.enemyPools[color].slice(drawn.length) },
+        }
+        newHexGrid.set(key, { ...hex, enemyTokens: drawn })
+        enemiesAssigned += drawn.length
       }
     }
 

@@ -263,6 +263,7 @@ export interface SiteState {
   enemyTokenIds: string[] // face-down enemy tokens
   shieldTokens: number // for cities
   cityColor?: CityColor
+  cityLevel?: number // city difficulty (Solo Conquest: first revealed = 5, second = 8)
   mineColor?: ManaColor // for crystal mines
 }
 
