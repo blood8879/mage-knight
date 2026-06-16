@@ -1263,10 +1263,14 @@ export function useGameEngine() {
       map: { ...newState.map, hexGrid: newHexGrid },
     }
 
+    // First Reconnaissance special rule (scenario 'tile_fame'): a player scores
+    // 1 Fame whenever a new tile is revealed, regardless of its type.
+    newState = applyFameGain(engine, newState, 1)
+
     newState = withLog(
       newState,
       'tile_reveal',
-      `Explored tile at (${position.q}, ${position.r})${enemiesAssigned > 0 ? ` — placed ${enemiesAssigned} enemy token(s)` : ''}`,
+      `Explored tile at (${position.q}, ${position.r}) — +1 Fame${enemiesAssigned > 0 ? `, placed ${enemiesAssigned} enemy token(s)` : ''}`,
       { position, cost: revealCost, enemiesAssigned },
     )
 
