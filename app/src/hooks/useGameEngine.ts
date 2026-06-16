@@ -2021,7 +2021,7 @@ export function useGameEngine() {
    *  - strong: take a Source die, set it to a chosen colour, gain 2 mana tokens
    */
   const applyManaDrawInCombat = useCallback(
-    (mode: 'basic' | 'strong', color?: ManaColor) => {
+    (mode: 'basic' | 'strong', color?: import('@/engine/types').ExtendedManaColor) => {
       const state = sharedState
       const engine = sharedEngine
       if (!state || !engine || !state.combat.isActive) return

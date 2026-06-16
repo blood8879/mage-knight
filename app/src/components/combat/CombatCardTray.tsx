@@ -10,7 +10,7 @@ import { validateCardPlay } from '@/engine/CardPlayValidator'
 import type { CardPlayValidation } from '@/engine/CardPlayValidator'
 import { translateValidationReason } from '@/utils/validationReason'
 import type { UseCombatCardsReturn } from '@/hooks/useCombatCards'
-import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor } from '@/engine/types'
+import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor, ExtendedManaColor } from '@/engine/types'
 import type { GameState } from '@/engine/GameState'
 import type { CombatCardPlay } from '@/engine/combatCardTypes'
 import {
@@ -114,7 +114,7 @@ interface PickerProps {
   onViewDetail: (card: AnyCard) => void
   onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
   onConcentration?: (idx: number, bonus: number) => void
-  onPlayMana?: (idx: number, mode: 'basic' | 'strong', color?: ManaColor) => void
+  onPlayMana?: (idx: number, mode: 'basic' | 'strong', color?: ExtendedManaColor) => void
   dayNight?: 'day' | 'night'
   canPlayStrong: boolean
   /** Localized reason why strong can't be played (e.g. "needs black mana at night") */
@@ -194,7 +194,7 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
             icon="🎲"
             onClick={() => { onPlayMana(handIndex, 'basic'); onClose() }}
           />
-          {(['red', 'blue', 'green', 'white', 'black'] as ManaColor[])
+          {(['red', 'blue', 'green', 'white', 'black'] as ExtendedManaColor[])
             .filter((c) => c !== 'black' || dayNight === 'night')
             .map((c) => (
               <PickerRow
@@ -340,7 +340,7 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
 
   // Mana Draw (and other mana-generating specials) played in combat: apply the
   // mana to the pool now, and register the card so it's consumed at combat end.
-  const handlePlayMana = useCallback((idx: number, mode: 'basic' | 'strong', color?: ManaColor) => {
+  const handlePlayMana = useCallback((idx: number, mode: 'basic' | 'strong', color?: ExtendedManaColor) => {
     engine.applyManaDrawInCombat(mode, color)
     playManaCardForCombat(idx)
     setPickerIdx(null)
