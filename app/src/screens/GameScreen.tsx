@@ -569,9 +569,16 @@ export default function GameScreen() {
   const handleHexClick = useCallback(
     (coord: HexCoord) => {
       if (phase === 'movement') {
+        // 1) Tapping a valid placement explores the unrevealed tile
         if (movement.exploreAt(coord)) return
-        movement.selectHex(coord)
-        return
+        // 2) Tapping a reachable hex selects it as a move destination
+        const key = `${coord.q},${coord.r}`
+        if (movement.reachableHexes?.has(key)) {
+          movement.selectHex(coord)
+          return
+        }
+        // 3) Otherwise fall through to show tile/enemy info (so distant
+        //    monsters and tiles can still be inspected during movement)
       }
       const cell = getHexAt(coord.q, coord.r)
       if (cell) {
@@ -1143,6 +1150,18 @@ export default function GameScreen() {
 
           {showMovementConfirm && (
             <div data-tutorial="confirm-move" className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2 sm:bottom-4">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!movement.selectedHex) return
+                  const cell = getHexAt(movement.selectedHex.q, movement.selectedHex.r)
+                  if (cell) setSelectedTileInfo(cell)
+                }}
+                aria-label={t('game.tileInfo', 'Tile Info')}
+                className="flex min-h-[44px] items-center justify-center rounded-lg bg-slate-700 px-3 py-2.5 text-sm font-bold text-slate-200 shadow-lg transition-all hover:bg-slate-600 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+              >
+                ⓘ
+              </button>
               <button
                 type="button"
                 onClick={movement.confirmMove}
