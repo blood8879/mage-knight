@@ -718,7 +718,20 @@ export function useGameEngine() {
     const hadExtraTurn = state.player.turn.extraTurnGranted === true
 
     const newTurn = engine.turnManager.endTurn(state.player.turn)
-    const newDeck = engine.deckManager.discardPlayArea(currentDeck)
+    // Steady Tempo: pull it out of the play area and return it to the deck
+    // (bottom for basic, top for strong) before the rest is discarded.
+    let deckForEnd = currentDeck
+    if (state.player.turn.steadyTempo) {
+      const stIdx = deckForEnd.playArea.findIndex((c) => 'name' in c && c.name === 'Steady Tempo')
+      if (stIdx !== -1) {
+        const st = deckForEnd.playArea[stIdx]
+        const playArea = deckForEnd.playArea.filter((_, i) => i !== stIdx)
+        deckForEnd = state.player.turn.steadyTempo === 'strong'
+          ? { ...deckForEnd, playArea, drawPile: [st, ...deckForEnd.drawPile] }
+          : { ...deckForEnd, playArea, drawPile: [...deckForEnd.drawPile, st] }
+      }
+    }
+    const newDeck = engine.deckManager.discardPlayArea(deckForEnd)
     const newMana = engine.manaPool.resetTurnState(state.player.mana)
     const newUnits = state.player.units
 
@@ -1483,6 +1496,11 @@ export function useGameEngine() {
           // hills (basic/strong) or mountains (strong) at the next draw.
           if (card.name === 'Mountain Lore') {
             resolvedTurn = { ...resolvedTurn, mountainLore: mode === 'strong' ? 'strong' : 'basic' }
+          }
+          // Steady Tempo: at end of turn return it to the deck (bottom=basic,
+          // top=strong) instead of the discard pile.
+          if (card.name === 'Steady Tempo') {
+            resolvedTurn = { ...resolvedTurn, steadyTempo: mode === 'strong' ? 'strong' : 'basic' }
           }
         }
       }

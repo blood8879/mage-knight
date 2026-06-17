@@ -430,6 +430,9 @@ export interface TurnState {
   hasPlunderedThisTurn?: boolean
   /** Mountain Lore played this turn: hand-limit bonus if you end in hills/mountains. */
   mountainLore?: 'basic' | 'strong'
+  /** Steady Tempo played this turn: at end of turn it returns to the deck
+   *  (bottom for basic, top for strong) instead of the discard pile. */
+  steadyTempo?: 'basic' | 'strong'
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */
