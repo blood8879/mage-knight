@@ -120,6 +120,12 @@ function specialCombatBonus(
     const target = enemies.find((e) => e.instanceId === targetEnemyId)
     if (target?.appliedAbilities.includes('swift')) return getActionValue(action)
   }
+  // Chivalry: the "special" variant is Attack 2 (basic) / 4 (strong) that also
+  // grants Reputation (+Fame on strong) per enemy defeated — value supplied here,
+  // the per-defeat reward is granted at combat resolution (see useCombat).
+  if (name === 'Chivalry' && action.type === 'special') {
+    return effectType === 'strong' ? 4 : 2
+  }
   return 0
 }
 

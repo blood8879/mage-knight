@@ -37,6 +37,7 @@ interface ProcessedPlays {
 }
 
 const SOUL_HARVESTER_ID = 20
+const CHIVALRY_ID = 35
 
 /**
  * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
@@ -54,6 +55,58 @@ export function soulHarvesterReward(
   const newlyDefeated = after.filter((e) => e.isDefeated && !wasDefeated.has(e.instanceId)).length
   if (newlyDefeated === 0) return 0
   return sh.effectType === 'strong' ? newlyDefeated : 1
+}
+
+/**
+ * Chivalry's "special" variant: +1 Reputation per enemy defeated by the attack
+ * (+1 Fame too on the strong effect). Returns the reputation/fame to grant.
+ */
+export function chivalryReward(
+  before: EnemyInstance[],
+  after: EnemyInstance[],
+  plays: CombatCardPlay[],
+): { reputation: number; fame: number } {
+  const ch = plays.find((p) => p.sourceType === 'card' && p.cardId === CHIVALRY_ID && p.chosenAction?.type === 'special')
+  if (!ch) return { reputation: 0, fame: 0 }
+  const wasDefeated = new Set(before.filter((e) => e.isDefeated).map((e) => e.instanceId))
+  const newlyDefeated = after.filter((e) => e.isDefeated && !wasDefeated.has(e.instanceId)).length
+  return { reputation: newlyDefeated, fame: ch.effectType === 'strong' ? newlyDefeated : 0 }
+}
+
+/** Apply post-resolution attack rewards (Soul Harvester crystals, Chivalry
+ *  reputation) into a new game state. Fame is applied by the caller. */
+function applyAttackRewards(
+  engine: typeof sharedEngine,
+  state: import('@/engine/GameState').GameState,
+  before: EnemyInstance[],
+  resolved: import('@/engine/types').CombatState,
+  plays: CombatCardPlay[],
+  processed: ProcessedPlays | null,
+): import('@/engine/GameState').GameState {
+  if (!engine) return state
+  let mana = processed?.mana ?? state.player.mana
+  const shCount = soulHarvesterReward(before, resolved.enemies, plays)
+  for (let i = 0; i < shCount; i++) mana = engine.manaPool.addCrystal(mana, 'white')
+  const chiv = chivalryReward(before, resolved.enemies, plays)
+  const reputation = chiv.reputation > 0
+    ? engine.reputationManager.changeReputation(state.player.reputation, chiv.reputation)
+    : state.player.reputation
+  const changed = !!processed || shCount > 0 || chiv.reputation > 0
+  return {
+    ...state,
+    combat: resolved,
+    ...(changed && {
+      player: {
+        ...state.player,
+        deck: processed?.deck ?? state.player.deck,
+        units: processed?.units ?? state.player.units,
+        turn: processed?.turn ?? state.player.turn,
+        mana,
+        skills: processed?.skills ?? state.player.skills,
+        reputation,
+      },
+    }),
+  }
 }
 
 export function useCombat() {
@@ -257,26 +310,9 @@ export function useCombat() {
       const resolver = sharedEngine.combatResolver
       const preCombat = applyCombatSpecials(combatState, plays)
       const resolved = resolver.resolveRangedSiegeAttack(preCombat, attacks)
-      let shMana = processed?.mana ?? engineState.player.mana
-      const shCount = soulHarvesterReward(combatState.enemies, resolved.enemies, plays)
-      for (let i = 0; i < shCount; i++) shMana = sharedEngine.manaPool.addCrystal(shMana, 'white')
-      const newState = {
-        ...engineState,
-        combat: resolved,
-        ...((processed || shCount > 0) && {
-          player: {
-            ...engineState.player,
-            deck: processed?.deck ?? engineState.player.deck,
-            units: processed?.units ?? engineState.player.units,
-            turn: processed?.turn ?? engineState.player.turn,
-            mana: shMana,
-            skills: processed?.skills ?? engineState.player.skills,
-          },
-        }),
-      }
-      const finalState = processed && processed.fameBonus > 0
-        ? applyFameGain(sharedEngine, newState, processed.fameBonus)
-        : newState
+      const newState = applyAttackRewards(sharedEngine, engineState, combatState.enemies, resolved, plays, processed)
+      const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
+      const finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])
@@ -345,26 +381,9 @@ export function useCombat() {
       const processed = plays.length > 0 ? processCardPlays(plays) : null
       const resolver = sharedEngine.combatResolver
       const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), attacks)
-      let shMana = processed?.mana ?? engineState.player.mana
-      const shCount = soulHarvesterReward(combatState.enemies, resolved.enemies, plays)
-      for (let i = 0; i < shCount; i++) shMana = sharedEngine.manaPool.addCrystal(shMana, 'white')
-      const newState = {
-        ...engineState,
-        combat: resolved,
-        ...((processed || shCount > 0) && {
-          player: {
-            ...engineState.player,
-            deck: processed?.deck ?? engineState.player.deck,
-            units: processed?.units ?? engineState.player.units,
-            turn: processed?.turn ?? engineState.player.turn,
-            mana: shMana,
-            skills: processed?.skills ?? engineState.player.skills,
-          },
-        }),
-      }
-      const finalState = processed && processed.fameBonus > 0
-        ? applyFameGain(sharedEngine, newState, processed.fameBonus)
-        : newState
+      const newState = applyAttackRewards(sharedEngine, engineState, combatState.enemies, resolved, plays, processed)
+      const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
+      const finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])

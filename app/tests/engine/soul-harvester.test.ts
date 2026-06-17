@@ -31,3 +31,22 @@ describe('Soul Harvester crystal reward', () => {
     expect(soulHarvesterReward([e('a', false)], [e('a', true)], [])).toBe(0)
   })
 })
+
+import { chivalryReward } from '@/hooks/useCombat'
+
+function chPlay(effectType: 'basic' | 'strong'): CombatCardPlay {
+  return { id: 'p2', sourceType: 'card', cardIndex: 0, cardId: 35, cardName: 'Chivalry', effectType, chosenAction: { type: 'special', value: 0 }, value: effectType === 'strong' ? 4 : 2, element: 'physical' }
+}
+
+describe('Chivalry special variant reward', () => {
+  it('basic: +1 Reputation per enemy defeated, no fame', () => {
+    expect(chivalryReward([e('a', false), e('b', false)], [e('a', true), e('b', true)], [chPlay('basic')])).toEqual({ reputation: 2, fame: 0 })
+  })
+  it('strong: +1 Reputation and +1 Fame per enemy defeated', () => {
+    expect(chivalryReward([e('a', false)], [e('a', true)], [chPlay('strong')])).toEqual({ reputation: 1, fame: 1 })
+  })
+  it('no reward without the special variant chosen', () => {
+    const normal: CombatCardPlay = { id: 'p3', sourceType: 'card', cardIndex: 0, cardId: 35, cardName: 'Chivalry', effectType: 'basic', chosenAction: { type: 'attack', value: 3 }, value: 3, element: 'physical' }
+    expect(chivalryReward([e('a', false)], [e('a', true)], [normal])).toEqual({ reputation: 0, fame: 0 })
+  })
+})
