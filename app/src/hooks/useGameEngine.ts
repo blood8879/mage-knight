@@ -176,6 +176,20 @@ export function applyFameGain(engine: EngineRefs, state: GameState, amount: numb
   }
 }
 
+// ── Keep / City hand-limit bonus (rulebook p.9) ──────────
+// If you are on or next to a keep you own, your Hand limit is increased by the
+// number of keeps you own. On/next to a conquered city you hold → +2 (solo
+// player is always the city leader). (exported for unit tests)
+export function keepCityHandLimitBonus(state: GameState): number {
+  const pos = state.player.position
+  const near = new Set<string>([hexKey(pos), ...hexNeighbors(pos).map(hexKey)])
+  const keeps = state.player.conqueredSites.filter((s) => s.siteType === 'keep')
+  let bonus = keeps.some((s) => near.has(hexKey(s.hexCoord))) ? keeps.length : 0
+  const cities = state.player.conqueredSites.filter((s) => s.siteType === 'city')
+  if (cities.some((s) => near.has(hexKey(s.hexCoord)))) bonus += 2
+  return bonus
+}
+
 // ── Combat site rewards (UNIT-07-G) ──────────
 // (exported for unit tests)
 export function buildSiteRewards(
@@ -823,7 +837,7 @@ export function useGameEngine() {
         newState.player.deck.hand,
       )
 
-      const nextDeck = engine.deckManager.drawToHandLimit(newState.player.deck, effectiveHandLimit)
+      const nextDeck = engine.deckManager.drawToHandLimit(newState.player.deck, effectiveHandLimit + keepCityHandLimitBonus(newState))
       const nextSkillsExtra = engine.skillManager.resetSkillsForTurn(newState.player.skills)
       newState = {
         ...newState,
@@ -877,7 +891,7 @@ export function useGameEngine() {
         newState.player.deck.hand,
       )
 
-      const nextDeck = engine.deckManager.drawToHandLimit(newState.player.deck, effectiveHandLimit)
+      const nextDeck = engine.deckManager.drawToHandLimit(newState.player.deck, effectiveHandLimit + keepCityHandLimitBonus(newState))
       const nextSkills = engine.skillManager.resetSkillsForTurn(newState.player.skills)
       newState = {
         ...newState,
