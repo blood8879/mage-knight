@@ -113,8 +113,15 @@ export default function TopBar({ onEndTurn, onRest, onDeclareEndOfRound, onUndo,
           </span>
 
           {currentTactic && (
-            <span className="hidden whitespace-nowrap text-xs text-purple-400 sm:inline">
-              [{tTactics(`${currentTactic.id}.name`, { defaultValue: currentTactic.name })}{currentTactic.isUsed ? ' ✓' : ''}]
+            <span
+              className="whitespace-nowrap rounded bg-purple-900/40 px-1.5 py-0.5 text-[10px] font-bold text-purple-300 ring-1 ring-purple-500/30 sm:text-xs"
+              title={tTactics(`${currentTactic.id}.name`, { defaultValue: currentTactic.name })}
+            >
+              🎴 #{currentTactic.number}
+              <span className="hidden sm:inline">
+                {' '}{tTactics(`${currentTactic.id}.name`, { defaultValue: currentTactic.name })}
+              </span>
+              {currentTactic.isUsed ? ' ✓' : ''}
             </span>
           )}
         </div>
