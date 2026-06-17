@@ -40,6 +40,7 @@ const SOUL_HARVESTER_ID = 20
 const CHIVALRY_ID = 35
 const EXPOSE_ID = 3
 const BLOOD_RAGE_ID = 5
+const HORN_OF_WRATH_ID = 10
 
 /**
  * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
@@ -125,7 +126,16 @@ function applyAttackRewards(
   ).length
   let deck = processed?.deck ?? state.player.deck
   for (let i = 0; i < bloodRageWounds; i++) deck = engine.deckManager.addWound(deck, 1)
-  const changed = !!processed || shCount > 0 || chiv.reputation > 0 || bloodRageWounds > 0
+  // Horn of Wrath: roll a mana die per play; a black or red roll inflicts a Wound.
+  let hornWounds = 0
+  for (const p of plays) {
+    if (p.sourceType === 'card' && p.cardId === HORN_OF_WRATH_ID) {
+      const rolled = engine.manaPool.rollDie()
+      if (rolled === 'black' || rolled === 'red') hornWounds++
+    }
+  }
+  for (let i = 0; i < hornWounds; i++) deck = engine.deckManager.addWound(deck, 1)
+  const changed = !!processed || shCount > 0 || chiv.reputation > 0 || bloodRageWounds > 0 || hornWounds > 0
   return {
     ...state,
     combat: resolved,
