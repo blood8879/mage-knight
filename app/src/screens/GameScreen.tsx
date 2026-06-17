@@ -482,17 +482,20 @@ export default function GameScreen() {
       }
     }
 
+    // Only rampaging enemies (orc marauders / draconum on open hexes with no
+    // site) may be challenged from an adjacent space. Fortified sites
+    // (keep/mageTower/city) and adventure sites must be assaulted/entered by
+    // moving ONTO their hex — they cannot be fought from one tile away
+    // (rulebook p.7).
     const neighbors = hexNeighbors(playerPos)
     for (const neighbor of neighbors) {
       const neighborHex = getHexAt(neighbor.q, neighbor.r)
-      if (neighborHex && neighborHex.enemyTokens.length > 0) {
+      if (neighborHex && neighborHex.enemyTokens.length > 0 && !neighborHex.siteData) {
         return {
           hex: neighborHex,
           enemyTokens: neighborHex.enemyTokens,
-          isFortified: neighborHex.siteData?.type === 'keep' ||
-                       neighborHex.siteData?.type === 'mageTower' ||
-                       neighborHex.siteData?.type === 'city',
-          cityColor: neighborHex.siteData?.cityColor,
+          isFortified: false,
+          cityColor: undefined,
         }
       }
     }
