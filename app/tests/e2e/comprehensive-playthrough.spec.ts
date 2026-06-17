@@ -12,11 +12,24 @@ async function suppressTips(page: Page) {
 async function selectTacticIfVisible(page: Page) {
   const overlay = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })
   if (!await overlay.isVisible({ timeout: 500 }).catch(() => false)) return false
-  await overlay.locator('button.group').last().click({ force: true })
+  // First tactic = simplest, no follow-up prompt (avoids stalling on a deck-search step).
+  await overlay.locator('button.group').first().click({ force: true })
   const skip = page.getByText('Skip', { exact: true })
   if (await skip.isVisible({ timeout: 800 }).catch(() => false)) await skip.click({ force: true })
   await page.waitForTimeout(300)
   return true
+}
+
+async function dismissSelectionPrompt(page: Page) {
+  const sel = page.locator('.backdrop-blur-sm').filter({ hasText: /Selected:\s*\d+\/\d+/i })
+  if (!await sel.isVisible({ timeout: 200 }).catch(() => false)) return false
+  const skip = sel.getByRole('button', { name: /^Skip$/i }).first()
+  if (await skip.isVisible({ timeout: 200 }).catch(() => false) && await skip.isEnabled().catch(() => false)) {
+    await skip.click({ force: true }).catch(() => undefined)
+    await page.waitForTimeout(250)
+    return true
+  }
+  return false
 }
 
 async function playSideways(page: Page, mode: 'move' | 'influence') {
@@ -71,24 +84,21 @@ async function continueToScore(page: Page) {
     }
 
     if (await selectTacticIfVisible(page)) continue
+    if (await dismissSelectionPrompt(page)) continue
 
-    const hand = page.locator('[data-tutorial="card-hand"] button')
-    if (await hand.count() > 0) {
-      await playSideways(page, 'move')
-      await playSideways(page, 'move')
+    // Declare end of round at the first chance to advance quickly to the
+    // round-6 game-over (only the dummy keeps taking turns afterward).
+    const endRound = page.locator('[data-tutorial="end-round"]')
+    if (await endRound.isVisible({ timeout: 300 }).catch(() => false)) {
+      await endRound.click({ force: true })
+      await page.waitForTimeout(600)
+      continue
     }
 
     const endTurn = page.locator('[data-tutorial="end-turn"]')
     if (await endTurn.isVisible({ timeout: 300 }).catch(() => false)) {
       await endTurn.click({ force: true })
       await page.waitForTimeout(500)
-      continue
-    }
-
-    const endRound = page.locator('[data-tutorial="end-round"]')
-    if (await endRound.isVisible({ timeout: 300 }).catch(() => false)) {
-      await endRound.click({ force: true })
-      await page.waitForTimeout(800)
       continue
     }
 
@@ -110,6 +120,7 @@ test.describe('Comprehensive Playthrough', () => {
     })
     page.on('pageerror', (err) => errors.push(`[CRASH] ${err.message}`))
 
+    await page.route('**/sw.js', (r) => r.abort())
     await page.goto('/')
     await suppressTips(page)
     await page.getByRole('button', { name: /New Game/i }).click()

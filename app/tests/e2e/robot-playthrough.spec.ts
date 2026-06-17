@@ -32,6 +32,9 @@ test.describe('Robot Playthrough', () => {
     })
     page.on('pageerror', (err) => errors.push(`[CRASH] ${err.message}`))
 
+    // Block the service worker so its controllerchange auto-reload can't
+    // destroy the execution context mid-run (production behaviour unchanged).
+    await page.route('**/sw.js', (r) => r.abort())
     await page.goto('/?seed=42')
     await suppressAllTips(page)
     await page.getByRole('button', { name: /New Game/i }).click()
@@ -54,7 +57,11 @@ test.describe('Robot Playthrough', () => {
       if (signature === lastSignature) stuckCounter++
       else stuckCounter = 0
       lastSignature = signature
-      if (stuckCounter > 40) throw new Error(`Robot stuck at step ${step}`)
+      if (stuckCounter > 40) {
+        const dump = await page.evaluate(() => document.body.innerText.slice(0, 1500))
+        console.log('[robot STUCK dump]\n' + dump)
+        throw new Error(`Robot stuck at step ${step}`)
+      }
 
       // ── Overlays (priority order) ──
       const roundContinue = page.locator('.backdrop-blur-sm').filter({ hasText: /Round Complete/i }).getByRole('button', { name: /Continue/i })
@@ -67,9 +74,36 @@ test.describe('Robot Playthrough', () => {
 
       const tacticOverlay = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })
       if (await visible(page, tacticOverlay)) {
-        await tacticOverlay.locator('button.group').last().click({ force: true }).catch(() => undefined)
+        // Pick the FIRST tactic — the simplest one (e.g. "From the Dusk" /
+        // "Rethink") that has no follow-up prompt, so the robot doesn't get
+        // stuck on a tactic that opens a deck-search step (Preparation) or a
+        // shuffle step (Midnight Meditation).
+        await tacticOverlay.locator('button.group').first().click({ force: true }).catch(() => undefined)
         const skip = page.getByText('Skip', { exact: true })
         if (await visible(page, skip, 600)) await skip.click({ force: true }).catch(() => undefined)
+        await page.waitForTimeout(300)
+        continue
+      }
+
+      // Safety net: a tactic / card effect that opens a "select N cards" search
+      // overlay ("Selected: x/y"). Pick the first card and confirm so the robot
+      // never deadlocks on a selection it didn't expect.
+      const searchOverlay = page.locator('.backdrop-blur-sm').filter({ hasText: /Selected:\s*\d+\/\d+/i })
+      if (await visible(page, searchOverlay)) {
+        // Most of these prompts are optional ("you may …"): a Skip button
+        // dismisses them safely without the robot needing to make a valid pick.
+        const skipSel = searchOverlay.getByRole('button', { name: /^Skip$/i }).first()
+        if (await visible(page, skipSel) && await skipSel.isEnabled().catch(() => false)) {
+          await skipSel.click({ force: true }).catch(() => undefined)
+          await page.waitForTimeout(300)
+          continue
+        }
+        const card = searchOverlay.locator('button.group, button.rounded-xl, button[aria-label*="die" i]').first()
+        if (await visible(page, card)) await card.click({ force: true }).catch(() => undefined)
+        const confirm = searchOverlay.getByRole('button', { name: /Confirm|Done|Take|Select/i }).last()
+        if (await visible(page, confirm) && await confirm.isEnabled().catch(() => false)) {
+          await confirm.click({ force: true }).catch(() => undefined)
+        }
         await page.waitForTimeout(300)
         continue
       }

@@ -12,6 +12,8 @@ async function newGame(page: Page, url: string) {
     localStorage.setItem('ad_disabled', '1')
     ;['tipTactic','tipTurn','tipMove','tipCombat','tipDamage','tipLevelUp','tipSite','tipEndTurn'].forEach((k) => localStorage.setItem(`gameTips_seen_${k}`, '1'))
   })
+  // Block the service worker so its controllerchange auto-reload can't flake the run.
+  await page.route('**/sw.js', (r) => r.abort())
   await page.goto(url)
   await page.getByRole('button', { name: /New Game/i }).click()
     await page.getByRole("button", { name: /Arythea|아리시아/ }).first().click({ force: true, timeout: 5000 }).catch(() => undefined)
@@ -19,9 +21,32 @@ async function newGame(page: Page, url: string) {
   await page.waitForTimeout(1000)
   const tac = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })
   if (await tac.isVisible({ timeout: 2000 }).catch(() => false)) {
-    await tac.locator('button.group').last().click({ force: true })
+    await tac.locator('button.group').first().click({ force: true })
     await page.waitForTimeout(400)
   }
+}
+
+/** Explore toward an enemy and enter combat. The map varies by seed, so we can't
+ * rely on an enemy being adjacent at the start — move via opportunities / sideways. */
+async function reachCombat(page: Page): Promise<boolean> {
+  const fight = page.getByRole('button', { name: /Fight/i })
+  for (let attempt = 0; attempt < 30; attempt++) {
+    if (await fight.first().isVisible({ timeout: 800 }).catch(() => false)) {
+      await fight.first().click({ force: true }).catch(() => undefined)
+      await page.waitForTimeout(1000)
+      if (await page.locator('[aria-label="Combat"]').isVisible({ timeout: 1500 }).catch(() => false)) return true
+    }
+    const opp = page.locator('[data-tutorial="opportunities"] button').first()
+    if (await opp.isVisible({ timeout: 400 }).catch(() => false)) {
+      await opp.click({ force: true }).catch(() => undefined)
+      const confirm = page.getByRole('button', { name: /Confirm Move/i })
+      if (await confirm.isVisible({ timeout: 800 }).catch(() => false)) await confirm.click({ force: true }).catch(() => undefined)
+      await page.waitForTimeout(300)
+      continue
+    }
+    await playSidewaysMove(page)
+  }
+  return false
 }
 
 async function playSidewaysMove(page: Page) {
@@ -39,15 +64,8 @@ test.describe('ManaStrip in overlays', () => {
 
   test('combat tray exposes the mana strip with Source dice', async ({ page }) => {
     await newGame(page, '/?seed=3')
-    const fight = page.getByRole('button', { name: /^(Fight|⚔️ Fight|⚔ Fight)$/i })
-    let inCombat = false
-    for (let i = 0; i < 3; i++) {
-      if (await fight.first().isVisible({ timeout: 1500 }).catch(() => false)) {
-        await fight.first().click({ force: true })
-        await page.waitForTimeout(1000)
-        if (await page.locator('[aria-label="Combat"]').isVisible({ timeout: 1500 }).catch(() => false)) { inCombat = true; break }
-      }
-    }
+    await expect(page.locator('[data-tutorial="card-hand"] button').first()).toBeVisible({ timeout: 10_000 })
+    const inCombat = await reachCombat(page)
     expect(inCombat, 'should reach combat').toBe(true)
 
     const strip = page.locator('[aria-label="Combat"] [data-testid="mana-strip"]')

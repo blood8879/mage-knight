@@ -3207,11 +3207,22 @@ export function useGameEngine() {
 
     const nextDayNight = result.nextDayNight
 
+    // Tactics refresh every Round (rulebook, Tactics phase): used tactic cards
+    // are returned, so all six cards of the new Round's time (Day/Night) are
+    // available again. Without this the pool depletes after ~3 rounds and the
+    // Tactics phase has no cards to offer, leaving the game stuck at round_start.
+    const tacticsRaw = getTactics()
+    const refreshedTactics = [
+      ...tacticsRaw.dayTactics.map(toTacticCard),
+      ...tacticsRaw.nightTactics.map(toTacticCard),
+    ]
+
     let newState: GameState = {
       ...state,
       round: result.nextRound,
       dayNight: nextDayNight,
       phase: 'round_start' as GamePhase,
+      availableTactics: refreshedTactics,
       player: {
         ...state.player,
         deck: newDeck,

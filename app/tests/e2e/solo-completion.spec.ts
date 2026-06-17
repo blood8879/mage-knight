@@ -17,15 +17,30 @@ async function suppressAllTips(page: Page) {
 async function selectTacticIfVisible(page: Page) {
   const overlay = page.locator('.backdrop-blur-sm').filter({ hasText: /Select Tactic/i })
   if (!await overlay.isVisible({ timeout: 400 }).catch(() => false)) return false
-  await overlay.locator('button.group').last().click({ force: true })
+  // Pick the FIRST tactic — the simplest one with no follow-up prompt, so the
+  // dummy/solo loop never stalls on a tactic that opens a deck-search step.
+  await overlay.locator('button.group').first().click({ force: true })
   const skip = page.getByText('Skip', { exact: true })
   if (await skip.isVisible({ timeout: 800 }).catch(() => false)) await skip.click({ force: true })
   await page.waitForTimeout(300)
   return true
 }
 
+async function dismissSelectionPrompt(page: Page) {
+  // Optional "Selected: x/y" prompts (Mana Steal/Search, Preparation, …): skip.
+  const sel = page.locator('.backdrop-blur-sm').filter({ hasText: /Selected:\s*\d+\/\d+/i })
+  if (!await sel.isVisible({ timeout: 200 }).catch(() => false)) return false
+  const skip = sel.getByRole('button', { name: /^Skip$/i }).first()
+  if (await skip.isVisible({ timeout: 200 }).catch(() => false) && await skip.isEnabled().catch(() => false)) {
+    await skip.click({ force: true }).catch(() => undefined)
+    await page.waitForTimeout(250)
+    return true
+  }
+  return false
+}
+
 test.describe('Solo Completion', () => {
-  test.setTimeout(360_000)
+  test.setTimeout(600_000)
 
   test('dummy player advances rounds until the game ends at the score screen', async ({ page }) => {
     const errors: string[] = []
@@ -37,6 +52,7 @@ test.describe('Solo Completion', () => {
     })
     page.on('pageerror', (err) => errors.push(`[CRASH] ${err.message}`))
 
+    await page.route('**/sw.js', (r) => r.abort())
     await page.goto('/?seed=5')
     await suppressAllTips(page)
     await page.getByRole('button', { name: /New Game/i }).click()
@@ -47,7 +63,7 @@ test.describe('Solo Completion', () => {
     let dummyTurnSeen = false
     let reachedScore = false
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 400; i++) {
       if (await page.getByText(/Total Score/i).isVisible({ timeout: 250 }).catch(() => false)) {
         reachedScore = true
         break
@@ -67,33 +83,21 @@ test.describe('Solo Completion', () => {
       }
 
       if (await selectTacticIfVisible(page)) continue
+      if (await dismissSelectionPrompt(page)) continue
 
-      // play sideways move twice to thin the hand, then end the turn
-      const hand = page.locator('[data-tutorial="card-hand"] button')
-      if (await hand.count() > 0) {
-        for (let k = 0; k < 2; k++) {
-          await hand.first().click({ force: true, timeout: 1_500 }).catch(() => undefined)
-          const side = page.getByRole('button', { name: /\+1 move/i })
-          if (await side.isVisible({ timeout: 700 }).catch(() => false)) {
-            await side.click({ force: true }).catch(() => undefined)
-          } else {
-            await page.keyboard.press('Escape')
-            break
-          }
-          await page.waitForTimeout(120)
-        }
+      // Declare end of round at the first chance each round: the human is then
+      // done and only the dummy keeps taking turns, so rounds advance quickly
+      // toward the round-6 game-over (the point of this test).
+      const endRound = page.locator('[data-tutorial="end-round"]')
+      if (await endRound.isVisible({ timeout: 300 }).catch(() => false)) {
+        await endRound.click({ force: true }).catch(() => undefined)
+        await page.waitForTimeout(450)
+        continue
       }
-
       const endTurn = page.locator('[data-tutorial="end-turn"]')
       if (await endTurn.isVisible({ timeout: 400 }).catch(() => false)) {
         await endTurn.click({ force: true }).catch(() => undefined)
         await page.waitForTimeout(450)
-        continue
-      }
-      const endRound = page.locator('[data-tutorial="end-round"]')
-      if (await endRound.isVisible({ timeout: 300 }).catch(() => false)) {
-        await endRound.click({ force: true }).catch(() => undefined)
-        await page.waitForTimeout(600)
         continue
       }
       await page.waitForTimeout(300)

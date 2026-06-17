@@ -57,6 +57,14 @@ async function handleCombat(page: Page, log: (s: string) => void): Promise<boole
     await page.waitForTimeout(350)
     return true
   }
+  // Damage with no units is auto-assigned to the hero — just confirm it.
+  const confirmDamage = combatDialog.getByRole('button', { name: /Confirm Damage( Assignment)?/i }).first()
+  if (await confirmDamage.isVisible({ timeout: 250 }).catch(() => false)) {
+    log('confirm damage assignment')
+    await confirmDamage.click({ force: true })
+    await page.waitForTimeout(350)
+    return true
+  }
   const endCombat = combatDialog.getByRole('button', { name: /End Combat/i }).first()
   if (await endCombat.isVisible({ timeout: 250 }).catch(() => false)) {
     log('end combat')
@@ -199,6 +207,13 @@ test.describe('Tutorial Chapter 1', () => {
       await page.waitForTimeout(300)
     }
 
+    if (!completed) {
+      const cd = page.locator('[role="dialog"][aria-label="Combat"]').first()
+      const txt = await cd.innerText().catch(() => 'NO COMBAT DIALOG')
+      console.log('[stall combat dialog]\n' + txt.slice(0, 1200))
+      const btns = await cd.getByRole('button').allInnerTexts().catch(() => [])
+      console.log('[stall buttons] ' + JSON.stringify(btns))
+    }
     console.log(`Steps seen: ${[...seenSteps].join(', ')}`)
     console.log(`Completed: ${completed}`)
     console.log(`Console errors: ${errors.length ? errors.join('\n') : 'none'}`)
