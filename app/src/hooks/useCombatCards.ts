@@ -24,7 +24,7 @@ import { INITIAL_COMBAT_CARDS_STATE } from '@/engine/combatCardTypes'
 import {
   getActionValue,
   getActionElement,
-  getManaCost,
+  getCardEffect,
   isCardRelevantForPhase,
   getUnitCombatActions,
   isRangedAction,
@@ -222,7 +222,10 @@ export function useCombatCards(
         if (card.type === 'wound') return prev
         if (prev.usedCardIndices.has(handIndex)) return prev
 
-        const manaCost = effectType === 'strong' ? getManaCost(card) : undefined
+        // Spells cost mana for BOTH effects (basic = the spell's colour); Action
+        // cards have a free basic effect. Reading the chosen effect's manaCost
+        // handles both: actions' basicEffect has none, spells' basicSpell does.
+        const manaCost = getCardEffect(card, effectType)?.manaCost
 
         const play: CombatCardPlay = {
           id: nextPlayId(),

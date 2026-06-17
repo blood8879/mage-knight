@@ -102,12 +102,13 @@ export function useCombat() {
         }
       }
 
-      // Spend mana for strong effect plays
+      // Spend mana for any play that carries a mana cost. Strong Action effects
+      // and BOTH spell effects (basic spell = the spell's colour, strong spell =
+      // colour + black) set manaCost; free plays (Action basics, sideways,
+      // Concentration's free combo card) leave it undefined.
       const manaPool = sharedEngine.manaPool
       for (const play of plays) {
-        if (play.effectType !== 'strong' || !play.manaCost) continue
-        // Artifacts don't cost mana
-        if (play.manaCost === undefined) continue
+        if (!play.manaCost) continue
 
         const costs = Array.isArray(play.manaCost) ? play.manaCost : [play.manaCost]
         for (const cost of costs) {

@@ -116,6 +116,9 @@ interface PickerProps {
   onConcentration?: (idx: number, bonus: number) => void
   onPlayMana?: (idx: number, mode: 'basic' | 'strong', color?: ExtendedManaColor) => void
   dayNight?: 'day' | 'night'
+  canPlayBasic: boolean
+  /** Localized reason why the basic effect can't be played (spells need their colour mana) */
+  basicReason?: string
   canPlayStrong: boolean
   /** Localized reason why strong can't be played (e.g. "needs black mana at night") */
   strongReason?: string
@@ -145,7 +148,7 @@ function getImprovisationActionsForPhase(phase: CombatPhase, value: number): Car
   }
 }
 
-function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, onPlayMana, dayNight, canPlayStrong, strongReason }: PickerProps) {
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, onPlayMana, dayNight, canPlayBasic, basicReason, canPlayStrong, strongReason }: PickerProps) {
   const { t } = useTranslation('ui')
   if (card.type === 'wound') return null
   const manaCard = isManaCard(card)
@@ -159,6 +162,9 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
   // Concentration / Will Focus combo (boosts another Action card's strong effect)
   const comboBonus = getConcentrationBonus(card)
 
+  // Spells cost their colour mana even for the basic effect — show it as a badge
+  const spellBasicMana = card.type === 'spell' ? card.basicSpell.manaCost : undefined
+
   const bActs = isImprov
     ? getImprovisationActionsForPhase(phase, 3)
     : (basic ? filterActionsForPhase(basic.actions, phase) : [])
@@ -170,6 +176,7 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
 
   const pick = (eff: 'basic' | 'strong', a: CardAction) => {
     if (eff === 'strong' && !canPlayStrong) return // mana check
+    if (eff === 'basic' && !canPlayBasic) return // spells need their colour mana
     if (isImprov && onImprovisation) {
       onImprovisation(handIndex, eff, a)
       onClose()
@@ -209,11 +216,21 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
         </>
       )}
       {bNon.length > 0 && (
-        <PickerRow label={`${t('combat.basicEffect')}: ${bNon.map(fmtAction).join(', ')}`} icon={ACT_ICON[bNon[0].type] ?? '◈'}
+        <PickerRow
+          label={canPlayBasic
+            ? `${t('combat.basicEffect')}: ${bNon.map(fmtAction).join(', ')}`
+            : `${t('combat.basicEffect')}: ${bNon.map(fmtAction).join(', ')} (${basicReason ?? t('combat.noMana', 'No Mana')})`}
+          icon={ACT_ICON[bNon[0].type] ?? '◈'}
+          mana={spellBasicMana}
           onClick={() => pick('basic', bNon[0])} />
       )}
       {bChoice.map((a, i) => (
-        <PickerRow key={`bc-${i}`} label={`${t('combat.basicEffect')}: ${fmtAction(a)}`} icon={ACT_ICON[a.type] ?? '◈'}
+        <PickerRow key={`bc-${i}`}
+          label={canPlayBasic
+            ? `${t('combat.basicEffect')}: ${fmtAction(a)}`
+            : `${t('combat.basicEffect')}: ${fmtAction(a)} (${basicReason ?? t('combat.noMana', 'No Mana')})`}
+          icon={ACT_ICON[a.type] ?? '◈'}
+          mana={spellBasicMana}
           onClick={() => pick('basic', a)} />
       ))}
       {sNon.length > 0 && (
@@ -557,6 +574,8 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                                 onConcentration={handleConcentration}
                                 onPlayMana={handlePlayMana}
                                 dayNight={dayNight}
+                                canPlayBasic={strongEval?.canPlayBasic ?? true}
+                                basicReason={strongEval && !strongEval.canPlayBasic ? translateValidationReason(strongEval, t) : undefined}
                                 canPlayStrong={strongEval?.canPlayStrong ?? false}
                                 strongReason={strongEval && !strongEval.canPlayStrong ? translateValidationReason(strongEval, t) : undefined} />
                             )
