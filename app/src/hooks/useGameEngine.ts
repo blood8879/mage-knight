@@ -187,6 +187,12 @@ export function keepCityHandLimitBonus(state: GameState): number {
   let bonus = keeps.some((s) => near.has(hexKey(s.hexCoord))) ? keeps.length : 0
   const cities = state.player.conqueredSites.filter((s) => s.siteType === 'city')
   if (cities.some((s) => near.has(hexKey(s.hexCoord)))) bonus += 2
+  // Mountain Lore: +1 in hills (basic/strong); strong also gives +2 in mountains.
+  if (state.player.turn.mountainLore) {
+    const terrain = state.map.hexGrid.get(hexKey(pos))?.terrain
+    if (terrain === 'hills') bonus += 1
+    else if (terrain === 'mountain' && state.player.turn.mountainLore === 'strong') bonus += 2
+  }
   return bonus
 }
 
@@ -1473,6 +1479,11 @@ export function useGameEngine() {
             if (terrain === 'forest') resolution.healingValue += 2
           }
           resolvedTurn = engine.cardEffectResolver.applyToTurnState(resolvedTurn, resolution)
+          // Mountain Lore: flag the hand-limit bonus to apply if the turn ends in
+          // hills (basic/strong) or mountains (strong) at the next draw.
+          if (card.name === 'Mountain Lore') {
+            resolvedTurn = { ...resolvedTurn, mountainLore: mode === 'strong' ? 'strong' : 'basic' }
+          }
         }
       }
 

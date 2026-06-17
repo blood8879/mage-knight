@@ -428,6 +428,8 @@ export interface TurnState {
   healingAvailable?: number
   /** A village may be plundered only once per turn (rulebook). */
   hasPlunderedThisTurn?: boolean
+  /** Mountain Lore played this turn: hand-limit bonus if you end in hills/mountains. */
+  mountainLore?: 'basic' | 'strong'
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */
