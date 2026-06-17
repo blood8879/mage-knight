@@ -3661,8 +3661,6 @@ export function useGameEngine() {
     // Rulebook: a village may be plundered only once per turn.
     if (state.player.turn.hasPlunderedThisTurn) return
 
-    pushState(state)
-
     const newReputation = engine.reputationManager.changeReputation(state.player.reputation, -1)
     const newDeck = engine.deckManager.drawCards(state.player.deck, 2)
 
@@ -3677,7 +3675,11 @@ export function useGameEngine() {
     }
     newState = withLog(newState, 'interaction', 'Plundered village: drew 2 cards and lost 1 reputation')
     updateState(newState)
-  }, [updateState, withLog, pushState])
+    // Plunder draws 2 cards — hidden information is revealed, so it is a commit
+    // point: neither the plunder nor any earlier action can be undone (you
+    // cannot "unsee" the drawn cards). Mirrors tile exploration.
+    clearUndoStack()
+  }, [updateState, withLog, clearUndoStack])
 
   const endInteraction = useCallback(() => {
     const state = sharedState

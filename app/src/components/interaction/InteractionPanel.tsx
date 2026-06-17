@@ -601,7 +601,22 @@ export default function InteractionPanel() {
             </div>
 
             {/* ── Footer actions ── */}
-            <div className="flex shrink-0 items-center justify-end gap-2 border-t border-slate-700/50 bg-slate-800/60 px-3 py-2 sm:px-5 sm:py-3">
+            <div className="flex shrink-0 items-center justify-between gap-2 border-t border-slate-700/50 bg-slate-800/60 px-3 py-2 sm:px-5 sm:py-3">
+              {/* Undo — the interaction panel covers the top bar's undo button,
+                  so expose it here. Interaction actions all push undo states. */}
+              <button
+                type="button"
+                onClick={() => engine.undoLastAction()}
+                disabled={!engine.canUndo}
+                className={[
+                  'min-h-[44px] rounded-lg px-4 py-2.5 text-sm font-semibold shadow transition-all active:scale-[0.97]',
+                  engine.canUndo
+                    ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+                    : 'cursor-not-allowed bg-slate-800 text-slate-600',
+                ].join(' ')}
+              >
+                {'↩'} {t('game.undo', 'Undo')}
+              </button>
               <button
                 type="button"
                 onClick={() => engine.endInteraction()}
