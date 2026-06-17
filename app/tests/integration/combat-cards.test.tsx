@@ -110,6 +110,19 @@ describe('Combat card → declaration → resolution (real flow)', () => {
     expect(r.resolveBlock(combat, decls).enemies[0].isBlocked).toBe(true) // 6 ≥ swift req (3×2)
   })
 
+  it('Blood Rage special variant: Attack 5 (basic) — take-a-Wound upgrade value', () => {
+    const br = getAdvancedActions().find((c) => c.name === 'Blood Rage')
+    if (!br) return
+    const r = new CombatResolver(new SeededRandom(42))
+    const combat = r.initiateCombat([enemy({ armor: 5 })], false)
+    const { result } = renderHook(() => useCombatCards('attack', [br], [], combat.enemies, [], 'day'))
+    act(() => result.current.setActiveTarget(combat.enemies[0].instanceId))
+    act(() => result.current.playCardForPhase(0, 'basic', { type: 'special', value: 0 }))
+    const decls = result.current.buildAttackDeclarations()
+    expect(decls[0].attackValue).toBe(5)
+    expect(r.resolveMeleeAttack({ ...combat, phase: 'attack' }, decls).enemies[0].isDefeated).toBe(true)
+  })
+
   it('an element melee attack keeps its element (Ice Attack contributes as ice)', () => {
     const { combat, hook } = setup('attack', [basic('Rage')], enemy({ armor: 5 }))
     act(() => hook.current.setActiveTarget(combat.enemies[0].instanceId))

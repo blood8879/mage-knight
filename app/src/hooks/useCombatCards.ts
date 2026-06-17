@@ -126,6 +126,11 @@ function specialCombatBonus(
   if (name === 'Chivalry' && action.type === 'special') {
     return effectType === 'strong' ? 4 : 2
   }
+  // Blood Rage: the "special" variant takes a Wound to raise the Attack to 5
+  // (basic) / 9 (strong). The wound is gained at combat resolution (useCombat).
+  if (name === 'Blood Rage' && action.type === 'special') {
+    return effectType === 'strong' ? 9 : 5
+  }
   return 0
 }
 

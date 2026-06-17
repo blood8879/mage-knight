@@ -39,6 +39,7 @@ interface ProcessedPlays {
 const SOUL_HARVESTER_ID = 20
 const CHIVALRY_ID = 35
 const EXPOSE_ID = 3
+const BLOOD_RAGE_ID = 5
 
 /**
  * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
@@ -118,14 +119,20 @@ function applyAttackRewards(
   const reputation = chiv.reputation > 0
     ? engine.reputationManager.changeReputation(state.player.reputation, chiv.reputation)
     : state.player.reputation
-  const changed = !!processed || shCount > 0 || chiv.reputation > 0
+  // Blood Rage's "special" variant takes a Wound for its higher Attack.
+  const bloodRageWounds = plays.filter(
+    (p) => p.sourceType === 'card' && p.cardId === BLOOD_RAGE_ID && p.chosenAction?.type === 'special',
+  ).length
+  let deck = processed?.deck ?? state.player.deck
+  for (let i = 0; i < bloodRageWounds; i++) deck = engine.deckManager.addWound(deck, 1)
+  const changed = !!processed || shCount > 0 || chiv.reputation > 0 || bloodRageWounds > 0
   return {
     ...state,
     combat: resolved,
     ...(changed && {
       player: {
         ...state.player,
-        deck: processed?.deck ?? state.player.deck,
+        deck,
         units: processed?.units ?? state.player.units,
         turn: processed?.turn ?? state.player.turn,
         mana,

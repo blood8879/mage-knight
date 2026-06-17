@@ -1042,7 +1042,9 @@
     "unassignedAttackWarning": "Jugaste cartas de ataque pero no las asignaste a un enemigo. Pulsa un enemigo arriba primero, o las cartas se descartan sin ataque.",
     "confirmWasteAttacks": "Confirmar — descartar cartas",
     "manaDrawBasic": "Robo de maná: +1 dado de Fuente",
-    "manaDrawStrong": "Robo de maná: +2 maná {{color}}"
+    "manaDrawStrong": "Robo de maná: +2 maná {{color}}",
+    "bloodRageBasic": "Recibe una Herida → Ataque 5",
+    "bloodRageStrong": "Recibe una Herida → Ataque 9"
   },
   "interaction": {
     "title": "Site Interaction",

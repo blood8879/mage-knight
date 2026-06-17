@@ -1021,7 +1021,9 @@
     "unassignedAttackWarning": "You played attack cards but did not assign them to an enemy. Tap an enemy above first — otherwise the cards are discarded with no attack.",
     "confirmWasteAttacks": "Confirm — discard cards",
     "manaDrawBasic": "Mana Draw: +1 Source die",
-    "manaDrawStrong": "Mana Draw: +2 {{color}} mana"
+    "manaDrawStrong": "Mana Draw: +2 {{color}} mana",
+    "bloodRageBasic": "Take a Wound → Attack 5",
+    "bloodRageStrong": "Take a Wound → Attack 9"
   },
   "interaction": {
     "title": "Site Interaction",

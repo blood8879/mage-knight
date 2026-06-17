@@ -224,6 +224,21 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
           mana={spellBasicMana}
           onClick={() => pick('basic', bNon[0])} />
       )}
+      {/* Blood Rage: optional "take a Wound for a bigger Attack" variants. */}
+      {'name' in card && card.name === 'Blood Rage' && (phase === 'attack' || phase === 'ranged_siege') && (
+        <>
+          <PickerRow
+            label={t('combat.bloodRageBasic', { defaultValue: 'Take a Wound → Attack 5' })}
+            icon="🩸"
+            onClick={() => pick('basic', { type: 'special', value: 0 })} />
+          {canPlayStrong && (
+            <PickerRow
+              label={t('combat.bloodRageStrong', { defaultValue: 'Take a Wound → Attack 9' })}
+              icon="🩸" amber mana={mana}
+              onClick={() => pick('strong', { type: 'special', value: 0 })} />
+          )}
+        </>
+      )}
       {bChoice.map((a, i) => (
         <PickerRow key={`bc-${i}`}
           label={canPlayBasic
