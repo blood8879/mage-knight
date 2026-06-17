@@ -1594,7 +1594,7 @@ export function useGameEngine() {
         const deckAfter =
           resolution.gainAdvancedAction === 'hand'
             ? { ...newState.player.deck, hand: [...newState.player.deck.hand, offerCard] }
-            : engine.deckManager.addCardToDiscardPile(newState.player.deck, offerCard)
+            : engine.deckManager.addCardToTopOfDeck(newState.player.deck, offerCard)
         newState = {
           ...newState,
           player: { ...newState.player, deck: deckAfter },
@@ -1608,7 +1608,7 @@ export function useGameEngine() {
         const deckAfter =
           resolution.gainSpell === 'hand'
             ? { ...newState.player.deck, hand: [...newState.player.deck.hand, offerCard] }
-            : engine.deckManager.addCardToDiscardPile(newState.player.deck, offerCard)
+            : engine.deckManager.addCardToTopOfDeck(newState.player.deck, offerCard)
         newState = {
           ...newState,
           player: { ...newState.player, deck: deckAfter },
@@ -3480,7 +3480,7 @@ export function useGameEngine() {
         )
 
         const newOfferCards = state.offers.advancedActions.filter(c => c.id !== cardId)
-        const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+        const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
         let newState: GameState = {
           ...state,
@@ -3525,7 +3525,7 @@ export function useGameEngine() {
         const newUnits = state.offers.units.filter(
           (u) => !(u.type === 'advanced_action' && u.id === cardId),
         )
-        const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+        const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
         let newState: GameState = {
           ...state,
@@ -3569,7 +3569,7 @@ export function useGameEngine() {
         )
 
         const newOfferCards = state.offers.spells.filter(c => c.id !== cardId)
-        const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+        const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
         let newState: GameState = {
           ...state,
@@ -3603,7 +3603,7 @@ export function useGameEngine() {
 
       const card = artifactDeck[0]
       const newArtifactDeck = artifactDeck.slice(1)
-      const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+      const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
       let newState: GameState = {
         ...state,
@@ -3812,7 +3812,7 @@ export function useGameEngine() {
       }
 
       const newOfferCards = state.offers.advancedActions.filter((c) => c.id !== cardId)
-      const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+      const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
       let newState: GameState = {
         ...state,
@@ -3840,7 +3840,7 @@ export function useGameEngine() {
       }
 
       const newOfferCards = state.offers.spells.filter((c) => c.id !== cardId)
-      const newDeck = engine.deckManager.addCardToDiscardPile(state.player.deck, card)
+      const newDeck = engine.deckManager.addCardToTopOfDeck(state.player.deck, card)
 
       let newState: GameState = {
         ...state,
