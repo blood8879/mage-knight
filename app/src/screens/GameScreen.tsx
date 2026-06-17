@@ -1706,6 +1706,17 @@ export default function GameScreen() {
 
                 <UnitSlots units={units} unitLimit={unitLimit} onUnitClick={(idx) => { setUnitAbilityIndex(idx); setMobileDrawerOpen(false) }} />
 
+                <SkillPanel
+                  skills={engineState.player.skills}
+                  units={units}
+                  hand={engineState.player.deck.hand}
+                  playerMana={engineState.player.mana.playerMana}
+                  dayNight={dayNight}
+                  interactionActive={engineState.interaction?.isActive === true}
+                  combatActive={engineState.combat.isActive}
+                  onActivate={(skillIndex, options) => { engine.activateSkill(skillIndex, options); setMobileDrawerOpen(false) }}
+                />
+
                 <div className="border-t border-slate-800" />
 
                 {offers && (
