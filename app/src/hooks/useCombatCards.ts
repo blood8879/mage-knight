@@ -92,6 +92,7 @@ function specialCombatBonus(
   effectType: 'basic' | 'strong',
   action: CardAction,
   enemies: EnemyInstance[],
+  targetEnemyId: string | null,
 ): number {
   if (card.type === 'wound' || !('name' in card)) return 0
   const name = card.name
@@ -101,6 +102,17 @@ function specialCombatBonus(
   if (name.startsWith('Flame Wall') && effectType === 'strong' &&
       (action.type === 'fire_attack' || action.type === 'fire_block')) {
     return 2 * facing
+  }
+  // Cold Toughness (strong): +1 Ice Block for each special ability, colour of
+  // attack, and resistance on the blocked enemy token.
+  if (name.startsWith('Cold Toughness') && effectType === 'strong' && action.type === 'ice_block') {
+    const target = enemies.find((e) => e.instanceId === targetEnemyId)
+    if (!target) return 0
+    const ab = target.appliedAbilities
+    const resistances = ab.filter((a) => a.endsWith('_resistance')).length
+    const specials = ab.filter((a) => !a.endsWith('_resistance')).length
+    const hasColouredAttack = target.currentAttackType !== 'normal' ? 1 : 0
+    return resistances + specials + hasColouredAttack
   }
   return 0
 }
@@ -254,7 +266,7 @@ export function useCombatCards(
           cardName: getCardName(card),
           effectType,
           chosenAction,
-          value: getActionValue(chosenAction) + specialCombatBonus(card, effectType, chosenAction, enemies),
+          value: getActionValue(chosenAction) + specialCombatBonus(card, effectType, chosenAction, enemies, prev.activeTargetEnemyId),
           element: getActionElement(chosenAction),
           manaCost,
         }

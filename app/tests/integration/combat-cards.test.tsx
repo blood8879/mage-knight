@@ -82,6 +82,20 @@ describe('Combat card → declaration → resolution (real flow)', () => {
     expect(decls[0].attackValue).toBe(9) // 5 + 2×2
   })
 
+  it('Cold Toughness (strong): Ice Block 5 +1 per ability/colour/resistance of the blocked enemy', () => {
+    const ct = getBasicActions().heroSpecificCards.find((c) => c.name.startsWith('Cold Toughness'))
+    if (!ct) return // hero card not present
+    const r = new CombatResolver(new SeededRandom(42))
+    // enemy with fire+ice resistance (2), swift (1 special), fire attack (coloured) → +4
+    const combat = r.initiateCombat([enemy({ attack: 9, attackType: 'fire', abilities: ['fire_resistance', 'ice_resistance', 'swift'] })], false)
+    const { result } = renderHook(() => useCombatCards('block', [ct], [], combat.enemies, [], 'day'))
+    act(() => result.current.setActiveTarget(combat.enemies[0].instanceId))
+    act(() => result.current.assignBlockToEnemy(combat.enemies[0].instanceId))
+    act(() => result.current.playCardForPhase(0, 'strong', { type: 'ice_block', value: 5 }))
+    const decls = result.current.buildBlockDeclarations()
+    expect(decls[0].blockValue).toBe(9) // 5 + (2 resist + 1 swift + 1 coloured)
+  })
+
   it('an element melee attack keeps its element (Ice Attack contributes as ice)', () => {
     const { combat, hook } = setup('attack', [basic('Rage')], enemy({ armor: 5 }))
     act(() => hook.current.setActiveTarget(combat.enemies[0].instanceId))
