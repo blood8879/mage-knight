@@ -1502,6 +1502,12 @@ export function useGameEngine() {
       const crystalsGained: import('@/engine/types').ManaColor[] = [...(resolution?.crystalsGained ?? [])]
       const manaTokensGained: string[] = [...(resolution?.manaTokensGained ?? [])]
       const colorPicks = [...(options?.chosenColors ?? [])]
+      // Charm / Possess: when used during interaction, also gain a crystal of a
+      // chosen colour (the "−3 Unit discount" alternative is not modelled).
+      if (card.name.startsWith('Charm') && state.interaction?.isActive) {
+        const pick = colorPicks.shift()
+        if (pick && pick !== 'gold' && pick !== 'black') crystalsGained.push(pick)
+      }
       for (const action of resolution?.openCrystalActions ?? []) {
         const allowed = parseColorSpec(String(action.color ?? 'any_basic'))
         const pick = colorPicks.shift()

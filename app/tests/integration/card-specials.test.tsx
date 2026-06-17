@@ -38,3 +38,15 @@ describe('Restoration / Rebirth — forest heal bonus', () => {
     expect(h.state().player.turn.healingAvailable ?? 0).toBe(5)
   })
 })
+
+import { setupInteraction as setupInter } from './card-play-harness'
+
+describe('Charm / Possess — interaction crystal bonus', () => {
+  it('basic in interaction: Influence 4 AND gain a chosen crystal', () => {
+    const h = createHarness()
+    h.setState((s) => manaWith({ tokens: [tok('white')] })(setupInter([spell('Charm')])(s)))
+    h.run((e) => e.playCard(0, 'basic', { chosenColors: ['blue'] }))
+    expect(h.state().interaction?.influencePool).toBe(4)
+    expect(h.state().player.mana.crystals.blue).toBe(1)
+  })
+})
