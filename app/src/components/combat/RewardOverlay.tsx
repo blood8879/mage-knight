@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { useCardTranslation } from '@/hooks/useCardTranslation'
 import type { PendingReward, SpellCard, ManaColor } from '@/engine/types'
 
 interface RewardOverlayProps {
@@ -42,6 +43,7 @@ const panelVariants = {
 
 export default function RewardOverlay({ reward, spellOffer, onClaim }: RewardOverlayProps) {
   const { t } = useTranslation('ui')
+  const { getCardName, getCardBasicEffect } = useCardTranslation()
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [crystalColor, setCrystalColor] = useState<ManaColor | null>(null)
 
@@ -83,9 +85,9 @@ export default function RewardOverlay({ reward, spellOffer, onClaim }: RewardOve
                         : 'border-slate-700/50 bg-slate-800/60 hover:border-orange-500/40',
                     ].join(' ')}
                   >
-                    <span className="block text-sm font-bold text-slate-100">◆ {card.name}</span>
+                    <span className="block text-sm font-bold text-slate-100">◆ {getCardName(card)}</span>
                     <span className="mt-0.5 block text-[11px] leading-snug text-slate-400">
-                      {card.basicEffect.text}
+                      {getCardBasicEffect(card)}
                     </span>
                   </button>
                 )
@@ -128,9 +130,9 @@ export default function RewardOverlay({ reward, spellOffer, onClaim }: RewardOve
                         : 'border-slate-700/50 bg-slate-800/60 hover:border-cyan-500/40',
                     ].join(' ')}
                   >
-                    <span className="block text-sm font-bold text-slate-100">✦ {card.name}</span>
+                    <span className="block text-sm font-bold text-slate-100">✦ {getCardName(card)}</span>
                     <span className="mt-0.5 block text-[11px] leading-snug text-slate-400">
-                      {card.basicSpell.text}
+                      {getCardBasicEffect(card)}
                     </span>
                   </button>
                 )
