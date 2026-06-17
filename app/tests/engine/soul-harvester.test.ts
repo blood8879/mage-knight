@@ -50,3 +50,28 @@ describe('Chivalry special variant reward', () => {
     expect(chivalryReward([e('a', false)], [e('a', true)], [normal])).toEqual({ reputation: 0, fame: 0 })
   })
 })
+
+import { applyExpose } from '@/hooks/useCombat'
+
+function fortifiedResistant(id: string): EnemyInstance {
+  return { ...e(id, false), isFortified: true, appliedAbilities: ['fortified', 'fire_resistance', 'ice_resistance', 'swift'] }
+}
+function exposePlay(effectType: 'basic' | 'strong'): CombatCardPlay {
+  return { id: 'px', sourceType: 'card', cardIndex: 0, cardId: 3, cardName: 'Expose', effectType, chosenAction: { type: 'ranged_attack', value: 2 }, value: 2, element: 'physical' }
+}
+
+describe('Expose / Mass Expose strips fortifications and resistances', () => {
+  it('basic: strongest enemy loses fortified + resistances (keeps other abilities)', () => {
+    const out = applyExpose([fortifiedResistant('a')], [exposePlay('basic')])
+    expect(out[0].isFortified).toBe(false)
+    expect(out[0].appliedAbilities).toEqual(['swift']) // resistances + fortified removed, swift kept
+  })
+  it('strong (Mass Expose): all enemies lose fortifications + resistances', () => {
+    const out = applyExpose([fortifiedResistant('a'), fortifiedResistant('b')], [exposePlay('strong')])
+    expect(out.every((x) => !x.isFortified && !x.appliedAbilities.some((ab) => ab.endsWith('_resistance')))).toBe(true)
+  })
+  it('no Expose play → enemies unchanged', () => {
+    const inp = [fortifiedResistant('a')]
+    expect(applyExpose(inp, [])).toBe(inp)
+  })
+})

@@ -38,6 +38,7 @@ interface ProcessedPlays {
 
 const SOUL_HARVESTER_ID = 20
 const CHIVALRY_ID = 35
+const EXPOSE_ID = 3
 
 /**
  * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
@@ -71,6 +72,32 @@ export function chivalryReward(
   const wasDefeated = new Set(before.filter((e) => e.isDefeated).map((e) => e.instanceId))
   const newlyDefeated = after.filter((e) => e.isDefeated && !wasDefeated.has(e.instanceId)).length
   return { reputation: newlyDefeated, fame: ch.effectType === 'strong' ? newlyDefeated : 0 }
+}
+
+/**
+ * Expose / Mass Expose: the targeted enemy (basic, the strongest standing one)
+ * or every enemy (strong) loses all fortifications and resistances this combat.
+ */
+export function applyExpose(enemies: EnemyInstance[], plays: CombatCardPlay[]): EnemyInstance[] {
+  const exposePlays = plays.filter((p) => p.sourceType === 'card' && p.cardId === EXPOSE_ID)
+  if (exposePlays.length === 0) return enemies
+  const strip = (e: EnemyInstance): EnemyInstance => ({
+    ...e,
+    isFortified: false,
+    appliedAbilities: e.appliedAbilities.filter((ab) => ab !== 'fortified' && !ab.endsWith('_resistance')),
+  })
+  let result = enemies
+  for (const p of exposePlays) {
+    if (p.effectType === 'strong') {
+      result = result.map((e) => (e.isDefeated ? e : strip(e)))
+    } else {
+      // strongest standing enemy
+      const standing = result.map((e, i) => ({ e, i })).filter(({ e }) => !e.isDefeated)
+      const idx = standing.sort((a, b) => b.e.currentArmor - a.e.currentArmor)[0]?.i ?? -1
+      if (idx >= 0) result = result.map((e, i) => (i === idx ? strip(e) : e))
+    }
+  }
+  return result
 }
 
 /** Apply post-resolution attack rewards (Soul Harvester crystals, Chivalry
@@ -298,6 +325,7 @@ export function useCombat() {
           }
         }
       }
+      enemies = applyExpose(enemies, plays)
       return { ...combat, enemies }
     },
     [],
