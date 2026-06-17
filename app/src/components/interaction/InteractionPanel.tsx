@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +6,7 @@ import { useGameEngine } from '@/hooks/useGameEngine'
 import { useGameStore } from '@/store/gameStore'
 import { useCardTranslation } from '@/hooks/useCardTranslation'
 import ManaStrip from '@/components/common/ManaStrip'
+import CardDetail from '@/components/cards/CardDetail'
 import { validateCardPlay } from '@/engine/CardPlayValidator'
 import type {
   InteractionSiteType,
@@ -99,6 +100,9 @@ export default function InteractionPanel() {
   const engineState = useGameStore((s) => s.engineState)
 
   const engine = useGameEngine()
+
+  // Card detail modal — lets the player read a purchasable card's effect text
+  const [detailCard, setDetailCard] = useState<DeedCard | null>(null)
 
   const interaction = engineState?.interaction
   const isVisible = interaction?.isActive === true && phase === 'interaction'
@@ -253,7 +257,13 @@ export default function InteractionPanel() {
   const cityHint = getCityColorHint(cityColor, t)
 
   return createPortal(
-    <AnimatePresence>
+    <>
+      <CardDetail
+        card={detailCard}
+        isOpen={detailCard !== null}
+        onClose={() => setDetailCard(null)}
+      />
+      <AnimatePresence>
       {isVisible && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center p-3"
@@ -512,6 +522,7 @@ export default function InteractionPanel() {
                             canAfford={canAfford}
                             hasMana={hasMana}
                             requiredManaColor={spellColor}
+                            onViewDetail={() => setDetailCard(card as DeedCard)}
                             onPurchase={() => {
                               if (cardType === 'advanced_action') {
                                 if (siteType === 'monastery') {
@@ -628,7 +639,8 @@ export default function InteractionPanel() {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>,
+      </AnimatePresence>
+    </>,
     document.body,
   )
 }
@@ -679,6 +691,7 @@ function CardRow({
   hasMana,
   requiredManaColor,
   onPurchase,
+  onViewDetail,
   t,
 }: {
   card: AdvancedActionCard | SpellCard | ArtifactCard
@@ -688,6 +701,7 @@ function CardRow({
   hasMana: boolean
   requiredManaColor?: ManaColor
   onPurchase: () => void
+  onViewDetail?: () => void
   t: (key: string, opts?: Record<string, unknown>) => string
 }) {
   const labelKey =
@@ -719,9 +733,17 @@ function CardRow({
     <div className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/20 bg-slate-800/30 px-3 py-2">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-semibold text-slate-200">
-            {card.name}
-          </span>
+          <button
+            type="button"
+            onClick={onViewDetail}
+            className="flex min-w-0 items-center gap-1 text-left"
+            title={t('combat.viewCardDetail', { defaultValue: 'View card details' })}
+          >
+            <span className="truncate text-sm font-semibold text-slate-200 underline decoration-slate-600 decoration-dotted underline-offset-2">
+              {card.name}
+            </span>
+            <span className="shrink-0 text-[10px] text-slate-500">ⓘ</span>
+          </button>
           <span
             className={[
               'shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold uppercase',
