@@ -114,6 +114,12 @@ function specialCombatBonus(
     const hasColouredAttack = target.currentAttackType !== 'normal' ? 1 : 0
     return resistances + specials + hasColouredAttack
   }
+  // Shield Bash: its Block counts twice against an attack with Swiftness
+  // (i.e. the block value is doubled when blocking a Swift enemy).
+  if (name.startsWith('Shield Bash') && action.type === 'block') {
+    const target = enemies.find((e) => e.instanceId === targetEnemyId)
+    if (target?.appliedAbilities.includes('swift')) return getActionValue(action)
+  }
   return 0
 }
 

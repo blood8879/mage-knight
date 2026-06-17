@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react'
 import { CombatResolver } from '@/engine/CombatResolver'
 import { SeededRandom } from '@/utils/random'
 import { useCombatCards } from '@/hooks/useCombatCards'
-import { getBasicActions, getSpells } from '@/data/loader'
+import { getBasicActions, getSpells, getAdvancedActions } from '@/data/loader'
 import type { EnemyToken, AnyCard, CombatPhase } from '@/engine/types'
 
 function spell(name: string): AnyCard {
@@ -94,6 +94,20 @@ describe('Combat card → declaration → resolution (real flow)', () => {
     act(() => result.current.playCardForPhase(0, 'strong', { type: 'ice_block', value: 5 }))
     const decls = result.current.buildBlockDeclarations()
     expect(decls[0].blockValue).toBe(9) // 5 + (2 resist + 1 swift + 1 coloured)
+  })
+
+  it('Shield Bash: Block counts twice against a Swift enemy (Block 3 → 6)', () => {
+    const sb = getAdvancedActions().find((c) => c.name.startsWith('Shield Bash'))
+    if (!sb) return
+    const r = new CombatResolver(new SeededRandom(42))
+    const combat = r.initiateCombat([enemy({ attack: 3, abilities: ['swift'] })], false)
+    const { result } = renderHook(() => useCombatCards('block', [sb], [], combat.enemies, [], 'day'))
+    act(() => result.current.setActiveTarget(combat.enemies[0].instanceId))
+    act(() => result.current.assignBlockToEnemy(combat.enemies[0].instanceId))
+    act(() => result.current.playCardForPhase(0, 'basic', { type: 'block', value: 3 }))
+    const decls = result.current.buildBlockDeclarations()
+    expect(decls[0].blockValue).toBe(6) // doubled vs swift
+    expect(r.resolveBlock(combat, decls).enemies[0].isBlocked).toBe(true) // 6 ≥ swift req (3×2)
   })
 
   it('an element melee attack keeps its element (Ice Attack contributes as ice)', () => {
