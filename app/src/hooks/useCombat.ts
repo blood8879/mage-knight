@@ -36,6 +36,26 @@ interface ProcessedPlays {
   fameBonus: number
 }
 
+const SOUL_HARVESTER_ID = 20
+
+/**
+ * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
+ * Basic = one crystal if it defeats anything; Strong = one per enemy defeated
+ * in this phase. Returns the number of crystals to gain (white by default).
+ */
+export function soulHarvesterReward(
+  before: EnemyInstance[],
+  after: EnemyInstance[],
+  plays: CombatCardPlay[],
+): number {
+  const sh = plays.find((p) => p.cardId === SOUL_HARVESTER_ID && p.sourceType === 'card')
+  if (!sh) return 0
+  const wasDefeated = new Set(before.filter((e) => e.isDefeated).map((e) => e.instanceId))
+  const newlyDefeated = after.filter((e) => e.isDefeated && !wasDefeated.has(e.instanceId)).length
+  if (newlyDefeated === 0) return 0
+  return sh.effectType === 'strong' ? newlyDefeated : 1
+}
+
 export function useCombat() {
   const engine = useGameEngine()
   const combatState = useGameStore((s) => s.combat)
@@ -237,17 +257,20 @@ export function useCombat() {
       const resolver = sharedEngine.combatResolver
       const preCombat = applyCombatSpecials(combatState, plays)
       const resolved = resolver.resolveRangedSiegeAttack(preCombat, attacks)
+      let shMana = processed?.mana ?? engineState.player.mana
+      const shCount = soulHarvesterReward(combatState.enemies, resolved.enemies, plays)
+      for (let i = 0; i < shCount; i++) shMana = sharedEngine.manaPool.addCrystal(shMana, 'white')
       const newState = {
         ...engineState,
         combat: resolved,
-        ...(processed && {
+        ...((processed || shCount > 0) && {
           player: {
             ...engineState.player,
-            deck: processed.deck,
-            units: processed.units,
-            turn: processed.turn,
-            mana: processed.mana,
-            skills: processed.skills,
+            deck: processed?.deck ?? engineState.player.deck,
+            units: processed?.units ?? engineState.player.units,
+            turn: processed?.turn ?? engineState.player.turn,
+            mana: shMana,
+            skills: processed?.skills ?? engineState.player.skills,
           },
         }),
       }
@@ -322,17 +345,20 @@ export function useCombat() {
       const processed = plays.length > 0 ? processCardPlays(plays) : null
       const resolver = sharedEngine.combatResolver
       const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), attacks)
+      let shMana = processed?.mana ?? engineState.player.mana
+      const shCount = soulHarvesterReward(combatState.enemies, resolved.enemies, plays)
+      for (let i = 0; i < shCount; i++) shMana = sharedEngine.manaPool.addCrystal(shMana, 'white')
       const newState = {
         ...engineState,
         combat: resolved,
-        ...(processed && {
+        ...((processed || shCount > 0) && {
           player: {
             ...engineState.player,
-            deck: processed.deck,
-            units: processed.units,
-            turn: processed.turn,
-            mana: processed.mana,
-            skills: processed.skills,
+            deck: processed?.deck ?? engineState.player.deck,
+            units: processed?.units ?? engineState.player.units,
+            turn: processed?.turn ?? engineState.player.turn,
+            mana: shMana,
+            skills: processed?.skills ?? engineState.player.skills,
           },
         }),
       }
