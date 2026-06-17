@@ -3,8 +3,14 @@ import { renderHook, act } from '@testing-library/react'
 import { CombatResolver } from '@/engine/CombatResolver'
 import { SeededRandom } from '@/utils/random'
 import { useCombatCards } from '@/hooks/useCombatCards'
-import { getBasicActions } from '@/data/loader'
+import { getBasicActions, getSpells } from '@/data/loader'
 import type { EnemyToken, AnyCard, CombatPhase } from '@/engine/types'
+
+function spell(name: string): AnyCard {
+  const c = getSpells().find((x) => x.name.startsWith(name))
+  if (!c) throw new Error(name)
+  return c
+}
 
 // Drive combat the way the UI does: cards → plays → AttackDeclaration → resolve.
 
@@ -64,6 +70,16 @@ describe('Combat card → declaration → resolution (real flow)', () => {
     expect(decls[0].blockValue).toBe(5)
     const out = r.resolveBlock(combat, decls)
     expect(out.enemies[0].isBlocked).toBe(true)
+  })
+
+  it('Flame Wave (strong): Fire Attack 5 +2 per enemy you face (2 enemies → 9)', () => {
+    const r = new CombatResolver(new SeededRandom(42))
+    const combat = r.initiateCombat([enemy({ armor: 9 }), enemy({ id: 2, armor: 3 })], false)
+    const { result } = renderHook(() => useCombatCards('attack', [spell('Flame Wall')], [], combat.enemies, [], 'day'))
+    act(() => result.current.setActiveTarget(combat.enemies[0].instanceId))
+    act(() => result.current.playCardForPhase(0, 'strong', { type: 'fire_attack', value: 5 }))
+    const decls = result.current.buildAttackDeclarations()
+    expect(decls[0].attackValue).toBe(9) // 5 + 2×2
   })
 
   it('an element melee attack keeps its element (Ice Attack contributes as ice)', () => {

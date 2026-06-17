@@ -86,6 +86,25 @@ export interface UseCombatCardsReturn {
   buildBlockDeclarations: () => BlockDeclaration[]
 }
 
+// ── Card "special" combat value bonuses (verified vs card text) ──────────────
+function specialCombatBonus(
+  card: AnyCard,
+  effectType: 'basic' | 'strong',
+  action: CardAction,
+  enemies: EnemyInstance[],
+): number {
+  if (card.type === 'wound' || !('name' in card)) return 0
+  const name = card.name
+  const facing = enemies.filter((e) => !e.isDefeated).length
+  // Flame Wall / Flame Wave (strong): the Fire Attack/Block is increased by 2
+  // for each enemy token you are facing.
+  if (name.startsWith('Flame Wall') && effectType === 'strong' &&
+      (action.type === 'fire_attack' || action.type === 'fire_block')) {
+    return 2 * facing
+  }
+  return 0
+}
+
 // ── Element combination helper ──────────────
 
 function combineElements(plays: CombatCardPlay[]): Element {
@@ -235,7 +254,7 @@ export function useCombatCards(
           cardName: getCardName(card),
           effectType,
           chosenAction,
-          value: getActionValue(chosenAction),
+          value: getActionValue(chosenAction) + specialCombatBonus(card, effectType, chosenAction, enemies),
           element: getActionElement(chosenAction),
           manaCost,
         }
@@ -252,7 +271,7 @@ export function useCombatCards(
         return autoAssignPlay(play, nextState)
       })
     },
-    [hand, nextPlayId, autoAssignPlay],
+    [hand, nextPlayId, autoAssignPlay, enemies],
   )
 
   // ── playCardSideways ──────────────────────
