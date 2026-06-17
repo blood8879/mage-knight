@@ -26,12 +26,33 @@ async function enterCombat(page: Page): Promise<boolean> {
   }
 
   const fightBtn = page.getByRole('button', { name: /^(Fight|⚔️ Fight)$/i }).or(page.getByRole('button', { name: /Fight/i }))
-  for (let attempt = 0; attempt < 3; attempt++) {
-    if (await fightBtn.first().isVisible({ timeout: 2_000 }).catch(() => false)) {
+  const playSideways = async () => {
+    const hand = page.locator('[data-tutorial="card-hand"] button')
+    if (await hand.count() === 0) return
+    await hand.first().click({ force: true, timeout: 1500 }).catch(() => undefined)
+    const side = page.getByRole('button', { name: /\+1 move/i })
+    if (await side.isVisible({ timeout: 800 }).catch(() => false)) await side.click({ force: true }).catch(() => undefined)
+    else await page.keyboard.press('Escape')
+    await page.waitForTimeout(120)
+  }
+  // Explore toward an enemy: try Fight; otherwise move (sideways + opportunities)
+  // and reveal tiles until a Fight becomes available. The map varies by seed so
+  // we can't rely on an enemy being adjacent at the start.
+  for (let attempt = 0; attempt < 30; attempt++) {
+    if (await fightBtn.first().isVisible({ timeout: 800 }).catch(() => false)) {
       await fightBtn.first().click({ force: true }).catch(() => undefined)
-      await page.waitForTimeout(1200)
-      if (await page.locator('[aria-label="Combat"]').isVisible({ timeout: 2_000 }).catch(() => false)) return true
+      await page.waitForTimeout(1000)
+      if (await page.locator('[aria-label="Combat"]').isVisible({ timeout: 1500 }).catch(() => false)) return true
     }
+    const opp = page.locator('[data-tutorial="opportunities"] button').first()
+    if (await opp.isVisible({ timeout: 400 }).catch(() => false)) {
+      await opp.click({ force: true }).catch(() => undefined)
+      const confirm = page.getByRole('button', { name: /Confirm Move/i })
+      if (await confirm.isVisible({ timeout: 800 }).catch(() => false)) await confirm.click({ force: true }).catch(() => undefined)
+      await page.waitForTimeout(300)
+      continue
+    }
+    await playSideways()
   }
   return false
 }
@@ -49,6 +70,9 @@ test.describe('Combat card picker visibility', () => {
     })
     page.on('pageerror', (err) => errors.push(`[CRASH] ${err.message}`))
 
+    // Block the service worker so its controllerchange auto-reload can't flake
+    // the run (production behaviour is unchanged; test context only).
+    await page.route('**/sw.js', (r) => r.abort())
     await page.goto('/?seed=3')
     const inCombat = await enterCombat(page)
     expect(inCombat, 'should reach a combat encounter').toBe(true)
