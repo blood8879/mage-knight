@@ -1467,6 +1467,11 @@ export function useGameEngine() {
           // Honor the player's pick among choice actions (Tranquility heal-vs-draw…)
           const selected = selectEffectActions(effectToResolve, options?.chosenActionIndex)
           resolution = engine.cardEffectResolver.resolveEffect(selected, state.dayNight)
+          // Restoration / Rebirth: Heal 5 instead of 3 when in a forest.
+          if (card.name.startsWith('Restoration') && resolution.healingValue > 0) {
+            const terrain = state.map.hexGrid.get(hexKey(state.player.position))?.terrain
+            if (terrain === 'forest') resolution.healingValue += 2
+          }
           resolvedTurn = engine.cardEffectResolver.applyToTurnState(resolvedTurn, resolution)
         }
       }
