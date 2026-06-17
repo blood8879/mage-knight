@@ -433,6 +433,9 @@ export interface TurnState {
   /** Steady Tempo played this turn: at end of turn it returns to the deck
    *  (bottom for basic, top for strong) instead of the discard pile. */
   steadyTempo?: 'basic' | 'strong'
+  /** Ambush played this turn: +bonus to the FIRST Attack OR FIRST Block in
+   *  combat, whichever is played first this turn. Consumed once. */
+  ambush?: { attackBonus: number; blockBonus: number }
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */

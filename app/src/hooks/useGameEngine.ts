@@ -1502,6 +1502,16 @@ export function useGameEngine() {
           if (card.name === 'Steady Tempo') {
             resolvedTurn = { ...resolvedTurn, steadyTempo: mode === 'strong' ? 'strong' : 'basic' }
           }
+          // Ambush: +1/+2 (basic) or +2/+4 (strong) to the FIRST Attack OR Block
+          // card played in combat this turn, whichever comes first.
+          if (card.name === 'Ambush') {
+            resolvedTurn = {
+              ...resolvedTurn,
+              ambush: mode === 'strong'
+                ? { attackBonus: 2, blockBonus: 4 }
+                : { attackBonus: 1, blockBonus: 2 },
+            }
+          }
         }
       }
 

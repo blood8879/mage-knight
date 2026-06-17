@@ -36,6 +36,12 @@ interface ProcessedPlays {
   fameBonus: number
 }
 
+/** Clear a consumed Ambush bonus from the turn state so it only applies once. */
+function clearAmbush<T extends { player: { turn: TurnState } }>(state: T): T {
+  if (!state.player.turn.ambush) return state
+  return { ...state, player: { ...state.player, turn: { ...state.player.turn, ambush: undefined } } }
+}
+
 const SOUL_HARVESTER_ID = 20
 const CHIVALRY_ID = 35
 const EXPOSE_ID = 3
@@ -100,6 +106,33 @@ export function applyExpose(enemies: EnemyInstance[], plays: CombatCardPlay[]): 
     }
   }
   return result
+}
+
+/** Ambush (AA): +bonus to the FIRST Attack OR Block played in combat this turn,
+ *  whichever is played first. These pure helpers boost the first declaration in
+ *  play order; the caller clears turn.ambush once consumed so it applies once. */
+export function applyAmbushAttackBonus(
+  attacks: AttackDeclaration[],
+  ambush: { attackBonus: number; blockBonus: number } | undefined,
+): { attacks: AttackDeclaration[]; consumed: boolean } {
+  if (!ambush || ambush.attackBonus <= 0 || attacks.length === 0) return { attacks, consumed: false }
+  const [first, ...rest] = attacks
+  return {
+    attacks: [{ ...first, attackValue: first.attackValue + ambush.attackBonus }, ...rest],
+    consumed: true,
+  }
+}
+
+export function applyAmbushBlockBonus(
+  blocks: BlockDeclaration[],
+  ambush: { attackBonus: number; blockBonus: number } | undefined,
+): { blocks: BlockDeclaration[]; consumed: boolean } {
+  if (!ambush || ambush.blockBonus <= 0 || blocks.length === 0) return { blocks, consumed: false }
+  const [first, ...rest] = blocks
+  return {
+    blocks: [{ ...first, blockValue: first.blockValue + ambush.blockBonus }, ...rest],
+    consumed: true,
+  }
 }
 
 /** Apply post-resolution attack rewards (Soul Harvester crystals, Chivalry
@@ -354,10 +387,12 @@ export function useCombat() {
       const processed = plays.length > 0 ? processCardPlays(plays) : null
       const resolver = sharedEngine.combatResolver
       const preCombat = applyCombatSpecials(combatState, plays)
-      const resolved = resolver.resolveRangedSiegeAttack(preCombat, attacks)
+      const { attacks: boostedAttacks, consumed } = applyAmbushAttackBonus(attacks, engineState.player.turn.ambush)
+      const resolved = resolver.resolveRangedSiegeAttack(preCombat, boostedAttacks)
       const newState = applyAttackRewards(sharedEngine, engineState, combatState.enemies, resolved, plays, processed)
       const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
-      const finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
+      let finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
+      if (consumed) finalState = clearAmbush(finalState)
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])
@@ -379,7 +414,8 @@ export function useCombat() {
       // Keep summon semantics centralized in CombatResolver so UI hooks stay type-safe.
       const currentCombatState = applyCombatSpecials(resolver.processSummons(combatState), plays)
 
-      const resolved = resolver.resolveBlock(currentCombatState, blocks)
+      const { blocks: boostedBlocks, consumed } = applyAmbushBlockBonus(blocks, engineState.player.turn.ambush)
+      const resolved = resolver.resolveBlock(currentCombatState, boostedBlocks)
       const newState = {
         ...engineState,
         combat: resolved,
@@ -394,9 +430,10 @@ export function useCombat() {
           },
         }),
       }
-      const finalState = processed && processed.fameBonus > 0
+      let finalState = processed && processed.fameBonus > 0
         ? applyFameGain(sharedEngine, newState, processed.fameBonus)
         : newState
+      if (consumed) finalState = clearAmbush(finalState)
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingBlocks([])
@@ -425,10 +462,12 @@ export function useCombat() {
       if (!engineState || !sharedEngine) return
       const processed = plays.length > 0 ? processCardPlays(plays) : null
       const resolver = sharedEngine.combatResolver
-      const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), attacks)
+      const { attacks: boostedAttacks, consumed } = applyAmbushAttackBonus(attacks, engineState.player.turn.ambush)
+      const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), boostedAttacks)
       const newState = applyAttackRewards(sharedEngine, engineState, combatState.enemies, resolved, plays, processed)
       const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
-      const finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
+      let finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
+      if (consumed) finalState = clearAmbush(finalState)
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])
