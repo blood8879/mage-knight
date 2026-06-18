@@ -483,7 +483,10 @@ export class TacticEffectManager {
   }
 }
 
-export function canActivateTactic(tactic: TacticCard | null): {
+export function canActivateTactic(
+  tactic: TacticCard | null,
+  manaSearchUsedThisTurn = false,
+): {
   rightMoment: boolean
   longNight: boolean
   midnightMeditation: boolean
@@ -511,6 +514,7 @@ export function canActivateTactic(tactic: TacticCard | null): {
     sparingPowerStore: tactic.id === 12 && !tactic.isUsed,
     sparingPowerRetrieve: tactic.id === 12 && !tactic.isUsed && (tactic.storedCards?.length ?? 0) > 0,
     manaStealUse: tactic.id === 3 && !!tactic.storedDie,
-    manaSearch: tactic.id === 9,
+    // Mana Search is once per turn (rulebook)
+    manaSearch: tactic.id === 9 && !manaSearchUsedThisTurn,
   }
 }

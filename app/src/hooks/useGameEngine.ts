@@ -1060,6 +1060,8 @@ export function useGameEngine() {
           result = engine.tacticEffectManager.useManaStealDie(tactic, state.player.mana)
           break
         case 'mana_search': {
+          // Mana Search is once per turn — bail if already used this turn.
+          if (state.player.turn.manaSearchUsedThisTurn) return
           const searchResult = engine.tacticEffectManager.applyManaSearch(
             state.player.mana, options?.manaSearchDieIds,
           )
@@ -1084,6 +1086,12 @@ export function useGameEngine() {
 
       if (result.grantExtraTurn) {
         newState = { ...newState, player: { ...newState.player, turn: { ...newState.player.turn, extraTurnGranted: true } } }
+      }
+
+      // Mana Search is once per turn — record that it was used so the button
+      // disables until the next turn.
+      if (action === 'mana_search') {
+        newState = { ...newState, player: { ...newState.player, turn: { ...newState.player.turn, manaSearchUsedThisTurn: true } } }
       }
 
       updateState(newState)

@@ -428,6 +428,8 @@ export interface TurnState {
   healingAvailable?: number
   /** A village may be plundered only once per turn (rulebook). */
   hasPlunderedThisTurn?: boolean
+  /** Mana Search tactic may be used only once per turn (rulebook). */
+  manaSearchUsedThisTurn?: boolean
   /** Mountain Lore played this turn: hand-limit bonus if you end in hills/mountains. */
   mountainLore?: 'basic' | 'strong'
   /** Steady Tempo played this turn: at end of turn it returns to the deck

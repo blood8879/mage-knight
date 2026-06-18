@@ -67,7 +67,10 @@ export default function TopBar({ onEndTurn, onRest, onDeclareEndOfRound, onUndo,
   const crystals = engineState?.player.mana.crystals ?? { red: 0, blue: 0, green: 0, white: 0 }
 
   const currentTactic = engineState?.player.currentTactic ?? null
-  const tacticActions = canActivateTactic(currentTactic)
+  const tacticActions = canActivateTactic(
+    currentTactic,
+    engineState?.player.turn.manaSearchUsedThisTurn ?? false,
+  )
   const deckEmpty = engineState?.player.deck.drawPile.length === 0
 
   return (

@@ -133,6 +133,7 @@ export class TurnManager {
       healingAvailable: 0,
       terrainModifiers: [],
       hasPlunderedThisTurn: false,
+      manaSearchUsedThisTurn: false,
     }
   }
 
