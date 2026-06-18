@@ -1543,6 +1543,11 @@ export function useGameEngine() {
           ) {
             resolvedTurn = { ...resolvedTurn, drawPerWoundHeal: (resolvedTurn.drawPerWoundHeal ?? 0) + 1 }
           }
+          // Golden Grail (basic): Fame +1 for each of this card's 2 Healing
+          // points spent this turn (granted as Wounds are healed).
+          if (card.name === 'Golden Grail' && mode === 'basic') {
+            resolvedTurn = { ...resolvedTurn, fameOnHeal: (resolvedTurn.fameOnHeal ?? 0) + 2 }
+          }
           // Amulet of the Sun (Night bonus): forests cost 3 and gold mana is
           // usable as a wild basic colour this turn.
           if (card.name === 'Amulet of Sun' && state.dayNight === 'night') {
@@ -2892,14 +2897,21 @@ export function useGameEngine() {
     // Cure (basic) / Golden Grail (strong): draw a card per Wound healed this turn.
     const drawPer = state.player.turn.drawPerWoundHeal ?? 0
     if (drawPer > 0) deck = engine.deckManager.drawCards(deck, drawPer)
+    // Golden Grail (basic): Fame +1 for each of its Healing points spent.
+    const fameOnHeal = state.player.turn.fameOnHeal ?? 0
     let newState: GameState = {
       ...state,
       player: {
         ...state.player,
         deck,
-        turn: { ...state.player.turn, healingAvailable: healing - 1 },
+        turn: {
+          ...state.player.turn,
+          healingAvailable: healing - 1,
+          fameOnHeal: fameOnHeal > 0 ? fameOnHeal - 1 : fameOnHeal,
+        },
       },
     }
+    if (fameOnHeal > 0) newState = applyFameGain(engine, newState, 1)
     newState = withLog(newState, 'wound_heal', 'logmsg.healedHandWound')
     updateState(newState)
   }, [updateState, withLog, pushState])

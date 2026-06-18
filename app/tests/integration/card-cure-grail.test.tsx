@@ -53,6 +53,30 @@ describe('Cure / Golden Grail: draw a card per Wound healed', () => {
     expect(after.player.deck.drawPile.length).toBe(before - 1)
   })
 
+  it('Golden Grail basic grants Fame +1 per Healing point spent (max 2)', () => {
+    const c = getArtifacts().find((x) => x.name === 'Golden Grail')
+    if (!c) return
+    const h = createHarness('Tovak')
+    h.setState(setupTurn([c as AnyCard]))
+    h.run((e) => e.playCard(0, 'basic')) // Heal 2 + fameOnHeal 2
+    expect(h.state().player.turn.fameOnHeal).toBe(2)
+
+    // Put two wounds in hand with healing available, then heal both.
+    h.setState((s) => ({
+      ...s,
+      player: {
+        ...s.player,
+        deck: { ...s.player.deck, hand: [wound('w1'), wound('w2')] },
+        turn: { ...s.player.turn, healingAvailable: 2 },
+      },
+    }))
+    const fameBefore = h.state().player.fame
+    h.run((e) => e.healWound())
+    h.run((e) => e.healWound())
+    expect(h.state().player.fame).toBe(fameBefore + 2) // +1 per heal, 2 heals
+    expect(h.state().player.turn.fameOnHeal).toBe(0) // exhausted
+  })
+
   it('without the flag, healing a wound draws nothing', () => {
     const h = createHarness('Tovak')
     h.setState((s) => ({

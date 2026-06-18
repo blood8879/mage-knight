@@ -449,6 +449,9 @@ export interface TurnState {
   /** Cure (basic) / Golden Grail (strong): draw this many cards for each Wound
    *  healed from hand for the rest of this turn. */
   drawPerWoundHeal?: number
+  /** Golden Grail (basic): grant Fame +1 for each of this card's Healing points
+   *  spent this turn (counter of remaining fame-granting heals). */
+  fameOnHeal?: number
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */
