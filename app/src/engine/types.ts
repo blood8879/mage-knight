@@ -441,6 +441,9 @@ export interface TurnState {
   /** Agility played this turn: leftover Move points may be spent as Attack
    *  (1:1). Strong also allows 2 Move → 1 Ranged Attack. */
   agility?: { ranged: boolean }
+  /** Cure (basic) / Golden Grail (strong): draw this many cards for each Wound
+   *  healed from hand for the rest of this turn. */
+  drawPerWoundHeal?: number
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */

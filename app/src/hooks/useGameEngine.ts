@@ -1525,6 +1525,14 @@ export function useGameEngine() {
           if (card.name === 'Agility') {
             resolvedTurn = { ...resolvedTurn, agility: { ranged: mode === 'strong' } }
           }
+          // Cure (basic) / Golden Grail (strong): for the rest of this turn,
+          // draw a card for each Wound healed from hand.
+          if (
+            (card.name.startsWith('Cure') && mode === 'basic') ||
+            (card.name === 'Golden Grail' && mode === 'strong')
+          ) {
+            resolvedTurn = { ...resolvedTurn, drawPerWoundHeal: (resolvedTurn.drawPerWoundHeal ?? 0) + 1 }
+          }
         }
       }
 
@@ -2691,12 +2699,18 @@ export function useGameEngine() {
     pushState(state)
 
     // Healed wounds return to the wound pile (removed from the game state entirely)
-    const newHand = state.player.deck.hand.filter((_, i) => i !== woundIdx)
+    let deck: import('@/engine/types').DeckState = {
+      ...state.player.deck,
+      hand: state.player.deck.hand.filter((_, i) => i !== woundIdx),
+    }
+    // Cure (basic) / Golden Grail (strong): draw a card per Wound healed this turn.
+    const drawPer = state.player.turn.drawPerWoundHeal ?? 0
+    if (drawPer > 0) deck = engine.deckManager.drawCards(deck, drawPer)
     let newState: GameState = {
       ...state,
       player: {
         ...state.player,
-        deck: { ...state.player.deck, hand: newHand },
+        deck,
         turn: { ...state.player.turn, healingAvailable: healing - 1 },
       },
     }
