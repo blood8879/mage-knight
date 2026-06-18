@@ -780,6 +780,7 @@
     "standardRestTitle": "일반 휴식",
     "standardRestSubtitle": "상처가 아닌 카드 1장(필수)과 버릴 상처 카드를 선택하세요",
     "standardRestConfirm": "휴식",
+    "standardRestRule": "상처가 아닌 카드는 정확히 1장만 버립니다 (상처는 몇 장이든 함께 버릴 수 있음).",
     "noCardSelected": "선택된 카드가 없습니다",
     "noCardsInHand": "손에 카드가 없습니다",
     "basicSpellLabel": "기본 주문",

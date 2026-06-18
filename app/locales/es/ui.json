@@ -780,6 +780,7 @@
     "standardRestTitle": "Descanso estándar",
     "standardRestSubtitle": "Selecciona 1 carta que no sea herida (obligatorio) y las heridas que quieras descartar",
     "standardRestConfirm": "Descansar",
+    "standardRestRule": "Descarta exactamente una carta que no sea herida (más cualquier número de heridas).",
     "noCardSelected": "Ninguna carta seleccionada",
     "noCardsInHand": "No hay cartas en la mano",
     "basicSpellLabel": "Hechizo básico",

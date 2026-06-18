@@ -1579,6 +1579,10 @@ export default function GameScreen() {
                   title={t('game.standardRestTitle', { defaultValue: 'Standard Rest' })}
                   subtitle={t('game.standardRestSubtitle', { defaultValue: 'Select 1 non-wound card (required) and any wounds to discard' })}
                   confirmLabel={t('game.standardRestConfirm', { defaultValue: 'Rest' })}
+                  validate={(indices, cards) =>
+                    indices.filter((i) => cards[i]?.type !== 'wound').length === 1
+                  }
+                  invalidHint={t('game.standardRestRule', { defaultValue: 'Discard exactly one non-Wound card (plus any number of Wounds).' })}
                   onConfirm={(selectedIndices) => {
                     engine.declareRest('standard', selectedIndices)
                     setRestMode(null)

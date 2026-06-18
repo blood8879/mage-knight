@@ -780,6 +780,7 @@
     "standardRestTitle": "Standard Rest",
     "standardRestSubtitle": "Select 1 non-wound card (required) and any wounds to discard",
     "standardRestConfirm": "Rest",
+    "standardRestRule": "Discard exactly one non-Wound card (plus any number of Wounds).",
     "noCardSelected": "No card selected",
     "noCardsInHand": "No cards in hand",
     "basicSpellLabel": "Basic Spell",

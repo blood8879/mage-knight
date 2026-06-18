@@ -10,6 +10,10 @@ interface CardSelectionOverlayProps {
   title: string
   subtitle?: string
   confirmLabel?: string
+  /** Optional extra rule: confirm is only allowed when this returns true.
+   *  `invalidHint` is shown while the current selection fails it. */
+  validate?: (selectedIndices: number[], cards: AnyCard[]) => boolean
+  invalidHint?: string
   onConfirm: (selectedIndices: number[]) => void
   onCancel?: () => void
 }
@@ -21,6 +25,8 @@ export default function CardSelectionOverlay({
   title,
   subtitle,
   confirmLabel,
+  validate,
+  invalidHint,
   onConfirm,
   onCancel,
 }: CardSelectionOverlayProps) {
@@ -39,7 +45,10 @@ export default function CardSelectionOverlay({
     })
   }
 
-  const canConfirm = selectedIndices.size >= minSelectable
+  const selectedArray = Array.from(selectedIndices)
+  const meetsCount = selectedIndices.size >= minSelectable
+  const meetsRule = validate ? validate(selectedArray, cards) : true
+  const canConfirm = meetsCount && meetsRule
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto bg-slate-950/80 backdrop-blur-sm">
@@ -56,6 +65,12 @@ export default function CardSelectionOverlay({
         <p className="mb-4 text-center text-sm font-semibold text-violet-400">
           {t('game.selectedCount', 'Selected')}: {selectedIndices.size}/{maxSelectable}
         </p>
+
+        {!meetsRule && invalidHint && (
+          <p className="-mt-2 mb-3 text-center text-xs font-semibold text-amber-400">
+            {invalidHint}
+          </p>
+        )}
 
         {cards.length === 0 ? (
           <p className="py-4 text-center text-sm text-slate-600 italic">
@@ -86,7 +101,7 @@ export default function CardSelectionOverlay({
           )}
           <button
             type="button"
-            onClick={() => onConfirm(Array.from(selectedIndices))}
+            onClick={() => onConfirm(selectedArray)}
             disabled={!canConfirm}
             className={[
               'min-h-[44px] rounded-lg px-8 py-2.5 text-sm font-bold shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400',
