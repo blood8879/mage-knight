@@ -11,6 +11,8 @@ export type TerrainModifier = CardAction
 function modifierMatches(mod: TerrainModifier, terrain: TerrainType): boolean {
   const target = mod.terrain
   if (target === 'all') return true
+  // Mist Form: "the Move cost of all terrains, including lakes, is 2".
+  if (target === 'all_including_lakes') return true
   if (typeof target === 'string') return target === terrain
   if (Array.isArray(target)) return (target as string[]).includes(terrain)
   return false
@@ -29,9 +31,14 @@ export class MovementResolver {
 
     for (const mod of modifiers) {
       if (!modifierMatches(mod, terrain)) continue
-      if (typeof mod.newCost === 'number') {
-        // Impassable terrain (lake) becomes passable only when explicitly enabled
-        if (cost === null && !(terrain === 'lake' && mod.enableLake)) continue
+      if (mod.impassable) {
+        // Mist Form: "you cannot enter hills and mountains this turn."
+        cost = null
+      } else if (typeof mod.newCost === 'number') {
+        // Impassable terrain (lake) becomes passable only when explicitly enabled.
+        // 'all_including_lakes' (Mist Form) implicitly enables lake travel.
+        const lakeEnabled = mod.enableLake || mod.terrain === 'all_including_lakes'
+        if (cost === null && !(terrain === 'lake' && lakeEnabled)) continue
         cost = mod.newCost
       } else if (typeof mod.costReduction === 'number' && cost !== null) {
         const minimum = typeof mod.minimum === 'number' ? mod.minimum : 0

@@ -1539,6 +1539,19 @@ export function useGameEngine() {
         }
       }
 
+      // Mist Form (basic): "you cannot enter hills and mountains for the rest of
+      // this turn" — add an impassable terrain modifier alongside the all-cost-2
+      // modifier already parsed from the card's actions.
+      if (card.name.startsWith('Mist Form') && mode === 'basic') {
+        resolvedTurn = {
+          ...resolvedTurn,
+          terrainModifiers: [
+            ...(resolvedTurn.terrainModifiers ?? []),
+            { type: 'terrain_modifier', terrain: ['hills', 'mountain'], impassable: true },
+          ],
+        }
+      }
+
       // Open-color gains consume the player's color picks in order
       const crystalsGained: import('@/engine/types').ManaColor[] = [...(resolution?.crystalsGained ?? [])]
       const manaTokensGained: string[] = [...(resolution?.manaTokensGained ?? [])]
