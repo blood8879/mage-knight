@@ -1350,6 +1350,8 @@ export function useGameEngine() {
     chosenActionIndex?: number
     /** Colors consumed in order by open-color crystal/mana gains */
     chosenColors?: import('@/engine/types').ExtendedManaColor[]
+    /** Song of Wind (strong): pay a blue mana to travel lakes for Move cost 0 */
+    songOfWindLake?: boolean
   }
 
   const playCard = useCallback(
@@ -1404,6 +1406,14 @@ export function useGameEngine() {
             if (!spent) return // cost unpaid → refuse the play
           }
         }
+      }
+
+      // Song of Wind (strong): optionally pay a blue mana to travel through
+      // lakes for Move cost 0 this turn (added as a lake terrain modifier below).
+      let songOfWindLakeModifier = false
+      if (card.type === 'advanced_action' && card.name === 'Song of Wind' && mode === 'strong' && options?.songOfWindLake) {
+        const paid = engine.manaPool.spendManaOfColor(newMana, 'blue', state.dayNight)
+        if (paid) { newMana = paid; songOfWindLakeModifier = true }
       }
 
       // ── Named special effects (data action type 'special') ──
@@ -1543,6 +1553,17 @@ export function useGameEngine() {
           terrainModifiers: [
             ...(resolvedTurn.terrainModifiers ?? []),
             ...resolution.terrainModifiers,
+          ],
+        }
+      }
+
+      // Song of Wind (strong): blue paid → lakes become travellable at cost 0.
+      if (songOfWindLakeModifier) {
+        resolvedTurn = {
+          ...resolvedTurn,
+          terrainModifiers: [
+            ...(resolvedTurn.terrainModifiers ?? []),
+            { type: 'terrain_modifier', terrain: 'lake', newCost: 0, enableLake: true },
           ],
         }
       }

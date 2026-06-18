@@ -362,6 +362,8 @@ export default function GameScreen() {
   const [offeringMode, setOfferingMode] = useState<{ handIndex: number } | null>(null)
   // Peaceful Moment: choose Influence (normal) vs Heal (spend influence 2:1)
   const [peacefulMode, setPeacefulMode] = useState<{ handIndex: number; mode: 'basic' | 'strong' } | null>(null)
+  // Song of Wind (strong): optionally pay a blue mana for lake travel
+  const [songWindMode, setSongWindMode] = useState<{ handIndex: number } | null>(null)
   // Concentration / Will Focus strong: pick the Action card to combo with
   const [comboMode, setComboMode] = useState<{
     handIndex: number
@@ -755,6 +757,18 @@ export default function GameScreen() {
           colorQueue: [{ allowed }],
           chosenColors: [],
         })
+        return
+      }
+      // Song of Wind (strong): offer the optional blue-mana lake-travel clause,
+      // but only when a blue mana is available to pay for it.
+      if (card?.type === 'advanced_action' && card.name === 'Song of Wind' && mode === 'strong') {
+        const mana = engineState.player.mana
+        const hasWhite = mana.playerMana.some((tk) => tk.color === 'white') || mana.crystals.white > 0 ||
+          (engineState.dayNight === 'day' && mana.playerMana.some((tk) => tk.color === 'gold'))
+        if (!hasWhite) return // strong needs its white mana
+        const hasBlue = mana.playerMana.some((tk) => tk.color === 'blue') || mana.crystals.blue > 0
+        if (hasBlue) { setSongWindMode({ handIndex: index }); return }
+        engine.playCard(index, 'strong')
         return
       }
       // Peaceful Moment: offer Influence (normal) vs Heal (spend Influence 2:1).
@@ -1463,6 +1477,52 @@ export default function GameScreen() {
                     <button
                       type="button"
                       onClick={() => setPeacefulMode(null)}
+                      className="mt-4 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+                    >
+                      {t('game.cancel', 'Cancel')}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Song of Wind (strong): optional blue-mana lake travel */}
+          <AnimatePresence>
+            {songWindMode && (
+              <motion.div
+                key="song-of-wind"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.25 } }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              >
+                <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto bg-slate-950/80 backdrop-blur-sm">
+                  <div className="mx-4 w-full max-w-md rounded-2xl border border-slate-700/50 bg-slate-900 p-6 shadow-2xl">
+                    <h2 className="mb-1 text-center text-lg font-black tracking-wide text-slate-100">
+                      {t('game.songWindTitle', 'Song of Wind')}
+                    </h2>
+                    <p className="mb-5 text-center text-xs text-slate-500">
+                      {t('game.songWindSubtitle', 'Pay a blue mana to travel through lakes for Move cost 0 this turn?')}
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => { engine.playCard(songWindMode.handIndex, 'strong', { songOfWindLake: true }); setSongWindMode(null) }}
+                        className="flex min-h-[56px] items-center justify-center rounded-xl border border-slate-700/40 bg-slate-800/60 px-4 py-3 text-sm font-bold text-slate-200 transition-all hover:border-blue-500/50 hover:bg-slate-800 active:scale-[0.97]"
+                      >
+                        💧 {t('game.songWindPayBlue', 'Pay blue — lake travel')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { engine.playCard(songWindMode.handIndex, 'strong'); setSongWindMode(null) }}
+                        className="flex min-h-[56px] items-center justify-center rounded-xl border border-slate-700/40 bg-slate-800/60 px-4 py-3 text-sm font-bold text-slate-200 transition-all hover:border-violet-500/50 hover:bg-slate-800 active:scale-[0.97]"
+                      >
+                        {t('game.songWindNoLake', 'Move only')}
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSongWindMode(null)}
                       className="mt-4 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
                     >
                       {t('game.cancel', 'Cancel')}
