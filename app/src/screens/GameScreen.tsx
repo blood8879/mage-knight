@@ -935,6 +935,11 @@ export default function GameScreen() {
   const units = engineState.player.units
   const unitLimit = engineState.player.unitLimit
   const offers = engineState.offers
+  // The unit offer also holds one Advanced Action per revealed Monastery
+  // (buyable at a Monastery for Influence 6). Split it out so it doesn't look
+  // like a stray unit in the info panel.
+  const offerUnits = offers.units.filter((u) => u.type !== 'advanced_action')
+  const monasteryAAs = offers.units.filter((u) => u.type === 'advanced_action')
   const phaseHint = getPhaseHint(phase, t)
 
   const availableTactics =
@@ -1639,11 +1644,19 @@ export default function GameScreen() {
                 layout="vertical"
               />
               <CardOffer
-                cards={offers.units}
+                cards={offerUnits}
                 type="unit"
                 title={t('game.units', 'Units')}
                 layout="vertical"
               />
+              {monasteryAAs.length > 0 && (
+                <CardOffer
+                  cards={monasteryAAs}
+                  type="advanced_action"
+                  title={t('game.monasteryAdvancedActions', 'Monastery Advanced Actions')}
+                  layout="vertical"
+                />
+              )}
             </>
           )}
         </aside>
@@ -1738,11 +1751,19 @@ export default function GameScreen() {
                       layout="vertical"
                     />
                     <CardOffer
-                      cards={offers.units}
+                      cards={offerUnits}
                       type="unit"
                       title={t('game.units', 'Units')}
                       layout="vertical"
                     />
+                    {monasteryAAs.length > 0 && (
+                      <CardOffer
+                        cards={monasteryAAs}
+                        type="advanced_action"
+                        title={t('game.monasteryAdvancedActions', 'Monastery Advanced Actions')}
+                        layout="vertical"
+                      />
+                    )}
                   </>
                 )}
               </div>

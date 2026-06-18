@@ -674,6 +674,7 @@
       "city": "City"
     },
     "advancedActions": "Advanced Actions",
+    "monasteryAdvancedActions": "Monastery Advanced Actions",
     "armor": "Armor",
     "artifact": "Artifact",
     "attachBannerSubtitle": "Choose a unit to carry this banner. It keeps the bonus until the unit is disbanded.",
