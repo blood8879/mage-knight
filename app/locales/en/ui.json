@@ -712,6 +712,8 @@
     "healWound": "Heal Wound",
     "hexMapPlaceholder": "Hex Map — Coming Soon",
     "improvisationChooseSubtitle": "Select the effect you want to gain.",
+    "bloodTitle": "Blood of Ancients",
+    "bloodSubtitle": "Gain a Wound, pay a mana, and take a matching Advanced Action into your hand.",
     "songWindTitle": "Song of Wind",
     "songWindSubtitle": "Pay a blue mana to travel through lakes for Move cost 0 this turn?",
     "songWindPayBlue": "Pay blue — lake travel",

@@ -364,6 +364,8 @@ export default function GameScreen() {
   const [peacefulMode, setPeacefulMode] = useState<{ handIndex: number; mode: 'basic' | 'strong' } | null>(null)
   // Song of Wind (strong): optionally pay a blue mana for lake travel
   const [songWindMode, setSongWindMode] = useState<{ handIndex: number } | null>(null)
+  // Blood of Ancients (basic): pay a mana → gain a matching-colour AA from offer
+  const [bloodMode, setBloodMode] = useState<{ handIndex: number } | null>(null)
   // Concentration / Will Focus strong: pick the Action card to combo with
   const [comboMode, setComboMode] = useState<{
     handIndex: number
@@ -758,6 +760,21 @@ export default function GameScreen() {
           chosenColors: [],
         })
         return
+      }
+      // Blood of Ancients (basic): pay a mana → gain a matching-colour AA from
+      // the offer to hand. Show the affordable offer cards; if none are
+      // affordable, fall through to a normal play (which just gains the Wound).
+      if (card?.type === 'advanced_action' && card.name === 'Blood of Ancients' && (mode ?? 'basic') === 'basic') {
+        const mana = engineState.player.mana
+        const canPay = (c: ManaColor) =>
+          mana.playerMana.some((tk) => tk.color === c) || mana.crystals[c] > 0 ||
+          (engineState.dayNight === 'day' && mana.playerMana.some((tk) => tk.color === 'gold'))
+        const affordable = engineState.offers.advancedActions.some((oc) => {
+          const cols = (Array.isArray(oc.color) ? oc.color : [oc.color]) as ManaColor[]
+          return cols.some(canPay)
+        })
+        if (affordable) { setBloodMode({ handIndex: index }); return }
+        // else: normal play gains the Wound only
       }
       // Song of Wind (strong): offer the optional blue-mana lake-travel clause,
       // but only when a blue mana is available to pay for it.
@@ -1485,6 +1502,63 @@ export default function GameScreen() {
                 </div>
               </motion.div>
             )}
+          </AnimatePresence>
+
+          {/* Blood of Ancients: pick an affordable AA from the offer */}
+          <AnimatePresence>
+            {bloodMode && engineState && (() => {
+              const mana = engineState.player.mana
+              const payColorFor = (cols: ManaColor[]): ManaColor | null => {
+                for (const c of cols) {
+                  if (mana.playerMana.some((tk) => tk.color === c) || mana.crystals[c] > 0) return c
+                }
+                // gold (day) can pay any single basic colour
+                if (engineState.dayNight === 'day' && mana.playerMana.some((tk) => tk.color === 'gold')) return cols[0] ?? null
+                return null
+              }
+              const affordable = engineState.offers.advancedActions
+                .map((oc) => ({ oc, color: payColorFor((Array.isArray(oc.color) ? oc.color : [oc.color]) as ManaColor[]) }))
+                .filter((x) => x.color !== null) as { oc: typeof engineState.offers.advancedActions[number]; color: ManaColor }[]
+              return (
+                <motion.div
+                  key="blood-of-ancients"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { duration: 0.25 } }}
+                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                >
+                  <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto bg-slate-950/80 backdrop-blur-sm">
+                    <div className="mx-4 w-full max-w-md rounded-2xl border border-slate-700/50 bg-slate-900 p-6 shadow-2xl">
+                      <h2 className="mb-1 text-center text-lg font-black tracking-wide text-slate-100">
+                        {t('game.bloodTitle', 'Blood of Ancients')}
+                      </h2>
+                      <p className="mb-5 text-center text-xs text-slate-500">
+                        {t('game.bloodSubtitle', 'Gain a Wound, pay a mana, and take a matching Advanced Action into your hand.')}
+                      </p>
+                      <div className="flex flex-col gap-2">
+                        {affordable.map(({ oc, color }) => (
+                          <button
+                            key={oc.id}
+                            type="button"
+                            onClick={() => { engine.playBloodOfAncients(bloodMode.handIndex, color, oc.id); setBloodMode(null) }}
+                            className="flex items-center justify-between rounded-xl border border-slate-700/40 bg-slate-800/60 px-4 py-3 text-left transition-all hover:border-rose-500/50 hover:bg-slate-800 active:scale-[0.98]"
+                          >
+                            <span className="text-sm font-bold text-slate-200">{oc.name}</span>
+                            <span className="text-[10px] uppercase text-slate-500">{t(`colors.${color}`, color)}</span>
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setBloodMode(null)}
+                        className="mt-4 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+                      >
+                        {t('game.cancel', 'Cancel')}
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })()}
           </AnimatePresence>
 
           {/* Song of Wind (strong): optional blue-mana lake travel */}

@@ -1942,6 +1942,48 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  // Blood of Ancients (basic): "Gain a Wound. Pay one mana of any colour. Gain
+  // a card of that colour from the Advanced Actions offer into your hand."
+  const playBloodOfAncients = useCallback(
+    (handIndex: number, color: ManaColor, offerCardId: number) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      const card = state.player.deck.hand[handIndex]
+      if (!card || card.type !== 'advanced_action' || card.name !== 'Blood of Ancients') return
+
+      const offerCard = state.offers.advancedActions.find((c) => c.id === offerCardId)
+      if (!offerCard) return
+      const cols = Array.isArray(offerCard.color) ? offerCard.color : [offerCard.color]
+      if (!cols.includes(color)) return // the gained card must match the paid colour
+
+      const paid = engine.manaPool.spendManaOfColor(state.player.mana, color, state.dayNight)
+      if (!paid) return
+
+      pushState(state)
+
+      let deck = engine.deckManager.playCard(state.player.deck, handIndex) // Blood → discard
+      deck = engine.deckManager.addWound(deck, 1) // gain a Wound (to hand)
+      deck = { ...deck, hand: [...deck.hand, offerCard] } // gained AA → hand
+
+      const resolvedTurn = {
+        ...state.player.turn,
+        cardsPlayedThisTurn: [...state.player.turn.cardsPlayedThisTurn, String(card.id)],
+      }
+      let newState: GameState = {
+        ...state,
+        player: { ...state.player, deck, mana: paid, turn: resolvedTurn },
+        offers: {
+          ...state.offers,
+          advancedActions: state.offers.advancedActions.filter((c) => c.id !== offerCardId),
+        },
+      }
+      newState = withLog(newState, 'card_acquire', `Blood of Ancients: gained ${offerCard.name}`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
   // Peaceful Moment (AA) "as your action": spend its Influence on Healing at
   // 2 Influence → Heal 1 (basic Influence 3 → Heal 1; strong Influence 6 →
   // Heal 3). The Heal accumulates as healingAvailable for use via healWound.
@@ -4162,6 +4204,7 @@ export function useGameEngine() {
     playCardWithDiscard,
     playOffering,
     playPeacefulMoment,
+    playBloodOfAncients,
     playComboCard,
     discardCard,
     drawCards,

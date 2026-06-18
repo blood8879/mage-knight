@@ -712,6 +712,8 @@
     "healWound": "Curar herida",
     "hexMapPlaceholder": "Mapa hexagonal — Próximamente",
     "improvisationChooseSubtitle": "Selecciona el efecto que quieres obtener.",
+    "bloodTitle": "Sangre de los Ancestros",
+    "bloodSubtitle": "Gana una Herida, paga un maná y toma una Acción Avanzada del color a tu mano.",
     "songWindTitle": "Canción del Viento",
     "songWindSubtitle": "¿Pagar un maná azul para cruzar lagos con coste de Movimiento 0 este turno?",
     "songWindPayBlue": "Pagar azul — cruzar lagos",

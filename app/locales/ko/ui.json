@@ -712,6 +712,8 @@
     "healWound": "부상 치료",
     "hexMapPlaceholder": "헥스 맵 — 준비 중",
     "improvisationChooseSubtitle": "얻을 효과를 선택하세요.",
+    "bloodTitle": "선조의 피",
+    "bloodSubtitle": "부상을 얻고 마나를 지불해, 같은 색의 상급 행동 카드를 손으로 가져옵니다.",
     "songWindTitle": "바람의 노래",
     "songWindSubtitle": "청색 마나를 지불해 이번 턴 호수를 이동 비용 0으로 건널까요?",
     "songWindPayBlue": "청마나 지불 — 호수 이동",
