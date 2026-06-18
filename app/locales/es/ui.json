@@ -678,6 +678,7 @@
     "armor": "Armadura",
     "artifact": "Artefacto",
     "attachBannerSubtitle": "Elige una unidad para portar este estandarte. Mantiene la bonificación hasta que la unidad se disuelva.",
+    "bannerInfluenceOnly": "Solo Influencia (no asignar)",
     "attachBannerTitle": "Asignar estandarte",
     "attack": "Ataque",
     "block": "Bloqueo",

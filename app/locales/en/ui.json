@@ -678,6 +678,7 @@
     "armor": "Armor",
     "artifact": "Artifact",
     "attachBannerSubtitle": "Choose a unit to carry this banner. It keeps the bonus until the unit is disbanded.",
+    "bannerInfluenceOnly": "Influence only (do not assign)",
     "attachBannerTitle": "Attach Banner",
     "attack": "Attack",
     "block": "Block",

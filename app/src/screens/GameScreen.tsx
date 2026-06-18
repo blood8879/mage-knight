@@ -1606,10 +1606,29 @@ export default function GameScreen() {
                         ),
                       )}
                     </div>
+                    {(() => {
+                      const banner = engineState.player.deck.hand[bannerAttachMode.handIndex]
+                      const hasInfluence = banner && banner.type === 'artifact' &&
+                        banner.basicEffect?.actions?.some((a) => a.type === 'influence')
+                      // Banner of Command: assigning is optional — you may instead
+                      // just take its Influence (play the card normally).
+                      return hasInfluence ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            engine.playCard(bannerAttachMode.handIndex, 'basic')
+                            setBannerAttachMode(null)
+                          }}
+                          className="mt-4 w-full rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-emerald-50 transition-all hover:bg-emerald-600 active:scale-95"
+                        >
+                          {t('game.bannerInfluenceOnly', 'Influence only (do not assign)')}
+                        </button>
+                      ) : null
+                    })()}
                     <button
                       type="button"
                       onClick={() => setBannerAttachMode(null)}
-                      className="mt-4 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
+                      className="mt-2 w-full rounded-lg bg-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-600 active:scale-95"
                     >
                       {t('game.cancel', 'Cancel')}
                     </button>

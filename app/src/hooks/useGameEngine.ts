@@ -3138,6 +3138,18 @@ export function useGameEngine() {
           },
         },
       }
+
+      // Banner of Command also grants its Influence when assigned (its basic
+      // effect is "Influence 4" plus the optional assign clause).
+      const influenceAction = card.basicEffect?.actions?.find((a) => a.type === 'influence')
+      const influenceValue = typeof influenceAction?.value === 'number' ? influenceAction.value : 0
+      if (influenceValue > 0 && newState.interaction?.isActive) {
+        newState = {
+          ...newState,
+          interaction: engine.interactionManager.addInfluence(newState.interaction, influenceValue),
+        }
+      }
+
       newState = withLog(newState, 'card_play', `Attached ${card.name} to ${unit.unit.name}`)
       updateState(newState)
     },

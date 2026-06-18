@@ -678,6 +678,7 @@
     "armor": "방어력",
     "artifact": "아티팩트",
     "attachBannerSubtitle": "이 깃발을 들 유닛을 선택하세요. 유닛이 해산될 때까지 보너스가 유지됩니다.",
+    "bannerInfluenceOnly": "영향력만 (배정 안 함)",
     "attachBannerTitle": "깃발 부착",
     "attack": "공격",
     "block": "방어",
