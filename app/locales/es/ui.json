@@ -1046,7 +1046,13 @@
     "manaDrawBasic": "Robo de maná: +1 dado de Fuente",
     "manaDrawStrong": "Robo de maná: +2 maná {{color}}",
     "bloodRageBasic": "Recibe una Herida → Ataque 5",
-    "bloodRageStrong": "Recibe una Herida → Ataque 9"
+    "bloodRageStrong": "Recibe una Herida → Ataque 9",
+    "agility": "Agilidad",
+    "agilityAttack": "1 Mov. → Ataque 1",
+    "agilityRanged": "2 Mov. → A distancia 1",
+    "agilityMove": "Agilidad (Mov.)",
+    "moveLeft": "Mov. restante",
+    "selectTargetFirst": "selecciona un objetivo primero"
   },
   "interaction": {
     "title": "Site Interaction",

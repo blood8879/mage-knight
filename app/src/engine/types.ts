@@ -438,6 +438,9 @@ export interface TurnState {
   /** Ambush played this turn: +bonus to the FIRST Attack OR FIRST Block in
    *  combat, whichever is played first this turn. Consumed once. */
   ambush?: { attackBonus: number; blockBonus: number }
+  /** Agility played this turn: leftover Move points may be spent as Attack
+   *  (1:1). Strong also allows 2 Move → 1 Ranged Attack. */
+  agility?: { ranged: boolean }
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */

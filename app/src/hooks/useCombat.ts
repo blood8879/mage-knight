@@ -42,6 +42,23 @@ function clearAmbush<T extends { player: { turn: TurnState } }>(state: T): T {
   return { ...state, player: { ...state.player, turn: { ...state.player.turn, ambush: undefined } } }
 }
 
+/** Agility: record Move points spent as Attack so they can't be re-spent. The
+ *  remaining-move convention is movePointsAvailable - movePointsSpent. */
+export function deductAgilityMove<T extends { player: { turn: TurnState } }>(
+  state: T,
+  plays: CombatCardPlay[],
+): T {
+  const spent = plays.reduce((s, p) => s + (p.sourceType === 'agility' ? (p.moveCost ?? 0) : 0), 0)
+  if (spent <= 0) return state
+  return {
+    ...state,
+    player: {
+      ...state.player,
+      turn: { ...state.player.turn, movePointsSpent: state.player.turn.movePointsSpent + spent },
+    },
+  }
+}
+
 const SOUL_HARVESTER_ID = 20
 const CHIVALRY_ID = 35
 const EXPOSE_ID = 3
@@ -393,6 +410,7 @@ export function useCombat() {
       const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
       let finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
       if (consumed) finalState = clearAmbush(finalState)
+      finalState = deductAgilityMove(finalState, plays)
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])
@@ -468,6 +486,7 @@ export function useCombat() {
       const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
       let finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState
       if (consumed) finalState = clearAmbush(finalState)
+      finalState = deductAgilityMove(finalState, plays)
       setSharedState(finalState)
       syncFromEngine(finalState)
       setPendingAttacks([])

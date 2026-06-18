@@ -1520,6 +1520,11 @@ export function useGameEngine() {
                 : { attackBonus: 1, blockBonus: 2 },
             }
           }
+          // Agility: leftover Move points may be spent as Attack (1:1) in combat
+          // this turn; strong also allows 2 Move → 1 Ranged Attack.
+          if (card.name === 'Agility') {
+            resolvedTurn = { ...resolvedTurn, agility: { ranged: mode === 'strong' } }
+          }
         }
       }
 

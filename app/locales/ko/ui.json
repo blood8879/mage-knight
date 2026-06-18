@@ -1025,7 +1025,13 @@
     "manaDrawBasic": "마나 흡수: 원천 주사위 +1",
     "manaDrawStrong": "마나 흡수: {{color}} 마나 +2",
     "bloodRageBasic": "부상 받고 → 공격 5",
-    "bloodRageStrong": "부상 받고 → 공격 9"
+    "bloodRageStrong": "부상 받고 → 공격 9",
+    "agility": "민첩",
+    "agilityAttack": "이동 1 → 공격 1",
+    "agilityRanged": "이동 2 → 원거리 1",
+    "agilityMove": "민첩 (이동)",
+    "moveLeft": "남은 이동",
+    "selectTargetFirst": "먼저 대상을 선택하세요"
   },
   "interaction": {
     "title": "장소 상호작용",

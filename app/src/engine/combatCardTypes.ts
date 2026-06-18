@@ -3,7 +3,7 @@ import type { CardAction, Element } from './types'
 /** A single card/unit/skill contribution to the current combat phase */
 export interface CombatCardPlay {
   id: string                          // unique play ID (counter-based: 'play_0', 'play_1', etc.)
-  sourceType: 'card' | 'unit' | 'skill'
+  sourceType: 'card' | 'unit' | 'skill' | 'agility' // 'agility' = leftover Move spent as Attack
   cardIndex?: number                  // index in hand (for cards)
   unitIndex?: number                  // index in player.units (for units)
   skillIndex?: number                 // index in player.skills (for skills)
@@ -15,6 +15,7 @@ export interface CombatCardPlay {
   element: Element                    // 'physical' | 'fire' | 'ice' | 'cold_fire'
   targetEnemyId?: string              // for attacks: which enemy targeted
   manaCost?: string | string[]        // mana cost if strong effect used
+  moveCost?: number                   // Move points consumed (Agility: leftover Move → Attack)
 }
 
 /** State for building an attack declaration from multiple card plays */

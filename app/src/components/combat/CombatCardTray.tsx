@@ -366,8 +366,8 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
 
   const engine = useGameEngine()
   const {
-    plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue,
-    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, playManaCardForCombat, removePlay, undoLastPlay, resetPhase,
+    plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue, activeTargetEnemyId,
+    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, playManaCardForCombat, playAgilityMove, removePlay, undoLastPlay, resetPhase,
   } = combatCards
 
   // Mana Draw (and other mana-generating specials) played in combat: apply the
@@ -431,6 +431,23 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
 
   const closePicker = useCallback(() => setPickerIdx(null), [])
 
+  // Agility: leftover Move points spendable as Attack this combat.
+  const agility = engineState?.player.turn.agility
+  const remainingMove = useMemo(() => {
+    if (!engineState) return 0
+    const base = engineState.player.turn.movePointsAvailable - engineState.player.turn.movePointsSpent
+    const usedByAgility = plays.reduce((s, p) => s + (p.sourceType === 'agility' ? (p.moveCost ?? 0) : 0), 0)
+    return Math.max(0, base - usedByAgility)
+  }, [engineState, plays])
+  // attack-type in melee phase (1:1); ranged-type in ranged/siege phase (2:1, strong only)
+  const agilityKind: 'attack' | 'ranged' | null =
+    !agility ? null
+      : phase === 'attack' ? 'attack'
+      : phase === 'ranged_siege' && agility.ranged ? 'ranged'
+      : null
+  const agilityCost = agilityKind === 'ranged' ? 2 : 1
+  const showAgility = !!agilityKind && remainingMove >= agilityCost
+
   const handleViewDetail = useCallback((card: AnyCard) => {
     if (card.type !== 'wound') {
       setDetailCard(card as DeedCard)
@@ -482,6 +499,38 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
 
               {/* Mana pool — take Source dice / spend crystals mid-combat */}
               <ManaStrip />
+
+              {/* Agility — spend leftover Move points as Attack (this turn) */}
+              {showAgility && agilityKind && (
+                <div className="flex flex-wrap items-center gap-2 rounded-md border border-emerald-700/40 bg-emerald-950/30 px-3 py-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">
+                    {t('combat.agility', 'Agility')}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={!activeTargetEnemyId}
+                    onClick={() => playAgilityMove(agilityKind)}
+                    className={[
+                      'rounded px-2 py-1 text-[10px] font-semibold transition-colors',
+                      activeTargetEnemyId
+                        ? 'bg-emerald-700 text-emerald-50 hover:bg-emerald-600'
+                        : 'cursor-not-allowed bg-slate-800/60 text-slate-600',
+                    ].join(' ')}
+                  >
+                    {agilityKind === 'ranged'
+                      ? t('combat.agilityRanged', '2 Move → Ranged 1')
+                      : t('combat.agilityAttack', '1 Move → Attack 1')}
+                  </button>
+                  <span className="text-[10px] text-emerald-400/80">
+                    {t('combat.moveLeft', 'Move left')}: {remainingMove}
+                  </span>
+                  {!activeTargetEnemyId && (
+                    <span className="text-[9px] text-slate-500 italic">
+                      {t('combat.selectTargetFirst', 'select a target first')}
+                    </span>
+                  )}
+                </div>
+              )}
 
               {/* Plays summary & undo controls */}
               <div className="space-y-1.5">

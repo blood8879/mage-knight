@@ -1025,7 +1025,13 @@
     "manaDrawBasic": "Mana Draw: +1 Source die",
     "manaDrawStrong": "Mana Draw: +2 {{color}} mana",
     "bloodRageBasic": "Take a Wound → Attack 5",
-    "bloodRageStrong": "Take a Wound → Attack 9"
+    "bloodRageStrong": "Take a Wound → Attack 9",
+    "agility": "Agility",
+    "agilityAttack": "1 Move → Attack 1",
+    "agilityRanged": "2 Move → Ranged 1",
+    "agilityMove": "Agility (Move)",
+    "moveLeft": "Move left",
+    "selectTargetFirst": "select a target first"
   },
   "interaction": {
     "title": "Site Interaction",

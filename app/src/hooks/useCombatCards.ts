@@ -74,6 +74,9 @@ export interface UseCombatCardsReturn {
   activateUnit: (unitIndex: number, action: CardAction, ability: UnitAbility) => void
   activateSkillForCombat: (skillIndex: number, action: CardAction) => void
   playManaCardForCombat: (handIndex: number) => void
+  /** Agility: spend leftover Move points as Attack (1 Move → Attack 1) or, when
+   *  the strong effect was played, 2 Move → 1 Ranged Attack. */
+  playAgilityMove: (kind: 'attack' | 'ranged') => void
   setActiveTarget: (enemyId: string | null) => void
   startNewAttack: (targetEnemyIds: string[]) => void
   assignBlockToEnemy: (enemyInstanceId: string) => void
@@ -544,6 +547,39 @@ export function useCombatCards(
     [hand, nextPlayId, getCardName],
   )
 
+  // ── playAgilityMove ───────────────────────
+  // Agility: convert leftover Move points to combat value. attack = 1 Move → 1
+  // Attack; ranged = 2 Move → 1 Ranged Attack (strong only). The Move deduction
+  // happens at confirm (useCombat) from the play's moveCost.
+  const playAgilityMove = useCallback(
+    (kind: 'attack' | 'ranged') => {
+      if (phase !== 'attack' && phase !== 'ranged_siege') return
+      if (kind === 'ranged' && phase !== 'ranged_siege') return
+      if (kind === 'attack' && phase === 'ranged_siege') return
+      setState((prev) => {
+        if (!prev.activeTargetEnemyId) return prev
+        const play: CombatCardPlay = {
+          id: nextPlayId(),
+          sourceType: 'agility',
+          cardId: 'agility',
+          cardName: t('combat.agilityMove', { defaultValue: 'Agility (Move)' }),
+          effectType: 'basic',
+          chosenAction: {
+            type: kind === 'ranged' ? 'ranged_attack' : 'attack',
+            value: 1,
+            description: 'agility move',
+          },
+          value: 1,
+          element: 'physical',
+          moveCost: kind === 'ranged' ? 2 : 1,
+        }
+        const nextState: CombatCardsState = { ...prev, plays: [...prev.plays, play] }
+        return autoAssignPlay(play, nextState)
+      })
+    },
+    [phase, nextPlayId, autoAssignPlay, t],
+  )
+
   // ── setActiveTarget ───────────────────────
 
   const setActiveTarget = useCallback((enemyId: string | null) => {
@@ -892,6 +928,7 @@ export function useCombatCards(
     activateUnit,
     activateSkillForCombat,
     playManaCardForCombat,
+    playAgilityMove,
     setActiveTarget,
     startNewAttack,
     assignBlockToEnemy,
