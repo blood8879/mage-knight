@@ -358,6 +358,8 @@ export default function GameScreen() {
     discardIndex?: number
   } | null>(null)
   const [bannerAttachMode, setBannerAttachMode] = useState<{ handIndex: number } | null>(null)
+  // Offering / Sacrifice (basic): pick up to 3 non-Wound cards to discard for crystals
+  const [offeringMode, setOfferingMode] = useState<{ handIndex: number } | null>(null)
   // Concentration / Will Focus strong: pick the Action card to combo with
   const [comboMode, setComboMode] = useState<{
     handIndex: number
@@ -753,6 +755,17 @@ export default function GameScreen() {
         })
         return
       }
+      // Offering / Sacrifice (basic): open a multi-discard picker (up to 3
+      // non-Wound cards → a crystal of each card's colour).
+      if (card?.type === 'spell' && card.name.startsWith('Offering') && (mode ?? 'basic') === 'basic') {
+        // Needs the red mana for the spell's basic effect.
+        const mana = engineState.player.mana
+        const hasRed = mana.playerMana.some((tk) => tk.color === 'red') || mana.crystals.red > 0 ||
+          (engineState.dayNight === 'day' && mana.playerMana.some((tk) => tk.color === 'gold'))
+        if (!hasRed) return
+        setOfferingMode({ handIndex: index })
+        return
+      }
       // Effects needing a player decision: pick one of the choice actions
       // (Tranquility heal-vs-draw) and/or pick colors (Crystallize, Mind Read…)
       if (card && card.type !== 'wound') {
@@ -847,6 +860,18 @@ export default function GameScreen() {
   const handleImprovisationCancel = useCallback(() => {
     setImprovisationMode(null)
   }, [])
+
+  const handleOfferingConfirm = useCallback(
+    (selectedIndices: number[]) => {
+      if (!offeringMode) return
+      // Artifact discards need a chosen crystal colour; the picker only offers
+      // non-Wound cards and most discards are coloured cards, so pass none here
+      // (artifacts simply yield no crystal unless a colour is supplied).
+      engine.playOffering(offeringMode.handIndex, selectedIndices, [])
+      setOfferingMode(null)
+    },
+    [offeringMode, engine],
+  )
 
   const handleActivateTactic = useCallback(
     (action: 'right_moment' | 'long_night' | 'midnight_meditation' | 'sparing_power_store' | 'sparing_power_retrieve' | 'mana_steal_use' | 'mana_search', options?: {
@@ -1359,6 +1384,31 @@ export default function GameScreen() {
                   confirmLabel={t('game.discard', 'Discard')}
                   onConfirm={handleImprovisationDiscard}
                   onCancel={handleImprovisationCancel}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Offering / Sacrifice: discard up to 3 non-Wound cards for crystals */}
+          <AnimatePresence>
+            {offeringMode && (
+              <motion.div
+                key="offering-discard"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.25 } }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              >
+                <CardSelectionOverlay
+                  cards={engineState.player.deck.hand.filter((_, i) => i !== offeringMode.handIndex)}
+                  maxSelectable={3}
+                  minSelectable={0}
+                  validate={(sel, cards) => sel.every((i) => cards[i]?.type !== 'wound')}
+                  invalidHint={t('game.offeringNoWounds', 'Wounds cannot be discarded')}
+                  title={t('game.offeringTitle', 'Offering')}
+                  subtitle={t('game.offeringSubtitle', 'Discard up to 3 non-Wound cards — gain a crystal of each card’s colour.')}
+                  confirmLabel={t('game.offeringConfirm', 'Sacrifice')}
+                  onConfirm={handleOfferingConfirm}
+                  onCancel={() => setOfferingMode(null)}
                 />
               </motion.div>
             )}

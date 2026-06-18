@@ -1836,6 +1836,67 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  // Offering / Sacrifice (basic): gain a red crystal, then discard up to 3
+  // non-Wound cards from hand — each grants a crystal of the matching colour
+  // (for multi-colour cards the first basic colour; Artifacts use a chosen
+  // colour supplied in artifactColors, in order). `discardIndices` index into
+  // the hand AFTER Offering itself is removed (the UI shows that filtered hand).
+  const playOffering = useCallback(
+    (cardIndex: number, discardIndices: number[] = [], artifactColors: ManaColor[] = []) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      const card = state.player.deck.hand[cardIndex]
+      if (!card || card.type !== 'spell' || !card.name.startsWith('Offering')) return
+
+      // Spell basic costs the card's colour (red).
+      const spent = engine.manaPool.spendManaOfColor(state.player.mana, 'red', state.dayNight)
+      if (!spent) return
+      let mana = spent
+
+      pushState(state)
+
+      // Primary effect: gain a red crystal.
+      mana = engine.manaPool.addCrystal(mana, 'red')
+
+      // Resolve the discard targets from the post-play hand (Offering removed).
+      const deckAfterPlay = engine.deckManager.playCard(state.player.deck, cardIndex)
+      const targets = Array.from(new Set(discardIndices)).slice(0, 3)
+      const artQueue = [...artifactColors]
+      const basicColors: ManaColor[] = ['red', 'blue', 'green', 'white']
+      const colorFor = (c: typeof deckAfterPlay.hand[number]): ManaColor | null => {
+        if (c.type === 'wound') return null
+        if (c.type === 'artifact') return artQueue.shift() ?? null
+        const col = (c as { color?: ManaColor | ManaColor[] }).color
+        const first = Array.isArray(col) ? col[0] : col
+        return first && basicColors.includes(first) ? first : null
+      }
+
+      let deck = deckAfterPlay
+      // Discard from the highest index down so earlier indices stay valid.
+      const sorted = targets.filter((i) => i >= 0 && i < deckAfterPlay.hand.length).sort((a, b) => b - a)
+      for (const idx of sorted) {
+        const target = deckAfterPlay.hand[idx]
+        if (target.type === 'wound') continue // only non-Wound cards
+        const color = colorFor(target)
+        if (color) mana = engine.manaPool.addCrystal(mana, color)
+        deck = engine.deckManager.discardFromHand(deck, idx)
+      }
+
+      const resolvedTurn = {
+        ...state.player.turn,
+        cardsPlayedThisTurn: [...state.player.turn.cardsPlayedThisTurn, String(card.id)],
+      }
+      let newState: GameState = {
+        ...state,
+        player: { ...state.player, deck, mana, turn: resolvedTurn },
+      }
+      newState = withLog(newState, 'card_play', `Offering: gained ${sorted.length + 1} crystal(s)`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
   const discardCard = useCallback(
     (handIndex: number) => {
       const state = sharedState
@@ -4004,6 +4065,7 @@ export function useGameEngine() {
 
     playCard,
     playCardWithDiscard,
+    playOffering,
     playComboCard,
     discardCard,
     drawCards,
