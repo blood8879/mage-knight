@@ -144,8 +144,9 @@ export class ManaPool {
   canUseManaColor(state: ManaPoolState, color: ManaColor, dayNight: DayNight): boolean {
     for (const token of state.playerMana) {
       if (token.color === color) return true
-      // EC-01-C: Gold mana substitutes for any basic color (Day only)
-      if (token.color === 'gold' && dayNight === 'day') return true
+      // EC-01-C: Gold mana substitutes for any basic color (Day only — or any
+      // time this turn with Amulet of the Sun).
+      if (token.color === 'gold' && (dayNight === 'day' || state.goldUsableAtNight)) return true
       // EC-01-D: Black mana does NOT substitute for basic colors.
       // It is only used for specific powering effects (Action strong at night, etc.)
     }
@@ -160,7 +161,8 @@ export class ManaPool {
    * Black mana never substitutes for basic colors — it's only for explicit power costs.
    */
   hasBlackMana(state: ManaPoolState, dayNight: DayNight): boolean {
-    if (dayNight !== 'night') return false
+    // Black is normally Night-only; Amulet of Darkness lets it be used by Day.
+    if (dayNight !== 'night' && !state.blackUsableAtDay) return false
     return state.playerMana.some((t) => t.color === 'black')
   }
 
@@ -177,7 +179,7 @@ export class ManaPool {
     const exactIdx = state.playerMana.findIndex((t) => t.color === color)
     if (exactIdx !== -1) return this.removeManaToken(state, exactIdx)
 
-    if (dayNight === 'day') {
+    if (dayNight === 'day' || state.goldUsableAtNight) {
       const goldIdx = state.playerMana.findIndex((t) => t.color === 'gold')
       if (goldIdx !== -1) return this.removeManaToken(state, goldIdx)
     }
@@ -263,6 +265,8 @@ export class ManaPool {
       playerMana: [],
       sourceDieTakenThisTurn: false,
       extraSourceDice: 0,
+      goldUsableAtNight: false,
+      blackUsableAtDay: false,
     }
   }
 

@@ -294,6 +294,11 @@ export interface ManaPoolState {
   sourceDieTakenThisTurn: boolean // player can take 1 die per turn normally
   /** Extra Source dice allowed this turn beyond the first (Mana Draw basic) */
   extraSourceDice?: number
+  /** Amulet of the Sun (Night): gold mana may be used as a wild basic colour
+   *  even at Night this turn. */
+  goldUsableAtNight?: boolean
+  /** Amulet of Darkness (Day): black mana may be used (as if Night) this turn. */
+  blackUsableAtDay?: boolean
 }
 
 // ── Deck System ───────────────────────────

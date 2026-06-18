@@ -1543,6 +1543,30 @@ export function useGameEngine() {
           ) {
             resolvedTurn = { ...resolvedTurn, drawPerWoundHeal: (resolvedTurn.drawPerWoundHeal ?? 0) + 1 }
           }
+          // Amulet of the Sun (Night bonus): forests cost 3 and gold mana is
+          // usable as a wild basic colour this turn.
+          if (card.name === 'Amulet of Sun' && state.dayNight === 'night') {
+            newMana = { ...newMana, goldUsableAtNight: true }
+            resolvedTurn = {
+              ...resolvedTurn,
+              terrainModifiers: [
+                ...(resolvedTurn.terrainModifiers ?? []),
+                { type: 'terrain_modifier', terrain: 'forest', newCost: 3 },
+              ],
+            }
+          }
+          // Amulet of Darkness (Day bonus): deserts cost 3 and black mana is
+          // usable (as if Night) this turn.
+          if (card.name === 'Amulet of Darkness' && state.dayNight === 'day') {
+            newMana = { ...newMana, blackUsableAtDay: true }
+            resolvedTurn = {
+              ...resolvedTurn,
+              terrainModifiers: [
+                ...(resolvedTurn.terrainModifiers ?? []),
+                { type: 'terrain_modifier', terrain: 'desert', newCost: 3 },
+              ],
+            }
+          }
         }
       }
 
