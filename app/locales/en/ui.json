@@ -1034,7 +1034,11 @@
     "selectTargetFirst": "select a target first",
     "diplomacyBlock": "Influence → Block 2",
     "diplomacyFireBlock": "Influence → Fire Block 4",
-    "diplomacyIceBlock": "Influence → Ice Block 4"
+    "diplomacyIceBlock": "Influence → Ice Block 4",
+    "splitBlock2": "Split: Block 4 ×2",
+    "splitColdFireBlock3": "Split: Cold Fire Block 4 ×3",
+    "splitChooseTargets": "Split Block — pick {{n}} different enemies",
+    "splitApply": "Apply Block {{v}} ×{{n}}"
   },
   "interaction": {
     "title": "Site Interaction",

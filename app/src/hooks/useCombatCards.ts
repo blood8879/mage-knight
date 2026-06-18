@@ -77,6 +77,15 @@ export interface UseCombatCardsReturn {
   /** Agility: spend leftover Move points as Attack (1 Move → Attack 1) or, when
    *  the strong effect was played, 2 Move → 1 Ranged Attack. */
   playAgilityMove: (kind: 'attack' | 'ranged') => void
+  /** Shield of the Fallen Kings: split one card's Block across several DIFFERENT
+   *  enemies (e.g. two Block 4 basic, up to three Cold Fire Block 4 strong). */
+  playMultiBlock: (
+    handIndex: number,
+    effectType: 'basic' | 'strong',
+    value: number,
+    element: Element,
+    targetEnemyInstanceIds: string[],
+  ) => void
   setActiveTarget: (enemyId: string | null) => void
   startNewAttack: (targetEnemyIds: string[]) => void
   assignBlockToEnemy: (enemyInstanceId: string) => void
@@ -580,6 +589,80 @@ export function useCombatCards(
     [phase, nextPlayId, autoAssignPlay, t],
   )
 
+  // ── playMultiBlock ────────────────────────
+  // Shield of the Fallen Kings: one card produces a Block of `value` against
+  // each of several DIFFERENT enemies. The card is used once; each target gets
+  // its own block contribution (creating a pending block if needed).
+  const playMultiBlock = useCallback(
+    (
+      handIndex: number,
+      effectType: 'basic' | 'strong',
+      value: number,
+      element: Element,
+      targetEnemyInstanceIds: string[],
+    ) => {
+      if (phase !== 'block') return
+      setState((prev) => {
+        const card = hand[handIndex]
+        if (!card || card.type === 'wound') return prev
+        if (prev.usedCardIndices.has(handIndex)) return prev
+        const targets = Array.from(new Set(targetEnemyInstanceIds)) // different attacks only
+        if (targets.length === 0) return prev
+
+        const blockType =
+          element === 'cold_fire' ? 'cold_fire_block'
+            : element === 'fire' ? 'fire_block'
+            : element === 'ice' ? 'ice_block'
+            : 'block'
+
+        const used = new Set(prev.usedCardIndices)
+        used.add(handIndex)
+
+        const newPlays: CombatCardPlay[] = []
+        let pendingBlocks = [...prev.pendingBlocks]
+
+        for (const enemyId of targets) {
+          const enemy = enemies.find((e) => e.instanceId === enemyId)
+          if (!enemy) continue
+          const isSwift = enemy.appliedAbilities.includes('swift')
+          const requiredValue = isSwift ? enemy.currentAttack * 2 : enemy.currentAttack
+          const play: CombatCardPlay = {
+            id: nextPlayId(),
+            sourceType: 'card',
+            cardIndex: handIndex,
+            cardId: card.id,
+            cardName: getCardName(card),
+            effectType,
+            chosenAction: { type: blockType as CardAction['type'], value },
+            value,
+            element,
+          }
+          newPlays.push(play)
+          const existing = pendingBlocks.find((b) => b.enemyInstanceId === enemyId)
+          if (!existing) {
+            pendingBlocks.push({
+              enemyInstanceId: enemyId,
+              plays: [play],
+              totalValue: value,
+              element,
+              requiredValue,
+              isSwift,
+            })
+          } else {
+            pendingBlocks = pendingBlocks.map((b) =>
+              b.enemyInstanceId === enemyId
+                ? { ...b, plays: [...b.plays, play], totalValue: b.totalValue + value, element: combineElements([...b.plays, play]) }
+                : b,
+            )
+          }
+        }
+
+        return { ...prev, plays: [...prev.plays, ...newPlays], usedCardIndices: used, pendingBlocks }
+      })
+    },
+    [phase, hand, enemies, nextPlayId, getCardName],
+  )
+
   // ── setActiveTarget ───────────────────────
 
   const setActiveTarget = useCallback((enemyId: string | null) => {
@@ -929,6 +1012,7 @@ export function useCombatCards(
     activateSkillForCombat,
     playManaCardForCombat,
     playAgilityMove,
+    playMultiBlock,
     setActiveTarget,
     startNewAttack,
     assignBlockToEnemy,

@@ -1055,7 +1055,11 @@
     "selectTargetFirst": "selecciona un objetivo primero",
     "diplomacyBlock": "Influencia → Bloqueo 2",
     "diplomacyFireBlock": "Influencia → Bloqueo de Fuego 4",
-    "diplomacyIceBlock": "Influencia → Bloqueo de Hielo 4"
+    "diplomacyIceBlock": "Influencia → Bloqueo de Hielo 4",
+    "splitBlock2": "Dividir: Bloqueo 4 ×2",
+    "splitColdFireBlock3": "Dividir: Bloqueo Fuego Frío 4 ×3",
+    "splitChooseTargets": "Bloqueo dividido — elige {{n}} enemigos distintos",
+    "splitApply": "Aplicar Bloqueo {{v}} ×{{n}}"
   },
   "interaction": {
     "title": "Site Interaction",

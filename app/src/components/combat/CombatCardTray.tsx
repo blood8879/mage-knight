@@ -10,7 +10,7 @@ import { validateCardPlay } from '@/engine/CardPlayValidator'
 import type { CardPlayValidation } from '@/engine/CardPlayValidator'
 import { translateValidationReason } from '@/utils/validationReason'
 import type { UseCombatCardsReturn } from '@/hooks/useCombatCards'
-import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor, ExtendedManaColor } from '@/engine/types'
+import type { AnyCard, CombatPhase, CardAction, UnitAbility, DeedCard, ManaColor, ExtendedManaColor, Element } from '@/engine/types'
 import type { GameState } from '@/engine/GameState'
 import type { CombatCardPlay } from '@/engine/combatCardTypes'
 import {
@@ -115,6 +115,7 @@ interface PickerProps {
   onImprovisation?: (idx: number, eff: 'basic' | 'strong', action: CardAction) => void
   onConcentration?: (idx: number, bonus: number) => void
   onPlayMana?: (idx: number, mode: 'basic' | 'strong', color?: ExtendedManaColor) => void
+  onSplitBlock?: (idx: number, eff: 'basic' | 'strong', value: number, element: Element, maxCount: number) => void
   dayNight?: 'day' | 'night'
   canPlayBasic: boolean
   /** Localized reason why the basic effect can't be played (spells need their colour mana) */
@@ -148,7 +149,7 @@ function getImprovisationActionsForPhase(phase: CombatPhase, value: number): Car
   }
 }
 
-function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, onPlayMana, dayNight, canPlayBasic, basicReason, canPlayStrong, strongReason }: PickerProps) {
+function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClose, onViewDetail, onImprovisation, onConcentration, onPlayMana, onSplitBlock, dayNight, canPlayBasic, basicReason, canPlayStrong, strongReason }: PickerProps) {
   const { t } = useTranslation('ui')
   if (card.type === 'wound') return null
   const manaCard = isManaCard(card)
@@ -259,6 +260,23 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
                 icon="❄" amber mana={mana}
                 onClick={() => pick('strong', { type: 'ice_block', value: 4 })} />
             </>
+          )}
+        </>
+      )}
+      {/* Shield of the Fallen Kings: split the Block across DIFFERENT enemies.
+          The single-target Block (6 / Cold Fire 8) shows via the normal rows;
+          these add the split alternative (two Block 4 / up to three CF Block 4). */}
+      {'name' in card && card.name === 'Shield of the Fallen Kings' && phase === 'block' && onSplitBlock && (
+        <>
+          <PickerRow
+            label={t('combat.splitBlock2', { defaultValue: 'Split: Block 4 ×2' })}
+            icon="🛡"
+            onClick={() => { onSplitBlock(handIndex, 'basic', 4, 'physical', 2); onClose() }} />
+          {canPlayStrong && (
+            <PickerRow
+              label={t('combat.splitColdFireBlock3', { defaultValue: 'Split: Cold Fire Block 4 ×3' })}
+              icon="❄🔥" amber
+              onClick={() => { onSplitBlock(handIndex, 'strong', 4, 'cold_fire', 3); onClose() }} />
           )}
         </>
       )}
@@ -386,11 +404,19 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
     bonus: number
     manaCost: string | string[] | undefined
   } | null>(null)
+  const [splitBlockMode, setSplitBlockMode] = useState<{
+    handIndex: number
+    effectType: 'basic' | 'strong'
+    value: number
+    element: Element
+    maxCount: number
+  } | null>(null)
+  const [splitTargets, setSplitTargets] = useState<string[]>([])
 
   const engine = useGameEngine()
   const {
     plays, availableCards, availableUnits, availableSkills, usedCardIndices, totalPhaseValue, activeTargetEnemyId,
-    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, playManaCardForCombat, playAgilityMove, removePlay, undoLastPlay, resetPhase,
+    playCardForPhase, playCardSideways, playConcentrationCombo, activateUnit, activateSkillForCombat, playManaCardForCombat, playAgilityMove, playMultiBlock, removePlay, undoLastPlay, resetPhase,
   } = combatCards
 
   // Mana Draw (and other mana-generating specials) played in combat: apply the
@@ -453,6 +479,27 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
   }, [concentrationMode, availableCards, phase, playConcentrationCombo])
 
   const closePicker = useCallback(() => setPickerIdx(null), [])
+
+  // Shield of the Fallen Kings split: open the enemy multi-select, then apply.
+  const handleStartSplitBlock = useCallback(
+    (handIndex: number, effectType: 'basic' | 'strong', value: number, element: Element, maxCount: number) => {
+      setSplitBlockMode({ handIndex, effectType, value, element, maxCount })
+      setSplitTargets([])
+      setPickerIdx(null)
+    },
+    [],
+  )
+  const toggleSplitTarget = useCallback((id: string) => {
+    setSplitTargets((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    )
+  }, [])
+  const applySplitBlock = useCallback(() => {
+    if (!splitBlockMode || splitTargets.length === 0) return
+    playMultiBlock(splitBlockMode.handIndex, splitBlockMode.effectType, splitBlockMode.value, splitBlockMode.element, splitTargets)
+    setSplitBlockMode(null)
+    setSplitTargets([])
+  }, [splitBlockMode, splitTargets, playMultiBlock])
 
   // Agility: leftover Move points spendable as Attack this combat.
   const agility = engineState?.player.turn.agility
@@ -552,6 +599,67 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                       {t('combat.selectTargetFirst', 'select a target first')}
                     </span>
                   )}
+                </div>
+              )}
+
+              {/* Shield of the Fallen Kings: choose the DIFFERENT enemies to
+                  split the Block across (2 basic / up to 3 strong). */}
+              {splitBlockMode && (
+                <div className="space-y-2 rounded-md border border-sky-700/40 bg-sky-950/30 px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-sky-300">
+                      {t('combat.splitChooseTargets', { defaultValue: 'Split Block — pick {{n}} different enemies', n: splitBlockMode.maxCount })}
+                    </span>
+                    <span className="text-[9px] text-sky-400/80">
+                      {splitTargets.length}/{splitBlockMode.maxCount}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {(engineState?.combat.enemies ?? [])
+                      .filter((e) => !e.isDefeated && !e.isBlocked)
+                      .map((e) => {
+                        const sel = splitTargets.includes(e.instanceId)
+                        const atCap = splitTargets.length >= splitBlockMode.maxCount
+                        return (
+                          <button
+                            key={e.instanceId}
+                            type="button"
+                            disabled={!sel && atCap}
+                            onClick={() => toggleSplitTarget(e.instanceId)}
+                            className={[
+                              'rounded px-2 py-1 text-[10px] font-semibold transition-colors',
+                              sel ? 'bg-sky-600 text-sky-50'
+                                : atCap ? 'cursor-not-allowed bg-slate-800/50 text-slate-600'
+                                : 'bg-slate-800 text-slate-300 hover:bg-slate-700',
+                            ].join(' ')}
+                          >
+                            {e.token.name} ⚔{e.currentAttack}
+                          </button>
+                        )
+                      })}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={splitTargets.length === 0}
+                      onClick={applySplitBlock}
+                      className={[
+                        'rounded px-3 py-1 text-[10px] font-bold transition-colors',
+                        splitTargets.length > 0
+                          ? 'bg-sky-700 text-sky-50 hover:bg-sky-600'
+                          : 'cursor-not-allowed bg-slate-800/50 text-slate-600',
+                      ].join(' ')}
+                    >
+                      {t('combat.splitApply', { defaultValue: 'Apply Block {{v}} ×{{n}}', v: splitBlockMode.value, n: splitTargets.length })}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setSplitBlockMode(null); setSplitTargets([]) }}
+                      className="rounded px-2 py-1 text-[10px] font-semibold text-slate-400 hover:text-slate-200"
+                    >
+                      {t('combat.cancel', 'Cancel')}
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -660,6 +768,7 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
                                 onImprovisation={handleImprovisation}
                                 onConcentration={handleConcentration}
                                 onPlayMana={handlePlayMana}
+                                onSplitBlock={handleStartSplitBlock}
                                 dayNight={dayNight}
                                 canPlayBasic={strongEval?.canPlayBasic ?? true}
                                 basicReason={strongEval && !strongEval.canPlayBasic ? translateValidationReason(strongEval, t) : undefined}

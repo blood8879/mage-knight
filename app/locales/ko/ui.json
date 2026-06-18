@@ -1034,7 +1034,11 @@
     "selectTargetFirst": "먼저 대상을 선택하세요",
     "diplomacyBlock": "영향력 → 방어 2",
     "diplomacyFireBlock": "영향력 → 화염 방어 4",
-    "diplomacyIceBlock": "영향력 → 얼음 방어 4"
+    "diplomacyIceBlock": "영향력 → 얼음 방어 4",
+    "splitBlock2": "분할: 방어 4 ×2",
+    "splitColdFireBlock3": "분할: 냉화 방어 4 ×3",
+    "splitChooseTargets": "분할 방어 — 서로 다른 적 {{n}}체 선택",
+    "splitApply": "방어 {{v}} ×{{n}} 적용"
   },
   "interaction": {
     "title": "장소 상호작용",
