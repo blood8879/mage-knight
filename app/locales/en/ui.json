@@ -712,6 +712,8 @@
     "healWound": "Heal Wound",
     "hexMapPlaceholder": "Hex Map — Coming Soon",
     "improvisationChooseSubtitle": "Select the effect you want to gain.",
+    "peacefulTitle": "Peaceful Moment",
+    "peacefulSubtitle": "Take the Influence, or spend it as Healing (2 Influence → Heal 1).",
     "offeringTitle": "Offering",
     "offeringSubtitle": "Discard up to 3 non-Wound cards — gain a crystal of each card's colour.",
     "offeringConfirm": "Sacrifice",

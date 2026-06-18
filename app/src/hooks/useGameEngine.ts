@@ -1897,6 +1897,44 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  // Peaceful Moment (AA) "as your action": spend its Influence on Healing at
+  // 2 Influence → Heal 1 (basic Influence 3 → Heal 1; strong Influence 6 →
+  // Heal 3). The Heal accumulates as healingAvailable for use via healWound.
+  const playPeacefulMoment = useCallback(
+    (handIndex: number, mode: 'basic' | 'strong') => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      const card = state.player.deck.hand[handIndex]
+      if (!card || card.type !== 'advanced_action' || card.name !== 'Peaceful Moment') return
+
+      let mana = state.player.mana
+      if (mode === 'strong') {
+        const spent = engine.manaPool.spendManaOfColor(mana, 'white', state.dayNight)
+        if (!spent) return
+        mana = spent
+      }
+
+      pushState(state)
+
+      const influence = mode === 'strong' ? 6 : 3
+      const heal = Math.floor(influence / 2)
+      const deck = engine.deckManager.playCard(state.player.deck, handIndex)
+      const resolvedTurn = {
+        ...state.player.turn,
+        cardsPlayedThisTurn: [...state.player.turn.cardsPlayedThisTurn, String(card.id)],
+        healingAvailable: (state.player.turn.healingAvailable ?? 0) + heal,
+      }
+      let newState: GameState = {
+        ...state,
+        player: { ...state.player, deck, mana, turn: resolvedTurn },
+      }
+      newState = withLog(newState, 'card_play', `Peaceful Moment: gained Heal ${heal}`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
   const discardCard = useCallback(
     (handIndex: number) => {
       const state = sharedState
@@ -4078,6 +4116,7 @@ export function useGameEngine() {
     playCard,
     playCardWithDiscard,
     playOffering,
+    playPeacefulMoment,
     playComboCard,
     discardCard,
     drawCards,

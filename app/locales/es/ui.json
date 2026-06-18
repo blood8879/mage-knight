@@ -712,6 +712,8 @@
     "healWound": "Curar herida",
     "hexMapPlaceholder": "Mapa hexagonal — Próximamente",
     "improvisationChooseSubtitle": "Selecciona el efecto que quieres obtener.",
+    "peacefulTitle": "Momento de Paz",
+    "peacefulSubtitle": "Toma la Influencia, o gástala como Curación (2 Influencia → Curar 1).",
     "offeringTitle": "Ofrenda",
     "offeringSubtitle": "Descarta hasta 3 cartas que no sean Heridas — gana un cristal del color de cada carta.",
     "offeringConfirm": "Sacrificar",
