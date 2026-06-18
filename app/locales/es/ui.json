@@ -1052,7 +1052,10 @@
     "agilityRanged": "2 Mov. → A distancia 1",
     "agilityMove": "Agilidad (Mov.)",
     "moveLeft": "Mov. restante",
-    "selectTargetFirst": "selecciona un objetivo primero"
+    "selectTargetFirst": "selecciona un objetivo primero",
+    "diplomacyBlock": "Influencia → Bloqueo 2",
+    "diplomacyFireBlock": "Influencia → Bloqueo de Fuego 4",
+    "diplomacyIceBlock": "Influencia → Bloqueo de Hielo 4"
   },
   "interaction": {
     "title": "Site Interaction",

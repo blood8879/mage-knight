@@ -1031,7 +1031,10 @@
     "agilityRanged": "2 Move → Ranged 1",
     "agilityMove": "Agility (Move)",
     "moveLeft": "Move left",
-    "selectTargetFirst": "select a target first"
+    "selectTargetFirst": "select a target first",
+    "diplomacyBlock": "Influence → Block 2",
+    "diplomacyFireBlock": "Influence → Fire Block 4",
+    "diplomacyIceBlock": "Influence → Ice Block 4"
   },
   "interaction": {
     "title": "Site Interaction",

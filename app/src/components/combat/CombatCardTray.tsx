@@ -239,6 +239,29 @@ function CardActionPicker({ card, handIndex, phase, onSelect, onSideways, onClos
           )}
         </>
       )}
+      {/* Diplomacy: "you may use Influence as Block this turn" — in the block
+          phase offer the card's Influence value (2/4) as Block. Strong picks an
+          element (Ice/Fire) for the elemental Block. */}
+      {'name' in card && card.name === 'Diplomacy' && phase === 'block' && (
+        <>
+          <PickerRow
+            label={t('combat.diplomacyBlock', { defaultValue: 'Influence → Block 2' })}
+            icon="🛡"
+            onClick={() => pick('basic', { type: 'block', value: 2 })} />
+          {canPlayStrong && (
+            <>
+              <PickerRow
+                label={t('combat.diplomacyFireBlock', { defaultValue: 'Influence → Fire Block 4' })}
+                icon="🔥" amber mana={mana}
+                onClick={() => pick('strong', { type: 'fire_block', value: 4 })} />
+              <PickerRow
+                label={t('combat.diplomacyIceBlock', { defaultValue: 'Influence → Ice Block 4' })}
+                icon="❄" amber mana={mana}
+                onClick={() => pick('strong', { type: 'ice_block', value: 4 })} />
+            </>
+          )}
+        </>
+      )}
       {bChoice.map((a, i) => (
         <PickerRow key={`bc-${i}`}
           label={canPlayBasic
