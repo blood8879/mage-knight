@@ -441,8 +441,20 @@ export default function CombatCardTray({ phase, combatCards }: CombatCardTrayPro
   }, [playCardForPhase])
 
   const handleSideways = useCallback((idx: number) => {
-    playCardSideways(idx); setPickerIdx(null)
-  }, [playCardSideways])
+    // Apply a one-shot sideways-bonus skill (I Don't Give a Damn! / Who Needs
+    // Magic!) to this play, then consume it.
+    const sb = engineState?.player.turn.sidewaysBonus
+    let value = 1
+    if (sb && engineState) {
+      const card = engineState.player.deck.hand[idx]
+      value = sb.base
+      if (sb.mode === 'card_type' && card && (card.type === 'advanced_action' || card.type === 'spell' || card.type === 'artifact')) value = sb.boosted
+      if (sb.mode === 'no_source_die' && !engineState.player.mana.sourceDieTakenThisTurn) value = sb.boosted
+    }
+    playCardSideways(idx, value)
+    if (sb) engine.consumeSidewaysBonus()
+    setPickerIdx(null)
+  }, [playCardSideways, engineState, engine])
 
   // Improvisation: step 1 — user picked an effect, now needs to discard a card
   const handleImprovisation = useCallback((cardIndex: number, effectType: 'basic' | 'strong', action: CardAction) => {

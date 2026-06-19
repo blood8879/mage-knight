@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { createHarness, setupTurn, setupInteraction } from './card-play-harness'
-import { getHeroSkills } from '@/data/loader'
-import type { GameState, HeroSkill, WoundCard } from '@/engine/types'
+import { getHeroSkills, getBasicActions, getAdvancedActions } from '@/data/loader'
+import type { AnyCard, GameState, HeroSkill, WoundCard } from '@/engine/types'
 
 /**
  * Hero-skill audit (non-combat activation). Several skills hit the `default`
@@ -51,6 +51,31 @@ describe('I Feel No Pain (discard_wound_draw_card) — Tovak', () => {
     h.setState((s) => withSkill(skill('Tovak', 306))(setupTurn([])(s)))
     h.run((e) => e.activateSkill(0))
     expect(h.state().player.skills[0].isUsedThisTurn).toBe(false) // not consumed
+  })
+})
+
+describe("I Don't Give a Damn! (sideways_bonus) — Tovak", () => {
+  it('sets the one-shot sideways bonus, then a sideways play gives +2 (Action) / +3 (AA)', () => {
+    const rage = getBasicActions().commonCards.find((c) => c.name === 'Rage')! as AnyCard
+    const aa = getAdvancedActions()[0] as AnyCard // an advanced action → +3
+    const h = createHarness('Tovak')
+    h.setState((s) => withSkill(skill('Tovak', 307))(setupTurn([rage, aa])(s)))
+    h.run((e) => e.activateSkill(0))
+    expect(h.state().player.turn.sidewaysBonus).toEqual({ base: 2, boosted: 3, mode: 'card_type' })
+
+    // Basic action played sideways → +2 Move.
+    h.run((e) => e.playSidewaysCard(0, 'move'))
+    expect(h.state().player.turn.movePointsAvailable).toBe(2)
+    expect(h.state().player.turn.sidewaysBonus).toBeUndefined() // consumed
+  })
+
+  it('an Advanced Action sideways play gets the boosted +3', () => {
+    const aa = getAdvancedActions()[0] as AnyCard
+    const h = createHarness('Tovak')
+    h.setState((s) => withSkill(skill('Tovak', 307))(setupTurn([aa])(s)))
+    h.run((e) => e.activateSkill(0))
+    h.run((e) => e.playSidewaysCard(0, 'move'))
+    expect(h.state().player.turn.movePointsAvailable).toBe(3)
   })
 })
 

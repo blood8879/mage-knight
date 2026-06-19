@@ -61,7 +61,7 @@ export interface UseCombatCardsReturn {
 
   // Actions
   playCardForPhase: (handIndex: number, effectType: 'basic' | 'strong', chosenAction: CardAction) => void
-  playCardSideways: (handIndex: number) => void
+  playCardSideways: (handIndex: number, sidewaysValue?: number) => void
   /** Concentration / Will Focus combo: play this card with another Action card,
    *  taking that card's strong effect for free with +bonus to its value. */
   playConcentrationCombo: (
@@ -318,7 +318,7 @@ export function useCombatCards(
   // ── playCardSideways ──────────────────────
 
   const playCardSideways = useCallback(
-    (handIndex: number) => {
+    (handIndex: number, sidewaysValue = 1) => {
       // Rulebook p.7: cards cannot be played sideways to contribute to
       // Ranged or Siege Attacks (only Block and melee Attack phases allow it).
       if (phase === 'ranged_siege') return
@@ -336,7 +336,7 @@ export function useCombatCards(
           cardName: getCardName(card),
           effectType: 'sideways',
           chosenAction: null,
-          value: 1,
+          value: sidewaysValue,
           element: 'physical',
         }
 

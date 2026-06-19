@@ -2115,6 +2115,16 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  // Consume the one-shot sideways bonus (after a boosted combat sideways play).
+  const consumeSidewaysBonus = useCallback(() => {
+    const state = sharedState
+    if (!state || !state.player.turn.sidewaysBonus) return
+    updateState({
+      ...state,
+      player: { ...state.player, turn: { ...state.player.turn, sidewaysBonus: undefined } },
+    })
+  }, [updateState])
+
   const discardCard = useCallback(
     (handIndex: number) => {
       const state = sharedState
@@ -2149,12 +2159,23 @@ export function useGameEngine() {
 
       pushState(state)
 
+      // Sideways play normally gives +1; a sideways-bonus skill (I Don't Give a
+      // Damn! / Who Needs Magic!) raises it for one play, consumed here.
+      const sb = state.player.turn.sidewaysBonus
+      let amount = 1
+      if (sb) {
+        amount = sb.base
+        if (sb.mode === 'card_type' && (card.type === 'advanced_action' || card.type === 'spell' || card.type === 'artifact')) amount = sb.boosted
+        if (sb.mode === 'no_source_die' && !state.player.mana.sourceDieTakenThisTurn) amount = sb.boosted
+      }
+
       const newDeck = engine.deckManager.playCard(state.player.deck, handIndex)
       const newTurn = {
         ...state.player.turn,
         cardsPlayedThisTurn: [...state.player.turn.cardsPlayedThisTurn, String(card.id)],
         sidewaysCardsPlayed: state.player.turn.sidewaysCardsPlayed + 1,
-        ...(effectType === 'move' ? { movePointsAvailable: state.player.turn.movePointsAvailable + 1 } : {}),
+        ...(sb ? { sidewaysBonus: undefined } : {}),
+        ...(effectType === 'move' ? { movePointsAvailable: state.player.turn.movePointsAvailable + amount } : {}),
       }
 
       const cardName = card.name
@@ -2165,13 +2186,13 @@ export function useGameEngine() {
       if (effectType === 'influence' && newState.interaction?.isActive) {
         newState = {
           ...newState,
-          interaction: engine.interactionManager.addInfluence(newState.interaction, 1),
+          interaction: engine.interactionManager.addInfluence(newState.interaction, amount),
         }
       }
       if (effectType === 'move' && state.phase === 'player_turn_start' && newTurn.movePointsAvailable > 0) {
         newState = { ...newState, phase: 'movement' as GamePhase }
       }
-      newState = withLog(newState, 'card_play', `Played ${cardName} sideways for +1 ${effectType}`)
+      newState = withLog(newState, 'card_play', `Played ${cardName} sideways for +${amount} ${effectType}`)
       updateState(newState)
     },
     [updateState, withLog, pushState],
@@ -3337,6 +3358,24 @@ export function useGameEngine() {
           break
         }
 
+        case 'sideways_bonus': {
+          // I Don't Give a Damn! / Who Needs Magic!: the next sideways play
+          // gives +2 (or +3 if the condition holds) instead of +1.
+          const base = value || 2
+          const boosted = typeof action.bonusValue === 'number' ? action.bonusValue : base
+          const mode = action.condition === 'no_source_die' ? 'no_source_die' : 'card_type'
+          newState = {
+            ...newState,
+            player: {
+              ...newState.player,
+              turn: { ...newState.player.turn, sidewaysBonus: { base, boosted, mode } },
+            },
+          }
+          logMessage += ` (next sideways +${base}/${boosted})`
+          applied = true
+          break
+        }
+
         case 'influence_per_crystal_color': {
           // Glittering Fortune: during interaction, Influence 1 per different
           // crystal colour in your Inventory.
@@ -4356,6 +4395,7 @@ export function useGameEngine() {
     drawCards,
 
     playSidewaysCard,
+    consumeSidewaysBonus,
     activateUnit,
     takeManaFromSource,
     applyManaDrawInCombat,

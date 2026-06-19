@@ -452,6 +452,10 @@ export interface TurnState {
   /** Golden Grail (basic): grant Fame +1 for each of this card's Healing points
    *  spent this turn (counter of remaining fame-granting heals). */
   fameOnHeal?: number
+  /** I Don't Give a Damn! / Who Needs Magic! / Universal Power: the NEXT card
+   *  played sideways gives `base` (or `boosted` when the condition holds)
+   *  instead of +1. Consumed by that sideways play. */
+  sidewaysBonus?: { base: number; boosted: number; mode: 'card_type' | 'no_source_die' }
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */
