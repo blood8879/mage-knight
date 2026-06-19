@@ -64,6 +64,43 @@ const CHIVALRY_ID = 35
 const EXPOSE_ID = 3
 const BLOOD_RAGE_ID = 5
 const HORN_OF_WRATH_ID = 10
+const BURNING_SHIELD_ID = 9
+
+/**
+ * Burning Shield / Exploding Shield (Spell): when its Fire Block is part of a
+ * SUCCESSFUL block, the strong effect destroys the blocked enemy and the basic
+ * effect lets you hit it with a free Fire Attack 4 in the Attack phase. Returns
+ * the combat with destroyed enemies + the basic Fire-Attack-4 target list.
+ */
+export function applyBurningShield(
+  resolved: import('@/engine/types').CombatState,
+  blocks: BlockDeclaration[],
+  plays: CombatCardPlay[],
+): import('@/engine/types').CombatState {
+  const bsPlays = plays.filter((p) => p.sourceType === 'card' && p.cardId === BURNING_SHIELD_ID)
+  if (bsPlays.length === 0) return resolved
+  const isStrong = bsPlays.some((p) => p.effectType === 'strong')
+  // The successful block(s) that used Burning Shield → their blocked enemy.
+  const targetIds = resolved.blocks
+    .filter((b) => b.isSuccessful && b.cardIds.includes(String(BURNING_SHIELD_ID)))
+    .map((b) => b.enemyInstanceId)
+  if (targetIds.length === 0) {
+    // resolved.blocks may not be populated yet; fall back to the input blocks.
+    const fromInput = blocks
+      .filter((b) => b.isSuccessful && b.cardIds.includes(String(BURNING_SHIELD_ID)))
+      .map((b) => b.enemyInstanceId)
+    if (fromInput.length === 0) return resolved
+    targetIds.push(...fromInput)
+  }
+  const targetSet = new Set(targetIds)
+  if (isStrong) {
+    return {
+      ...resolved,
+      enemies: resolved.enemies.map((e) => (targetSet.has(e.instanceId) ? { ...e, isDefeated: true } : e)),
+    }
+  }
+  return { ...resolved, burningShieldTargets: [...new Set([...(resolved.burningShieldTargets ?? []), ...targetIds])] }
+}
 
 /**
  * Soul Harvester (Artifact): gain a crystal for each enemy this attack defeats.
@@ -455,7 +492,10 @@ export function useCombat() {
       const currentCombatState = applyCombatSpecials(resolver.processSummons(combatState), plays)
 
       const { blocks: boostedBlocks, consumed } = applyAmbushBlockBonus(blocks, engineState.player.turn.ambush)
-      const resolved = resolver.resolveBlock(currentCombatState, boostedBlocks)
+      let resolved = resolver.resolveBlock(currentCombatState, boostedBlocks)
+      // Burning Shield: successful block → destroy enemy (strong) or mark it for
+      // a free Fire Attack 4 in the Attack phase (basic).
+      resolved = applyBurningShield(resolved, boostedBlocks, plays)
       const newState = {
         ...engineState,
         combat: resolved,
@@ -503,7 +543,21 @@ export function useCombat() {
       const processed = plays.length > 0 ? processCardPlays(plays) : null
       const resolver = sharedEngine.combatResolver
       const { attacks: boostedAttacks, consumed } = applyAmbushAttackBonus(attacks, engineState.player.turn.ambush)
-      const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), boostedAttacks)
+      // Burning Shield (basic): enemies blocked with it get a free Fire Attack 4.
+      const bsAttacks: AttackDeclaration[] = (combatState.burningShieldTargets ?? [])
+        .filter((id) => !combatState.enemies.find((e) => e.instanceId === id)?.isDefeated)
+        .map((id, i) => ({
+          id: `burning_shield_${i}`,
+          targetEnemyIds: [id],
+          attackValue: 4,
+          attackElement: 'fire' as const,
+          isSiege: false,
+          isRanged: false,
+          cardIds: [],
+          unitIds: [],
+        }))
+      const allAttacks = [...boostedAttacks, ...bsAttacks]
+      const resolved = resolver.resolveMeleeAttack(applyCombatSpecials(combatState, plays), allAttacks)
       const newState = applyAttackRewards(sharedEngine, engineState, combatState.enemies, resolved, plays, processed)
       const fameBonus = (processed?.fameBonus ?? 0) + chivalryReward(combatState.enemies, resolved.enemies, plays).fame
       let finalState = fameBonus > 0 ? applyFameGain(sharedEngine, newState, fameBonus) : newState

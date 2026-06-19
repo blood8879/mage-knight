@@ -386,6 +386,9 @@ export interface CombatState {
   reputationChange: number
   rewards: CombatReward[]
   combatHexCoord?: HexCoord // which hex the combat is taking place on
+  /** Burning Shield (basic): enemies successfully blocked with it may be hit by
+   *  a free Fire Attack 4 in the Attack phase. */
+  burningShieldTargets?: string[]
 }
 
 export interface CombatReward {

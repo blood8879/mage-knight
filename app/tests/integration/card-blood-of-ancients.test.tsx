@@ -39,8 +39,9 @@ describe('Blood of Ancients: gain a matching-colour AA from the offer', () => {
   it('refuses if the paid colour does not match the offer card', () => {
     const h = createHarness('Tovak')
     const offerCard = h.state().offers.advancedActions[0]
-    const cardColor = (Array.isArray(offerCard.color) ? offerCard.color[0] : offerCard.color) as ManaColor
-    const wrong: ManaColor = cardColor === 'red' ? 'blue' : 'red'
+    const cardCols = (Array.isArray(offerCard.color) ? offerCard.color : [offerCard.color]) as ManaColor[]
+    // Pick a basic colour that the offer card does NOT have.
+    const wrong = (['red', 'blue', 'green', 'white'] as ManaColor[]).find((c) => !cardCols.includes(c))!
 
     h.setState((s) => manaWith({ tokens: [{ color: wrong, source: 'effect' }] })(setupTurn([blood()])(s)))
     h.run((e) => e.playBloodOfAncients(0, wrong, offerCard.id))
