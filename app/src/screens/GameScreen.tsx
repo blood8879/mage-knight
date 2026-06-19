@@ -13,6 +13,8 @@ import { useUIStore } from '@/store/uiStore'
 import { useTutorialProgress } from '@/hooks/useTutorialProgress'
 import TopBar from '@/components/layout/TopBar'
 import BottomPanel from '@/components/layout/BottomPanel'
+import LearnByPlayingGuide from '@/components/learn/LearnByPlayingGuide'
+import type { LearnContext } from '@/data/learnGuide'
 import HexMap from '@/components/map/HexMap'
 import CombatView from '@/components/combat/CombatView'
 import InteractionPanel from '@/components/interaction/InteractionPanel'
@@ -283,6 +285,7 @@ export default function GameScreen() {
   const phase = useGameStore((s) => s.phase)
   const isTutorialMode = useGameStore((s) => s.isTutorialMode)
   const tutorialChapter = useGameStore((s) => s.tutorialChapter)
+  const learnMode = useGameStore((s) => s.learnMode)
   const selectedHero = useGameStore((s) => s.selectedHero)
   const fame = useGameStore((s) => s.fame)
   const reputation = useGameStore((s) => s.reputation)
@@ -442,10 +445,10 @@ export default function GameScreen() {
       if (isTutorialMode) {
         engine.initializeTutorial(tutorialChapter ?? 1)
       } else {
-        engine.initializeGame(selectedHero)
+        engine.initializeGame(selectedHero, { learn: learnMode })
       }
     }
-  }, [engine, isTutorialMode, tutorialChapter, selectedHero])
+  }, [engine, isTutorialMode, tutorialChapter, selectedHero, learnMode])
 
   useEffect(() => {
     if (phase === 'player_turn_start' && engineState && engineState.turnCount === 0) {
@@ -947,6 +950,20 @@ export default function GameScreen() {
       engineState?.pendingRewards?.[0]) ||
     null
 
+  // Live context for the "Learn by Playing" teaching guide.
+  const learnCtx: LearnContext = {
+    round: engineState?.round ?? 1,
+    phase,
+    combatActive: engineState?.combat.isActive ?? false,
+    interactionActive: engineState?.interaction?.isActive ?? false,
+    hasInteractableSite: interactableSite !== null,
+    hasEnemyNearby: enemiesNearby !== null,
+    pendingLevelUp: !!pendingLevelUp,
+    pendingReward: !!pendingReward,
+    finalTurnPending: engineState?.finalTurnPending ?? false,
+    movePoints: engineState?.player.turn.movePointsAvailable ?? 0,
+  }
+
   // Safety: leave the level_up phase if there is nothing to resolve
   useEffect(() => {
     if (phase === 'level_up' && (engineState?.pendingLevelUps?.length ?? 0) === 0) {
@@ -1079,7 +1096,8 @@ export default function GameScreen() {
   })()
 
   return (
-    <div className="flex h-full flex-col bg-slate-950" aria-label={t('game.title', 'Game')}>
+    <div className="relative flex h-full flex-col bg-slate-950" aria-label={t('game.title', 'Game')}>
+      {learnMode && engineState && <LearnByPlayingGuide ctx={learnCtx} />}
       <TopBar
         onEndTurn={() => engine.endTurn()}
         onRest={(type) => {

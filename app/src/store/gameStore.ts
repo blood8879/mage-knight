@@ -8,6 +8,8 @@ interface GameStoreState {
   isGameActive: boolean
   isTutorialMode: boolean
   tutorialChapter: number | null
+  /** "Learn by Playing" — a real First Reconnaissance game with a teaching guide. */
+  learnMode: boolean
   round: number
   totalRounds: number
   turn: number
@@ -36,6 +38,7 @@ interface GameStoreState {
   selectedHero: string
 
   startNewGame: (hero?: string) => void
+  startLearnGame: (hero?: string) => void
   startTutorial: () => void
   startTutorialChapter: (chapter: number) => void
   endGame: (score?: FinalScore) => void
@@ -51,6 +54,7 @@ const initialState = {
   isGameActive: false,
   isTutorialMode: false,
   tutorialChapter: null as number | null,
+  learnMode: false,
   round: 1,
   totalRounds: 3,
   turn: 1,
@@ -82,6 +86,23 @@ export const useGameStore = create<GameStoreState>((set) => ({
       isGameActive: true,
       isTutorialMode: false,
       tutorialChapter: null,
+      learnMode: false,
+      phase: 'setup',
+      log: [],
+    }),
+
+  // Learn by Playing: a real game (rulebook-faithful First Reconnaissance) with
+  // a contextual teaching guide layered on top. NOT the scripted tutorial.
+  startLearnGame: (hero = 'Arythea') =>
+    set({
+      ...initialState,
+      selectedHero: hero,
+      isGameActive: true,
+      isTutorialMode: false,
+      tutorialChapter: null,
+      learnMode: true,
+      totalRounds: 3,
+      roundPattern: ['day', 'night', 'day'],
       phase: 'setup',
       log: [],
     }),

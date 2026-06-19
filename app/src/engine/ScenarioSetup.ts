@@ -82,6 +82,35 @@ export class ScenarioSetup {
     }
   }
 
+  /**
+   * The First Reconnaissance — the rulebook's introductory scenario, used by the
+   * "Learn by Playing" mode. Three rounds (Day–Night–Day); the game ends as soon
+   * as a City tile is discovered (then one more turn), and placing a new tile
+   * grants Fame +1. Rules are otherwise identical to the standard game.
+   */
+  setupLearnScenario(): ScenarioConfig {
+    return {
+      name: 'First Reconnaissance',
+      totalRounds: 3,
+      roundPattern: ['day', 'night', 'day'],
+      mapConfig: {
+        startingSide: 'A',
+        countrysideTileCount: 7,
+        coreTileCount: 3, // 1 city + 2 non-city core
+        coreCityCount: 1,
+      },
+      playerCount: 2,
+      useDummyPlayer: true,
+      diceCount: 4,
+      unitOfferSlots: 4,
+      spellOfferSlots: 3,
+      aaOfferSlots: 3,
+      specialRules: ['no_pvp', 'fame_on_tile_reveal', 'end_on_city_discovery'],
+      useEliteUnits: false,
+      removedSpellIds: [...COMPETITIVE_SPELL_IDS],
+    }
+  }
+
   setupPlayerDeck(heroName: string, basicActionCards: BasicActionCard[]): AnyCard[] {
     // Works for any hero: keep common cards, swap in this hero's unique card
     // (heroSpecific with a `replaces` target), and drop other heroes' cards.

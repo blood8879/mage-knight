@@ -27,11 +27,14 @@ export default function MainMenu() {
   const { t } = useTranslation('ui')
   const navigate = useUIStore((s) => s.navigate)
   const startNewGame = useGameStore((s) => s.startNewGame)
+  const startLearnGame = useGameStore((s) => s.startLearnGame)
   const startTutorialChapter = useGameStore((s) => s.startTutorialChapter)
   const { language, setLanguage } = useSettingsStore()
   const { isFirstVisit, markFirstVisitDone, completedChapters } = useTutorialProgress()
   const [showChapterSelect, setShowChapterSelect] = useState(false)
   const [showHeroSelect, setShowHeroSelect] = useState(false)
+  // Whether the hero picker is for a normal game or a Learn-by-Playing game.
+  const [heroSelectFor, setHeroSelectFor] = useState<'new' | 'learn'>('new')
   const engine = useGameEngine()
   const [autoSaveInfo, setAutoSaveInfo] = useState<{ round: number; dayNight: string } | null>(null)
 
@@ -44,12 +47,19 @@ export default function MainMenu() {
   }, [])
 
   const handleNewGame = () => {
+    setHeroSelectFor('new')
+    setShowHeroSelect(true)
+  }
+
+  const handleLearnGame = () => {
+    setHeroSelectFor('learn')
     setShowHeroSelect(true)
   }
 
   const handleSelectHero = (hero: string) => {
     setShowHeroSelect(false)
-    startNewGame(hero)
+    if (heroSelectFor === 'learn') startLearnGame(hero)
+    else startNewGame(hero)
     navigate('game')
   }
 
@@ -148,6 +158,14 @@ export default function MainMenu() {
           className="btn-fantasy btn-fantasy-primary rounded-lg px-6 py-3.5 text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
         >
           {t('menu.newGame', 'New Game')}
+        </button>
+        <button
+          type="button"
+          onClick={handleLearnGame}
+          aria-label={t('menu.learnByPlaying', 'Learn by Playing')}
+          className="btn-fantasy rounded-lg px-6 py-3.5 text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+        >
+          {t('menu.learnByPlaying', 'Learn by Playing')}
         </button>
         <button
           type="button"

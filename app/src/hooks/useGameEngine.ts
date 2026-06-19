@@ -319,7 +319,7 @@ export function useGameEngine() {
   // ════════════════════════════════════════════
   //  GAME INITIALIZATION
   // ════════════════════════════════════════════
-  const initializeGame = useCallback((heroName: string = 'Arythea') => {
+  const initializeGame = useCallback((heroName: string = 'Arythea', opts?: { learn?: boolean }) => {
     // Deterministic seed via ?seed= for QA/E2E reproducibility
     const urlSeed =
       typeof window !== 'undefined'
@@ -345,7 +345,9 @@ export function useGameEngine() {
     const tacticEffectManager = new TacticEffectManager(random)
     const interactionManager = new InteractionManager()
     const skillManager = new SkillManager()
-    const config = scenarioSetup.setupFirstReconnaissance()
+    const config = opts?.learn
+      ? scenarioSetup.setupLearnScenario()
+      : scenarioSetup.setupFirstReconnaissance()
 
     sharedEngine = {
       random,
@@ -1327,8 +1329,12 @@ export function useGameEngine() {
       map: { ...newState.map, hexGrid: newHexGrid },
     }
 
-    // (Solo Conquest does not grant Fame for revealing tiles — that is a
-    // First Reconnaissance special rule only.)
+    // First Reconnaissance: placing a new tile grants Fame +1 (Solo Conquest
+    // does not). Gated on the scenario's special rule.
+    const rules = engine.config?.specialRules ?? []
+    if (rules.includes('fame_on_tile_reveal')) {
+      newState = applyFameGain(engine, newState, 1)
+    }
 
     newState = withLog(
       newState,
@@ -1336,6 +1342,16 @@ export function useGameEngine() {
       `Explored tile at (${position.q}, ${position.r})${enemiesAssigned > 0 ? ` — placed ${enemiesAssigned} enemy token(s)` : ''}`,
       { position, cost: revealCost, enemiesAssigned },
     )
+
+    // First Reconnaissance: the game ends as soon as a City tile is discovered
+    // (each side then takes one more turn — reuses the finalTurnPending flow).
+    if (rules.includes('end_on_city_discovery') && !newState.finalTurnPending) {
+      const cityRevealed = [...newHexGrid.values()].some((h) => h.site === 'city' && h.isRevealed)
+      if (cityRevealed) {
+        newState = { ...newState, finalTurnPending: true }
+        newState = withLog(newState, 'game_end', 'A City has been discovered — the game ends after one final turn!')
+      }
+    }
 
     clearUndoStack()
     updateState(newState)
