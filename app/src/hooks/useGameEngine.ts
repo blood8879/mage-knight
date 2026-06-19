@@ -1989,11 +1989,79 @@ export function useGameEngine() {
     [updateState, withLog, pushState],
   )
 
+  // Blood of Ancients (strong): "Gain a Wound to hand. Use the stronger effect
+  // of any card from the AA offer without paying its mana cost; the card stays
+  // in the offer." Applies the offer card's strong effect's out-of-combat parts
+  // (Move / Heal / Influence / crystals / mana / draw).
+  const playBloodOfAncientsStrong = useCallback(
+    (handIndex: number, offerCardId: number, chosenColors: ManaColor[] = []) => {
+      const state = sharedState
+      const engine = sharedEngine
+      if (!state || !engine) return
+      const card = state.player.deck.hand[handIndex]
+      if (!card || card.type !== 'advanced_action' || card.name !== 'Blood of Ancients') return
+      const offerCard = state.offers.advancedActions.find((c) => c.id === offerCardId)
+      if (!offerCard) return
+
+      // Blood of Ancients' own strong effect costs red mana (the OFFER card is free).
+      const paidRed = engine.manaPool.spendManaOfColor(state.player.mana, 'red', state.dayNight)
+      if (!paidRed) return
+
+      pushState(state)
+
+      let deck = engine.deckManager.playCard(state.player.deck, handIndex) // Blood → discard
+      deck = engine.deckManager.addWound(deck, 1)
+
+      // Resolve the offer card's strong effect for free (it stays in the offer).
+      const selected = selectEffectActions(offerCard.strongEffect, undefined)
+      const resolution = engine.cardEffectResolver.resolveEffect(selected, state.dayNight)
+      let resolvedTurn = engine.cardEffectResolver.applyToTurnState(
+        { ...state.player.turn, cardsPlayedThisTurn: [...state.player.turn.cardsPlayedThisTurn, String(card.id)] },
+        resolution,
+      )
+      if (resolution.terrainModifiers.length > 0) {
+        resolvedTurn = {
+          ...resolvedTurn,
+          terrainModifiers: [...(resolvedTurn.terrainModifiers ?? []), ...resolution.terrainModifiers],
+        }
+      }
+
+      let mana = paidRed
+      for (const c of resolution.crystalsGained) mana = engine.manaPool.addCrystal(mana, c)
+      for (const m of resolution.manaTokensGained) mana = engine.manaPool.addManaToken(mana, m as ManaColor, 'effect')
+      // Open-colour gains consume the supplied colour picks in order.
+      const picks = [...chosenColors]
+      for (let i = 0; i < resolution.openCrystalActions.length; i++) {
+        const pick = picks.shift()
+        if (pick) mana = engine.manaPool.addCrystal(mana, pick)
+      }
+      for (let i = 0; i < resolution.openManaActions.length; i++) {
+        const pick = picks.shift()
+        if (pick) mana = engine.manaPool.addManaToken(mana, pick, 'effect')
+      }
+      if (resolution.cardsToDraw > 0) deck = engine.deckManager.drawCards(deck, resolution.cardsToDraw)
+
+      let newState: GameState = {
+        ...state,
+        player: { ...state.player, deck, mana, turn: resolvedTurn },
+      }
+      if (resolution.influenceValue > 0 && newState.interaction?.isActive) {
+        newState = { ...newState, interaction: engine.interactionManager.addInfluence(newState.interaction, resolution.influenceValue) }
+      }
+      if (state.phase === 'player_turn_start' && resolvedTurn.movePointsAvailable > 0) {
+        newState = { ...newState, phase: 'movement' as GamePhase }
+      }
+      newState = withLog(newState, 'card_play', `Blood of Ancients (strong): used ${offerCard.name}`)
+      updateState(newState)
+    },
+    [updateState, withLog, pushState],
+  )
+
   // Peaceful Moment (AA) "as your action": spend its Influence on Healing at
   // 2 Influence → Heal 1 (basic Influence 3 → Heal 1; strong Influence 6 →
   // Heal 3). The Heal accumulates as healingAvailable for use via healWound.
   const playPeacefulMoment = useCallback(
-    (handIndex: number, mode: 'basic' | 'strong') => {
+    (handIndex: number, mode: 'basic' | 'strong', readyUnitIndex?: number) => {
       const state = sharedState
       const engine = sharedEngine
       if (!state || !engine) return
@@ -2007,10 +2075,26 @@ export function useGameEngine() {
         mana = spent
       }
 
+      // Spend the card's Influence on Healing (2 Influence → Heal 1) and, on the
+      // strong effect, optionally refresh one Unit (2 Influence per Unit level).
+      let influence = mode === 'strong' ? 6 : 3
+      let units = state.player.units
+      let readied: string | null = null
+      if (mode === 'strong' && typeof readyUnitIndex === 'number') {
+        const unit = state.player.units[readyUnitIndex]
+        if (unit && unit.status === 'spent') {
+          const cost = 2 * unit.unit.level
+          if (influence >= cost) {
+            influence -= cost
+            units = state.player.units.map((u, i) => (i === readyUnitIndex ? { ...u, status: 'ready' as const } : u))
+            readied = unit.unit.name
+          }
+        }
+      }
+      const heal = Math.floor(influence / 2)
+
       pushState(state)
 
-      const influence = mode === 'strong' ? 6 : 3
-      const heal = Math.floor(influence / 2)
       const deck = engine.deckManager.playCard(state.player.deck, handIndex)
       const resolvedTurn = {
         ...state.player.turn,
@@ -2019,9 +2103,13 @@ export function useGameEngine() {
       }
       let newState: GameState = {
         ...state,
-        player: { ...state.player, deck, mana, turn: resolvedTurn },
+        player: { ...state.player, deck, mana, units, turn: resolvedTurn },
       }
-      newState = withLog(newState, 'card_play', `Peaceful Moment: gained Heal ${heal}`)
+      newState = withLog(
+        newState,
+        'card_play',
+        readied ? `Peaceful Moment: readied ${readied}, Heal ${heal}` : `Peaceful Moment: gained Heal ${heal}`,
+      )
       updateState(newState)
     },
     [updateState, withLog, pushState],
@@ -4217,6 +4305,7 @@ export function useGameEngine() {
     playOffering,
     playPeacefulMoment,
     playBloodOfAncients,
+    playBloodOfAncientsStrong,
     playComboCard,
     discardCard,
     drawCards,

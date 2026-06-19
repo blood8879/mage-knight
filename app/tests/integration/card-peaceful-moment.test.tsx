@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { createHarness, setupTurn, manaWith } from './card-play-harness'
-import { getAdvancedActions } from '@/data/loader'
-import type { AnyCard } from '@/engine/types'
+import { getAdvancedActions, getRegularUnits } from '@/data/loader'
+import type { AnyCard, UnitInstance } from '@/engine/types'
 
 /**
  * Peaceful Moment (AA, id 36) — rulebook text:
@@ -35,6 +35,22 @@ describe('Peaceful Moment: Influence spent as Healing', () => {
     const before = h.state().player.turn.healingAvailable ?? 0
     h.run((e) => e.playPeacefulMoment(0, 'strong'))
     expect((h.state().player.turn.healingAvailable ?? 0)).toBe(before + 3)
+  })
+
+  it('strong: refresh a spent Unit (2×level Influence), remainder → Heal', () => {
+    const h = createHarness('Tovak')
+    const u = getRegularUnits()[0] // level 1 → cost 2
+    const spent: UnitInstance = { unit: u, status: 'spent', woundCount: 0 }
+    h.setState((s) => {
+      const base = manaWith({ tokens: [{ color: 'white', source: 'effect' }] })(setupTurn([peaceful()])(s))
+      return { ...base, player: { ...base.player, units: [spent] } }
+    })
+    const before = h.state().player.turn.healingAvailable ?? 0
+    h.run((e) => e.playPeacefulMoment(0, 'strong', 0))
+    const after = h.state()
+    expect(after.player.units[0].status).toBe('ready') // refreshed
+    // 6 Influence − 2 (level 1) = 4 → Heal 2
+    expect((after.player.turn.healingAvailable ?? 0)).toBe(before + 2)
   })
 
   it('strong without white mana is refused', () => {

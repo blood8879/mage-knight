@@ -49,6 +49,28 @@ describe('Blood of Ancients: gain a matching-colour AA from the offer', () => {
     expect(h.state().player.deck.hand.some((c) => 'name' in c && c.name === 'Blood of Ancients')).toBe(true)
   })
 
+  it('strong: gains a Wound and applies an offer card’s strong effect for free (card stays)', () => {
+    const h = createHarness('Tovak')
+    // Find an offer AA whose strong effect grants Move (a clean out-of-combat result).
+    const target = h.state().offers.advancedActions.find((c) =>
+      c.strongEffect?.actions?.some((a) => a.type === 'move'),
+    )
+    if (!target) return // offer-dependent; skip if none this seed
+    const moveAction = target.strongEffect.actions.find((a) => a.type === 'move')!
+    const moveVal = typeof moveAction.value === 'number' ? moveAction.value : 0
+
+    h.setState((s) => manaWith({ tokens: [{ color: 'red', source: 'effect' }] })(setupTurn([blood()])(s)))
+    const offerLenBefore = h.state().offers.advancedActions.length
+
+    h.run((e) => e.playBloodOfAncientsStrong(0, target.id))
+
+    const after = h.state()
+    expect(after.player.deck.hand.some((c) => c.type === 'wound')).toBe(true) // gained a Wound
+    expect(after.offers.advancedActions.length).toBe(offerLenBefore) // card STAYS in offer
+    expect(after.player.turn.movePointsAvailable).toBe(moveVal) // strong effect applied free
+    expect(after.player.mana.playerMana.some((t) => t.color === 'red')).toBe(false) // red paid
+  })
+
   it('refuses without the mana to pay', () => {
     const h = createHarness('Tovak')
     const offerCard = h.state().offers.advancedActions[0]

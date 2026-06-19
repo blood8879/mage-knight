@@ -364,8 +364,9 @@ export default function GameScreen() {
   const [peacefulMode, setPeacefulMode] = useState<{ handIndex: number; mode: 'basic' | 'strong' } | null>(null)
   // Song of Wind (strong): optionally pay a blue mana for lake travel
   const [songWindMode, setSongWindMode] = useState<{ handIndex: number } | null>(null)
-  // Blood of Ancients (basic): pay a mana → gain a matching-colour AA from offer
-  const [bloodMode, setBloodMode] = useState<{ handIndex: number } | null>(null)
+  // Blood of Ancients: basic = pay a mana → gain a matching-colour AA from
+  // offer; strong = use any offer AA's strong effect for free.
+  const [bloodMode, setBloodMode] = useState<{ handIndex: number; mode: 'basic' | 'strong' } | null>(null)
   // Concentration / Will Focus strong: pick the Action card to combo with
   const [comboMode, setComboMode] = useState<{
     handIndex: number
@@ -764,7 +765,14 @@ export default function GameScreen() {
       // Blood of Ancients (basic): pay a mana → gain a matching-colour AA from
       // the offer to hand. Show the affordable offer cards; if none are
       // affordable, fall through to a normal play (which just gains the Wound).
-      if (card?.type === 'advanced_action' && card.name === 'Blood of Ancients' && (mode ?? 'basic') === 'basic') {
+      if (card?.type === 'advanced_action' && card.name === 'Blood of Ancients') {
+        if (mode === 'strong') {
+          const m = engineState.player.mana
+          const hasRed = m.playerMana.some((tk) => tk.color === 'red') || m.crystals.red > 0 ||
+            (engineState.dayNight === 'day' && m.playerMana.some((tk) => tk.color === 'gold'))
+          if (hasRed && engineState.offers.advancedActions.length > 0) { setBloodMode({ handIndex: index, mode: 'strong' }); return }
+          return // need red mana + a non-empty offer
+        }
         const mana = engineState.player.mana
         const canPay = (c: ManaColor) =>
           mana.playerMana.some((tk) => tk.color === c) || mana.crystals[c] > 0 ||
@@ -773,7 +781,7 @@ export default function GameScreen() {
           const cols = (Array.isArray(oc.color) ? oc.color : [oc.color]) as ManaColor[]
           return cols.some(canPay)
         })
-        if (affordable) { setBloodMode({ handIndex: index }); return }
+        if (affordable) { setBloodMode({ handIndex: index, mode: 'basic' }); return }
         // else: normal play gains the Wound only
       }
       // Song of Wind (strong): offer the optional blue-mana lake-travel clause,
@@ -1491,6 +1499,29 @@ export default function GameScreen() {
                         ❤️ {t('game.heal', 'Heal')} {peacefulMode.mode === 'strong' ? 3 : 1}
                       </button>
                     </div>
+                    {/* Strong: refresh a spent Unit (2 Influence per level), rest → Heal */}
+                    {peacefulMode.mode === 'strong' && engineState.player.units.some((u) => u.status === 'spent') && (
+                      <div className="mt-3 space-y-1.5">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                          {t('game.peacefulReadyUnit', 'Or refresh a Unit (2 Influence / level)')}
+                        </p>
+                        {engineState.player.units.map((u, i) =>
+                          u.status === 'spent' && 2 * u.unit.level <= 6 ? (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => { engine.playPeacefulMoment(peacefulMode.handIndex, 'strong', i); setPeacefulMode(null) }}
+                              className="flex w-full items-center justify-between rounded-lg border border-slate-700/40 bg-slate-800/60 px-3 py-2 text-left transition-all hover:border-emerald-500/50 hover:bg-slate-800"
+                            >
+                              <span className="text-xs font-bold text-slate-200">{u.unit.name}</span>
+                              <span className="text-[10px] text-slate-500">
+                                −{2 * u.unit.level} · {t('game.heal', 'Heal')} {Math.floor((6 - 2 * u.unit.level) / 2)}
+                              </span>
+                            </button>
+                          ) : null,
+                        )}
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => setPeacefulMode(null)}
@@ -1516,9 +1547,10 @@ export default function GameScreen() {
                 if (engineState.dayNight === 'day' && mana.playerMana.some((tk) => tk.color === 'gold')) return cols[0] ?? null
                 return null
               }
+              const isStrong = bloodMode.mode === 'strong'
               const affordable = engineState.offers.advancedActions
-                .map((oc) => ({ oc, color: payColorFor((Array.isArray(oc.color) ? oc.color : [oc.color]) as ManaColor[]) }))
-                .filter((x) => x.color !== null) as { oc: typeof engineState.offers.advancedActions[number]; color: ManaColor }[]
+                .map((oc) => ({ oc, color: isStrong ? ('red' as ManaColor) : payColorFor((Array.isArray(oc.color) ? oc.color : [oc.color]) as ManaColor[]) }))
+                .filter((x) => isStrong || x.color !== null) as { oc: typeof engineState.offers.advancedActions[number]; color: ManaColor }[]
               return (
                 <motion.div
                   key="blood-of-ancients"
@@ -1532,18 +1564,24 @@ export default function GameScreen() {
                         {t('game.bloodTitle', 'Blood of Ancients')}
                       </h2>
                       <p className="mb-5 text-center text-xs text-slate-500">
-                        {t('game.bloodSubtitle', 'Gain a Wound, pay a mana, and take a matching Advanced Action into your hand.')}
+                        {isStrong
+                          ? t('game.bloodStrongSubtitle', 'Gain a Wound, then use an Advanced Action’s strong effect for free (it stays in the offer).')
+                          : t('game.bloodSubtitle', 'Gain a Wound, pay a mana, and take a matching Advanced Action into your hand.')}
                       </p>
                       <div className="flex flex-col gap-2">
                         {affordable.map(({ oc, color }) => (
                           <button
                             key={oc.id}
                             type="button"
-                            onClick={() => { engine.playBloodOfAncients(bloodMode.handIndex, color, oc.id); setBloodMode(null) }}
+                            onClick={() => {
+                              if (isStrong) engine.playBloodOfAncientsStrong(bloodMode.handIndex, oc.id)
+                              else engine.playBloodOfAncients(bloodMode.handIndex, color, oc.id)
+                              setBloodMode(null)
+                            }}
                             className="flex items-center justify-between rounded-xl border border-slate-700/40 bg-slate-800/60 px-4 py-3 text-left transition-all hover:border-rose-500/50 hover:bg-slate-800 active:scale-[0.98]"
                           >
                             <span className="text-sm font-bold text-slate-200">{oc.name}</span>
-                            <span className="text-[10px] uppercase text-slate-500">{t(`colors.${color}`, color)}</span>
+                            {!isStrong && <span className="text-[10px] uppercase text-slate-500">{t(`colors.${color}`, color)}</span>}
                           </button>
                         ))}
                       </div>
