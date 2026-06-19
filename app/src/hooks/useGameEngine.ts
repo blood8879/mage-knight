@@ -3308,6 +3308,51 @@ export function useGameEngine() {
           break
         }
 
+        case 'draw_cards': {
+          // Motivation: draw N cards; companion gain_mana_token applies when you
+          // have the least Fame (trivially true in the solo game).
+          const n = value || 2
+          let deck = engine.deckManager.drawCards(newState.player.deck, n)
+          let mana = newState.player.mana
+          const companion = skill.actions.find((a) => a.type === 'gain_mana_token')
+          const compColor = companion?.color as ManaColor | 'black' | undefined
+          if (compColor && !(compColor === 'black' && state.dayNight !== 'night')) {
+            mana = engine.manaPool.addManaToken(mana, compColor, 'effect')
+          }
+          newState = { ...newState, player: { ...newState.player, deck, mana } }
+          logMessage += ` (drew ${n} card(s)${compColor ? `, +1 ${compColor} mana` : ''})`
+          applied = true
+          break
+        }
+
+        case 'discard_wound_draw_card': {
+          // I Feel No Pain: discard one Wound from hand → draw a card.
+          const woundIdx = newState.player.deck.hand.findIndex((c) => c.type === 'wound')
+          if (woundIdx === -1) return
+          let deck = engine.deckManager.discardFromHandForced(newState.player.deck, woundIdx)
+          deck = engine.deckManager.drawCards(deck, value || 1)
+          newState = { ...newState, player: { ...newState.player, deck } }
+          logMessage += ` (discarded a Wound, drew a card)`
+          applied = true
+          break
+        }
+
+        case 'influence_per_crystal_color': {
+          // Glittering Fortune: during interaction, Influence 1 per different
+          // crystal colour in your Inventory.
+          if (!newState.interaction?.isActive) return
+          const crystals = newState.player.mana.crystals
+          const colors = (['red', 'blue', 'green', 'white'] as const).filter((c) => crystals[c] > 0).length
+          if (colors <= 0) return
+          newState = {
+            ...newState,
+            interaction: engine.interactionManager.addInfluence(newState.interaction, colors * (value || 1)),
+          }
+          logMessage += ` (+${colors} Influence from crystal colours)`
+          applied = true
+          break
+        }
+
         default:
           // Unsupported action type
           return
