@@ -456,6 +456,8 @@ export interface TurnState {
    *  played sideways gives `base` (or `boosted` when the condition holds)
    *  instead of +1. Consumed by that sideways play. */
   sidewaysBonus?: { base: number; boosted: number; mode: 'card_type' | 'no_source_die' }
+  /** Flight (Goldyx): the granted move ignores terrain cost and doesn't provoke. */
+  flightActive?: boolean
   /** Where this turn started — forced withdrawal retreats here (EC-03-D-1) */
   turnStartPosition?: HexCoord
   /** Turn-scoped terrain cost modifiers from cards (Frost Bridge, Path Finding…) */

@@ -3042,6 +3042,7 @@ export function useGameEngine() {
       cardIndex?: number
       tokenIndex?: number
       sidewaysEffect?: 'move' | 'influence'
+      terrain?: import('@/engine/types').TerrainType
     }) => {
       const state = sharedState
       const engine = sharedEngine
@@ -3372,6 +3373,105 @@ export function useGameEngine() {
             },
           }
           logMessage += ` (next sideways +${base}/${boosted})`
+          applied = true
+          break
+        }
+
+        case 'flight': {
+          // Flight (Goldyx): fly up to two spaces — grant the Move points; the
+          // move ignores terrain cost and does not provoke (flightActive).
+          const moveGain = value || 2
+          newState = {
+            ...newState,
+            player: {
+              ...newState.player,
+              turn: {
+                ...newState.player.turn,
+                movePointsAvailable: newState.player.turn.movePointsAvailable + moveGain,
+                flightActive: true,
+              },
+            },
+          }
+          if (newState.phase === 'player_turn_start') newState = { ...newState, phase: 'movement' as GamePhase }
+          logMessage += ` (Flight: +${moveGain} Move, ignores terrain)`
+          applied = true
+          break
+        }
+
+        case 'sideways_mana_boost': {
+          // Universal Power: spend one mana so the next sideways play gives +3
+          // (or +4 for an Action/Spell card). Consumed by that sideways play.
+          const picked = options?.color
+          if (!picked || picked === 'black') return
+          const paid = engine.manaPool.spendManaOfColor(newState.player.mana, picked, state.dayNight)
+          if (!paid) return
+          const base = value || 3
+          const boosted = typeof action.bonusValue === 'number' ? action.bonusValue : 4
+          newState = {
+            ...newState,
+            player: {
+              ...newState.player,
+              mana: paid,
+              turn: { ...newState.player.turn, sidewaysBonus: { base, boosted, mode: 'card_type' } },
+            },
+          }
+          logMessage += ` (next sideways +${base}/${boosted})`
+          applied = true
+          break
+        }
+
+        case 'cooperative_terrain_discount': {
+          // Prayer of Weather (solo: the "for you" part): reduce one terrain's
+          // Move cost by 2 (min 1) until your next turn.
+          const terrain = options?.terrain
+          if (!terrain) return
+          newState = {
+            ...newState,
+            player: {
+              ...newState.player,
+              turn: {
+                ...newState.player.turn,
+                terrainModifiers: [
+                  ...(newState.player.turn.terrainModifiers ?? []),
+                  { type: 'terrain_modifier', terrain, costReduction: value || 2, minimum: 1 },
+                ],
+              },
+            },
+          }
+          logMessage += ` (${terrain} Move cost −${value || 2})`
+          applied = true
+          break
+        }
+
+        case 'cooperative_mana_overload': {
+          // Mana Overload (solo self-benefit): gain a mana token of a chosen colour.
+          const picked = options?.color
+          if (!picked || (picked === 'black' && state.dayNight !== 'night')) return
+          newState = {
+            ...newState,
+            player: { ...newState.player, mana: engine.manaPool.addManaToken(newState.player.mana, picked, 'effect') },
+          }
+          logMessage += ` (+1 ${picked} mana)`
+          applied = true
+          break
+        }
+
+        case 'cooperative_source_opening': {
+          // Source Opening (solo self-benefit): use an extra Source die this turn
+          // and gain a crystal of a chosen basic colour.
+          const picked = options?.color
+          if (!picked || picked === 'black') return
+          newState = {
+            ...newState,
+            player: {
+              ...newState.player,
+              mana: engine.manaPool.addCrystal(
+                { ...newState.player.mana, extraSourceDice: (newState.player.mana.extraSourceDice ?? 0) + 1 },
+                picked,
+              ),
+            },
+          }
+          logMessage += ` (+1 Source die, +1 ${picked} crystal)`
           applied = true
           break
         }
