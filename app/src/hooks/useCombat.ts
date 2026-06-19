@@ -125,6 +125,39 @@ export function applyExpose(enemies: EnemyInstance[], plays: CombatCardPlay[]): 
   return result
 }
 
+/**
+ * enemy_armor_reduction specials (Tremor, Demolish, Resistance Break…). Flat
+ * `value` by default; Resistance Break uses rule 'per_resistance_min_1' → Armor
+ * −1 per resistance the enemy has. `target: 'all'` hits every standing enemy,
+ * otherwise the strongest standing one. Armor floors at 1.
+ */
+export function applyEnemyArmorReduction(
+  enemies: EnemyInstance[],
+  plays: CombatCardPlay[],
+): EnemyInstance[] {
+  let result = enemies
+  for (const play of plays) {
+    const a = play.chosenAction
+    if (!a || a.type !== 'enemy_armor_reduction') continue
+    const value = typeof a.value === 'number' ? a.value : 1
+    const perResistance = a.rule === 'per_resistance_min_1'
+    const reduce = (e: EnemyInstance): EnemyInstance => {
+      const amount = perResistance
+        ? e.appliedAbilities.filter((ab) => ab.endsWith('_resistance')).length
+        : value
+      return { ...e, currentArmor: Math.max(1, e.currentArmor - amount) }
+    }
+    if (a.target === 'all') {
+      result = result.map((e) => (e.isDefeated ? e : reduce(e)))
+    } else {
+      const standing = result.map((e, i) => ({ e, i })).filter(({ e }) => !e.isDefeated)
+      const idx = standing.sort((x, y) => y.e.currentArmor - x.e.currentArmor)[0]?.i ?? -1
+      if (idx >= 0) result = result.map((e, i) => (i === idx ? reduce(e) : e))
+    }
+  }
+  return result
+}
+
 /** Ambush (AA): +bonus to the FIRST Attack OR Block played in combat this turn,
  *  whichever is played first. These pure helpers boost the first declaration in
  *  play order; the caller clears turn.ambush once consumed so it applies once. */
@@ -357,22 +390,11 @@ export function useCombat() {
         return s.length > 0 ? s[0].i : -1
       }
 
+      enemies = applyEnemyArmorReduction(enemies, plays)
       for (const play of plays) {
         const a = play.chosenAction
         if (!a) continue
-        if (a.type === 'enemy_armor_reduction') {
-          const value = typeof a.value === 'number' ? a.value : 1
-          const reduce = (e: EnemyInstance) => ({
-            ...e,
-            currentArmor: Math.max(1, e.currentArmor - value),
-          })
-          if (a.target === 'all') {
-            enemies = enemies.map((e) => (e.isDefeated ? e : reduce(e)))
-          } else {
-            const idx = strongestIdx()
-            if (idx >= 0) enemies = enemies.map((e, i) => (i === idx ? reduce(e) : e))
-          }
-        } else if (a.type === 'enemy_skip_attack') {
+        if (a.type === 'enemy_skip_attack') {
           // "Does not attack this combat" — model as already-blocked
           const count = typeof a.count === 'number' ? a.count : 1
           let applied = 0
