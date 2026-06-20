@@ -51,18 +51,27 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
   const [showWhy, setShowWhy] = useState(false)
   const baseRef = useRef<LearnContext>(ctx)
   const stepRef = useRef(0)
+  // Guard so an action step schedules its advance EXACTLY once — without this, a
+  // setTimeout placed inside the effect is cancelled by its own cleanup on every
+  // ctx change while done() stays true, so it never fires and the guide stalls.
+  const scheduledForIndex = useRef(-1)
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const step = LEARN_STEPS[index] ?? LEARN_STEPS[LEARN_STEPS.length - 1]
   const reactive = activeReactiveId ? LEARN_REACTIVE.find((r) => r.id === activeReactiveId) ?? null : null
 
-  // Reset baseline + collapse "why" when the ordered step changes.
+  // Reset baseline + per-step advance guard when the ordered step changes.
   useEffect(() => {
     if (stepRef.current !== index) {
       stepRef.current = index
       baseRef.current = ctx
+      scheduledForIndex.current = -1
       setShowWhy(false)
     }
   }, [index, ctx])
+
+  // Clear any pending advance timer on unmount.
+  useEffect(() => () => { if (advanceTimer.current) clearTimeout(advanceTimer.current) }, [])
 
   // Raise a just-in-time lesson the first time its situation appears.
   const firing = useMemo(() => {
@@ -78,27 +87,32 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
     }
   }, [firing, activeReactiveId, feedback])
 
-  // Auto-advance a step once its done() fires (works for both action steps and
-  // info steps that carry an optional completion check, e.g. exploring a tile).
+  // Auto-advance a step once its done() fires — scheduled only ONCE per step
+  // (the timer is not torn down on re-render, so it actually fires).
   useEffect(() => {
     if (activeReactiveId) return // don't advance under an interrupt
+    if (scheduledForIndex.current === index) return // already advancing this step
     if (step.done?.(ctx, baseRef.current)) {
+      scheduledForIndex.current = index
       const fb = step.feedback?.[lang]
       if (fb) setFeedback(fb)
-      const t = setTimeout(() => {
+      advanceTimer.current = setTimeout(() => {
         setFeedback(null)
         setIndex((i) => Math.min(i + 1, LEARN_STEPS.length - 1))
       }, fb ? 1500 : 250)
-      return () => clearTimeout(t)
     }
-  }, [ctx, step, lang, activeReactiveId])
+  }, [ctx, step, lang, activeReactiveId, index])
 
   const dismissReactive = () => {
     if (activeReactiveId) setSeenReactive((prev) => new Set(prev).add(activeReactiveId))
     setActiveReactiveId(null)
     setShowWhy(false)
   }
-  const advance = () => { setFeedback(null); setShowWhy(false); setIndex((i) => Math.min(i + 1, LEARN_STEPS.length - 1)) }
+  const advance = () => {
+    if (advanceTimer.current) { clearTimeout(advanceTimer.current); advanceTimer.current = null }
+    setFeedback(null); setShowWhy(false)
+    setIndex((i) => Math.min(i + 1, LEARN_STEPS.length - 1))
+  }
   const isLast = index >= LEARN_STEPS.length - 1
 
   if (hidden) {
@@ -131,6 +145,7 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
       <AnimatePresence mode="wait">
         <motion.div
           key={view.id + (feedback ? '-fb' : '') + (reactive ? '-r' : '')}
+          data-testid="learn-guide" data-learn-step={view.id}
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }} exit={{ opacity: 0, y: 18, transition: { duration: 0.15 } }}
           className="pointer-events-auto absolute left-2 top-16 z-30 w-[min(92vw,22rem)]"
         >
@@ -170,7 +185,7 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
                       {reactive ? (
                         <>
                           <span />
-                          <button type="button" onClick={dismissReactive}
+                          <button type="button" data-testid="learn-forward" onClick={dismissReactive}
                             className="shrink-0 rounded-lg bg-sky-600/90 px-3 py-1.5 text-xs font-bold text-slate-950 transition-colors hover:bg-sky-500">{gotIt}</button>
                         </>
                       ) : (
@@ -179,10 +194,10 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
                             ? <span className="text-[10px] italic text-emerald-400/80">⏳ {waitingHint}</span>
                             : <span />}
                           {!isLast ? (
-                            <button type="button" onClick={advance}
+                            <button type="button" data-testid="learn-forward" onClick={advance}
                               className="shrink-0 rounded-lg bg-amber-600/90 px-3 py-1.5 text-xs font-bold text-slate-950 transition-colors hover:bg-amber-500">{nextLabel}</button>
                           ) : (
-                            <button type="button" onClick={() => setHidden(true)}
+                            <button type="button" data-testid="learn-forward" onClick={() => setHidden(true)}
                               className="shrink-0 rounded-lg bg-slate-700 px-3 py-1.5 text-xs font-bold text-slate-200 transition-colors hover:bg-slate-600">
                               {lang === 'ko' ? '닫기' : lang === 'es' ? 'Cerrar' : 'Close'}
                             </button>
