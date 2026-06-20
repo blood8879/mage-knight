@@ -40,6 +40,10 @@ export interface GuideStep {
   /** Completion check (action steps). `base` is the context snapshot taken when
    *  the step became active, so we can detect changes (moved, explored, …). */
   done?: (ctx: LearnContext, base: LearnContext) => boolean
+  /** CSS selector of the UI element to spotlight for this step (data-tutorial). */
+  spotlight?: string
+  /** One-line confirmation shown briefly when an action step completes. */
+  feedback?: Record<GuideLang, string>
 }
 
 export const LEARN_STEPS: GuideStep[] = [
@@ -75,6 +79,12 @@ export const LEARN_STEPS: GuideStep[] = [
     id: 'get_move',
     kind: 'action',
     done: (c) => c.movePoints > 0,
+    spotlight: '[data-tutorial="card-hand"]',
+    feedback: {
+      en: '✓ Move points gained — those power your movement this turn.',
+      ko: '✓ 이동력 획득 — 이번 턴 이동에 쓰입니다.',
+      es: '✓ Puntos de Movimiento — impulsan tu movimiento este turno.',
+    },
     text: {
       en: { title: 'Now: Get Move points', body: 'Tap a card with the boot (Move) icon and play its basic effect. Tip: you can stack same-type cards (two Move 2 → Move 4), or play ANY card "sideways" for +1 Move. Watch your Move total rise.' },
       ko: { title: '지금 할 일: 이동력 얻기', body: '손에서 신발(이동) 아이콘 카드를 탭해 기본효과로 내세요. 팁: 같은 종류 카드를 쌓거나(이동2 ×2 → 이동4), 아무 카드나 "옆으로(sideways)" 내면 이동 +1. 이동 수치가 오르는지 보세요.' },
@@ -85,6 +95,12 @@ export const LEARN_STEPS: GuideStep[] = [
     id: 'move_figure',
     kind: 'action',
     done: (c, base) => c.positionKey !== base.positionKey,
+    spotlight: '[data-tutorial="hex-map"]',
+    feedback: {
+      en: '✓ You moved! Terrain cost was deducted from your Move points.',
+      ko: '✓ 이동 완료! 지형 비용만큼 이동력이 차감됐어요.',
+      es: '✓ ¡Te moviste! Se restó el coste del terreno de tu Movimiento.',
+    },
     text: {
       en: { title: 'Now: Move your hero', body: 'Tap a highlighted (reachable) space, then confirm the move. Each terrain costs different Move points (shown on the board; some cost more at Night). Your starting tile has villages to visit and orcs to fight.' },
       ko: { title: '지금 할 일: 영웅 이동', body: '표시된(이동 가능한) 칸을 탭하고 이동을 확정하세요. 지형마다 이동 비용이 다릅니다(보드에 표시, 밤엔 일부 지형이 더 비쌈). 시작 타일에는 방문할 마을과 싸울 오크가 있습니다.' },
@@ -104,6 +120,12 @@ export const LEARN_STEPS: GuideStep[] = [
     id: 'explore',
     kind: 'action',
     done: (c, base) => c.exploredTiles > base.exploredTiles,
+    spotlight: '[data-tutorial="hex-map"]',
+    feedback: {
+      en: '✓ New tile placed — Fame +1, and new places revealed.',
+      ko: '✓ 새 타일 공개 — 명성 +1, 새 장소가 드러났어요.',
+      es: '✓ Loseta colocada — Fama +1, y se revelan nuevos lugares.',
+    },
     text: {
       en: { title: 'Now: Explore a new tile', body: 'Move to the edge of the map, then pay 2 Move to reveal a new tile (Exploration is movement, not your action). In this scenario, placing a tile earns Fame +1! New tiles reveal sites and rampaging enemies.' },
       ko: { title: '지금 할 일: 새 타일 탐험', body: '맵 가장자리로 이동한 뒤, 이동 2를 써서 새 타일을 공개하세요(탐험은 행동이 아니라 이동입니다). 이 시나리오에선 타일을 놓을 때마다 명성 +1! 새 타일에서 장소와 광란하는 적이 나타납니다.' },
@@ -113,6 +135,7 @@ export const LEARN_STEPS: GuideStep[] = [
   {
     id: 'combat',
     kind: 'info',
+    spotlight: '[data-tutorial="fight-button"]',
     text: {
       en: { title: 'Fighting a Rampaging Orc', body: 'To fight a rampaging enemy, stand in an ADJACENT space and press Fight (you do not move onto it). Combat has 4 phases: 1) Ranged & Siege, 2) Block, 3) Assign Damage, 4) Attack. Deal damage ≥ the enemy\'s Armor to defeat it and earn its Fame. Tap Next when you\'re ready to continue.' },
       ko: { title: '광란하는 오크와 전투', body: '광란하는 적과 싸우려면 그 적의 인접 칸에 서서 "Fight"를 누르세요(적 칸으로 들어가는 게 아닙니다). 전투는 4단계: ① 장거리·공성 ② 방어 ③ 데미지 받기 ④ 공격. 적의 아머 이상으로 데미지를 주면 처치하고 명성을 얻습니다. 계속하려면 "다음"을 누르세요.' },

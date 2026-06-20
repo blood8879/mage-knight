@@ -84,6 +84,9 @@ export interface EngineRefs {
 export let sharedEngine: EngineRefs | null = null
 let sharedState: GameState | null = null
 
+/** Fixed seed for "Learn by Playing" so the guided lessons stay reproducible. */
+const LEARN_MODE_SEED = 7777
+
 /** Reset both singletons (e.g. when returning to main menu) */
 export function resetEngine(): void {
   sharedEngine = null
@@ -320,12 +323,18 @@ export function useGameEngine() {
   //  GAME INITIALIZATION
   // ════════════════════════════════════════════
   const initializeGame = useCallback((heroName: string = 'Arythea', opts?: { learn?: boolean }) => {
-    // Deterministic seed via ?seed= for QA/E2E reproducibility
+    // Deterministic seed via ?seed= for QA/E2E reproducibility.
+    // Learn-by-Playing uses a FIXED seed so the opening is consistent and the
+    // guided lessons can give precise, reproducible instructions.
     const urlSeed =
       typeof window !== 'undefined'
         ? new URLSearchParams(window.location.search).get('seed')
         : null
-    const seed = urlSeed && !Number.isNaN(Number(urlSeed)) ? Number(urlSeed) : generateSeed()
+    const seed = urlSeed && !Number.isNaN(Number(urlSeed))
+      ? Number(urlSeed)
+      : opts?.learn
+        ? LEARN_MODE_SEED
+        : generateSeed()
     const random = new SeededRandom(seed)
 
     // Create engine instances
