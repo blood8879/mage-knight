@@ -58,8 +58,8 @@ export interface ReactiveLesson {
 
 const S = {
   basics: { en: 'Lesson 1 · Basics', ko: '레슨 1 · 기본기', es: 'Lección 1 · Básicos' },
-  explore: { en: 'Lesson 2 · Exploration', ko: '레슨 2 · 탐험', es: 'Lección 2 · Exploración' },
-  interact: { en: 'Lesson 3 · Interaction', ko: '레슨 3 · 상호작용', es: 'Lección 3 · Interacción' },
+  interact: { en: 'Lesson 2 · Interaction', ko: '레슨 2 · 상호작용', es: 'Lección 2 · Interacción' },
+  explore: { en: 'Lesson 3 · Exploration', ko: '레슨 3 · 탐험', es: 'Lección 3 · Exploración' },
   combat: { en: 'Lesson 4 · Combat', ko: '레슨 4 · 전투', es: 'Lección 4 · Combate' },
   goal: { en: 'Lesson 5 · The Goal', ko: '레슨 5 · 목표', es: 'Lección 5 · El Objetivo' },
   just: { en: 'Rule', ko: '규칙', es: 'Regla' },
@@ -138,33 +138,33 @@ export const LEARN_STEPS: GuideStep[] = [
     },
   },
   {
-    id: 'explore', kind: 'action', section: S.explore,
-    done: (c, base) => c.exploredTiles > base.exploredTiles,
-    spotlight: '[data-tutorial="hex-map"]',
-    feedback: { en: '✓ New tile placed — Fame +1, and new places revealed.', ko: '✓ 새 타일 공개 — 명성 +1, 새 장소가 드러났어요.', es: '✓ Loseta colocada — Fama +1, nuevos lugares revelados.' },
-    text: {
-      en: { title: 'Explore a new tile', body: 'Move to the edge of the map, then pay 2 Move to reveal a new tile (exploration is movement, not your action). Here, placing a tile earns Fame +1! New tiles bring sites and rampaging enemies.' },
-      ko: { title: '새 타일 탐험', body: '맵 가장자리로 이동한 뒤 이동 2를 써서 새 타일을 공개하세요(탐험은 행동이 아니라 이동). 이 시나리오에선 타일을 놓을 때마다 명성 +1! 새 타일에서 장소와 광란하는 적이 나옵니다.' },
-      es: { title: 'Explora una loseta', body: 'Muévete al borde y paga 2 de Movimiento para revelar una loseta (explorar es movimiento, no tu acción). Aquí colocar una loseta da Fama +1. Trae sitios y enemigos furiosos.' },
-    },
-    why: {
-      en: 'Exploring is how the realm — and the hidden City you\'re looking for — gets revealed. It uses Move points, so it competes with travelling.',
-      ko: '탐험으로 왕국과, 당신이 찾는 숨은 도시가 드러납니다. 이동 포인트를 쓰므로 이동과 경쟁합니다.',
-      es: 'Explorar revela el reino — y la Ciudad oculta que buscas. Usa Movimiento, así que compite con desplazarte.',
-    },
-  },
-  {
     id: 'village', kind: 'info', section: S.interact,
     spotlight: '[data-tutorial="card-hand"]',
     text: {
-      en: { title: 'Interact at a Village', body: 'On (or next to) a Village, press Interact. Play cards for Influence (or sideways for +1) — your Reputation adjusts the total. Spend Influence to RECRUIT a Unit (village icon) or BUY Healing, then Done. You may also Plunder a village once per turn (Reputation −1, draw 2 cards). Units fight alongside you — activate one per round.' },
-      ko: { title: '마을에서 상호작용', body: '마을 칸(또는 인접)에서 "Interact". 영향력 카드를 내(옆으로 내면 +1) 영향력을 모으세요 — 평판이 총합을 가감합니다. 모은 영향력으로 ① 마을 아이콘 유닛 고용 ② 치료 구매 후 "Done". 마을 약탈도 턴당 1회(평판 −1, 카드 2장). 유닛은 함께 싸우며 라운드당 1번 활성화합니다.' },
-      es: { title: 'Interactúa en una Aldea', body: 'Sobre (o junto a) una Aldea, pulsa Interactuar. Juega cartas por Influencia (o de lado +1) — tu Reputación ajusta el total. Gasta Influencia para RECLUTAR una Unidad (icono de aldea) o COMPRAR Curación, y Hecho. También Saquear una vez por turno (Reputación −1, roba 2). Las Unidades luchan contigo — activa una por ronda.' },
+      en: { title: 'Interact at a Village', body: 'Your start tile already has Villages — no need to explore for this. On (or next to) a Village, press Interact. Play cards for Influence (or sideways for +1) — your Reputation adjusts the total. Spend Influence to RECRUIT a Unit (village icon) or BUY Healing, then Done. You may also Plunder a village once per turn (Reputation −1, draw 2 cards). Units fight alongside you — activate one per round.' },
+      ko: { title: '마을에서 상호작용', body: '시작 타일에 이미 마을이 있으니 이건 탐험 없이도 됩니다. 마을 칸(또는 인접)에서 "Interact". 영향력 카드를 내(옆으로 내면 +1) 영향력을 모으세요 — 평판이 총합을 가감합니다. 모은 영향력으로 ① 마을 아이콘 유닛 고용 ② 치료 구매 후 "Done". 마을 약탈도 턴당 1회(평판 −1, 카드 2장). 유닛은 함께 싸우며 라운드당 1번 활성화합니다.' },
+      es: { title: 'Interactúa en una Aldea', body: 'Tu loseta inicial ya tiene Aldeas — no hace falta explorar para esto. Sobre (o junto a) una Aldea, pulsa Interactuar. Juega cartas por Influencia (o de lado +1) — tu Reputación ajusta el total. Gasta Influencia para RECLUTAR una Unidad (icono de aldea) o COMPRAR Curación, y Hecho. También Saquear una vez por turno (Reputación −1, roba 2). Las Unidades luchan contigo — activa una por ronda.' },
     },
     why: {
       en: 'Influence is "social power": it buys Units, healing and cards. Reputation reflects how you treat the land — plundering is strong but makes locals like you less.',
       ko: '영향력은 "사회적 힘"입니다: 유닛·치료·카드를 삽니다. 평판은 당신이 땅을 어떻게 대하는지 반영 — 약탈은 강하지만 주민 호감을 떨어뜨립니다.',
       es: 'La Influencia es "poder social": compra Unidades, curación y cartas. La Reputación refleja cómo tratas la tierra — saquear es fuerte pero te hace menos querido.',
+    },
+  },
+  {
+    id: 'explore', kind: 'info', section: S.explore,
+    done: (c, base) => c.exploredTiles > base.exploredTiles,
+    spotlight: '[data-tutorial="hex-map"]',
+    feedback: { en: '✓ New tile placed — Fame +1, and new places revealed.', ko: '✓ 새 타일 공개 — 명성 +1, 새 장소가 드러났어요.', es: '✓ Loseta colocada — Fama +1, nuevos lugares revelados.' },
+    text: {
+      en: { title: 'How to explore', body: 'During your Movement (before your Action) you can reveal a new tile, but only when: ① you are standing on a space ADJACENT to an open tile slot at the map\'s edge, AND ② you spend 2 more Move points there. So you need enough Move to reach the edge PLUS 2 to reveal — usually more than one Move card. If you\'re short on Move this turn, do something else now and explore on a later turn. (Placing a tile earns Fame +1 in this scenario.) Tap Next to continue — this advances automatically the moment you do reveal a tile.' },
+      ko: { title: '탐험하는 법', body: '이동 단계 중(행동 전) 새 타일을 공개할 수 있는데, 조건이 있습니다: ① 맵 가장자리에서 아직 타일이 없는 칸과 인접한 위치에 서 있어야 하고, ② 그 자리에서 이동 2를 추가로 써야 합니다. 즉 가장자리까지 갈 이동력 + 공개용 2가 모두 필요해요 — 보통 이동 카드 한 장으론 부족합니다. 이번 턴 이동력이 모자라면 다른 걸 먼저 하고, 다음 턴에 이동 카드를 더 모아 탐험하세요. (이 시나리오에선 타일을 놓으면 명성 +1.) "다음"으로 진행하세요 — 실제로 타일을 공개하면 자동으로 넘어갑니다.' },
+      es: { title: 'Cómo explorar', body: 'Durante tu Movimiento (antes de tu Acción) puedes revelar una loseta, pero solo si: ① estás en un espacio ADYACENTE a un hueco de loseta en el borde del mapa, Y ② gastas 2 puntos de Movimiento más ahí. Necesitas Movimiento para llegar al borde MÁS 2 para revelar — normalmente más de una carta. Si te falta Movimiento, haz otra cosa y explora en otro turno. (Colocar una loseta da Fama +1.) Pulsa Siguiente — avanza solo en cuanto reveles una loseta.' },
+    },
+    why: {
+      en: 'Rulebook: you may reveal a tile only while on a space adjacent to a valid new-tile position, and it costs 2 Move points. Exploring is part of Movement, so it must happen before your Action — and it competes with travelling for your Move points.',
+      ko: '룰북: 새 타일을 놓을 수 있는 위치와 인접한 칸에 있을 때만 공개 가능하고, 이동 2가 듭니다. 탐험은 이동의 일부라 행동 전에 해야 하며, 이동 포인트를 두고 이동과 경쟁합니다.',
+      es: 'Reglamento: solo puedes revelar una loseta estando adyacente a una posición válida, y cuesta 2 de Movimiento. Explorar es parte del Movimiento, así que va antes de tu Acción y compite por tus puntos.',
     },
   },
   {

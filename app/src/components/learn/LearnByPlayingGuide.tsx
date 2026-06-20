@@ -78,10 +78,11 @@ export default function LearnByPlayingGuide({ ctx }: { ctx: LearnContext }) {
     }
   }, [firing, activeReactiveId, feedback])
 
-  // Auto-advance an ordered action step once done (showing a brief confirmation).
+  // Auto-advance a step once its done() fires (works for both action steps and
+  // info steps that carry an optional completion check, e.g. exploring a tile).
   useEffect(() => {
     if (activeReactiveId) return // don't advance under an interrupt
-    if (step.kind === 'action' && step.done?.(ctx, baseRef.current)) {
+    if (step.done?.(ctx, baseRef.current)) {
       const fb = step.feedback?.[lang]
       if (fb) setFeedback(fb)
       const t = setTimeout(() => {
