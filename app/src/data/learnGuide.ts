@@ -100,9 +100,9 @@ export const LEARN_STEPS: GuideStep[] = [
     id: 'mana_intro', kind: 'info', section: S.basics,
     spotlight: '[data-tutorial="mana-source"]',
     text: {
-      en: { title: 'Mana & Crystals', body: 'Cards have a basic effect (free) and a stronger effect that needs mana of the card\'s colour. Each turn you may take ONE die from the Mana Source (top), or spend a Crystal from your inventory. Gold mana is a wild basic colour by Day; Black powers spells by Night.' },
-      ko: { title: '마나와 크리스탈', body: '카드는 기본효과(무료)와, 카드 색의 마나가 필요한 강한 효과가 있습니다. 매 턴 마나 원천(위)에서 주사위 하나를 가져오거나, 인벤토리의 크리스탈을 쓸 수 있어요. 골드는 낮에 아무 기본색으로 쓰는 만능, 블랙은 밤에 스펠에 쓰입니다.' },
-      es: { title: 'Maná y Cristales', body: 'Las cartas tienen efecto básico (gratis) y uno fuerte que necesita maná del color de la carta. Cada turno tomas UN dado de la Fuente (arriba) o gastas un Cristal. El oro es comodín de Día; el negro impulsa hechizos de Noche.' },
+      en: { title: 'Mana & Crystals', body: 'Cards have a basic effect (free) and a stronger effect that needs mana of the card\'s colour. Each turn you may take ONE die from the Mana Source (top), or spend a Crystal from your inventory. Gold mana works as any basic colour by Day only; Black mana powers strong effects by Night only.' },
+      ko: { title: '마나와 크리스탈', body: '카드는 기본효과(무료)와, 카드 색의 마나가 필요한 강한 효과가 있습니다. 매 턴 마나 원천(위)에서 주사위 하나를 가져오거나, 인벤토리의 크리스탈을 쓸 수 있어요. 골드는 낮에만 아무 기본색으로 쓰는 만능, 블랙은 밤에만 강한 효과를 켜는 데 쓰입니다.' },
+      es: { title: 'Maná y Cristales', body: 'Las cartas tienen efecto básico (gratis) y uno fuerte que necesita maná del color de la carta. Cada turno tomas UN dado de la Fuente (arriba) o gastas un Cristal. El oro vale como cualquier color básico solo de Día; el maná negro impulsa efectos fuertes solo de Noche.' },
     },
     why: {
       en: 'Mana is the engine of "strong" plays. Crystals are saved mana (permanent until spent); loose mana from dice is lost at end of turn.',
@@ -141,9 +141,9 @@ export const LEARN_STEPS: GuideStep[] = [
     id: 'village', kind: 'info', section: S.interact,
     spotlight: '[data-tutorial="card-hand"]',
     text: {
-      en: { title: 'Interact at a Village', body: 'Your start tile already has Villages — no need to explore for this. On (or next to) a Village, press Interact. Play cards for Influence (or sideways for +1) — your Reputation adjusts the total. Spend Influence to RECRUIT a Unit (village icon) or BUY Healing, then Done. You may also Plunder a village once per turn (Reputation −1, draw 2 cards). Units fight alongside you — activate one per round.' },
-      ko: { title: '마을에서 상호작용', body: '시작 타일에 이미 마을이 있으니 이건 탐험 없이도 됩니다. 마을 칸(또는 인접)에서 "Interact". 영향력 카드를 내(옆으로 내면 +1) 영향력을 모으세요 — 평판이 총합을 가감합니다. 모은 영향력으로 ① 마을 아이콘 유닛 고용 ② 치료 구매 후 "Done". 마을 약탈도 턴당 1회(평판 −1, 카드 2장). 유닛은 함께 싸우며 라운드당 1번 활성화합니다.' },
-      es: { title: 'Interactúa en una Aldea', body: 'Tu loseta inicial ya tiene Aldeas — no hace falta explorar para esto. Sobre (o junto a) una Aldea, pulsa Interactuar. Juega cartas por Influencia (o de lado +1) — tu Reputación ajusta el total. Gasta Influencia para RECLUTAR una Unidad (icono de aldea) o COMPRAR Curación, y Hecho. También Saquear una vez por turno (Reputación −1, roba 2). Las Unidades luchan contigo — activa una por ronda.' },
+      en: { title: 'Interact at a Village', body: 'Your start tile already has Villages — no need to explore for this. On (or next to) a Village, press Interact. Play cards for Influence (or sideways for +1) — your Reputation adjusts the total. Spend Influence to RECRUIT a Unit whose site icon includes the village, or BUY Healing, then Done. You may also Plunder a village once per turn (Reputation −1, draw 2 cards). Recruited Units fight alongside you — each Unit can be used once per round.' },
+      ko: { title: '마을에서 상호작용', body: '시작 타일에 이미 마을이 있으니 이건 탐험 없이도 됩니다. 마을 칸(또는 인접)에서 "Interact". 영향력 카드를 내(옆으로 내면 +1) 영향력을 모으세요 — 평판이 총합을 가감합니다. 모은 영향력으로 ① 마을 아이콘이 있는 유닛 고용 ② 치료 구매 후 "Done". 마을 약탈도 턴당 1회(평판 −1, 카드 2장). 고용한 유닛은 함께 싸우며, 각 유닛은 라운드당 1번 사용할 수 있어요.' },
+      es: { title: 'Interactúa en una Aldea', body: 'Tu loseta inicial ya tiene Aldeas — no hace falta explorar para esto. Sobre (o junto a) una Aldea, pulsa Interactuar. Juega cartas por Influencia (o de lado +1) — tu Reputación ajusta el total. Gasta Influencia para RECLUTAR una Unidad cuyo icono de sitio incluya la aldea, o COMPRAR Curación, y Hecho. También Saquear una vez por turno (Reputación −1, roba 2). Cada Unidad reclutada puede usarse una vez por ronda.' },
     },
     why: {
       en: 'Influence is "social power": it buys Units, healing and cards. Reputation reflects how you treat the land — plundering is strong but makes locals like you less.',
@@ -206,22 +206,22 @@ export const LEARN_REACTIVE: ReactiveLesson[] = [
   {
     id: 'r_levelup', priority: 0, trigger: (c) => c.pendingLevelUp, section: S.just,
     text: {
-      en: { title: 'Level Up!', body: 'Enough Fame raised your Level. Every level improves your stats; every SECOND level also lets you learn a Skill and gain an Advanced Action card (it joins your deck for the rest of the game). Pick your rewards in the dialog.' },
-      ko: { title: '레벨 업!', body: '명성이 충분히 쌓여 레벨이 올랐습니다. 레벨업마다 능력치가 오르고, 두 레벨마다 스킬을 배우고 상급 액션 카드를 얻습니다(남은 게임 동안 덱에 추가). 대화창에서 보상을 고르세요.' },
-      es: { title: '¡Subes de Nivel!', body: 'Suficiente Fama subió tu Nivel. Cada nivel mejora stats; cada DOS niveles aprendes una Habilidad y ganas una Acción Avanzada (se une a tu mazo). Elige recompensas en el diálogo.' },
+      en: { title: 'Level Up!', body: 'Enough Fame raised your Level. Level benefits ALTERNATE: reaching an even Level gives you a Skill plus an Advanced Action card (it joins your deck for the rest of the game); reaching an odd Level raises your Armour & hand limit and gives a Command token (so you can command one more Unit). Pick your rewards in the dialog.' },
+      ko: { title: '레벨 업!', body: '명성이 충분히 쌓여 레벨이 올랐습니다. 레벨 보상은 교대로 주어집니다: 짝수 레벨에 도달하면 스킬 + 상급 액션 카드(남은 게임 동안 덱에 추가)를, 홀수 레벨에 도달하면 아머·핸드 제한 상승 + 커맨드 토큰(유닛을 하나 더 지휘)을 얻습니다. 대화창에서 보상을 고르세요.' },
+      es: { title: '¡Subes de Nivel!', body: 'Suficiente Fama subió tu Nivel. Los beneficios ALTERNAN: al llegar a un Nivel par ganas una Habilidad y una Acción Avanzada (se une a tu mazo); a un Nivel impar suben tu Armadura y límite de mano y ganas una ficha de Mando (una Unidad más). Elige recompensas en el diálogo.' },
     },
     why: {
-      en: 'Levels make your hero stronger and your deck bigger/better — the main way you grow during a game.',
-      ko: '레벨은 영웅을 강하게, 덱을 크고 좋게 만듭니다 — 게임 중 성장의 핵심 수단이에요.',
-      es: 'Los niveles hacen a tu héroe más fuerte y tu mazo mejor — la forma principal de crecer en la partida.',
+      en: 'Rulebook: even levels grant a Skill + Advanced Action; odd levels reveal a new Armour/hand-limit value and a Command token. So your growth alternates between deck power and raw capacity.',
+      ko: '룰북: 짝수 레벨은 스킬+상급 액션을, 홀수 레벨은 새 아머/핸드 제한과 커맨드 토큰을 줍니다. 즉 성장이 덱 강화와 기본 용량 사이를 번갈아 갑니다.',
+      es: 'Reglamento: los niveles pares dan Habilidad + Acción Avanzada; los impares revelan nueva Armadura/límite de mano y una ficha de Mando. Tu crecimiento alterna entre poder de mazo y capacidad.',
     },
   },
   {
     id: 'r_wounds', priority: 1, trigger: (c) => c.handWoundCount > 0 && !c.combatActive, section: S.just,
     text: {
-      en: { title: 'Wounds & Healing', body: 'A Wound card sits in your hand and is never discarded normally — it just clogs your hand. Remove Wounds by Healing (villages, or Heal cards/Units — never during combat). If a turn looks hopeless, Rest instead: discard one non-Wound card to throw ALL Wounds from your hand into the discard.' },
-      ko: { title: '상처와 치료', body: '상처(Wound) 카드는 손에 남아 평소엔 버릴 수 없습니다 — 손만 막아요. 치료로 제거합니다(마을, 또는 치료 카드/유닛 — 전투 중엔 불가). 턴이 가망 없으면 휴식: 상처 아닌 카드 1장을 버리면 손의 모든 상처를 버립니다.' },
-      es: { title: 'Heridas y Curación', body: 'Una Herida se queda en tu mano y no se descarta normalmente — solo estorba. Quítalas Curando (aldeas, o cartas/Unidades — nunca en combate). Si el turno es inútil, Descansa: descarta una carta no-Herida para tirar TODAS las Heridas.' },
+      en: { title: 'Wounds & Healing', body: 'A Wound card sits in your hand and is never discarded normally — it just clogs your hand. HEALING removes Wounds for good (villages, or Heal cards/Units — never during combat). A Standard Rest instead lets you discard one non-Wound card plus any number of Wounds to the discard pile (they\'ll return next round — that\'s clearing, not healing). With only Wounds in hand you must do a Slow Recovery (discard just one Wound).' },
+      ko: { title: '상처와 치료', body: '상처(Wound) 카드는 손에 남아 평소엔 버릴 수 없습니다 — 손만 막아요. "치료"는 상처를 영구 제거합니다(마을, 또는 치료 카드/유닛 — 전투 중엔 불가). "일반 휴식"은 상처 아닌 카드 1장 + 원하는 만큼의 상처를 버린 더미로 보냅니다(다음 라운드에 돌아옴 — 제거가 아니라 정리). 손에 상처만 있으면 "느린 회복"으로 상처 1장만 버립니다.' },
+      es: { title: 'Heridas y Curación', body: 'Una Herida se queda en tu mano y no se descarta normalmente — solo estorba. CURAR las elimina del todo (aldeas, o cartas/Unidades — nunca en combate). Un Descanso Estándar te deja descartar una carta no-Herida más cualquier número de Heridas al descarte (volverán la próxima ronda — es limpiar, no curar). Si solo tienes Heridas, haces Recuperación Lenta (descarta solo una Herida).' },
     },
     why: {
       en: 'Wounds are the main "damage" in Mage Knight — they don\'t kill you, they choke your hand. Managing them is half the game.',
@@ -256,9 +256,14 @@ export const LEARN_REACTIVE: ReactiveLesson[] = [
   {
     id: 'r_resist', priority: 3, trigger: (c) => c.combatActive && c.combatAbilities.some((a) => a.endsWith('_resistance')), section: S.just,
     text: {
-      en: { title: 'Resistant Enemy', body: 'This enemy resists an element. Physical resistance halves your physical attack; fire/ice resistance ignores that element entirely. Match the right attack type (or use Siege/Ranged of another element) to get through.' },
-      ko: { title: '저항(Resistance) 적', body: '이 적은 속성 저항이 있습니다. 피지컬 저항은 일반 공격을 반으로, 화염/얼음 저항은 그 속성 공격을 완전히 무시합니다. 알맞은 공격 속성을(또는 다른 속성의 공성/장거리) 사용해 뚫으세요.' },
-      es: { title: 'Enemigo Resistente', body: 'Resiste un elemento. La resistencia física reduce a la mitad tu ataque físico; la de fuego/hielo ignora ese elemento por completo. Usa el tipo de ataque adecuado para superarla.' },
+      en: { title: 'Resistant Enemy', body: 'This enemy resists an element. Attacks of the MATCHING type are inefficient — their value is HALVED (not ignored). To hit at full strength, use a different type: e.g. attack a fire-resistant enemy with Ice or physical, not Fire. The same halving applies when blocking that enemy\'s matching-element attack.' },
+      ko: { title: '저항(Resistance) 적', body: '이 적은 속성 저항이 있습니다. 일치하는 속성의 공격은 비효율 — 그 값이 절반이 됩니다(무시가 아니라 반감). 제값으로 때리려면 다른 속성을 쓰세요: 예) 화염 저항 적은 화염 대신 얼음이나 일반 공격으로. 그 적의 같은 속성 공격을 방어할 때도 마찬가지로 절반이 됩니다.' },
+      es: { title: 'Enemigo Resistente', body: 'Resiste un elemento. Los ataques del tipo COINCIDENTE son ineficientes — su valor se REDUCE A LA MITAD (no se ignora). Para dañar al máximo, usa otro tipo: p. ej. a un enemigo resistente al fuego pégale con Hielo o físico, no Fuego. Lo mismo al bloquear su ataque del elemento coincidente.' },
+    },
+    why: {
+      en: 'Rulebook: if an enemy has a Resistance icon, all attacks (and blocks) of the matching type are inefficient and their strength is halved — they are not negated, just weaker.',
+      ko: '룰북: 적에게 저항 아이콘이 있으면 일치하는 속성의 모든 공격(과 방어)은 비효율이 되어 위력이 절반이 됩니다 — 무효가 아니라 약해질 뿐입니다.',
+      es: 'Reglamento: si un enemigo tiene icono de Resistencia, todos los ataques (y bloqueos) del tipo coincidente son ineficientes y su fuerza se reduce a la mitad — no se anulan, solo se debilitan.',
     },
   },
   {
