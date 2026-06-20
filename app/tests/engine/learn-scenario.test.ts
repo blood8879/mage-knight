@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ScenarioSetup } from '@/engine/ScenarioSetup'
 import { SeededRandom } from '@/utils/random'
-import { LEARN_STEPS, type LearnContext } from '@/data/learnGuide'
+import { LEARN_STEPS, LEARN_REACTIVE, type LearnContext } from '@/data/learnGuide'
 
 /**
  * "Learn by Playing" uses the rulebook's First Reconnaissance scenario. These
@@ -38,12 +38,14 @@ const baseCtx: LearnContext = {
   hasInteractableSite: false, hasEnemyNearby: false, pendingLevelUp: false,
   pendingReward: false, finalTurnPending: false, movePoints: 0,
   positionKey: '0,0', exploredTiles: 3, fame: 0, conqueredCount: 0,
+  handWoundCount: 0, combatAbilities: [],
 }
 
 describe('Learn guide steps', () => {
-  it('every step has en/ko/es title + body', () => {
+  it('every step has en/ko/es section + title + body', () => {
     for (const s of LEARN_STEPS) {
       for (const lang of ['en', 'ko', 'es'] as const) {
+        expect(s.section[lang], `${s.id}/${lang} section`).toBeTruthy()
         expect(s.text[lang]?.title, `${s.id}/${lang} title`).toBeTruthy()
         expect(s.text[lang]?.body, `${s.id}/${lang} body`).toBeTruthy()
       }
@@ -87,6 +89,44 @@ describe('Learn guide steps', () => {
 
   it('step ids are unique', () => {
     const ids = LEARN_STEPS.map((s) => s.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+})
+
+describe('Learn reactive lessons (just-in-time)', () => {
+  it('every reactive lesson has en/ko/es section + title + body', () => {
+    for (const r of LEARN_REACTIVE) {
+      for (const lang of ['en', 'ko', 'es'] as const) {
+        expect(r.section[lang], `${r.id}/${lang}`).toBeTruthy()
+        expect(r.text[lang]?.title && r.text[lang]?.body, `${r.id}/${lang}`).toBeTruthy()
+      }
+    }
+  })
+
+  it('level-up lesson fires on a pending level-up', () => {
+    const r = LEARN_REACTIVE.find((x) => x.id === 'r_levelup')!
+    expect(r.trigger({ ...baseCtx, pendingLevelUp: true })).toBe(true)
+    expect(r.trigger(baseCtx)).toBe(false)
+  })
+
+  it('wounds lesson fires with wounds in hand out of combat', () => {
+    const r = LEARN_REACTIVE.find((x) => x.id === 'r_wounds')!
+    expect(r.trigger({ ...baseCtx, handWoundCount: 2 })).toBe(true)
+    expect(r.trigger({ ...baseCtx, handWoundCount: 2, combatActive: true })).toBe(false)
+  })
+
+  it('swift / fortified / resistance lessons fire on the matching enemy ability in combat', () => {
+    const swift = LEARN_REACTIVE.find((x) => x.id === 'r_swift')!
+    expect(swift.trigger({ ...baseCtx, combatActive: true, combatAbilities: ['swift'] })).toBe(true)
+    expect(swift.trigger({ ...baseCtx, combatActive: true, combatAbilities: ['brutal'] })).toBe(false)
+    const fort = LEARN_REACTIVE.find((x) => x.id === 'r_fortified')!
+    expect(fort.trigger({ ...baseCtx, combatActive: true, combatAbilities: ['fortified'] })).toBe(true)
+    const resist = LEARN_REACTIVE.find((x) => x.id === 'r_resist')!
+    expect(resist.trigger({ ...baseCtx, combatActive: true, combatAbilities: ['fire_resistance'] })).toBe(true)
+  })
+
+  it('reactive ids are unique', () => {
+    const ids = LEARN_REACTIVE.map((r) => r.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 })

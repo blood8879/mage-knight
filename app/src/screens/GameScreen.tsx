@@ -967,6 +967,10 @@ export default function GameScreen() {
     exploredTiles: engineState?.map.tiles.filter((tile) => tile.isRevealed).length ?? 0,
     fame: engineState?.player.fame ?? 0,
     conqueredCount: engineState?.player.conqueredSites.length ?? 0,
+    handWoundCount: engineState?.player.deck.hand.filter((c) => c.type === 'wound').length ?? 0,
+    combatAbilities: engineState?.combat.isActive
+      ? [...new Set(engineState.combat.enemies.flatMap((e) => e.appliedAbilities))]
+      : [],
   }
 
   // Safety: leave the level_up phase if there is nothing to resolve

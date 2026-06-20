@@ -267,12 +267,23 @@ export default function BottomPanel({ onCardDrop, onCardPlay, onCardDiscard, onC
             const isWound = card.type === 'wound'
             const isSelected = selectedCardId === id
             const isBeingDragged = drag.isDragging && drag.dragItem === index
+            // Learn-by-Playing: tag what this card's basic effect provides so the
+            // teaching guide can spotlight a specific card (e.g. a Move card).
+            const effActs: Array<{ type?: string }> =
+              (!isWound && ((card as unknown as { basicEffect?: { actions?: Array<{ type?: string }> }; basicSpell?: { actions?: Array<{ type?: string }> } }).basicEffect?.actions
+                ?? (card as unknown as { basicSpell?: { actions?: Array<{ type?: string }> } }).basicSpell?.actions)) || []
+            const givesMove = effActs.some((a) => a.type === 'move')
+            const givesInfluence = effActs.some((a) => a.type === 'influence')
+            const givesAttack = effActs.some((a) => (a.type ?? '').includes('attack'))
 
             return (
               <motion.button
                 key={`${id}-${index}`}
                 layout
                 custom={index}
+                data-learn-move={givesMove ? 'true' : undefined}
+                data-learn-influence={givesInfluence ? 'true' : undefined}
+                data-learn-attack={givesAttack ? 'true' : undefined}
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
