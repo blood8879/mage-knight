@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ScenarioSetup } from '@/engine/ScenarioSetup'
 import { SeededRandom } from '@/utils/random'
-import { LEARN_TOPICS, type LearnContext } from '@/data/learnGuide'
+import { LEARN_STEPS, type LearnContext } from '@/data/learnGuide'
 
 /**
  * "Learn by Playing" uses the rulebook's First Reconnaissance scenario. These
@@ -34,50 +34,59 @@ describe('First Reconnaissance (Learn) scenario config', () => {
 })
 
 const baseCtx: LearnContext = {
-  round: 1, phase: 'player_turn_start', combatActive: false, interactionActive: false,
+  round: 1, phase: 'player_turn_start', turnCount: 1, combatActive: false, interactionActive: false,
   hasInteractableSite: false, hasEnemyNearby: false, pendingLevelUp: false,
   pendingReward: false, finalTurnPending: false, movePoints: 0,
+  positionKey: '0,0', exploredTiles: 3, fame: 0, conqueredCount: 0,
 }
 
-describe('Learn guide topics', () => {
-  it('every topic has en/ko/es title + body', () => {
-    for (const t of LEARN_TOPICS) {
+describe('Learn guide steps', () => {
+  it('every step has en/ko/es title + body', () => {
+    for (const s of LEARN_STEPS) {
       for (const lang of ['en', 'ko', 'es'] as const) {
-        expect(t.text[lang]?.title, `${t.id}/${lang} title`).toBeTruthy()
-        expect(t.text[lang]?.body, `${t.id}/${lang} body`).toBeTruthy()
+        expect(s.text[lang]?.title, `${s.id}/${lang} title`).toBeTruthy()
+        expect(s.text[lang]?.body, `${s.id}/${lang} body`).toBeTruthy()
       }
     }
   })
 
-  it('welcome fires for any context', () => {
-    expect(LEARN_TOPICS.find((t) => t.id === 'welcome')!.trigger(baseCtx)).toBe(true)
+  it('is an ordered sequence starting with welcome and ending terminal', () => {
+    expect(LEARN_STEPS[0].id).toBe('welcome')
+    expect(LEARN_STEPS[LEARN_STEPS.length - 1].kind).toBe('terminal')
   })
 
-  it('combat_phases fires only in active combat', () => {
-    const topic = LEARN_TOPICS.find((t) => t.id === 'combat_phases')!
-    expect(topic.trigger(baseCtx)).toBe(false)
-    expect(topic.trigger({ ...baseCtx, combatActive: true })).toBe(true)
+  it('action steps have a done() check; info/terminal do not advance automatically', () => {
+    for (const s of LEARN_STEPS) {
+      if (s.kind === 'action') expect(typeof s.done, s.id).toBe('function')
+    }
   })
 
-  it('rampaging fires when an enemy is nearby out of combat', () => {
-    const topic = LEARN_TOPICS.find((t) => t.id === 'rampaging')!
-    expect(topic.trigger({ ...baseCtx, hasEnemyNearby: true })).toBe(true)
-    expect(topic.trigger({ ...baseCtx, hasEnemyNearby: true, combatActive: true })).toBe(false)
+  it('get_move completes once Move points are available', () => {
+    const s = LEARN_STEPS.find((x) => x.id === 'get_move')!
+    expect(s.done!({ ...baseCtx, movePoints: 0 }, baseCtx)).toBe(false)
+    expect(s.done!({ ...baseCtx, movePoints: 2 }, baseCtx)).toBe(true)
   })
 
-  it('city_goal fires when the final turn is pending (city discovered)', () => {
-    const topic = LEARN_TOPICS.find((t) => t.id === 'city_goal')!
-    expect(topic.trigger({ ...baseCtx, finalTurnPending: true })).toBe(true)
-    expect(topic.trigger(baseCtx)).toBe(false)
+  it('move_figure completes when the hero position changes', () => {
+    const s = LEARN_STEPS.find((x) => x.id === 'move_figure')!
+    expect(s.done!({ ...baseCtx, positionKey: '0,0' }, { ...baseCtx, positionKey: '0,0' })).toBe(false)
+    expect(s.done!({ ...baseCtx, positionKey: '1,0' }, { ...baseCtx, positionKey: '0,0' })).toBe(true)
   })
 
-  it('level_up fires on a pending level-up', () => {
-    const topic = LEARN_TOPICS.find((t) => t.id === 'level_up')!
-    expect(topic.trigger({ ...baseCtx, pendingLevelUp: true })).toBe(true)
+  it('explore completes when a new tile is revealed', () => {
+    const s = LEARN_STEPS.find((x) => x.id === 'explore')!
+    expect(s.done!({ ...baseCtx, exploredTiles: 3 }, { ...baseCtx, exploredTiles: 3 })).toBe(false)
+    expect(s.done!({ ...baseCtx, exploredTiles: 4 }, { ...baseCtx, exploredTiles: 3 })).toBe(true)
   })
 
-  it('topic ids are unique', () => {
-    const ids = LEARN_TOPICS.map((t) => t.id)
+  it('goal completes when a City is discovered (final turn pending)', () => {
+    const s = LEARN_STEPS.find((x) => x.id === 'goal')!
+    expect(s.done!(baseCtx, baseCtx)).toBe(false)
+    expect(s.done!({ ...baseCtx, finalTurnPending: true }, baseCtx)).toBe(true)
+  })
+
+  it('step ids are unique', () => {
+    const ids = LEARN_STEPS.map((s) => s.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 })

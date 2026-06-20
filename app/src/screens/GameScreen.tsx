@@ -954,6 +954,7 @@ export default function GameScreen() {
   const learnCtx: LearnContext = {
     round: engineState?.round ?? 1,
     phase,
+    turnCount: engineState?.turnCount ?? 0,
     combatActive: engineState?.combat.isActive ?? false,
     interactionActive: engineState?.interaction?.isActive ?? false,
     hasInteractableSite: interactableSite !== null,
@@ -962,6 +963,10 @@ export default function GameScreen() {
     pendingReward: !!pendingReward,
     finalTurnPending: engineState?.finalTurnPending ?? false,
     movePoints: engineState?.player.turn.movePointsAvailable ?? 0,
+    positionKey: engineState ? `${engineState.player.position.q},${engineState.player.position.r}` : '',
+    exploredTiles: engineState?.map.tiles.filter((tile) => tile.isRevealed).length ?? 0,
+    fame: engineState?.player.fame ?? 0,
+    conqueredCount: engineState?.player.conqueredSites.length ?? 0,
   }
 
   // Safety: leave the level_up phase if there is nothing to resolve

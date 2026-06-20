@@ -29,15 +29,18 @@ test.describe('Learn by Playing', () => {
     await page.getByRole('button', { name: /Arythea|Tovak|Goldyx|Norowas/ }).first().click({ force: true })
     await page.waitForSelector('canvas', { timeout: 15_000 })
 
-    // The teaching guide should appear (welcome topic) with the 📖 marker.
+    // The step-by-step teaching guide should appear (welcome step) with 📖.
     const guide = page.locator('text=📖').first()
     await expect(guide).toBeVisible({ timeout: 8_000 })
 
-    // Dismissing a tip should not crash, and the reopen button remains available.
-    const gotIt = page.getByRole('button', { name: /Got it|알겠어요|Entendido/i }).first()
-    if (await gotIt.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await gotIt.click({ force: true })
+    // The guide is an ordered sequence: a manual Next advances to the next step
+    // without crashing.
+    const next = page.getByRole('button', { name: /Next ▶|다음 ▶|Siguiente ▶/ }).first()
+    if (await next.isVisible({ timeout: 3000 }).catch(() => false)) {
+      await next.click({ force: true })
+      await page.waitForTimeout(300)
     }
+    await expect(guide).toBeVisible() // still present after advancing
 
     expect(errors).toEqual([])
   })

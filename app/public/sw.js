@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mage-knight-v29'
+const CACHE_NAME = 'mage-knight-v30'
 
 const PRECACHE_URLS = [
   '/',
