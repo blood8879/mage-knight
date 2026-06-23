@@ -35,6 +35,8 @@ export interface TutorialSnapshot {
   hasMovedThisTurn: boolean
   hasActedThisTurn: boolean
   woundsInHand: number
+  /** True when an enemy is on the player's hex or an adjacent open hex (fightable). */
+  canFight: boolean
 }
 
 // ── Spotlight & Arrow Types ──
@@ -132,10 +134,13 @@ const CHAPTER_1_STEPS: TutorialStepDef[] = [
     icon: '🗺️',
     i18nKey: 'ch1.moveToHex',
     spotlight: 'center',
-    arrow: 'down',
+    arrow: 'up',
     highlightTarget: 'hex-map',
     requiresAction: true,
-    advanceWhen: (_prev, curr) => curr.hasMovedThisTurn,
+    // Only advance once the hero has moved AND is next to the enemy (so the
+    // "enemy spotted" step never fires when the player wandered off, e.g. to the
+    // village, with no enemy adjacent) — or combat already started.
+    advanceWhen: (_prev, curr) => (curr.hasMovedThisTurn && curr.canFight) || curr.combatActive,
   },
   {
     id: 'ch1_enemy_spotted',

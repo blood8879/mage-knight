@@ -301,7 +301,7 @@
       },
       "moveToHex": {
         "title": "Mueve a tu Héroe",
-        "desc": "Haz clic en un hex del mapa para seleccionar tu destino y confirma el movimiento. Los marcadores verdes indican hexes alcanzables."
+        "desc": "Muévete junto al enemigo (el hex de la calavera): toca un hex verde adyacente y confirma. Los marcadores verdes indican hexes alcanzables."
       },
       "terrainIntro": {
         "title": "Costes de Terreno",

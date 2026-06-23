@@ -301,7 +301,7 @@
       },
       "moveToHex": {
         "title": "Move Your Hero",
-        "desc": "Click a hex on the map to select your destination, then confirm the move. Green markers show hexes you can reach."
+        "desc": "Move next to the enemy (the skull hex): tap an adjacent green hex, then confirm. Green markers show hexes you can reach."
       },
       "terrainIntro": {
         "title": "Terrain Costs",

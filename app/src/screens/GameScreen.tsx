@@ -64,6 +64,7 @@ const DEFAULT_SNAPSHOT: TutorialSnapshot = {
   hasMovedThisTurn: false,
   hasActedThisTurn: false,
   woundsInHand: 0,
+  canFight: false,
 }
 
 function getPhaseHint(phase: GamePhase, t: (key: string, options?: { defaultValue: string }) => string): string | undefined {
@@ -310,6 +311,18 @@ export default function GameScreen() {
 
   const tutorialSnapshot = useMemo<TutorialSnapshot>(() => {
     if (!engineState) return DEFAULT_SNAPSHOT
+    // An enemy is fightable when it's on the player's hex, or on an adjacent
+    // open (non-site) hex — same rule as the Fight button (rampaging only
+    // from adjacent; sites must be entered).
+    const pos = engineState.player.position
+    const grid = engineState.map.hexGrid
+    const here = grid.get(hexKey(pos))
+    const canFight =
+      (here?.enemyTokens.length ?? 0) > 0 ||
+      hexNeighbors(pos).some((n) => {
+        const h = grid.get(hexKey(n))
+        return !!h && h.enemyTokens.length > 0 && !h.siteData
+      })
     return {
       phase: engineState.phase,
       combatPhase: engineState.combat.phase,
@@ -332,6 +345,7 @@ export default function GameScreen() {
       hasMovedThisTurn: engineState.player.turn.hasMovedThisTurn,
       hasActedThisTurn: engineState.player.turn.cardsPlayedThisTurn.length > 0,
       woundsInHand: engineState.player.deck.hand.filter(c => c.type === 'wound').length,
+      canFight,
     }
   }, [engineState])
 
